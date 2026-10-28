@@ -1,6 +1,14 @@
 .env
+.env.*
+!.env.example
 .venv/
 __pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.ruff_cache/
+.pytest_cache/
 chroma_db/
 data/raw/
 .ipynb_checkpoints/
