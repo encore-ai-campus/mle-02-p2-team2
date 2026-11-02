@@ -25,7 +25,7 @@
 
 ## 시작하기
 
-Python 3.11 이상을 사용합니다. 저장소 루트에서 실행하세요.
+Python 3.12 이상을 사용합니다. 저장소 루트에서 실행하세요.
 
 ```powershell
 python -m venv .venv
