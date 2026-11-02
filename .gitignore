@@ -13,3 +13,4 @@ chroma_db/
 data/raw/
 .ipynb_checkpoints/
 .DS_Store
+data/interim/
