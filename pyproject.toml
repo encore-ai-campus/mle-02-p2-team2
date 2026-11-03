@@ -20,6 +20,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "ipywidgets>=8.1.9",
     "jupyterlab>=4,<5",
     "pytest>=9.2.0",
     "ruff>=0.6,<1",

@@ -14,3 +14,4 @@ data/raw/
 .ipynb_checkpoints/
 .DS_Store
 data/interim/
+/지시서들
