@@ -10,14 +10,14 @@
 | 결과물 | `PreventionLegalGraph` — `QueryInput`을 받아 근거가 붙은 `QueryOutput`을 돌려주는 LangGraph |
 | 전문 영역 | 홍역·수족구병·예방접종 근거, 접촉자 안내, **학교 보고 · 법정 신고 · 통보 · 의료기관 신고의 주체 구분** |
 | 첫 독립 질문 (T3) | "홍역 발생 시 학교 담당자의 업무와 신고 근거는?" |
-| 코드 위치 | `src/preprocess/prevention_legal/`, `src/index/prevention_legal/`, `src/rag/prevention_legal/`, `src/eval/prevention_legal/` |
+| 코드 위치 (지시서 v1.2 §2 기준) | `src/preprocess/prevention_legal/`, `src/index/prevention_legal/`, `src/rag/prevention_legal/`, `src/eval/prevention_legal/` |
 | 개인 노트북·메모 | `notebooks/prevention_legal/` |
 
 **담당 문서 (`data/raw/prevention_legal/`)**
 
-| 문서 | 쪽수 | 준비 | 제안 `document_id` [임시] |
+| 문서 | 쪽수 | 준비 | 제안 `document_id` (스키마 v3.1 §6: `{발행처}_{약칭}_{판본}`) |
 |---|---:|---|---|
-| 감염병의 예방 및 관리에 관한 법률 (제21521호) | 59 | ✅ | `law_infectious_disease_act_21521` |
+| 감염병의 예방 및 관리에 관한 법률 (제21521호) | 59 | ✅ | `moleg_infectious_disease_act_21521` |
 | 홍역 대응 지침 2026 | 180 | ✅ | `kdca_measles_2026` |
 | 엔테로바이러스감염증·수족구병 관리지침 2026 | 68 | ✅ | `kdca_hfmd_2026` |
 | 예방접종 대상 감염병 관리 지침 2026 | 315 | ✅ | `kdca_vaccine_preventable_2026` |
@@ -65,7 +65,7 @@
 | 표 청크 규칙 | v3.1 5-2절(C8): 표는 행 단위 청크, 각 행 `text`에 표 제목·열 머리글 반복 | P3부터 적용. 행 ID는 `t{표}r{행}` 형식 |
 | 임베딩 | v3.1 C7: `Chunk.embedding`과 벡터 인덱스를 공통 DB에 명시(11/4 적재 전 임베딩 모델·차원 확정) | 임베딩 모델과 차원을 11/4 적재 전에 팀이 정한다. 인덱스 생성은 공동 승인 항목으로 유지 |
 | 개발 일정 | 최종 개발일정표 v1.0: 11/4 각자 독립 완주, 11/5 2-Graph, 11/6 3-Graph(M4), 11/8 18:00 동결 | 아래 P6·P9·표 4장의 날짜를 이 기준으로 고쳤다 |
-| 공통 DB 접속 | Aura 응답 없음(`ServiceUnavailable`) | 11/4 공통 DB 소량 적재는 연결이 복구되거나 팀이 DB를 지정할 때까지 보류. 그 전까지는 테스트 DB에서 검증 |
+| 공통 DB 접속 | Aura 연결 확인 완료(2026-11-03, 읽기 질의 성공, 노드 0개). 연결 경로는 `src/preprocess/prevention_legal/`가 아니라 `src/rag/prevention_legal/neo4j_conn.py`(임시) | 11/4 공통 적재는 ID 형식·공동 승인 후 진행. 그 전까지는 테스트 DB에서 검증 |
 | 홍역 지침 쪽수 | 계획서 표는 179쪽, 원본 md 첫머리는 PDF 180쪽 | 원본 파일 기준(180쪽)을 쓰고, 계획서 표 정정은 공동 검토 때 제안 |
 
 ## 2. 설계 원칙

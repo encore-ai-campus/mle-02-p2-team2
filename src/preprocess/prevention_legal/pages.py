@@ -3,15 +3,15 @@
 설계의 본질이 아닌 '읽기 도구'만 담았다. 문서 md 는 `## PDF N페이지` 제목으로 쪽이 나뉜다.
 """
 import re
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 
-# src/rag/prevention_legal/pages.py -> parents[3] 이 저장소 루트
+# src/preprocess/prevention_legal/pages.py -> parents[3] 이 저장소 루트
 RAW_DIR = Path(__file__).resolve().parents[3] / "data" / "raw" / "prevention_legal"
 
 # 짧은 이름 -> (document_id [임시], 파일 이름)
 DOCS = {
-    "law": ("law_infectious_disease_act_21521",
+    "law": ("moleg_infectious_disease_act_21521",
             "감염병의 예방 및 관리에 관한 법률(법률)(제21521호)(20261008).md"),
     "measles": ("kdca_measles_2026", "2026년도 홍역 대응 지침(전자용).md"),
     "hfmd": ("kdca_hfmd_2026", "★2026년도 엔테로바이러스 감염증·수족구병 관리지침(전자용).md"),
@@ -21,7 +21,7 @@ DOCS = {
 _PAGE_HEADER = re.compile(r"^## PDF (\d+)페이지\s*$")
 
 
-@lru_cache(maxsize=None)
+@cache
 def _load_pages(key: str) -> dict[int, str]:
     """문서 하나를 {쪽번호: 쪽 글} 로 나눠 둔다."""
     _, filename = DOCS[key]
