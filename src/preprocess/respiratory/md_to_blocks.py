@@ -6,7 +6,6 @@ import sys
 import unicodedata
 from pathlib import Path
 
-
 # 파일명에 포함된 문구와 문서 ID의 대응을 한곳에서 관리한다.
 DOCUMENT_IDS = {
     "호흡기감염병 관리지침": "kdca_respiratory_2026",
