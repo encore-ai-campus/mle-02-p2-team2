@@ -10,7 +10,7 @@
 | 결과물 | `PreventionLegalGraph` — `QueryInput`을 받아 근거가 붙은 `QueryOutput`을 돌려주는 LangGraph |
 | 전문 영역 | 홍역·수족구병·예방접종 근거, 접촉자 안내, **학교 보고 · 법정 신고 · 통보 · 의료기관 신고의 주체 구분** |
 | 첫 독립 질문 (T3) | "홍역 발생 시 학교 담당자의 업무와 신고 근거는?" |
-| 코드 위치 | `src/preprocess/prevention_legal/`, `src/index/prevention_legal/`, `src/rag/prevention_legal/`, `src/eval/prevention_legal/` |
+| 코드 위치 (지시서 v1.2 §2 기준) | `src/preprocess/prevention_legal/`, `src/index/prevention_legal/`, `src/rag/prevention_legal/`, `src/eval/prevention_legal/` |
 | 개인 노트북·메모 | `notebooks/prevention_legal/` |
 
 **담당 문서 (`data/raw/prevention_legal/`)**
