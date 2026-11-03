@@ -11,7 +11,7 @@ RAW_DIR = Path(__file__).resolve().parents[3] / "data" / "raw" / "prevention_leg
 
 # 짧은 이름 -> (document_id [임시], 파일 이름)
 DOCS = {
-    "law": ("law_infectious_disease_act_21521",
+    "law": ("moleg_infectious_disease_act_21521",
             "감염병의 예방 및 관리에 관한 법률(법률)(제21521호)(20261008).md"),
     "measles": ("kdca_measles_2026", "2026년도 홍역 대응 지침(전자용).md"),
     "hfmd": ("kdca_hfmd_2026", "★2026년도 엔테로바이러스 감염증·수족구병 관리지침(전자용).md"),
