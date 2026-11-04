@@ -1,0 +1,241 @@
+{
+  "domain": "respiratory",
+  "status": "ANSWERED",
+  "findings": [
+    {
+      "claim": "(조건:인플루엔자 유행 시기) 인플루엔자 유행 시기에는 등원 및 등교 전에 인플루엔자 의심증상 발생 등 건강상태 관찰을 철저히 실시 [의무]",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0016:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0016:a03"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "ACTIVE_SURVEILLANCE"
+      ]
+    },
+    {
+      "claim": "유행 시기 전까지 영 유아, 학생 및 학부모에게 예방접종 안내",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0017:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0017:a01"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "HEALTH_EDUCATION"
+      ]
+    },
+    {
+      "claim": "영 유아, 학생의 개인위생 관련 지도",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0017:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0017:a02"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "HEALTH_EDUCATION"
+      ]
+    },
+    {
+      "claim": "(조건:유행 시기에 영 유아, 학생의 외출 시) 유행 시기에 영 유아, 학생의 외출 시 사람이 많이 모이는 장소의 방문을 삼가며, 특히 발열 및 기침 또는 인후통 등을 보이는 사람을 피하도록 당부",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0017:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0017:a03"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "HEALTH_EDUCATION"
+      ]
+    },
+    {
+      "claim": "(조건:발열 및 기침 또는 인후통 등을 보이는 영 유아, 학생이 있는 경우) 발열 및 기침 또는 인후통 등을 보이는 영 유아, 학생이 있는 경우, 담임교사 및 학부모에게 신속히 통보",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0017:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0017:a04"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "CONTACT_GUARDIAN"
+      ]
+    },
+    {
+      "claim": "(조건:발열 및 기침 또는 인후통 등을 보이는 영 유아, 학생이 있는 경우) 진료를 받게 함",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0017:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0017:a05"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "REQUEST_MEDICAL_VISIT"
+      ]
+    },
+    {
+      "claim": "(조건:발열 및 기침 또는 인후통 등을 보이는 영 유아, 학생이 있는 경우) 집에서 휴식하도록 조치함",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0017:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0017:a06"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "EXCLUDE_FROM_SCHOOL"
+      ]
+    },
+    {
+      "claim": "(조건:필요시) 필요시 학생(유아) 및 학부모 대상 안내문 발송 [선택]",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0018:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0018:a01"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "INFORM_GUARDIANS_NOTICE"
+      ]
+    },
+    {
+      "claim": "문손잡이, 창문, 스위치, 책상과 의자, 장난감 등 전파를 매개하기 쉬운 환경 소독",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0018:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0018:a02"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "VENTILATE_DISINFECT"
+      ]
+    },
+    {
+      "claim": "화장실 및 환기시설(가습기 제습기 포함) 난방시설 등 점검",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0018:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0018:a03"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "VENTILATE_DISINFECT"
+      ]
+    },
+    {
+      "claim": "실내에서는 출입문과 창문을 동시에 열어 환기 하기",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0018:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0018:a04"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "VENTILATE_DISINFECT"
+      ]
+    },
+    {
+      "claim": "(조건:필요시) 필요시 유관기관(관할 보건소, 시 도 등)과 연락 등 협력 [선택]",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0018:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0018:a05"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "COOPERATE_HEALTH_AUTHORITY"
+      ]
+    },
+    {
+      "claim": "(조건:교직원이 인플루엔자로 진단받은 경우) 교직원이 인플루엔자로 진단받은 경우, 감염력이 소실(해열 후 24시간 경과)될 때까지 업무를 일시적으로 제한하도록 권고 [권장]",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0018:b01"
+      ],
+      "action_ids": [
+        "kdca_flu_facility_2026:p0018:a06"
+      ],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": [
+        "STAFF_DUTY_SUBSTITUTE"
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0016:b01",
+      "pdf_page": 16,
+      "printed_page": 12,
+      "excerpt": "**2) 인플루엔자 유행 시 조치사항**  가) 지침의 권고사항에 따라 환자 및 환경관리 실시  나) 가정통신문 안내문 발송 등 사전예방 활동  #### **다. 적용 기관**  **1) 「영유아보육법」제2조 제3호에 따른 어린이집**  **2) 「유아교육법」제2조 제2호에 따른 유치원**  ･ **3) 「초** **중등 교육법」제2조에 따른 각 학교** "
+    },
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0017:b01",
+      "pdf_page": 17,
+      "printed_page": 13,
+      "excerpt": " 창문, 스위치, 책상과 의자, 장난감 등 전파를 매개하기 쉬운 환경 소독  - 실내에서는 자주 환기 하기  **2** **교직원**  ･ ① 유행 시기 전까지 영 유아, 학생 및 학부모에게 예방접종 안내  ･ ② 영 유아, 학생의 개인위생 관련 지도  ･ ③ 유행 시기에 영 유아, 학생의 외출 시 사람이 많이 모이는 장소의 방문을 삼가며, 특히  발열 및"
+    },
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0018:b01",
+      "pdf_page": 18,
+      "printed_page": 14,
+      "excerpt": "⑤ 필요시 학생(유아) 및 학부모 대상 안내문 발송  - 학교(유치원) 내 발생 현황, 인플루엔자 예방수칙, 인플루엔자 진단 시 등교(등원) 제한 등 포함  ⑥ 어린이집, 유치원 및 학교의 위생 및 환경 관리  - 문손잡이, 창문, 스위치, 책상과 의자, 장난감 등 전파를 매개하기 쉬운 환경 소독  ･ ･ - 화장실 및 환기시설(가습기 제습기 포함) 난방시"
+    }
+  ],
+  "action_ids": [
+    "kdca_flu_facility_2026:p0016:a03",
+    "kdca_flu_facility_2026:p0017:a01",
+    "kdca_flu_facility_2026:p0017:a02",
+    "kdca_flu_facility_2026:p0017:a03",
+    "kdca_flu_facility_2026:p0017:a04",
+    "kdca_flu_facility_2026:p0017:a05",
+    "kdca_flu_facility_2026:p0017:a06",
+    "kdca_flu_facility_2026:p0018:a01",
+    "kdca_flu_facility_2026:p0018:a02",
+    "kdca_flu_facility_2026:p0018:a03",
+    "kdca_flu_facility_2026:p0018:a04",
+    "kdca_flu_facility_2026:p0018:a05",
+    "kdca_flu_facility_2026:p0018:a06"
+  ],
+  "warnings": [],
+  "answer": "- (조건:인플루엔자 유행 시기) 인플루엔자 유행 시기에는 등원 및 등교 전에 인플루엔자 의심증상 발생 등 건강상태 관찰을 철저히 실시 [의무]\n- 유행 시기 전까지 영 유아, 학생 및 학부모에게 예방접종 안내\n- 영 유아, 학생의 개인위생 관련 지도\n- (조건:유행 시기에 영 유아, 학생의 외출 시) 유행 시기에 영 유아, 학생의 외출 시 사람이 많이 모이는 장소의 방문을 삼가며, 특히 발열 및 기침 또는 인후통 등을 보이는 사람을 피하도록 당부\n- (조건:발열 및 기침 또는 인후통 등을 보이는 영 유아, 학생이 있는 경우) 발열 및 기침 또는 인후통 등을 보이는 영 유아, 학생이 있는 경우, 담임교사 및 학부모에게 신속히 통보\n- (조건:발열 및 기침 또는 인후통 등을 보이는 영 유아, 학생이 있는 경우) 진료를 받게 함\n- (조건:발열 및 기침 또는 인후통 등을 보이는 영 유아, 학생이 있는 경우) 집에서 휴식하도록 조치함\n- (조건:필요시) 필요시 학생(유아) 및 학부모 대상 안내문 발송 [선택]\n- 문손잡이, 창문, 스위치, 책상과 의자, 장난감 등 전파를 매개하기 쉬운 환경 소독\n- 화장실 및 환기시설(가습기 제습기 포함) 난방시설 등 점검\n- 실내에서는 출입문과 창문을 동시에 열어 환기 하기\n- (조건:필요시) 필요시 유관기관(관할 보건소, 시 도 등)과 연락 등 협력 [선택]\n- (조건:교직원이 인플루엔자로 진단받은 경우) 교직원이 인플루엔자로 진단받은 경우, 감염력이 소실(해열 후 24시간 경과)될 때까지 업무를 일시적으로 제한하도록 권고 [권장]"
+}

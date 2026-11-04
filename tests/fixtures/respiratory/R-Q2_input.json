@@ -1,0 +1,9 @@
+{
+  "question": "인플루엔자 발생 시 학교(교직원)가 참고할 시설별 예방 조치는?",
+  "region": "NATIONAL",
+  "allowed_document_ids": [
+    "kdca_respiratory_2026",
+    "kdca_flu_facility_2026",
+    "kdca_covid19_2026"
+  ]
+}
