@@ -2,7 +2,7 @@
 
 > 담당:송수림 / Graph:RespiratoryGraph(domain="respiratory")
 > 기준:계약 가이드 v1.2 10장(대표 질문·QueryInput·QueryOutput·Citation 검증표),온톨로지 v3.1
-> 상태:질문셋 v0(11/2 작성)의 정답을 md 원문과 대조 완료(11/3). QueryInput·QueryOutput 샘플은 T-19(11/4)에 추가.
+> 상태:질문셋 v0(11/2 작성)의 정답을 md 원문과 대조 완료(11/3). QueryInput·QueryOutput 샘플은 11/4 단독 질의 후 추가.
 > 쪽수:pdf_page=PDF 뷰어 기준,printed_page=책 인쇄 쪽(코로나19는 인쇄 쪽 없음→null)
 > excerpt:md 변환본 글자 그대로(줄바꿈은 공백 하나로 정리해 비교). 최종 시연 전 PDF 원본과 한 번 더 대조.
 
