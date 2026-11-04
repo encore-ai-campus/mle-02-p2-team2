@@ -16,6 +16,8 @@ DOCS = {
     "measles": ("kdca_measles_2026", "2026년도 홍역 대응 지침(전자용).md"),
     "hfmd": ("kdca_hfmd_2026", "★2026년도 엔테로바이러스 감염증·수족구병 관리지침(전자용).md"),
     "vaccine": ("kdca_vaccine_preventable_2026", "2026년도 예방접종 대상 감염병 관리 지침_최종.md"),
+    # 법정감염병 진단·신고기준 (변환본, 237쪽). 원본 대조 결과는 06 노트북에 기록
+    "diagnosis": ("kdca_diagnosis_reporting_2026", "2026년 법정감염병 진단·신고기준 지침_최종.md"),
 }
 
 _PAGE_HEADER = re.compile(r"^## PDF (\d+)페이지\s*$")
@@ -46,7 +48,9 @@ def read_page(key: str, page: int) -> str:
 
 
 def _squash(s: str) -> str:
-    """공백·줄바꿈·마크다운 기호(*, #)와 대괄호를 없앤 비교용 글. (간단한 '후보' 확인용)"""
+    """공백·줄바꿈·마크다운 기호(*, #)와 대괄호, 표 안의 줄바꿈 태그(<br>)를 없앤 비교용 글. (간단한 '후보' 확인용)"""
+    s = s.replace("<br>", "")  # 변환본 표 안의 줄바꿈 태그는 원문 비교에서 뺀다
+    s = s.replace("○", "")     # 목록 기호(원·불릿)는 쪽마다 달라서 비교에서 뺀다
     return re.sub(r"[\s*#\[\]]+", "", s)
 
 
@@ -55,7 +59,9 @@ def excerpt_in_page(excerpt: str, key: str, page: int) -> bool:
 
     표의 다른 셀이나 줄이 이어져도 일치로 보일 수 있다. '확인'이 나와도 PDF 에서 문맥을 직접 대조한다.
     """
-    return bool(excerpt.strip()) and _squash(excerpt) in _squash(read_page(key, page))
+    q = _squash(excerpt)
+    # 기호만 있는 발췌문(예: "○", "<br>")은 정규화하면 빈 글이 되므로 바로 거부한다
+    return bool(q) and q in _squash(read_page(key, page))
 
 
 def make_citation(key: str, page: int, excerpt: str, block: int = 1) -> dict:
