@@ -1,0 +1,95 @@
+{
+  "dictionary": "Disease",
+  "id_field": "disease_id",
+  "version": "school-draft-2026-11-04",
+  "status": "DRAFT_LOCAL_UNAPPROVED",
+  "source": "온톨로지 v3.1 4절 ③ 표준 ID 사전(11종) + 교육부 매뉴얼·경기도 가이드북에서 확인한 표기",
+  "notes": [
+    "school 개인 임시 사전이다. 공통 사전(data/specs/ids/)이 3인 승인되면 그 파일로 교체한다.",
+    "name의 공식 표기는 「2026 법정감염병 진단·신고기준」으로 최종 확인한다(온톨로지 v3.1). 그 문서는 prevention_legal 담당이다.",
+    "review_aliases는 다른 질병도 가리킬 수 있는 넓은 표현이다. 자동 연결하지 않고 사람 검수로 넘긴다."
+  ],
+  "entries": [
+    {
+      "disease_id": "SCARLET_FEVER", "name": "성홍열", "aliases": ["Scarlet fever"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "성홍열", "pdf_pages": [48, 50, 55]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "성홍열", "pdf_pages": [160, 180]}
+      ]
+    },
+    {
+      "disease_id": "INFLUENZA", "name": "인플루엔자", "aliases": ["독감", "Flu"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "독감", "pdf_pages": [37, 38, 39]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "인플루엔자", "pdf_pages": [195]}
+      ]
+    },
+    {
+      "disease_id": "HFMD", "name": "수족구병", "aliases": ["수족구", "손발입병", "Hand-foot-mouth disease"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "수족구병", "pdf_pages": [55, 61]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "수족구병", "pdf_pages": [78, 186]}
+      ]
+    },
+    {
+      "disease_id": "MEASLES", "name": "홍역", "aliases": ["Measles"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "홍역", "pdf_pages": [59]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "홍역", "pdf_pages": [199, 210]}
+      ]
+    },
+    {
+      "disease_id": "COVID19", "name": "코로나바이러스감염증-19", "aliases": ["코로나19", "코로나", "COVID-19"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "코로나19", "pdf_pages": [16, 18]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "코로나바이러스감염증-19", "pdf_pages": [197]}
+      ]
+    },
+    {
+      "disease_id": "VARICELLA", "name": "수두", "aliases": ["Chickenpox"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "수두", "pdf_pages": [55, 61]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "수두", "pdf_pages": [94, 183]}
+      ]
+    },
+    {
+      "disease_id": "MUMPS", "name": "유행성이하선염", "aliases": ["볼거리", "Mumps"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "유행성 이하선염", "pdf_pages": [55]},
+        {"document_id": "moe_school_manual_v3", "text": "볼거리", "pdf_pages": [175, 198]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "유행성이하선염", "pdf_pages": [192]}
+      ]
+    },
+    {
+      "disease_id": "PERTUSSIS", "name": "백일해", "aliases": ["Pertussis"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "백일해", "pdf_pages": [48, 50]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "백일해", "pdf_pages": [177]}
+      ]
+    },
+    {
+      "disease_id": "MYCOPLASMA_PNEUMONIA", "name": "마이코플라스마 폐렴균 감염증", "aliases": ["마이코플라스마 폐렴"],
+      "evidence": [
+        {"document_id": "gyeonggi_school_guide_2025", "text": "마이코플라스마", "pdf_pages": [156]}
+      ],
+      "note": "두 학교 문서에서 거의 등장하지 않는다(경기도 PDF 156쪽 1회). 학교 행동 연결은 respiratory 문서 근거가 필요하다."
+    },
+    {
+      "disease_id": "EKC", "name": "유행성각결막염", "aliases": [],
+      "review_aliases": ["눈병", "아데노바이러스 결막염"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "유행성 각결막염", "pdf_pages": [55]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "유행성각결막염", "pdf_pages": [64, 190]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "눈병", "pdf_pages": [62, 191]}
+      ],
+      "note": "'눈병'은 급성출혈성결막염 등 다른 결막염도 가리킬 수 있어 review_aliases로 둔다(온톨로지 초안은 별칭으로 제시)."
+    },
+    {
+      "disease_id": "TUBERCULOSIS", "name": "결핵", "aliases": ["TB"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "결핵", "pdf_pages": [55, 59]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "결핵", "pdf_pages": [169, 210]}
+      ]
+    }
+  ]
+}

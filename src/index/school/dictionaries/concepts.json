@@ -1,0 +1,283 @@
+{
+ "dictionary": "ActionConcept",
+ "id_field": "concept_id",
+ "version": "school-draft-2026-11-04b",
+ "status": "DRAFT_LOCAL_UNAPPROVED",
+ "source": "온톨로지 v3.1 7절 ActionConcept 초기 사전(27개, 폐쇄 목록 초안)",
+ "notes": [
+  "school 개인 임시 사전이다. 공통 사전(data/specs/ids/)이 3인 승인되면 그 파일로 교체한다.",
+  "Neo4j ActionConcept 노드에는 concept_id, name만 적재한다. group·description·not_for는 추출 프롬프트와 검수용 메타데이터다.",
+  "pending_candidates는 표준 concept_id가 아니다. 3인 승인 전에는 INSTANCE_OF를 만들지 않는다."
+ ],
+ "entries": [
+  {
+   "concept_id": "REPORT_EDU_OFFICE",
+   "name": "교육청 발생 보고",
+   "group": "7-1 신고·보고·통보",
+   "description": "학교가 교육(지원)청에 감염병 발생을 보고하는 행동. NEIS 감염병 환자 등록·보고 제출 포함",
+   "not_for": [
+    "보건소 신고"
+   ]
+  },
+  {
+   "concept_id": "NOTIFY_HEALTH_CENTER_LEGAL",
+   "name": "학교장의 보건소 법정 신고",
+   "group": "7-1 신고·보고·통보",
+   "description": "학교장이 관할 보건소장에게 하는 신고. 경기도 가이드북은 대상 감염병 8종을 제시",
+   "not_for": [
+    "교육청 보고",
+    "의료기관 신고"
+   ],
+   "rule": "FOR_DISEASE는 원문에 질병명이 나열된 청크를 근거로만 만든다. 질병 등급만 보고 자동 연결하지 않는다."
+  },
+  {
+   "concept_id": "COOPERATE_HEALTH_AUTHORITY",
+   "name": "방역당국 협조",
+   "group": "7-1 신고·보고·통보",
+   "description": "역학조사 협조, 방역당국 지시에 따른 조치 등",
+   "not_for": [
+    "신고"
+   ]
+  },
+  {
+   "concept_id": "INFORM_GUARDIANS_NOTICE",
+   "name": "보호자 대상 발생 안내",
+   "group": "7-1 신고·보고·통보",
+   "description": "가정통신문, 비상 연락망 등으로 발생 현황을 알리는 행동",
+   "not_for": [
+    "개별 학생 보호자 연락"
+   ]
+  },
+  {
+   "concept_id": "CONTACT_GUARDIAN",
+   "name": "개별 보호자 연락",
+   "group": "7-1 신고·보고·통보",
+   "description": "유증상·환자 학생의 보호자에게 연락하여 인계·진료 요청 등",
+   "not_for": [
+    "전체 안내"
+   ]
+  },
+  {
+   "concept_id": "DETECT_SYMPTOMATIC",
+   "name": "유증상자 발견·확인",
+   "group": "7-2 발견·확인·등교 관리"
+  },
+  {
+   "concept_id": "CONTACT_HEALTH_TEACHER",
+   "name": "보건(담당)교사에게 연락",
+   "group": "7-2 발견·확인·등교 관리"
+  },
+  {
+   "concept_id": "ESCORT_TO_HEALTH_ROOM",
+   "name": "보건실·일시적 관찰실로 이동·동행",
+   "group": "7-2 발견·확인·등교 관리"
+  },
+  {
+   "concept_id": "REQUEST_MEDICAL_VISIT",
+   "name": "의료기관 진료 요청·안내",
+   "group": "7-2 발견·확인·등교 관리"
+  },
+  {
+   "concept_id": "CHECK_MEDICAL_RESULT",
+   "name": "진료·검사 결과 확인",
+   "group": "7-2 발견·확인·등교 관리"
+  },
+  {
+   "concept_id": "EXCLUDE_FROM_SCHOOL",
+   "name": "등교중지 실시·통보",
+   "group": "7-2 발견·확인·등교 관리"
+  },
+  {
+   "concept_id": "END_EXCLUSION",
+   "name": "등교중지 해제·복귀 확인",
+   "group": "7-2 발견·확인·등교 관리"
+  },
+  {
+   "concept_id": "ISSUE_EXCLUSION_NOTICE",
+   "name": "등교중지 안내문 배부·생활수칙 안내",
+   "group": "7-2 발견·확인·등교 관리"
+  },
+  {
+   "concept_id": "ACTIVE_SURVEILLANCE",
+   "name": "능동감시 실시·강화",
+   "group": "7-3 감시·확산 차단"
+  },
+  {
+   "concept_id": "MANAGE_CLOSE_CONTACTS",
+   "name": "밀접접촉자 파악·관리",
+   "group": "7-3 감시·확산 차단"
+  },
+  {
+   "concept_id": "MANAGE_HIGH_RISK",
+   "name": "보건학적 고위험군·취약계층 관리",
+   "group": "7-3 감시·확산 차단"
+  },
+  {
+   "concept_id": "VENTILATE_DISINFECT",
+   "name": "환기·소독",
+   "group": "7-3 감시·확산 차단"
+  },
+  {
+   "concept_id": "HEALTH_EDUCATION",
+   "name": "감염병 예방·위생수칙 교육",
+   "group": "7-3 감시·확산 차단"
+  },
+  {
+   "concept_id": "ADJUST_SCHOOL_ACTIVITIES",
+   "name": "학사일정 조정·교육활동 제한 검토",
+   "group": "7-3 감시·확산 차단"
+  },
+  {
+   "concept_id": "SCHOOL_CLOSURE",
+   "name": "휴업·휴교 검토·실시",
+   "group": "7-3 감시·확산 차단"
+  },
+  {
+   "concept_id": "ACTIVATE_RESPONSE_ORG",
+   "name": "학교 감염병 관리조직·비상대응체계 활성화",
+   "group": "7-3 감시·확산 차단"
+  },
+  {
+   "concept_id": "ATTENDANCE_RECOGNITION",
+   "name": "출석인정 처리·증빙 확인",
+   "group": "7-4 행정·학사"
+  },
+  {
+   "concept_id": "LEARNING_LOSS_PLAN",
+   "name": "수업결손 대책·보충",
+   "group": "7-4 행정·학사"
+  },
+  {
+   "concept_id": "STAFF_DUTY_SUBSTITUTE",
+   "name": "교직원 복무·대체인력 처리",
+   "group": "7-4 행정·학사"
+  },
+  {
+   "concept_id": "MEDIA_COMPLAINT_RESPONSE",
+   "name": "언론·민원 대응",
+   "group": "7-4 행정·학사"
+  },
+  {
+   "concept_id": "PSYCHOLOGICAL_SUPPORT",
+   "name": "심리 지원",
+   "group": "7-4 행정·학사"
+  },
+  {
+   "concept_id": "DECLARE_OUTBREAK_END",
+   "name": "유행 종료 선언·평가",
+   "group": "7-4 행정·학사"
+  }
+ ],
+ "pending_candidates": [
+  {
+   "proposed_id": "TEMPORARY_OBSERVATION",
+   "proposed_name": "일시적 관찰 필요성 판단·실시",
+   "seen_in": "run_20261103T110539_426305Z 후보 9 '진한이를 교내에 마련된 일시적 관찰실에서 보호·관찰을 함'",
+   "evidence": [
+    {
+     "document_id": "moe_school_manual_v3",
+     "pdf_pages": [
+      55
+     ],
+     "text": "3) 일시적 관찰 필요성 판단 및 실시"
+    },
+    {
+     "document_id": "gyeonggi_school_guide_2025",
+     "pdf_pages": [
+      167
+     ],
+     "text": "2. 일시적 관찰 필요성 판단 및 실시"
+    },
+    {
+     "document_id": "moe_school_manual_v3",
+     "pdf_pages": [
+      36
+     ],
+     "text": "부모님이 올 때까지 일시적 관찰실에서 일시적 보호·관찰을 하고"
+    }
+   ],
+   "why": "ESCORT_TO_HEALTH_ROOM은 '이동·동행'이고 관찰 자체는 다른 행동이다. 두 문서 모두 별도 항목으로 둔다. 보건교사 행의 '일시적 관찰실에서 일시적 보호·관찰', '담당 교사를 통해 상태를 주기적으로 확인', '출입 금지 안내판 부착'도 이 개념 후보로 본다."
+  },
+  {
+   "proposed_id": "WEAR_MASK",
+   "proposed_name": "마스크 착용",
+   "seen_in": "run_20261103T110539_426305Z 후보 8 '교실에 비치된 마스크를 진한이와 교사가 함께 착용하도록 함'",
+   "evidence": [
+    {
+     "document_id": "moe_school_manual_v3",
+     "pdf_pages": [
+      54
+     ],
+     "text": "필요시 감염병 (의심)환자와 이동 담당 교사 모두 마스크 착용"
+    },
+    {
+     "document_id": "gyeonggi_school_guide_2025",
+     "pdf_pages": [
+      166
+     ],
+     "text": "필요시 감염병(의심) 환자와 이동 담당 교사 모두 마스크 착용"
+    }
+   ],
+   "why": "27개 개념에 개인보호 행동이 없다. HEALTH_EDUCATION(교육)과 구별된다."
+  },
+  {
+   "proposed_id": "ASSIGN_RESPONSE_STAFF",
+   "proposed_name": "이동·격리 담당 교사 지정 요청",
+   "seen_in": "run_20261104T045311_203944Z 후보 5, run_20261104T054859_870962Z 후보 8·17, run_20261104T055051_403958Z 후보 8",
+   "evidence": [
+    {
+     "document_id": "moe_school_manual_v3",
+     "pdf_pages": [
+      54
+     ],
+     "text": "담당 교사는 담임교사 권장 (만약 임신부 등 감염병 고위험군인 경우 다른 교사로 대체)"
+    },
+    {
+     "document_id": "moe_school_manual_v3",
+     "pdf_pages": [
+      36
+     ],
+     "text": "교무부장에게 연락하여 격리 담당 교사 결정을 요청"
+    }
+   ],
+   "why": "담임 행 '이동 담당 교사 지정을 요청'과 보건교사 행 '격리 담당 교사 결정을 요청'이 같은 종류(대응 담당 인력 배정 요청)다. STAFF_DUTY_SUBSTITUTE는 복무·대체인력 처리라 범위가 다르다. 3인이 기존 개념 재사용을 택하면 이 제안을 지운다."
+  },
+  {
+   "proposed_id": "ARRANGE_CLASS_COVERAGE",
+   "proposed_name": "남은 학생 수업·관리 요청",
+   "seen_in": "run_20261104T045311_203944Z 후보 8, run_20261104T054859_870962Z 후보 20",
+   "evidence": [
+    {
+     "document_id": "moe_school_manual_v3",
+     "pdf_pages": [
+      36
+     ],
+     "text": "교무부장에게 기타 학생들에 대한 수업 진행 등 관리를 요청"
+    }
+   ],
+   "why": "STAFF_DUTY_SUBSTITUTE 재사용 가능성 검토. 모의훈련 시나리오(예시)에만 나오므로 적재 우선순위 낮음."
+  },
+  {
+   "proposed_id": "HAND_HYGIENE",
+   "proposed_name": "손 씻기 실시·요청",
+   "seen_in": "run_20261104T054859_870962Z 후보 1, run_20261104T055051_403958Z 후보 1 '도착한 즉시 손을 씻도록 요청'",
+   "evidence": [
+    {
+     "document_id": "moe_school_manual_v3",
+     "pdf_pages": [
+      36
+     ],
+     "text": "교사와 진한이가 보건실에 도착한 즉시 손을 씻도록 요청"
+    },
+    {
+     "document_id": "gyeonggi_school_guide_2025",
+     "pdf_pages": [
+      54
+     ],
+     "text": "교사와 진한이가 보건실에 도착한 즉시 손을 씻도록 요청"
+    }
+   ],
+   "why": "그 자리에서 손 씻기를 하게 하는 행동이다. HEALTH_EDUCATION(예방·위생수칙 교육)으로 볼지 3인 판단. 교육으로 묶으면 이 제안을 지운다."
+  }
+ ]
+}

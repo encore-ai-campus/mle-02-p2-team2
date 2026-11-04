@@ -25,6 +25,19 @@ def candidate_key(candidate):
     return hashlib.sha256(json.dumps(candidate, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
 
 
+def concept_options():
+    """개념 드롭다운 항목: (표시, 값). ''은 LLM 후보를 그대로 쓴다는 뜻.
+
+    표준 개념만 보여 준다. 맞는 개념이 없으면 고르지 않아도 된다(행동은 개념 연결 없이 적재).
+    """
+    from index.school.dictionaries import load_dictionary
+
+    book = load_dictionary("concept")
+    options = [("LLM 후보 그대로 사용", "")]
+    options += [(f"{e['concept_id']} · {e['name']}", e["concept_id"]) for e in book["entries"]]
+    return options
+
+
 def create_review_ui(base_dir):
     """추출 성공 기록을 골라 후보별 원문과 판정을 확인·저장한다."""
     folders = []
@@ -42,6 +55,8 @@ def create_review_ui(base_dir):
     status = widgets.Dropdown(options=[("미검수", "PENDING"), ("승인", "APPROVED"), ("확인 필요", "NEEDS_REVIEW"), ("반려", "REJECTED")], description="판정:")
     note = widgets.Textarea(description="판정 메모:", placeholder="수정할 점, 보류·반려 이유 등을 적으세요.", layout={"width": "95%", "height": "85px"})
     correction = widgets.Textarea(description="행동 수정안:", placeholder="수정이 필요할 때만 입력하세요. 원래 LLM 후보와 별도로 저장합니다.", layout={"width": "95%", "height": "65px"})
+    # 개념 선택(선택 사항): 비워 두면 LLM 후보를 쓴다. 표준 개념이 아니면 개념 연결만 생략하고 행동은 적재된다.
+    concept = widgets.Dropdown(options=concept_options(), description="개념 선택:", layout={"width": "95%"})
     labels = {
         "pdf_source_checked": "PDF 판본·쪽수·근거 확인",
         "role_row_checked": "같은 행의 역할과 행동 확인",
@@ -79,6 +94,8 @@ def create_review_ui(base_dir):
         status.value = record.get("review_status", "PENDING")
         note.value = record.get("reason") or ""
         correction.value = record.get("edited_action_text") or ""
+        known = {value for _, value in concept.options}
+        concept.value = record.get("edited_concept_id") if record.get("edited_concept_id") in known else ""
         for key, checkbox in checks.items():
             checkbox.value = bool(record.get(key))
         completed = sum(row.get("review_status") != "PENDING" for row in state["reviews"])
@@ -112,7 +129,7 @@ def create_review_ui(base_dir):
             message.value = "반려 또는 확인이 필요한 이유를 메모에 적어 주세요."
             return
         index = picker.value
-        state["reviews"][index].update(review_status=status.value, reviewer=reviewer.value.strip(), reviewed_at=datetime.now(UTC).isoformat(), reason=note.value.strip(), edited_action_text=correction.value.strip() or None, evidence_location=state["candidates"][index]["source_chunk_id"], **{key: check.value for key, check in checks.items()})
+        state["reviews"][index].update(review_status=status.value, reviewer=reviewer.value.strip(), reviewed_at=datetime.now(UTC).isoformat(), reason=note.value.strip(), edited_action_text=correction.value.strip() or None, edited_concept_id=concept.value or None, evidence_location=state["candidates"][index]["source_chunk_id"], **{key: check.value for key, check in checks.items()})
         save_reviews(state["folder"], state["reviews"])
         if advance and index + 1 < len(state["candidates"]):
             picker.value = index + 1
@@ -125,4 +142,4 @@ def create_review_ui(base_dir):
     save.on_click(lambda _: persist())
     next_button.on_click(lambda _: persist(advance=True))
     load()
-    return widgets.VBox([run, widgets.HTML("후보를 살펴보고 판정을 입력한 뒤 저장하세요. 후보 선택을 바꾸기 전에 저장해야 입력이 남습니다."), picker, progress, detail, reviewer, status, widgets.VBox(list(checks.values())), correction, note, widgets.HBox([save, next_button]), message])
+    return widgets.VBox([run, widgets.HTML("후보를 살펴보고 판정을 입력한 뒤 저장하세요. 후보 선택을 바꾸기 전에 저장해야 입력이 남습니다."), picker, progress, detail, reviewer, status, widgets.VBox(list(checks.values())), concept, correction, note, widgets.HBox([save, next_button]), message])

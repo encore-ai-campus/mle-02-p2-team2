@@ -1,11 +1,17 @@
 """브라우저와 노트북에서 사용하는 로컬 행동 후보 검수 화면."""
 
+import hashlib
 import json
 import secrets
 import threading
 from datetime import UTC, datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+
+
+def candidate_key(candidate):
+    """review_ui.candidate_key와 같은 후보 지문."""
+    return hashlib.sha256(json.dumps(candidate, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
 
 
 def read_rows(path):
@@ -101,7 +107,9 @@ def start_review_server(base_dir):
                     raise ValueError("판정 메모를 입력하세요.")
                 rows = read_rows(folder / "review.jsonl") if (folder / "review.jsonl").exists() else []
                 rows = [r for r in rows if not (r.get("candidate_index") == index+1 and r.get("source_chunk_id") == candidate["source_chunk_id"])]
-                rows.append({**review, "document_id": candidate["document_id"], "source_chunk_id": candidate["source_chunk_id"], "candidate_index": index+1, "reviewed_at": datetime.now(UTC).isoformat()})
+                # 후보 지문을 함께 저장해야 정규화(B01)가 검수 기록을 후보와 연결할 수 있다.
+                # 이 화면에는 개념 선택이 없다. 개념을 고르려면 노트북 검수 화면(review_ui)을 쓴다.
+                rows.append({**review, "document_id": candidate["document_id"], "source_chunk_id": candidate["source_chunk_id"], "candidate_index": index+1, "candidate_fingerprint": candidate_key(candidate), "evidence_location": candidate["source_chunk_id"], "reviewed_at": datetime.now(UTC).isoformat()})
                 target = folder / "review.jsonl"
                 temporary = target.with_suffix(".jsonl.tmp")
                 temporary.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")

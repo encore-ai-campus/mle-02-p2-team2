@@ -1,0 +1,179 @@
+{
+  "dictionary": "SchoolRole",
+  "id_field": "role_id",
+  "version": "school-draft-2026-11-04",
+  "status": "DRAFT_LOCAL_UNAPPROVED",
+  "source": "온톨로지 v3.1 4절 ④ 표준 ID 사전(초안) + 교육부 매뉴얼·경기도 가이드북 역할표에서 확인한 표기",
+  "notes": [
+    "school 개인 임시 사전이다. 공통 사전(data/specs/ids/)이 3인 승인되면 그 파일로 교체한다.",
+    "비교는 NFKC 정규화 + 공백 제거 + casefold로 한다. '담임 교사', '행 정 실', '보건 (담당) 교사' 같은 공백 변형은 별칭에 따로 넣지 않아도 같은 키가 된다.",
+    "evidence.pdf_pages는 변환본 Markdown에서 해당 표기가 나온 PDF 쪽의 일부 예시다. 모든 출현 위치가 아니다."
+  ],
+  "entries": [
+    {
+      "role_id": "PRINCIPAL",
+      "name": "학교장",
+      "aliases": ["교장"],
+      "evidence": [
+        {"document_id": "gyeonggi_school_guide_2025", "text": "학교장", "pdf_pages": [165]},
+        {"document_id": "moe_school_manual_v3", "text": "학교장", "pdf_pages": [38, 68]}
+      ]
+    },
+    {
+      "role_id": "VICE_PRINCIPAL",
+      "name": "교감",
+      "aliases": [],
+      "evidence": [
+        {"document_id": "gyeonggi_school_guide_2025", "text": "교감", "pdf_pages": [165]}
+      ]
+    },
+    {
+      "role_id": "HEAD_OF_ACADEMIC_AFFAIRS",
+      "name": "교무부장",
+      "aliases": ["교무"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "교무부장", "pdf_pages": [36, 65]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "교무부장", "pdf_pages": [54, 165, 205]}
+      ]
+    },
+    {
+      "role_id": "GRADE_HEAD",
+      "name": "학년부장",
+      "aliases": [],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "학년부장", "pdf_pages": [65]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "학년부장", "pdf_pages": [165]}
+      ]
+    },
+    {
+      "role_id": "HOMEROOM_TEACHER",
+      "name": "담임교사",
+      "aliases": ["담임", "담임(담당)교사"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "담임교사", "pdf_pages": [36, 56, 66]},
+        {"document_id": "moe_school_manual_v3", "text": "담임(담당) 교사", "pdf_pages": [54]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "담임교사", "pdf_pages": [54, 166, 204]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "담임(담당)교사", "pdf_pages": [166]}
+      ]
+    },
+    {
+      "role_id": "HEALTH_TEACHER",
+      "name": "보건교사",
+      "aliases": ["보건(담당)교사", "보건"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "보건(담당)교사", "pdf_pages": [36, 55, 66]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "보건교사", "pdf_pages": [167, 168]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "보건(담당)교사", "pdf_pages": [54, 205]}
+      ],
+      "note": "별칭 '보건'은 나이스 메뉴 '[보건]'과 같은 글자다. 역할 칸(표의 담당·구성원 열)에서 나온 표기에만 적용한다."
+    },
+    {
+      "role_id": "SUBJECT_TEACHER",
+      "name": "교과교사",
+      "aliases": ["교과", "교과담당교사"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "교과담당교사", "pdf_pages": [27]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "교과담당교사", "pdf_pages": [53, 61]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "교과 담당 교사", "pdf_pages": [111]}
+      ]
+    },
+    {
+      "role_id": "COUNSELOR",
+      "name": "상담교사",
+      "aliases": ["상담", "상담(담당)교사"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "상담(담당)교사", "pdf_pages": [66]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "상담교사", "pdf_pages": [128]}
+      ]
+    },
+    {
+      "role_id": "ADMIN_OFFICE",
+      "name": "행정실",
+      "aliases": [],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "행 정 실", "pdf_pages": [40]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "행정실", "pdf_pages": [58, 64]}
+      ]
+    },
+    {
+      "role_id": "DISCOVERING_STAFF",
+      "name": "발견 교직원",
+      "aliases": ["유증상자를 발견한 교직원"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "발견 교직원", "pdf_pages": [100]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "발견 교직원", "pdf_pages": [232]}
+      ]
+    },
+    {
+      "role_id": "INFECTION_MGMT_TEAM",
+      "name": "학교 감염병 관리조직",
+      "aliases": [
+        "감염병관리조직", "학생 감염병 관리조직",
+        "보건안전팀", "비상대책팀", "비상대책반", "발생감시팀", "예방관리팀",
+        "학사·인력관리팀", "교수학습운영팀", "행정지원팀"
+      ],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "text": "발생감시팀", "pdf_pages": [59, 60, 65]},
+        {"document_id": "moe_school_manual_v3", "text": "예방관리팀", "pdf_pages": [60, 66, 67]},
+        {"document_id": "moe_school_manual_v3", "text": "행정지원팀", "pdf_pages": [67]},
+        {"document_id": "moe_school_manual_v3", "text": "비상대책반", "pdf_pages": [43, 44]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "학교감염병관리조직", "pdf_pages": [164, 165]},
+        {"document_id": "gyeonggi_school_guide_2025", "text": "보건안전팀", "pdf_pages": [227, 233]}
+      ],
+      "note": "온톨로지 v3.1: 팀 명칭은 문서마다 '예시'이므로 개별 팀을 역할로 늘리지 않고 이 ID의 별칭으로 둔다. 특정 팀명이 필요하면 action_text에 원문대로 남긴다."
+    }
+  ],
+  "compound_mentions": [
+    {
+      "mention": "교장 및 교감",
+      "role_ids": ["PRINCIPAL", "VICE_PRINCIPAL"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "pdf_pages": [38]},
+        {"document_id": "gyeonggi_school_guide_2025", "pdf_pages": [56, 58, 60]}
+      ],
+      "rule": "한 칸에 두 역할이 함께 적힌 표기. 자동으로 하나를 고르지 않고, 사람 검수 후 행동마다 두 역할 모두에 DONE_BY를 둘지 정한다."
+    },
+    {
+      "mention": "담임(교과담당)교사",
+      "role_ids": ["HOMEROOM_TEACHER", "SUBJECT_TEACHER"],
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "pdf_pages": [72]},
+        {"document_id": "gyeonggi_school_guide_2025", "pdf_pages": [205]}
+      ],
+      "rule": "담임 또는 교과담당 교사를 함께 가리키는 표기. 사람 검수 대상."
+    }
+  ],
+  "excluded_mentions": [
+    {"mention": "보건소", "reason": "학교 밖 방역기관. SchoolRole을 만들지 않는다(온톨로지 v3.1 1절·4절 ④)."},
+    {"mention": "교육청", "reason": "학교 밖 기관. 학교가 보고하는 수신처이지 수행 역할이 아니다."},
+    {"mention": "교육(지원)청", "reason": "학교 밖 기관."},
+    {"mention": "교육지원청", "reason": "학교 밖 기관."},
+    {"mention": "시도 교육청", "reason": "학교 밖 기관."},
+    {"mention": "시･도 교육청", "reason": "학교 밖 기관."},
+    {"mention": "질병관리청", "reason": "학교 밖 기관."},
+    {"mention": "의료기관", "reason": "의료기관의 법정 신고는 학교 행동이 아니다(온톨로지 v3.1 7-1)."},
+    {"mention": "시･도 역학조사관", "reason": "학교 밖 기관."},
+    {"mention": "보호자", "reason": "행동의 대상·수신자이며 학교 수행 역할이 아니다."},
+    {"mention": "학부모", "reason": "행동의 대상·수신자이며 학교 수행 역할이 아니다."}
+  ],
+  "unregistered_mentions": [
+    {
+      "mention": "생활부장",
+      "evidence": [{"document_id": "gyeonggi_school_guide_2025", "pdf_pages": [66, 79, 84, 97, 115]}],
+      "suggestion": "경기도 가이드북 시나리오 표에 반복 등장. 표준 사전에 없음 → 신규 역할 후보로 3인 승인 필요. 승인 전에는 DONE_BY를 만들지 않고 보류."
+    },
+    {
+      "mention": "부장급 교사",
+      "evidence": [
+        {"document_id": "moe_school_manual_v3", "pdf_pages": [60, 65]},
+        {"document_id": "gyeonggi_school_guide_2025", "pdf_pages": [165]}
+      ],
+      "suggestion": "특정 부장을 지칭하지 않는 표현. 특정 역할로 매핑하지 않고 보류하거나 신규 후보로 검토."
+    },
+    {
+      "mention": "영양(교)사",
+      "evidence": [{"document_id": "moe_school_manual_v3", "pdf_pages": [43]}],
+      "suggestion": "표준 사전에 없음. 대표 질문 범위 밖이면 보류."
+    }
+  ]
+}

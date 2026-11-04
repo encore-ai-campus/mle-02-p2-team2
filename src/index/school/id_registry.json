@@ -1,0 +1,443 @@
+{
+ "version": 1,
+ "chunks": {
+  "moe_school_manual_v3:p0036:t01r01": {
+   "temp_chunk_id": "TEMP:school_manual:B0025:01",
+   "row_text_sha256": "74a3c0edbdb5eb42009062e3f53c6ca70a1476640c460c77c8b566971daceb29"
+  },
+  "moe_school_manual_v3:p0036:t01r02": {
+   "temp_chunk_id": "TEMP:school_manual:B0025:02",
+   "row_text_sha256": "6c82bb4826bd2e04d6c66e0c0b0b0122f3eada535033ddaff504409e8f92ea54"
+  },
+  "gyeonggi_school_guide_2025:p0054:t01r01": {
+   "temp_chunk_id": "TEMP:gyeonggi_guide:B0071:03",
+   "row_text_sha256": "8ad649abb03e2a42f15d4f9692153dddfa0c4dbb14d99f2c05d0df901f9b983c"
+  },
+  "gyeonggi_school_guide_2025:p0054:t01r02": {
+   "temp_chunk_id": "TEMP:gyeonggi_guide:B0071:04",
+   "row_text_sha256": "28b6754f77fc49f546b6864229b144b8101e42c68c71018796e50c1165ebf6a4"
+  }
+ },
+ "actions": [
+  {
+   "action_id": "moe_school_manual_v3:p0036:a01",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 12,
+   "evidence": "보건교사에게 유선으로 진한이의 상태를 정확하게 전달",
+   "action_text": "보건교사에게 유선으로 진한이의 상태를 정확하게 전달한다.",
+   "candidate_key": "0f816e8a665cb96258d9b471da95749f1c52c31a4e6aa206b9d2c85ef35c1801",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a02",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 44,
+   "evidence": "교실 환기",
+   "action_text": "교실을 환기한다.",
+   "candidate_key": "82fae7feab2c48896c2b2121c2c8c8db7fda8424c1f1c2b882435e82652a97ed",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a03",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 51,
+   "evidence": "진한이와 접촉한 학생들에게 손을 씻고, 오염된 손으로 눈, 코, 입을 만지지 말아야 하며, 재치기나 기침을 할 때는 옷소매로 가리고 하도록 함",
+   "action_text": "진한이와 접촉한 학생들에게 손 씻기, 오염된 손으로 눈·코·입을 만지지 않기, 재채기나 기침을 옷소매로 가리기를 하도록 한다.",
+   "candidate_key": "6c59d12b84a76a210f6a266073ce9b2e013a3db9d58452048c711be96b64ae6a",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a04",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 134,
+   "evidence": "진한이와 직접 동행하여 보건실로 이동함",
+   "action_text": "진한이와 직접 동행하여 보건실로 이동한다.",
+   "candidate_key": "3bc2acc04635d89e061ce8352844fff78fe6d75a62b0996acb9d94032062e317",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a05",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 177,
+   "evidence": "교무부장에게 연락하여 이동 담당 교사 지정을 요청",
+   "action_text": "교무부장에게 연락하여 이동 담당 교사 지정을 요청한다.",
+   "candidate_key": "41ad5c3b29453cdcf8b9c6d5650f54cd300abcda0863f4e64b7260d264e6aa4f",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a06",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 206,
+   "evidence": "교실에 비치된 마스크를 진한이와 교사가 함께 착용하도록 함",
+   "action_text": "진한이와 교사가 교실에 비치된 마스크를 함께 착용하도록 한다.",
+   "candidate_key": "f993d8c07267670b545a922d3f06fc59c2cbaeb86ba13aad0b7d7352ac9df3b0",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a07",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 243,
+   "evidence": "보건교사의 판단에 따라 진한이를 교내에 마련된 일시적 관찰실에서 보호·관찰을 함",
+   "action_text": "보건교사의 판단에 따라 진한이를 교내에 마련된 일시적 관찰실에서 보호·관찰한다.",
+   "candidate_key": "76f8f9c2cfddc08bc1d6201d42766cc9a6642b96ca0893c139c21cb58061a655",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a08",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 289,
+   "evidence": "교무부장에게 기타 학생들에 대한 수업 진행 등 관리를 요청",
+   "action_text": "교무부장에게 기타 학생들에 대한 수업 진행 등 관리를 요청한다.",
+   "candidate_key": "7f7d32cd65dc0079cf56835626c0ee0ea4c37d0675c588a102bac32c2b8c75e5",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a09",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 325,
+   "evidence": "진한이의 부모님에게 연락하여",
+   "action_text": "진한이의 부모님에게 연락한다.",
+   "candidate_key": "db3f77f18f27a5045b1ea8c4e4e6e765700ff184f65c388eb3a2b48f7d4b8c53",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a10",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+   "evidence_offset": 341,
+   "evidence": "진한이를 데리고 근처의 병원에서 진료를 볼 수 있도록 함",
+   "action_text": "부모님이 진한이를 데리고 근처 병원에서 진료를 볼 수 있도록 한다.",
+   "candidate_key": "26836c071edd27ee4c797a5b89c9fb3cb67fca6354f1b7616a16e42832362dba",
+   "registered_from_run": "run_20261104T045311_203944Z",
+   "split_text": null
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a01",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 12,
+   "evidence": "보건교사에게 유선으로 진한이의 상태를 정확하게 전달",
+   "split_text": null,
+   "action_text": "보건교사에게 진한이의 상태를 유선으로 정확하게 전달한다.",
+   "candidate_key": "2126d7782c3e11ae9ea82ef97cc437fe27a679d38041054ae011831f286c8411",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a02",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 44,
+   "evidence": "교실 환기",
+   "split_text": null,
+   "action_text": "교실을 환기한다.",
+   "candidate_key": "56d9eef00a4cd8fd2842c01c710c2eb27b687e3e41a0db42c2e9831c6d239248",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a03",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 51,
+   "evidence": "진한이와 접촉한 학생들에게 손을 씻고, 오염된 손으로 눈, 코, 입을 만지지 말아야 하며, 재채기나 기침을 할 때는 옷소매로 가리고 하도록 함",
+   "split_text": null,
+   "action_text": "진한이와 접촉한 학생들에게 손 씻기, 오염된 손으로 눈·코·입을 만지지 않기, 기침이나 재채기를 할 때 옷소매로 가리기를 하도록 한다.",
+   "candidate_key": "2eb410d0f489a17965766e93622cf795be13a86fccb021f8bd80ff906afcafd4",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a04",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 134,
+   "evidence": "진한이와 직접 동행하여 보건실로 이동함",
+   "split_text": null,
+   "action_text": "진한이와 직접 동행하여 보건실로 이동한다.",
+   "candidate_key": "db35f838cf6975cf550317c1864434b9e6ba4cd69358bb08ac71c4e54a68b58e",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a05",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 177,
+   "evidence": "교무부장에게 연락하여 이동 담당 교사 지정을 요청",
+   "split_text": null,
+   "action_text": "이동 담당 교사를 지정해 달라고 교무부장에게 연락하여 요청한다.",
+   "candidate_key": "734b3297986eb4767d79e1bcea5f9e529013a9afe0ce29eb9bc574c73d96d9c4",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a06",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 206,
+   "evidence": "교실에 비치된 마스크를 진한이와 교사가 각각 착용하도록 함",
+   "split_text": null,
+   "action_text": "진한이와 교사가 각각 교실에 비치된 마스크를 착용하도록 한다.",
+   "candidate_key": "25dc7a897c7c222be6da570c88b1a3eb43bce99af3bd18f41a47ef95bec0d629",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a07",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 243,
+   "evidence": "보건교사의 판단에 따라 진한이를 교내에 마련된 일시적 관찰실에서 보호･관찰을 함",
+   "split_text": null,
+   "action_text": "보건교사의 판단에 따라 진한이를 교내에 마련된 일시적 관찰실에서 보호·관찰한다.",
+   "candidate_key": "b736e9e73ef75d5baaade39ace6968dcacbf9b8e1d07507d98bb139babdcb8b6",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a08",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 289,
+   "evidence": "교무부장에게 기타 학생들에 대한 수업 진행 등 관리를 요청",
+   "split_text": null,
+   "action_text": "기타 학생들의 수업 진행 등 관리를 교무부장에게 요청한다.",
+   "candidate_key": "310e68bad34f490ee061781b67c59205395415226f8e40cb596ce22aef894842",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a09",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 325,
+   "evidence": "진한이의 부모님에게 연락",
+   "split_text": null,
+   "action_text": "진한이의 부모님에게 연락한다.",
+   "candidate_key": "35710aec053778a27f855af71431f1fe17263bc14a88d20a56e8727fedc16785",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a10",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r01",
+   "evidence_offset": 341,
+   "evidence": "진한이를 데리고 근처의 병원에서 진료를 볼 수 있도록 함",
+   "split_text": null,
+   "action_text": "진한이를 데리고 근처 병원에서 진료를 받을 수 있도록 요청한다.",
+   "candidate_key": "424b30d5868e7027bce55f5a2552b9dde034ccee6f06507c370dae4fe688aa4d",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a11",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 16,
+   "evidence": "교사와 진한이가 보건실에 도착한 즉시 손을 씻도록 요청",
+   "split_text": null,
+   "action_text": "교사와 진한이가 보건실에 도착한 즉시 손을 씻도록 요청한다.",
+   "candidate_key": "449a25099348e253a727b380c823a788f767724a0a201246ec200c78a79d365a",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a12",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 50,
+   "evidence": "보건교사는 마스크를 착용하고",
+   "split_text": null,
+   "action_text": "마스크를 착용한다.",
+   "candidate_key": "8449c5185f0ae78100e87ad1f27495593638b63294d858d8cedb0f3c39adbc3b",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a13",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 67,
+   "evidence": "체온 측정",
+   "split_text": null,
+   "action_text": "체온을 측정한다.",
+   "candidate_key": "9179fa58b59b945538ff7e48d1be393c53942bb960e1ce783f7eff74d10e6643",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a14",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 78,
+   "evidence": "환자의 증상과 징후를 관찰한 후 감염병이 의심되는지를 확인",
+   "split_text": null,
+   "action_text": "환자의 증상과 징후를 관찰하고 감염병이 의심되는지를 확인한다.",
+   "candidate_key": "84b0e1b01393ac4e9d1b50a7aaedc8d103cb12e0bd1d6db7bee8e00c12e94880",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a15",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 114,
+   "evidence": "진한이가 의료기관 진료를 받지 않았음을 확인",
+   "split_text": null,
+   "action_text": "진한이가 의료기관 진료를 받지 않았음을 확인한다.",
+   "candidate_key": "8cd52e15a2d547bf6828dc8b9efc6563c696ac0033ae2668f132c1688437ed11",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a16",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 197,
+   "evidence": "교무부장에게 연락하여 격리 담당 교사 결정을 요청",
+   "split_text": null,
+   "action_text": "교무부장에게 연락하여 격리 담당 교사의 결정을 요청한다.",
+   "candidate_key": "a8d978acdc58041d04474713f6d9a5075276ef50ecf14ba177693170532741b6",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a17",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 228,
+   "evidence": "진한이를 일시적 관찰실로 이동",
+   "split_text": null,
+   "action_text": "진한이를 일시적 관찰실로 이동한다.",
+   "candidate_key": "f54c71b469fe1b910de7f03cdf6a204c8f65cf97ad90b912ed6141d05f4c62bc",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a18",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 246,
+   "evidence": "부모님이 올 때까지 일시적 관찰실에서 일시적 보호･관찰을 하고",
+   "split_text": null,
+   "action_text": "부모님이 올 때까지 일시적 관찰실에서 진한이를 보호·관찰한다.",
+   "candidate_key": "295c9dbe04340bbe6110f788f4c569abae77af2c0efd7c20fcbbbc6c99620e0b",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a19",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 281,
+   "evidence": "담당 교사를 통해 진한이의 상태를 주기적으로 확인",
+   "split_text": null,
+   "action_text": "진한이의 상태를 주기적으로 확인한다.",
+   "candidate_key": "70f6d3114502b9bd33bdfa29b3a97eddda48922604af9ab76446046925dde072",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "gyeonggi_school_guide_2025:p0054:a20",
+   "chunk_id": "gyeonggi_school_guide_2025:p0054:t01r02",
+   "evidence_offset": 312,
+   "evidence": "‘일시적 관찰실 출입 금지’ 안내판 부착",
+   "split_text": null,
+   "action_text": "‘일시적 관찰실 출입 금지’ 안내판을 부착한다.",
+   "candidate_key": "75e6c2227da057541855d0ed80cc035602f7b51b508ba4279843c9f6cfa268c4",
+   "registered_from_run": "run_20261104T055051_403958Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a11",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 16,
+   "evidence": "교사와 진한이가 보건실에 도착한 즉시 손을 씻도록 요청",
+   "split_text": null,
+   "action_text": "교사와 진한이가 보건실에 도착한 즉시 손을 씻도록 요청한다.",
+   "candidate_key": "97f8f4ce120fc60067e5ad60e6f89b2009c34a4efc88778ecaf8c1e045eb16f5",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a12",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 50,
+   "evidence": "보건교사는 마스크를 착용하고",
+   "split_text": null,
+   "action_text": "마스크를 착용한다.",
+   "candidate_key": "944cdb33ba0da0fbe5a5475b62fa86a33c3985f054a98ddf828a3730157f8fbf",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a13",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 67,
+   "evidence": "체온 측정",
+   "split_text": null,
+   "action_text": "체온을 측정한다.",
+   "candidate_key": "4d0c4d922813b847e7778fffbc50fb373766366f034e8222a17f44a3291d11e5",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a14",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 78,
+   "evidence": "환자의 증상과 징후를 관찰한 후 감염병이 의심되는지를 확인",
+   "split_text": null,
+   "action_text": "환자의 증상과 징후를 관찰하고 감염병이 의심되는지를 확인한다.",
+   "candidate_key": "6fcc617097bab653af2825729cefd8aa722819d76e84068904a4a746013a7b81",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a15",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 114,
+   "evidence": "진한이가 의료기관 진료를 받지 않았음을 확인",
+   "split_text": null,
+   "action_text": "진한이가 의료기관 진료를 받지 않았음을 확인한다.",
+   "candidate_key": "2ebc76a36a5f08e2b5ff16c8c8666597dfd57e9ceb9cb00c38bc7c5737cc953c",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a16",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 141,
+   "evidence": "담임교사에게 보호자에게 연락하여 의료기관 진료를 받도록 안내할 것을 요청",
+   "split_text": "담임교사에게 보호자에게 연락하도록 요청한다.",
+   "action_text": "담임교사에게 보호자에게 연락하도록 요청한다.",
+   "candidate_key": "c901b04b90e8fdfba126b1f079dbe5aab81a328e9060a403b0ec3a09469b35a8",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a17",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 141,
+   "evidence": "담임교사에게 보호자에게 연락하여 의료기관 진료를 받도록 안내할 것을 요청",
+   "split_text": "담임교사에게 의료기관 진료를 받도록 안내할 것을 요청한다.",
+   "action_text": "담임교사에게 의료기관 진료를 받도록 안내할 것을 요청한다.",
+   "candidate_key": "d7abb6b62b70bb083bb8c9e368a74fd09b8f96e2eeb87cac819e8dfad3a84a54",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a18",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 199,
+   "evidence": "교무부장에게 연락하여 격리 담당 교사 결정을 요청",
+   "split_text": null,
+   "action_text": "교무부장에게 연락하여 격리 담당 교사 결정을 요청한다.",
+   "candidate_key": "0968a047a2bfd75be3778a13756bd55616eab6765dd9de17c864458532be6343",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a19",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 230,
+   "evidence": "진한이를 일시적 관찰실로 이동",
+   "split_text": null,
+   "action_text": "진한이를 일시적 관찰실로 이동한다.",
+   "candidate_key": "9677cb498573299300293cce3e4fbee583db19c05fb9876890c8acc6e6060ef0",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a20",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 248,
+   "evidence": "부모님이 올 때까지 일시적 관찰실에서 일시적 보호·관찰을 하고",
+   "split_text": null,
+   "action_text": "부모님이 올 때까지 일시적 관찰실에서 진한이를 일시적으로 보호·관찰한다.",
+   "candidate_key": "21d686995f1401c2a42665d5efeabe0fe7ad682005a9b6b5b485e2048ba82dda",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a21",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 283,
+   "evidence": "담당 교사를 통해 진한이의 상태를 주기적으로 확인",
+   "split_text": null,
+   "action_text": "담당 교사를 통해 진한이의 상태를 주기적으로 확인한다.",
+   "candidate_key": "7682187836eede6416013ab8062b8ab1340368afe793946c38f5a2b2d3f56b4b",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  },
+  {
+   "action_id": "moe_school_manual_v3:p0036:a22",
+   "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+   "evidence_offset": 314,
+   "evidence": "‘일시적 관찰실 출입 금지’ 안내판 부착",
+   "split_text": null,
+   "action_text": "‘일시적 관찰실 출입 금지’ 안내판을 부착한다.",
+   "candidate_key": "5b1e27e6912e23b85bc1dff5f351a6a9ac358adddd6abc5ed535b3e988d7d038",
+   "registered_from_run": "run_20261104T054859_870962Z"
+  }
+ ]
+}
