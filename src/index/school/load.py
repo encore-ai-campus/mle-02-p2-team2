@@ -99,13 +99,16 @@ def _scope(bundle: dict) -> dict:
 
 
 def fetch_scope_keys(driver, bundle: dict, database=None) -> dict:
-    """담당 문서 범위(문서 ID와 그 ID로 시작하는 청크·행동)의 실제 노드·관계 키와 속성."""
+    """담당 문서 범위(문서 ID와 그 ID로 시작하는 청크·행동)의 실제 노드·관계 키와 속성.
+
+    embedding(1536개 실수)은 비교 대상이 아니므로 가져오지 않는다.
+    """
     scope = _scope(bundle)
     in_scope = ("(n:Document AND n.document_id IN $docs) OR "
                 "(n:Chunk AND any(d IN $docs WHERE n.chunk_id STARTS WITH d + ':')) OR "
                 "(n:SchoolAction AND any(d IN $docs WHERE n.action_id STARTS WITH d + ':'))")
     node_records, _, _ = driver.execute_query(
-        f"MATCH (n) WHERE {in_scope} RETURN labels(n)[0] AS label, properties(n) AS props",
+        f"MATCH (n) WHERE {in_scope} RETURN labels(n)[0] AS label, n {{.*, embedding: null}} AS props",
         database_=database, **scope)
     coalesce = "coalesce(" + ", ".join(f"{{v}}.{f}" for f in ID_FIELDS_ANY) + ")"
     edge_records, _, _ = driver.execute_query(

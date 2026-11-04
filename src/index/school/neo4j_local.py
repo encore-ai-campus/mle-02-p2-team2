@@ -22,7 +22,10 @@ def get_driver(env_path: str | Path | None = None):
     missing = [k for k in ("NEO4J_URI", "NEO4J_USERNAME", "NEO4J_PASSWORD") if not os.getenv(k)]
     if missing:
         raise RuntimeError(f".env에 없는 Neo4j 설정: {missing}")
+    # Cypher 25의 'queryNodes → SEARCH' 폐기 예고와 아직 없는 관계 이름(FOR_DISEASE 등) 경고는 끈다.
+    # 이 DB의 기본 Cypher 5에서는 queryNodes가 정상 문법이다. 질의 오타는 테스트·키 대조로 잡는다.
     driver = GraphDatabase.driver(os.environ["NEO4J_URI"],
-                                  auth=(os.environ["NEO4J_USERNAME"], os.environ["NEO4J_PASSWORD"]))
+                                  auth=(os.environ["NEO4J_USERNAME"], os.environ["NEO4J_PASSWORD"]),
+                                  notifications_disabled_classifications=["DEPRECATION", "UNRECOGNIZED"])
     driver.verify_connectivity()
     return driver, os.getenv("NEO4J_DATABASE") or None

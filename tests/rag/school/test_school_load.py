@@ -48,7 +48,8 @@ def test_schema_is_idempotent_and_has_no_destructive_statements():
     assert all("IF NOT EXISTS" in s for s in statements)
     assert not any(word in s.upper() for s in statements for word in ("DROP", "DELETE", "REMOVE"))
     assert sum(s.startswith("CREATE CONSTRAINT") for s in statements) == 6
-    assert not any("VECTOR" in s for s in statements)      # 임베딩 차원 결정 전
+    vector = [s for s in statements if "VECTOR INDEX" in s]
+    assert len(vector) == 1 and "`vector.dimensions`: 1536" in vector[0] and "'cosine'" in vector[0]
 
 
 def test_bundle_hash_ignores_report_fields():

@@ -16,6 +16,718 @@
   "gyeonggi_school_guide_2025:p0054:t01r02": {
    "temp_chunk_id": "TEMP:gyeonggi_guide:B0071:04",
    "row_text_sha256": "28b6754f77fc49f546b6864229b144b8101e42c68c71018796e50c1165ebf6a4"
+  },
+  "moe_school_manual_v3:p0038:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ea3643134a1469f434a0bbb09280ca35330eedf6b5021033e19f399528ee45bc"
+  },
+  "moe_school_manual_v3:p0038:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "f2b859d48d7904d900a6ed925c15b545627c6ec6075c641724f963a22907b613"
+  },
+  "moe_school_manual_v3:p0038:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "c75bae43fe573a85958a4d102f032d18e7dbbfa131d9b99146a917eea5e11050"
+  },
+  "moe_school_manual_v3:p0038:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "77dbd538eb8bf64e70acdf190c6d244e0e52c2b3c2577fb934476ca5b0c324e4"
+  },
+  "moe_school_manual_v3:p0053:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "acd2bc823c671892d94521fede438094f8c71653223c975247f9f1f621286443"
+  },
+  "moe_school_manual_v3:p0053:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "04a09fb35b2f22afc440524065936e8b9b748b1901363f86dc5d4cdb1a5e5348"
+  },
+  "moe_school_manual_v3:p0055:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "6113094daef046c84d8a7599f862259a9b9b1a759b1e8c36e7aff9420da31163"
+  },
+  "moe_school_manual_v3:p0055:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "b3ecae4843466feeae0f45805ae21657c12837bb1d99b6d4f7aa71b04a6e0b5c"
+  },
+  "moe_school_manual_v3:p0055:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "de475d52f525c1ed6249523609a7a015b6ad476bf20ed6af0fa594681eca0510"
+  },
+  "moe_school_manual_v3:p0055:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "3217c959edbf8728ecacf80f770ef646a118df13c69e17b1eeac024c979bbe00"
+  },
+  "moe_school_manual_v3:p0055:t01r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "6d7c189d04747dc66bd364df8720f5db24d9f118e2410cc4bc2fd5f41519b3ec"
+  },
+  "moe_school_manual_v3:p0055:t01r06": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "3996f8e9158f4198cb82508e71037e93f27529c42034bbdb166037f65cbb094b"
+  },
+  "moe_school_manual_v3:p0055:t01r07": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "1d7b5732ce382771b6c5bb6c87e83e40f8a35c0ba84eb1dbee58bb8d280d142a"
+  },
+  "moe_school_manual_v3:p0055:t01r08": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "29ab53fe7fa0b1c93f31b49645e74f25bda884d80889e5130c0e2cb18cd31810"
+  },
+  "moe_school_manual_v3:p0056:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "48e0c68f59e20aab1fe9ba37a7dd150aa42084bacd79afcf8b5855f1ccc23630"
+  },
+  "moe_school_manual_v3:p0056:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "34ebf55b85a628c97af519a21473b23d4bc12f6adc18cd0609937206cb1dab5a"
+  },
+  "moe_school_manual_v3:p0056:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "1892b078f9c87326d759212d2d8c45906d9115692d6b76c8bc488cc7b911c808"
+  },
+  "moe_school_manual_v3:p0056:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "e594062fdcea53992982a4b434a2d0b7440cd07d0cae97e12bb58179786ac3d3"
+  },
+  "moe_school_manual_v3:p0056:t01r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "fad597cf320c9ad82e89fc98632ff27d747ab23a31a217bc41a06bf0b3d15ca6"
+  },
+  "moe_school_manual_v3:p0058:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "0511368b7c1c25729ddaf342eee40b908a726691f29d06cd0d4b22096c30857c"
+  },
+  "moe_school_manual_v3:p0058:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a56aac2706e7605972539900d766ddd43dfd791260ebb5cb696f494456081fa1"
+  },
+  "moe_school_manual_v3:p0060:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "072a27de115a6b0564bdb02b000db04549de7d17d391f785b187f17da3fc4dd5"
+  },
+  "moe_school_manual_v3:p0060:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "b42fe97c80362272720f51b2020ab637268ced5ff3940a249418776b9d166571"
+  },
+  "moe_school_manual_v3:p0060:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "f4f86c64534159e671e0fed96cee678812c232612e2a172264e0f7cc5da1234f"
+  },
+  "moe_school_manual_v3:p0060:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "3c4ea155d067ee598be65aa17db3b0165f7d639bb671e742c39a9406f12393ec"
+  },
+  "moe_school_manual_v3:p0060:t02r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "3f60aa82421112845c78046b5f8154b1fa980ec10bf489d4f31cac9152cfb6f5"
+  },
+  "moe_school_manual_v3:p0060:t02r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "0d7dd380dedb4563862c87d6842f5dbbf962cbcbcd3218aef8bfe73ebc432a05"
+  },
+  "moe_school_manual_v3:p0060:t02r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a1ee71514fb232a3e7ece2b208c0d8ee87744cebf93d83d46c4c6008dd795fed"
+  },
+  "moe_school_manual_v3:p0063:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "5deb572cf01ddf19ed35bc7bf1f1218394a674b0a4e71ff2e3abbac30e48d853"
+  },
+  "moe_school_manual_v3:p0065:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "11c882be8b9f8d9b106fb471e1ec452144959156056a86acbb3c5b1413b5e49d"
+  },
+  "moe_school_manual_v3:p0065:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "b4698a96bead74e91f582707402392cd0fa3d51ea02139514ad2bd7648c2506a"
+  },
+  "moe_school_manual_v3:p0065:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "909eb01dee313338f9685b4d0f54c035dfc3ef814bfbe761dd6811a61340288a"
+  },
+  "moe_school_manual_v3:p0065:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "c19c8a38735c0211bb27e228d1fd1222dbb20d42d42db19014a2ffe352daf6a0"
+  },
+  "moe_school_manual_v3:p0066:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "4baceef168d46dccc754139d30bf0dcdd3806d9d410373d31e4b922794e602de"
+  },
+  "moe_school_manual_v3:p0066:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "72d5835304923e3be1b67c457c8b047244454c243141b4551eb1500d3ba7b75e"
+  },
+  "moe_school_manual_v3:p0066:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "2abfaeb2dd2ad1bf437b5b9c6428f23bfb81cb7e664c9b594be7c3f917892c13"
+  },
+  "moe_school_manual_v3:p0066:t02r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "51babbd9ebe11f0355a3b5b6f7cc6dc277cfbe48072d58486c12b0bcd6d7ffc2"
+  },
+  "moe_school_manual_v3:p0066:t02r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ae22bdc916b666c95b5f8bd146fe4cc440d5e4b3aaa79cd795528724553e6bf1"
+  },
+  "moe_school_manual_v3:p0066:t03r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "0dc5ad4918a5ad62e05d41a845121c2bf0b37ec1b717d7f847707ad0b9e58eea"
+  },
+  "moe_school_manual_v3:p0066:t03r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "184547f0d9da653223488b29bb1de728c53164285a257b6c540908425f618be1"
+  },
+  "moe_school_manual_v3:p0067:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "0fe75913f635e92d360886be421f3c5d87bba1cc8869da5769dc18a6177e4da0"
+  },
+  "moe_school_manual_v3:p0067:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "7645d248dec59ed615d42f79915cc9778c75035f48a79dd63f90043a4e1d3d27"
+  },
+  "moe_school_manual_v3:p0067:t02r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "704429007ca6645e9c968d9a756a53694a5e8f92cf4963a8af5a970d036b7831"
+  },
+  "moe_school_manual_v3:p0067:t02r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "8aa9506d787a3f4575e56209c1abb18a956b5ad01e2f76f5ae52d9a8f14176b9"
+  },
+  "moe_school_manual_v3:p0068:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "988d6064ccf3644d935782e2ef29dea921281c940b11034e5a9800154aa4d651"
+  },
+  "moe_school_manual_v3:p0068:t02r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "f778e1058029140ed261679dd3439f536b8d8ad9fbc7381b1575594949dd957d"
+  },
+  "moe_school_manual_v3:p0068:t02r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ebec0f037a10887498d50db93ba3a6d10a224ae3d4e6f9e1c987cdf5d666109d"
+  },
+  "moe_school_manual_v3:p0068:t02r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "71182a0a2b0ee521dff77863747b7189f809bcd2fba55d77308d0dfc6651a4dd"
+  },
+  "moe_school_manual_v3:p0068:t02r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "58becff5f763a028828c60fbc37b6700f89d8cd135fdfc4d05d47cc3dfb91ec5"
+  },
+  "moe_school_manual_v3:p0068:t02r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "363a707dd1df89b9adb8c70a1abb9565f060b8d9a9d0d516eab4e82ca2d516ee"
+  },
+  "moe_school_manual_v3:p0036:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "2654ee162e5835707167e40fa6d8e824383243bc9bb3c87e956e201fd1d11315"
+  },
+  "moe_school_manual_v3:p0038:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "cb571d005f80754058fae6f992cdb546aaf09628c903eba690dcd90bd0fe4b51"
+  },
+  "moe_school_manual_v3:p0053:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a4c763ce71fd8c0696526d1b8d0edec7770f35855ee40d3fa2a9e8a67b7ef3a5"
+  },
+  "moe_school_manual_v3:p0054:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "df6898179114cd68b9cf89ee242e7c07f49698fbd01d935997455e41ad3359c7"
+  },
+  "moe_school_manual_v3:p0055:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "de53f873e7bdc537cfa0fab6b7761122b5c43c9c04457c0a88c0773423770724"
+  },
+  "moe_school_manual_v3:p0055:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ec841d6e14dfa867669ef79cf6f800413737074c44c4db3dc239f59eacf8914b"
+  },
+  "moe_school_manual_v3:p0056:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "3d6399269111433dbb9648d1de4ff0c1024c4df01fb52d681ec06ce7b133ae42"
+  },
+  "moe_school_manual_v3:p0056:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a5c380400715ddd8da212a945be27698d664f7fbf94b5de0eb548d7f21f27e90"
+  },
+  "moe_school_manual_v3:p0057:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "f8df047bb25e5d2814854e6ff834c46e641c2dfedf1766000c2814fbea347ac7"
+  },
+  "moe_school_manual_v3:p0057:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "7f620d9b5119957df62ad6641bf040b5f59ccb0c4130264acc6db52890e1c816"
+  },
+  "moe_school_manual_v3:p0058:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "2c8d827271d5250e8d361d954f1861d43e4dbe3736d2b55e00624ba7ba2a5aa1"
+  },
+  "moe_school_manual_v3:p0059:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "accea7dc6d81b86351068f5d4fb9b87bac04dce3c922f865ef5152b727ed3bdd"
+  },
+  "moe_school_manual_v3:p0059:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "e038c6eedee0c771e61c9476a5a5577713b60239fcea3d84cde7d8059d7c82cc"
+  },
+  "moe_school_manual_v3:p0060:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "37764d1f59e59997bb0fe526e850b3661af1cb5e899af3b62cf99040776fd1ef"
+  },
+  "moe_school_manual_v3:p0061:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "1fa1952d13c5e91d7d6f89a8d6de5554f58728756b88372d6d388083d1562ff4"
+  },
+  "moe_school_manual_v3:p0061:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "1be850e4a3feff1e0ca2f41d81c303a51d0d9d5b76dc8f03edd9fa5f94cb9f61"
+  },
+  "moe_school_manual_v3:p0062:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "9a5b7bd3e64656cb8dfef416c0c74d68055fbb3994e08e6a0d249cd3b94172ce"
+  },
+  "moe_school_manual_v3:p0063:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "d26cb45dc3cac42da822900433fa1d851cfc738716d836dfd519a5f9cce789b3"
+  },
+  "moe_school_manual_v3:p0064:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "612b62656fb240b8f37aaa25c7834af390fd0b84d5bc91d20314859f0c0ec0f3"
+  },
+  "moe_school_manual_v3:p0065:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "4944979467b5fc25c3bd8f4219717352de37b6f18bd204c1a1cb6d8a3e443fb0"
+  },
+  "moe_school_manual_v3:p0065:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "d4b2e3d8b21cbcb1f991afbc25cacb7b17339997a88acbb58cd4b445ab4eb03c"
+  },
+  "moe_school_manual_v3:p0066:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "aca1eec743a79490d782568957d17419ddbe931b52c16989ba7a85fca4cfeb23"
+  },
+  "moe_school_manual_v3:p0066:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "21bc716c47cb719a9e0f4de7fda52ab4315219f7694da40e773d218a41e45d0b"
+  },
+  "moe_school_manual_v3:p0067:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "804ca9785e8cff5b9501e6b3cb80dfab18599b55b2d84b1be011145a762e9259"
+  },
+  "moe_school_manual_v3:p0068:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "e95b4bde860cdc90d60f9eb8faad8f490f4d61085b5a8c4b755fb3a7e0bc1044"
+  },
+  "moe_school_manual_v3:p0073:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "c1ea093632c22b9ac70e330b5fe0d96892007eae7ae3f907c608cb6feea832ab"
+  },
+  "moe_school_manual_v3:p0073:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "bb32755b15b6bb4d36c182ef4874d38882e95b36960907c66a48a04ccf1e1558"
+  },
+  "moe_school_manual_v3:p0074:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "688a202aa15e55aa1328554a7648d14ee61f1d3cd72049fdcf6498c5d42bc70d"
+  },
+  "gyeonggi_school_guide_2025:p0056:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "609f90401410d07498a4b667c25e7a2c1352d60958521a76f78c2a9d65432eec"
+  },
+  "gyeonggi_school_guide_2025:p0056:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "b40e3d4d584d3d777b3b7d8dcf996f3664a916972d2c03fff3f8fd3bf3a06f82"
+  },
+  "gyeonggi_school_guide_2025:p0056:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "edcfbc43c4b7ad27aa3ce7a663190a63ed5e1641d0fa79b5c0569f7d0291f386"
+  },
+  "gyeonggi_school_guide_2025:p0056:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "77dbd538eb8bf64e70acdf190c6d244e0e52c2b3c2577fb934476ca5b0c324e4"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "78150b1a4c49164e752c723b45ca7b3986ec973a6388748201132fd439cea075"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ba7bd9ba6efa6c7658015fa69c9c87895b59a8210e5121054bd9d4e4696c657a"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "188f81c8db01704902fcb00444d5569d380a25b15b3d5513b923e6f00e0a3eee"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "9859a01d50b720abe15cef3a69ed3747a16449300c7fb4c641bcda62c5257395"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "2c40abcb443cd3598d8c89f77fbe49a396698de051d23ca255426a2753b1daef"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r06": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "216f34907a9fed332bb0ffc5b2488b29b5a063373ffa55c1890ff2e0e99fd4f7"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r07": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "447637b2da943769e56effe05081729eea965724f2152aa173eb93f0f3409549"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r08": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a25350bc10b8662e0751f049be5ba319c4ad539d6c0b06bff733ceb6994f1f66"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r09": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "d7fbec72718760762bf454adcde96f4e6f0aec459990ac9dc513d72d7b002b66"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r10": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "8b05919f7bfc40db3ca804b13b7f05f2f8ee2bcf655cb33c8f3fe865e2aeb2d8"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r11": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "51306e7f5efd88d1d1d0b79f7857fd5557a8ffb3c590e727a3a6ea484c8f0087"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r12": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "9e2ca910a7d60fe9619140ea103ed0cc96729bc3120614596625756192e88f38"
+  },
+  "gyeonggi_school_guide_2025:p0160:t01r13": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "8fbb7d752dfdce03ca488cb200c8a9e0f93356c170d50fae1f866a7b5521cf31"
+  },
+  "gyeonggi_school_guide_2025:p0162:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "da1e7cbc1741a23fcb2411028ad24e2d3ec91a657508989012effd6edafcd110"
+  },
+  "gyeonggi_school_guide_2025:p0162:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "bb6efbeed7fd9db2c7f69118f63324aad94ca872ffbdde9543ea7f6a7a3492e4"
+  },
+  "gyeonggi_school_guide_2025:p0162:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a7f737f9e1ebbbfce2d977ea3dd9e66424e9e3d802100e95fc26052af41e79b7"
+  },
+  "gyeonggi_school_guide_2025:p0162:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "d8bbfd7cf83aa949ae1a3ecaa7ec9d9206b96c7507d8f96685f4e36bb88a4ff3"
+  },
+  "gyeonggi_school_guide_2025:p0162:t01r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "dc35a4ddbc9c51e3f5a257ebb2d42087973cb14aa4a82f53fbfc7300a4dccb8f"
+  },
+  "gyeonggi_school_guide_2025:p0162:t01r06": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "2e9202b62d0445907b2c236e59481581161be7854b2eb30baddeb9244e421c23"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "f4ab73bc74825473ac92fd7069b864f722064c1236498ea6da80c4eaef8660ce"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "9fe8f619bf14c656c2e74f9e5a42169b743b386a613718d86c4028eb121cc287"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "bb3b65863c37647910013fdcf400d01dca73ffea2b530d55425eaff8b12151f9"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "5d039ec1687bfd00f27629bdef4e577d017bdb332e73f302acc4f7cd9b0deb42"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "1450bd9ba62ce00086abc52619d9ab11c90620986208bdb00e42b39b0f82db26"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r06": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "6338dd9bb3098710f234f6ae7bfb11f0816a2edc15eccaf5000d2648c9724a4a"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r07": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "2cc897398731d2fdc69c0192b45a0a3eede1d7deec5f35c17192b66ae01682a5"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r08": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "1c0157d7e1223d65c7ec0360fa54182770147822c4cf9e431d039b5e76a20b55"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r09": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "0cfeb67416d3e7992fb1fb762ebcaeb88883e5674d7fb8eefc262e7141b1d05a"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r10": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "3eccdae095cdb3f4efcf6f96c25d2674698141a4068ed9c6a4fd02eca7632e05"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r11": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "d2287a064ad62833f1d4d7779d469bc9ab83d8d28a8156ec85cc18b2fcb7da3f"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r12": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "508a118073d4e7bdaf32dfff3893741d1f9f316fbd8f7b0e1e81096571520b57"
+  },
+  "gyeonggi_school_guide_2025:p0164:t01r13": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "47a4de610a4460eb2d35b9b91dea8dd029ddc2a4419ae4825afed34c8929b4a5"
+  },
+  "gyeonggi_school_guide_2025:p0165:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "425ff6b3ff02cb2ece75f97aa67d2656feca019f7ff2f00b103e907f05cad2f9"
+  },
+  "gyeonggi_school_guide_2025:p0165:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "100e7d808cb0b44464b99a155c45aa8e47ad5d81148bd9ebdde052e819e08738"
+  },
+  "gyeonggi_school_guide_2025:p0165:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ddd81ef7e4731b61cb56041c31f9f91db6f10a73f3ed8b6eb9d5c1bba70d3740"
+  },
+  "gyeonggi_school_guide_2025:p0165:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "e2164b40be48f961dd9d4159bbc1069e796dd510fb2595b99f1a788308a18507"
+  },
+  "gyeonggi_school_guide_2025:p0165:t01r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "cf46b60e5a9c5825a6314c7786d8c1ce95f4f301661b1cbc96018a68848fa13c"
+  },
+  "gyeonggi_school_guide_2025:p0165:t02r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "23b7174389b28c5d82141dda49ca3f17537b334e5886efb906d6d8963deadd9c"
+  },
+  "gyeonggi_school_guide_2025:p0165:t02r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "3c28ea77b63dd04677f7a402ecca9b5174d021935729e2e419e5354d91916d4c"
+  },
+  "gyeonggi_school_guide_2025:p0165:t02r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "5cd3ae4b6c06bebc4c3c52c3b312dd62a472c235a0749cbec58e15709ea8cf82"
+  },
+  "gyeonggi_school_guide_2025:p0165:t02r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "263dd0951f78c619bd84352588c1e1e087d334d6c8dd3a19a1b936bac8eb9cac"
+  },
+  "gyeonggi_school_guide_2025:p0165:t02r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "889c4e75ba8758a5f381f6ade66ef0d09e8d866481aea09e7d499822975e5efc"
+  },
+  "gyeonggi_school_guide_2025:p0165:t02r06": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "b9a76e78160fe119461da3d398170408d168c2c6370a3072c6fd21ebdd2cc9e4"
+  },
+  "gyeonggi_school_guide_2025:p0165:t02r07": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "fa4cb7846f217bdefc4f088411c311b07b89a725aaf7854d82aec72026d807d1"
+  },
+  "gyeonggi_school_guide_2025:p0165:t02r08": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ff97aaa58df223dbab8b741a8bfa37d26cb296047af1829137bdfd3a454a7b48"
+  },
+  "gyeonggi_school_guide_2025:p0166:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "6e13469098eb3c2bf56aafd9fb53958a55582024e39e467a87d5007a2998dbb5"
+  },
+  "gyeonggi_school_guide_2025:p0166:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a7cd78536f379969ffa0898d7875c2cbcd631a8f9a5e6f1df0c486ec97e3b868"
+  },
+  "gyeonggi_school_guide_2025:p0167:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "7074b09baf4bf4ff155af3992eb1a39e07e0f64d495ac04ba98247fe6a67c193"
+  },
+  "gyeonggi_school_guide_2025:p0167:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "e27c79ee6dbae89e5481a2d35bc494bb916b02de05d7f48a0f306d689c8d765a"
+  },
+  "gyeonggi_school_guide_2025:p0167:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ec43c15bb38d55bf0983daec15ed83e2bbfd5b85741187b1ed796e8d2bffe172"
+  },
+  "gyeonggi_school_guide_2025:p0168:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "cba6aab04f14337062cc99f2e1b144705f8846b7d49b0ded8e0c5061170c62ec"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ecc9445f759e83668aa4b574f20a0ba3f4ab66eda7b2dc05b720bfe3393c1ea2"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a20e03b2b460a53959e9161660ede113b0a163e7c330729bd4fc2b83040a059a"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "d73ced1176c6d196589d86f1b8b719adf68bf97e5ff4cf204b2655334008df85"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "34ff5350971a958f0b875570affb53a0c6ed6f0c992060acacf0c05c5c500f80"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "9268a5608b33f86e3b8db0631e804b1ba8f84e55d76a5742c3dc848237952ba2"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r06": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a4dd4e55e155dcd03ea9b40e55506af5fb7426e33179eb57533d0160a8b3e257"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r07": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "870a3ad1ad8796b40bb04ce19a7de2ff640020cd10321571098136db43ad9b3b"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r08": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "f2004734109d92a647acf562a8b7d9afd5431908dd4491fb104ab3a3bf321834"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r09": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "2460f33e8b362a098ffd8b761e2a5a8d3832df3d4cc0a7eba5c1912e410487e6"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r10": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "75671985b08e2392d1fe7757df021c5d8343fdfb82ae4f1cd43b04a5b55bdd28"
+  },
+  "gyeonggi_school_guide_2025:p0169:t01r11": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "c0765a4d031e6a26e43d904408adcbbd5178b366cda26fea4e8d365ca5ccf8c9"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "d174e36550985893745f3dfdda90ed3f006a63cbccc05c53016acd1b8b17b97a"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "a20e03b2b460a53959e9161660ede113b0a163e7c330729bd4fc2b83040a059a"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "ac9ccf9914d8bbfbb8ee702b13394e1338edbc71751e8709990c18fd5d21c44d"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r04": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "4c14959b9b8c8657786c0ea9dda78f06c2679335fd3e22bf79762bce7f8286a2"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r05": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "88abce90c1334da0c97614d05d06eedebcee4b007e4f053c2471762584aa67ba"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r06": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "5d29c9d7491202afd045ae36a88b0607bb20c105d8d73e492345da20e0c1a538"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r07": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "6bf508ea648701e49bc21bd40a8289bbf40e58eecc533bb61814f38f4c2e7fe9"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r08": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "6cfaf422460e6f5a7c8ad6e056dbc47a97da81eb39232ec44bad73fc008f883c"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r09": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "4a64610d8c3bbf4b59d5eaf4be3a6f26a3b3a02cbeab11ed15acaeb8aa757246"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r10": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "9a1f56bfb9a287557bcf0fe2b2df627c15519e7bc4a4d2874aa053c77513d207"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r11": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "3e2a3724b1f8f7bab7cbff7866d2e1002b61aee43c19e7ef7315b65b21ff8143"
+  },
+  "gyeonggi_school_guide_2025:p0180:t01r12": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "c61d2c66f8276d83d20e8ba3f422662aafd326a3bfac3fcc3c2e33e664644551"
+  },
+  "gyeonggi_school_guide_2025:p0054:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "c69ea61ce6eb4615de5c89927f187457fc179621d4c1bb4128e3c0caba575870"
+  },
+  "gyeonggi_school_guide_2025:p0056:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "d20232cd50e8769203d595c871c17e45592e0f4d1715563a8a093c29ae164322"
+  },
+  "gyeonggi_school_guide_2025:p0160:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "8ed07d85d0865492852b721c3eca5c09cf845052c89beda25fdcb26fd87ca297"
+  },
+  "gyeonggi_school_guide_2025:p0162:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "6f05b7af33ca6b4b68af64827234d5b90f46ba01827b2acb8704b40c34258498"
+  },
+  "gyeonggi_school_guide_2025:p0163:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "5d94e9ad5e453e4fad0ffa472d06e10a29b6ce2d28297117f8294831918063c9"
+  },
+  "gyeonggi_school_guide_2025:p0164:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "0ec29023ea52273302fdcb98c8f587ce726e569c9add3dcc33a52f9650a17f58"
+  },
+  "gyeonggi_school_guide_2025:p0165:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "fab17893fc52f490fe9bdf02a4399cc1af1773c881602ad9597892519cedcbb1"
+  },
+  "gyeonggi_school_guide_2025:p0168:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "465b1d9d011fdf7fb1289e4795d89c1b7df93c9c22d9f7109080ebe9dbc3227b"
+  },
+  "gyeonggi_school_guide_2025:p0169:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "2f92f90fb879544abc2abf4c84856972469053f532f5e20f99e9a61d5294966c"
+  },
+  "gyeonggi_school_guide_2025:p0204:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "e3242c4ee1f0a530825bd1d6798596310f4d0b4f8f6c49db58bf457530fc6191"
+  },
+  "gyeonggi_school_guide_2025:p0204:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "c17c019282ae795e5d5b871b8a81843ad9ea994eace707fa70ed63e5c175e863"
+  },
+  "gyeonggi_school_guide_2025:p0204:b03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "c0639036004fba4ce4a2cc080226b8efcf728dd60feb93b80f075e35574ccbd5"
+  },
+  "gyeonggi_school_guide_2025:p0205:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "63d8a116a8314368ffe202cdc6142c1d72f32722a1f8dcc61f3faf674df517f4"
+  },
+  "gyeonggi_school_guide_2025:p0205:b02": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "0a868c13a79cbbb6333caa0a865fdd718437a6104a748926d97c75b9531d930d"
+  },
+  "gyeonggi_school_guide_2025:p0205:b03": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "87da40a2628bb3b2c159e7f1c9e684d7dc5fb39c635124e4591c22e67c005046"
+  },
+  "gyeonggi_school_guide_2025:p0206:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "5243f0c53c5e3adfaa43ef35ed3e348abdd415a0342c2365d3467136bf54ef78"
+  },
+  "gyeonggi_school_guide_2025:p0207:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "7782e24a70654e3a3e851de1263e1e5bf67a9d1fa76495752dec925bdd489fbf"
+  },
+  "gyeonggi_school_guide_2025:p0208:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "4b0759b5d699fcb82b98dc0e875cc8ecf5f6a8a5fc6a2249f15cbb967436d4c7"
+  },
+  "gyeonggi_school_guide_2025:p0209:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "35160821bc045a1631f88cec5320ac53e7c41d0fb0320982f50c461be8ccd3c5"
+  },
+  "gyeonggi_school_guide_2025:p0210:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "2a84c51b0da43c4d32b9099f82321c2c89c39c4023298e9a2acdf2e0bf78bdf1"
+  },
+  "gyeonggi_school_guide_2025:p0211:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "09c300f613bcc1f69240de7d68071f367022a1074368d1e7075f346885c4bd93"
+  },
+  "gyeonggi_school_guide_2025:p0212:b01": {
+   "temp_chunk_id": null,
+   "row_text_sha256": "224bb2d2d7eb0914d32412b61216517e9dd8ec513d8b3e8631180256a188eae4"
   }
  },
  "actions": [

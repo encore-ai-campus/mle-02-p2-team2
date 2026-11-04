@@ -1,7 +1,7 @@
 """공통 DB 스키마(제약·인덱스)와 표준 사전 노드 초기화 - 온톨로지 v3.1 5-3절.
 
 - 모든 문장은 IF NOT EXISTS / MERGE라 여러 번 실행해도 같다. 삭제·변경(DROP, DELETE)은 하지 않는다.
-- 벡터 인덱스는 임베딩 모델·차원이 정해질 때까지 만들지 않는다(차원은 나중에 바꿀 수 없음).
+- 벡터 인덱스: 팀 합의 임베딩 text-embedding-3-small(1536차원, cosine). 차원은 나중에 바꿀 수 없다.
 - Chunk 전문 검색 인덱스는 한국어 검색을 위해 cjk 분석기(2글자 단위)를 쓴다.
 - 사전 노드는 표준 entries만 MERGE하고 name·aliases를 SET한다. 승인 대기 개념은 넣지 않는다.
   공통 사전(data/specs/ids/)이 생기면 그 파일을 같은 함수에 넣으면 된다.
@@ -11,6 +11,7 @@ src/common/schema/로 옮길 때 이 파일을 그대로 옮기면 된다.
 from __future__ import annotations
 
 from index.school.dictionaries import KINDS, neo4j_rows
+from index.school.embed import EMBEDDING_DIM, VECTOR_INDEX
 
 CONSTRAINTS = {
     "document_id": ("Document", "document_id"),
@@ -25,7 +26,15 @@ INDEXES = [
      "OPTIONS {indexConfig: {`fulltext.analyzer`: 'cjk'}}"),
     "CREATE INDEX action_stage IF NOT EXISTS FOR (a:SchoolAction) ON (a.stage)",
     "CREATE INDEX action_scope IF NOT EXISTS FOR (a:SchoolAction) ON (a.scope)",
+    (f"CREATE VECTOR INDEX {VECTOR_INDEX} IF NOT EXISTS FOR (c:Chunk) ON (c.embedding) "
+     f"OPTIONS {{indexConfig: {{`vector.dimensions`: {EMBEDDING_DIM}, "
+     "`vector.similarity_function`: 'cosine'}}"),
 ]
+# IF NOT EXISTS는 같은 이름의 인덱스가 이미 있으면 설정을 바꾸지 않는다(38-1 주의). 실제 설정을 확인한다.
+EXPECTED_INDEX_OPTIONS = {
+    "chunk_text": {"fulltext.analyzer": "cjk"},
+    VECTOR_INDEX: {"vector.dimensions": EMBEDDING_DIM, "vector.similarity_function": "COSINE"},
+}
 
 
 def schema_statements() -> list[str]:
@@ -49,8 +58,17 @@ def schema_state(driver, database=None) -> dict:
               if r["type"] in ("UNIQUENESS", "NODE_PROPERTY_UNIQUENESS", "NODE_KEY")
               and r["labelsOrTypes"]}
     index_records, _, _ = driver.execute_query(
-        "SHOW INDEXES YIELD name, type, state RETURN *", database_=database)
+        "SHOW INDEXES YIELD name, type, state, options RETURN *", database_=database)
+    wrong = []
+    for record in index_records:
+        expected = EXPECTED_INDEX_OPTIONS.get(record["name"])
+        config = (record["options"] or {}).get("indexConfig", {})
+        if expected and any(str(config.get(k)).upper() != str(v).upper() for k, v in expected.items()):
+            wrong.append((record["name"], {k: config.get(k) for k in expected}))
+    names = {r["name"] for r in index_records}
     return {"missing_constraints": sorted(set(CONSTRAINTS.values()) - unique),
+            "missing_indexes": sorted(set(EXPECTED_INDEX_OPTIONS) - names),
+            "wrong_index_options": wrong,
             "indexes": {r["name"]: (r["type"], r["state"]) for r in index_records}}
 
 
