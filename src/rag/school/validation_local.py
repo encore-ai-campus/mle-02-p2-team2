@@ -2,13 +2,28 @@
 
 구조 검사(validate_query_output)는 없는 chunk_id를 알 수 없다(T6). 여기서 실제 DB를 읽어 확인한다.
 - Citation: chunk 존재, 그 청크가 Citation.document_id 문서의 HAS_CHUNK인지, pdf_page·printed_page 일치,
-  excerpt가 청크 원문에 그대로 있는지.
+  excerpt가 청크 원문에 있는지(표시 서식 기호만 무시, 낱말은 그대로 비교).
 - Finding: disease_ids·concept_ids가 사전 노드로 존재하는지, action_ids가 존재하고 Finding이 인용한
   청크 중 하나로 SUPPORTED_BY가 있는지.
 검증을 통과해도 주장·담당·강도가 원문과 맞는다는 뜻은 아니다(사람·골든셋 검수 몫).
 """
 
 from __future__ import annotations
+
+import re
+
+# 비교에서 무시하는 것은 표시 서식뿐이다: Markdown 강조(*), 각주 표시([*], [1]), <br>, 공백.
+# 낱말·숫자·문장부호는 그대로 비교하므로 요약·의역 발췌는 여전히 실패한다.
+FORMAT_MARKS = re.compile(r"<br\s*/?>|\[\*+\]|\[\d{1,2}\]|\*+|\s+")
+
+
+def excerpt_in_text(excerpt: str, text: str) -> bool:
+    """발췌가 청크 원문에 있는가. 그대로 있으면 통과, 없으면 서식 기호를 뺀 뒤 다시 비교한다
+    (11/05 M3: legal_search가 '**홍역(의심)환자** **[*]** **발생 시…**'의 서식만 빼고 발췌)."""
+    if excerpt in text:
+        return True
+    plain = FORMAT_MARKS.sub("", excerpt)
+    return bool(plain) and plain in FORMAT_MARKS.sub("", text)
 
 
 def _rows(driver, query, database=None, **params):
@@ -39,7 +54,7 @@ RETURN c.chunk_id AS chunk_id, c.text AS text, c.pdf_page AS pdf_page,
                 problems.append(f"HAS_CHUNK 문서 불일치: {row['documents']}")
             if row["pdf_page"] != citation["pdf_page"] or row["printed_page"] != citation["printed_page"]:
                 problems.append("쪽수 불일치")
-            if citation["excerpt"] not in (row["text"] or ""):
+            if not excerpt_in_text(citation["excerpt"], row["text"] or ""):
                 problems.append("excerpt가 청크 원문에 없음")
         if problems:
             bad_citations[chunk_id] = problems
