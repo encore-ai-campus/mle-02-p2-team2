@@ -17,7 +17,7 @@
 | 학교 자료·Action Tool·메인 | 주승우 | 진행 중 | 로컬 v4 기록상 D06 수정 후 Tool 정답 인용 25/34, 전부 16/34. 174개 테스트 통과 기록 | main에 최신 코드·증빙 공유, Disease/Legal/CrossDoc 연결 확인, 추출 정답·채점 기준 정비 | 로컬 보고서 `notebooks/school/평가결과/평가_20261105_D06수정_v4.md`는 공유 대기. 이 초기 현황 작성에서 재실행하지 않음 | 2026-11-05 |
 | 질병 자료·Disease Tool·CrossDoc | 송수림 | 담당자 확인 대기 | origin/main에 Disease Tool·공동 DB 점검 커밋 확인 | 담당자가 실제 실행 결과·현재 작업·연동 상태 갱신 | 원격 커밋 `2a82f52`, `81b5053` 확인. 작성자가 실DB/Tool 재검증하지 않음 | 2026-11-05 |
 | 예방·법령·Legal Tool·공통 검증 | 유종혁 | 담당자 확인 대기 | Legal Tool 검증 노트북과 회의 결정 문서 확인 | 담당자가 최신 상태·검증 범위·공통 계약 연동 갱신 | [검증 노트북](../notebooks/prevention_legal/16_LegalSearchTool_검증샘플.ipynb), [회의 결정](../notebooks/prevention_legal/회의결정_2026-11-05.md) | 2026-11-05 |
-| 공통 진행 기록·에이전트 규칙 | 3인 공동 | 리뷰 대기 | AGENTS.md, Claude 가져오기 파일, 공통 진행 현황 초안 작성 | 팀에 공유하고 각 담당자가 자기 행·구역을 갱신. 기존 리뷰 기준에 따라 main 반영 | [공통 규칙](../AGENTS.md), [Claude 연결](../CLAUDE.md). 문서 링크·필수 항목·가져오기 연결 검사 통과 | 2026-11-05 |
+| 공통 진행 기록·에이전트 규칙 | 3인 공동 | 리뷰 대기 | AGENTS.md, Claude 가져오기 파일, 공통 진행 현황을 문서 브랜치에 업로드 | PR 생성·팀 리뷰 후 main 반영. 각 담당자가 자기 행·구역 갱신 | [공통 규칙](../AGENTS.md), [Claude 연결](../CLAUDE.md), [문서 브랜치](https://github.com/encore-ai-campus/mle-02-p2-team2/tree/docs/team-agent-progress-20261105). 링크·필수 항목·가져오기 검사 통과. 연동 권한 403으로 PR 자동 생성은 실패 | 2026-11-05 |
 
 ## 3. 담당별 상세 기록
 
@@ -49,7 +49,7 @@
 
 ## 5. 최근 변경
 
-- 2026-11-05 / 주승우 요청·Codex 작성: 팀 공통 AGENTS 규칙과 Claude 연결, 이 현황판 초안 추가. 다른 담당자의 미확인 상태는 확인 대기로 둠.
+- 2026-11-05 / 주승우 요청·Codex 작성: 팀 공통 AGENTS 규칙과 Claude 연결, 이 현황판을 `docs/team-agent-progress-20261105` 브랜치에 업로드. 다른 담당자의 미확인 상태는 확인 대기로 둠. GitHub 연동의 PR 생성 권한은 403으로 확인되어 [PR 생성 화면](https://github.com/encore-ai-campus/mle-02-p2-team2/compare/main...docs/team-agent-progress-20261105?expand=1)에서 리뷰 절차 진행 필요.
 
 ## 6. 갱신 방법
 
