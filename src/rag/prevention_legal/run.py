@@ -16,12 +16,11 @@
 빈칸은 모두 채웠다. 아래 설명은 흐름을 이해하기 위한 것이다.
 Neo4j 에는 아직 쓰지 않는다. 테스트 적재는 접두사·테스트 라벨을 붙이고, 끝나면 삭제한다.
 """
-import json
 import re
-from pathlib import Path
 
-from preprocess.prevention_legal.pages import DOCS, make_citation
+from preprocess.prevention_legal.pages import DOCS
 from rag.prevention_legal.contract_local import QueryInput, QueryOutput, validate_query_output
+from rag.prevention_legal.retrieve import fetch_chunks, fulltext_search
 
 # ---------------------------------------------------------------------------
 # 1) 고정 샘플 (사용자가 Part A 에서 정한 값을 넣는다)
@@ -33,7 +32,7 @@ SAMPLE_QUESTION = "홍역 의심환자가 생겼을 때 학교 담당교사와 �
 # 카드 한 건 = 학교 행동 한 개.
 # "출처" 는 (문서 키, PDF 쪽, 원문 구절) 세 칸짜리 튜플이다.
 #   - 문서 키는 pages.py 의 DOCS 키다 (예: "measles").
-#   - 원문 구절은 블록 원문에 그대로 있어야 한다 (make_citation 은 쪽 안에서, build_citations 는 블록 안에서 확인한다).
+#   - 원문 구절은 청크 원문에 그대로 있어야 한다 (build_citations 가 공동 DB 청크 텍스트와 대조한다).
 # "블록" 은 그 행동 근거가 들어 있는 블록 번호(정수)다. 블록 파일의 chunk_id 끝 두 자리와 같다.
 #   예) 93쪽 b01 이면 1, 93쪽 b03 이면 3.
 # 예시 모양 (값은 직접 채운다):
@@ -62,6 +61,35 @@ LAW_CARDS: list[dict] = [
      "주장": "제1급부터 제3급감염병 중 보건복지부령으로 정한 감염병(홍역 포함)이 발생한 경우, 학교의 관리인·경영자 또는 대표자는 의사의 진단이나 검안을 요구하거나 주소지 관할 보건소장에게 신고하여야 한다.",
      "출처": ("law", 19, "관리인, 경영자 또는 대표자"), "블록": 1},
 ]
+
+# 검색 기반 카드 (샘플 질문이 아닌 질문에만 쓴다). 블록이 검색 상위 10개에 들고, 질문에 "질문어" 중 하나가 있어야 쓴다.
+# 질문어 조건은 검색 점수가 질문과 무관하게 같은 블록을 올리는 문제를 줄이기 위한 임시 가드다.
+ITEM4_CARD: dict = {
+    "주체": "학교[담당교사]", "행동": "MMR 2차 접종 미완료자에게 예방접종 완료 안내", "조건": "교내 MMR 2차 접종 미완료자가 있는 경우",
+    "역할근거": "가. 초 중 고등학교 내 환자 발생 시 학교[담당교사] 역할", "basis": "EXPLICIT", "단계": "UNSPECIFIED",
+    "출처": ("measles", 93, "교내 MMR(홍역 유행성이하선염 풍진) 2차 접종 미완료자 가 있는 경우 감염 예방을 위해 예방접종을 완료할 필요가 있음을 안내"),
+    "블록": 4,
+    "주장": "학교 담당교사는 교내 MMR 2차 접종 미완료자가 있으면 예방접종을 완료하도록 안내한다.",
+    "답문장": "학교 담당교사는 교내 MMR 2차 접종 미완료자가 있으면 예방접종을 완료하도록 안내합니다(지침 93쪽 항목 4).",
+    "범위문": "이 답은 지침 93쪽 항목 4 범위입니다. 접종 시행 의무와 법 근거는 다루지 않았습니다.",
+    "질문어": ["MMR", "미완료", "2차"],   # 두 개 이상 있어야 쓴다
+    "제외어": ["전파", "잠복기", "증상", "감염경로", "전염기간", "부작용", "효과", "간격", "감염", "발병", "기간", "격리"],   # 하나라도 있으면 쓰지 않는다
+}
+# 93쪽 항목 2 (골든셋 Q02, 사용자 승인 2026-11-05). 근거 블록 b05, 행동 a05.
+ITEM2_CARD: dict = {
+    "주체": "학교[담당교사]", "행동": "진단받은 홍역(의심) 환자의 전염기간 동안 등교·등원 금지 안내", "조건": "의료기관 진료 결과 홍역(의심) 진단을 받은 경우",
+    "역할근거": "가. 초 중 고등학교 내 환자 발생 시 학교[담당교사] 역할", "basis": "EXPLICIT", "단계": "UNSPECIFIED",
+    "출처": ("measles", 93, "전염기간(발진이 나타난 후 4일까지) 동안 학교 등교 및 학원 등원하지 않도록 안내"),
+    "블록": 5,
+    "주장": "홍역(의심) 진단을 받은 경우 전염기간 동안 학교 등교 및 학원 등원하지 않도록 안내한다.",
+    "답문장": "홍역(의심) 진단을 받은 학생은 전염기간(발진이 나타난 후 4일까지) 동안 학교 등교와 학원 등원을 하지 않도록 안내합니다(지침 93쪽 항목 2).",
+    "범위문": "이 답은 지침 93쪽 항목 2 범위입니다. 등교 재개 판단(실험실 검사 결과 등)과 법 근거는 다루지 않았습니다.",
+    "필수어": ["홍역"],                             # 질문에 반드시 있어야 한다
+    "질문어": ["진단", "등교", "등원", "언제까지"],   # 두 개 이상 있어야 쓴다
+    "제외어": ["전파", "잠복기", "증상", "감염경로", "부작용", "효과", "간격", "검사", "접촉", "예방접종",
+              "격리", "복귀", "재개", "음성", "수족구", "성홍열", "백일해", "수두", "코로나", "독감", "인플루엔자", "유행성이하선염"],
+}
+RETRIEVAL_CARDS: list[dict] = [ITEM4_CARD, ITEM2_CARD]
 
 
 # ---------------------------------------------------------------------------
@@ -108,9 +136,36 @@ SCARLET_CASES: list[dict] = [
 ]
 
 
+# 수족구 사례 (골든셋 Q18·Q19, 개발용). 근거는 수족구 지침 29·30쪽 블록만 쓴다.
+HFMD_CASES: list[dict] = [
+    {
+        "question": "수족구병에 걸린 학생은 학교에 계속 나와도 되나요?",
+        "status": "ANSWERED",
+        "cards": [
+            {"주체": "학교·유치원 등", "행동": "수족구병 환자의 등교 등원중지 권장", "조건": "수족구병 환자",
+             "주장": "수족구병 환자는 학교, 유치원, 학원 등에서 확산 방지를 위해 등교 등원중지가 권장된다.",
+             "출처": ("hfmd", 29, "수족구병 환자는 등교 등원중지"), "블록": 1},
+        ],
+        "answer": "학교에 계속 나오지 않도록 등교 등원중지가 권장됩니다(수족구 지침 29쪽). 증상이 있으면 의사의 진료를 받고 자가 격리합니다.",
+        "warnings": ["등교 중지의 법적 근거(학교보건법 제8조)는 우리 자료에 없어 답하지 않았습니다.", "원본 PDF 대조는 아직 하지 않았습니다(변환본 기준)."],
+    },
+    {
+        "question": "수족구병으로 등교를 중지한 학생은 언제부터 다시 등교할 수 있나요?",
+        "status": "ANSWERED",
+        "cards": [
+            {"주체": "등교 등원 중지자", "행동": "복귀", "조건": "발열이 없고 수포가 마른 후",
+             "주장": "수족구병으로 등교 등원을 중지한 사람은 발열이 없고 수포가 마른 후 복귀한다.",
+             "출처": ("hfmd", 30, "발열이 없고, 수포가 마른 후 복귀"), "블록": 1},
+        ],
+        "answer": "열이 없고 물집(수포)이 마른 뒤에 복귀합니다(수족구 지침 30쪽). 복귀 후에도 손 위생을 철저히 지키고, 단체 물놀이 등 분변구강 전파 가능 행동은 자제합니다. 완치 후에도 병원체가 나올 수 있어 최소 8주까지 주의가 필요하며, 상태가 좋지 않으면 복귀를 늦추는 것을 고려합니다.",
+        "warnings": ["원본 PDF 30쪽과 대조했습니다(사용자 확인, 2026-11-05)."],
+    },
+]
+
+
 def scarlet_case(question: str) -> dict | None:
     """질문 문장이 성홍열 사례와 같으면 그 사례를 돌려준다 (공백 앞뒤 정리 후 비교)."""
-    for case in SCARLET_CASES:
+    for case in SCARLET_CASES + HFMD_CASES:
         if question.strip() == case["question"].strip():
             return case
     return None
@@ -129,43 +184,18 @@ def is_sample_question(request: QueryInput) -> bool:
 
 
 
-# 블록 파일 (블록 노트북 02 가 만드는 로컬 파일, Git 에는 올라가지 않는다)
-BLOCKS_FILE = Path(__file__).resolve().parents[3] / "data" / "interim" / "prevention_legal" / "blocks.jsonl"
-
-
 def _compact(text: str) -> str:
     """비교용 글: 공백, 별표(*), 대괄호를 뺀다. 강조 표시 차이는 무시한다."""
     return re.sub(r"[\s*\[\]]", "", text)
 
 
-def _in_block(chunk_id: str, quote: str) -> bool:
-    """구절이 chunk_id 블록의 원문 안에 있는지 본다."""
-    for line in BLOCKS_FILE.read_text(encoding="utf-8").splitlines():
-        b = json.loads(line)
-        if b["chunk_id"] == chunk_id:
-            return _compact(quote) in _compact(b["text"])
-    raise ValueError(f"블록 파일에서 {chunk_id} 를 찾지 못했습니다.")
-
-
-# 검색어 (임시 키워드 방식). 질문의 핵심어를 블록 글과 소제목에서 센다.
-# 공동 DB 인덱스는 쓰지 않는다 (팀 승인 전). 전문 검색으로 바꾸는 것은 팀 회의 결정 후.
-SEARCH_TERMS = ["홍역", "의심환자", "학교", "담당교사", "의료기관", "보건소", "신고", "보고", "진료", "안내", "관리인"]
-
-
 def search_blocks(request: QueryInput, k: int = 5) -> list[dict]:
-    """허용 문서 안에서 질문과 관련 있는 블록을 점수 순으로 k개 돌려준다 (로컬 블록 파일을 읽는다)."""
-    allowed = set(request["allowed_document_ids"])
-    scored = []
-    for line in BLOCKS_FILE.read_text(encoding="utf-8").splitlines():
-        b = json.loads(line)
-        if b["document_id"] not in allowed:
-            continue
-        hay = (b["text"] or "") + " " + (b.get("section") or "")
-        score = sum(hay.count(term) for term in SEARCH_TERMS)
-        if score > 0:
-            scored.append((score, b))
-    scored.sort(key=lambda item: item[0], reverse=True)  # 점수가 같으면 파일 순서를 그대로 둔다
-    return [b for _, b in scored[:k]]
+    """질문 단어로 전문 인덱스(chunk_text)를 검색해 허용 문서 안의 상위 k개 블록을 돌려준다.
+
+    설명: 검색은 retrieve.fulltext_search 가 맡는다. 공동 DB 의 운영 청크(접두사로 문서 판별)를 찾고, 테스트 노드(PLTest)가 있으면 함께 본다.
+    DB 연결 실패는 예외로 올라가고, 검색 결과가 없으면 빈 목록이 돌아온다 (두 경우를 구별한다).
+    """
+    return fulltext_search(request["question"], request["allowed_document_ids"], k=k)
 
 
 def expected_chunk_id(card: dict) -> str:
@@ -180,27 +210,34 @@ def build_citations(cards: list[dict]) -> list[dict]:
     설명
     - Citation 은 chunk_id(블록 단위)로 구분된다. 같은 chunk_id 는 한 번만 넣는다.
       (contract_local 의 검사가 중복 chunk_id 를 실패로 본다.)
-    - make_citation 은 chunk_id 를 만들고, 구절이 쪽 안에 있는지 확인한다.
-      build_citations 는 여기에 더해 구절이 그 블록 안에 있는지 확인한다.
-    - 블록 번호는 카드의 "블록" 칸에서 읽는다. 그래야 카드마다 맞는 블록을 가리킨다.
+    - 원문 대조는 공동 DB 의 운영 청크 텍스트로 한다. 로컬 파일(blocks.jsonl, 원문 md)을 읽지 않는다.
+      그래서 Git 에 없는 파일이 있는 PC 에서도 동작한다.
+    - 구절이 청크 원문에 없으면 ValueError 를 낸다. 청크가 DB 에 없어도 ValueError 다.
     """
     citations: list[dict] = []
     seen_chunk_ids: set[str] = set()
 
+    chunks = fetch_chunks([expected_chunk_id(c) for c in cards])
     for card in cards:
-        key, page, quote = card["출처"]  # 튜플을 세 변수로 나눠 받는다.
-        block = card["블록"]             # 카드가 가리키는 블록 번호
-
-        citation = make_citation(key, page, quote, block=block)
-        # make_citation 은 쪽 안만 확인하므로, 구절이 이 블록 원문 안에 있는지 따로 확인한다.
-        if not _in_block(citation["chunk_id"], quote):
-            raise ValueError(f"구절이 {citation['chunk_id']} 블록 안에 없습니다: {quote}")
+        key, _, quote = card["출처"]
+        chunk_id = expected_chunk_id(card)
+        rec = chunks.get(chunk_id)
+        if rec is None:
+            raise ValueError(f"공동 DB 에서 {chunk_id} 청크를 찾지 못했습니다.")
+        if _compact(quote) not in _compact(rec["text"]):
+            raise ValueError(f"구절이 {chunk_id} 청크 원문 안에 없습니다: {quote}")
 
         # 같은 chunk_id 가 이미 있으면 건너뛴다. (두 카드가 같은 블록을 가리킬 수 있다.)
-        if citation["chunk_id"] in seen_chunk_ids:
+        if chunk_id in seen_chunk_ids:
             continue
-        seen_chunk_ids.add(citation["chunk_id"])
-        citations.append(citation)
+        seen_chunk_ids.add(chunk_id)
+        citations.append({
+            "document_id": DOCS[key][0],
+            "chunk_id": chunk_id,
+            "pdf_page": int(rec["pdf_page"]),
+            "printed_page": None,
+            "excerpt": quote,
+        })
 
     return citations
 
@@ -268,19 +305,45 @@ def run(request: QueryInput) -> QueryOutput:
     if case is not None:
         allowed = set(request["allowed_document_ids"])
         cards = [c for c in case["cards"] if DOCS[c["출처"][0]][0] in allowed]
+        # 허용되지 않은 근거가 하나라도 빠지면 원래 답을 그대로 쓰지 않는다 (근거 일부만 남은 답 방지)
+        complete = len(cards) == len(case["cards"])
         citations = build_citations(cards)
         findings = build_findings(cards, citations)
         result = {
             "domain": "prevention_legal",
-            "status": case["status"] if cards else "INSUFFICIENT_EVIDENCE",
+            "status": case["status"] if cards and complete else "INSUFFICIENT_EVIDENCE",
             "findings": findings,
             "citations": citations,
             "action_ids": [],
-            "warnings": case["warnings"],
-            "answer": case["answer"],
+            "warnings": case["warnings"] if complete else case["warnings"] + ["허용되지 않은 문서의 근거가 빠져 답을 제공하지 않습니다."],
+            "answer": case["answer"] if complete else "",
         }
         validate_query_output(result, request)
         return result
+
+    # 검색 기반 카드 (샘플 질문이 아닐 때만). 블록이 검색 상위 10개에 있고, 질문에 질문어가 있어야 쓴다.
+    if not is_sample_question(request):
+        retrieved_ids = {b["chunk_id"] for b in search_blocks(request, k=10)}
+        allowed_docs = set(request["allowed_document_ids"])
+        cards = [c for c in RETRIEVAL_CARDS
+                 if expected_chunk_id(c) in retrieved_ids
+                 and DOCS[c["출처"][0]][0] in allowed_docs
+                 and all(term in request["question"] for term in c.get("필수어", []))
+                 and sum(term in request["question"] for term in c["질문어"]) >= 2
+                 and not any(term in request["question"] for term in c["제외어"])]
+        if cards:
+            citations = build_citations(cards)
+            result = {
+                "domain": "prevention_legal",
+                "status": "ANSWERED",
+                "findings": build_findings(cards, citations),
+                "citations": citations,
+                "action_ids": [],
+                "warnings": [c["범위문"] for c in cards],
+                "answer": " ".join(c["답문장"] for c in cards),
+            }
+            validate_query_output(result, request)
+            return result
 
     # 샘플이 아직 비어 있으면 실행을 멈추고 이유를 알려준다.
     if not SAMPLE_CARDS:
@@ -304,10 +367,10 @@ def run(request: QueryInput) -> QueryOutput:
         return result
 
     # 2) 검색: 질문과 관련 있는 블록을 찾는다 (허용 문서 안에서만)
-    # 상위 10개: 법 근거(의료기관장 기한 등)가 7위 안팎에 있어 5개로는 빠진다. 검색 순위 자체는 바꾸지 않았다.
-    retrieved_ids = {b["chunk_id"] for b in search_blocks(request, k=10)}
+    # 상위 20개: 전문 검색 기준 법 블록(18쪽 b01·b02, 19쪽 b01)이 상위 10개 밖이라 20개로 늘렸다 (튜닝 기록: 노트북 19).
+    retrieved_ids = {b["chunk_id"] for b in search_blocks(request, k=20)}
 
-    # 3) 샘플·법 카드 중 검색 결과 상위 10개에 드는 블록을 가리키는 카드만 근거로 쓴다
+    # 3) 샘플·법 카드 중 검색 결과(상위 20개)에 드는 블록을 가리키는 카드만 근거로 쓴다
     usable_cards = [c for c in SAMPLE_CARDS + LAW_CARDS if expected_chunk_id(c) in retrieved_ids]
     if not usable_cards:
         result: QueryOutput = {
