@@ -45,6 +45,8 @@ mkdir data/raw          # Windows PowerShell: New-Item -ItemType Directory data/
 
 ## 개발 규칙
 
+- 작업 시작 전에 [공통 에이전트 규칙](AGENTS.md)과 [팀 진행 현황](docs/progress.md)을 확인합니다.
+- 코드·문서·평가 작업을 마치면 실제 변경·검증·남은 일을 `docs/progress.md`에 갱신하고 같은 PR에 포함합니다. Claude Code는 `CLAUDE.md`에서 공통 `AGENTS.md`를 가져옵니다.
 - 데이터 형식과 수집 규칙은 `data/specs/`에 기록합니다.
 - 노트북에서 재사용할 코드는 `src/`로 옮깁니다.
 - 의존성은 `uv add <패키지>`로 추가해 `pyproject.toml`과 `uv.lock`에 반영합니다.
