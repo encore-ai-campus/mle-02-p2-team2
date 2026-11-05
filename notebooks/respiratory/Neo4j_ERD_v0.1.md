@@ -54,7 +54,6 @@ erDiagram
     ActionConcept {
         string concept_id PK "VENTILATE_DISINFECT"
         string name
-        string group
     }
 ```
 
@@ -121,10 +120,22 @@ bundle.json:validate_bundle(속성·ID·관계 패턴 검사)
 •GraphPath=위 관계를 실제 방향 그대로 직렬화(새 노드 아님)
 ```
 
-## 7. 확인 필요
+## 7. 공동 DB 점검 결과(11/5 notebooks/respiratory/db_check.py,읽기 전용)
 
 ```
-•사전 노드 실제 DB 속성(json 키와 같다고 가정)
-•회의결정 12번 공동 DB 노드 수와 문서별 실제 수
-•표 청크 규칙(회의 "문단 유지"↔v3.1 "행 단위",회의결정 5번)
+•노드 2,115:Document 9·Chunk 1,567·SchoolAction 488·ActionConcept 28·SchoolRole 12·Disease 11
+•관계 2,985:HAS_CHUNK 1,567·SUPPORTED_BY 488·DONE_BY 344·INSTANCE_OF 305·ABOUT 166·FOR_DISEASE 115
+•허용 6패턴 밖 관계 0,SUPPORTED_BY 없는 행동 0,HAS_CHUNK 없는 청크 0,basis 없는 DONE_BY 0,임베딩 없는 청크 0
+•사전 노드 실제 속성:Disease(disease_id·name·aliases),SchoolRole(role_id·name·aliases),ActionConcept(concept_id·name)
+ →ActionConcept.group은 DB에 없음(사전 검수용)
+•제약 6·인덱스 12(RANGE 9·FULLTEXT 1·VECTOR 1·LOOKUP 2) 전부 ONLINE
+•문서 간 공통 개념(3개 문서):CONTACT_GUARDIAN·ACTIVE_SURVEILLANCE·COOPERATE_HEALTH_AUTHORITY 등
+```
+
+## 8. 확인 필요
+
+```
+•ActionConcept 28=사전 27+REPORT_HEALTH_CENTER(사전 파일에 없음,kdca_measles_2026 행동 2건이 사용),SchoolRole 12=사전 11+1(무엇인지 미확인)
+•kdca_hfmd_2026:DB엔 있고 source_manifest.csv엔 없음
+•표 청크 규칙(회의 "문단 유지"↔v3.1 "행 단위",회의결정 5번).school 문서는 이미 표 행 청크 사용
 ```
