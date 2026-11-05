@@ -27,10 +27,16 @@ class ToolInput(TypedDict):
     top_k: NotRequired[int]
 
 
+class GraphEdge(TypedDict):
+    # 계약 v2.0 §9 와 같은 모양. 예: SchoolAction:<ID> --SUPPORTED_BY--> Chunk:<ID>
+    source_ref: str
+    relationship_type: str
+    target_ref: str
+
+
 class GraphPath(TypedDict):
-    # 법령 Tool은 그래프 경로를 만들지 않는다 (빈 목록). 형식만 맞춘다.
-    nodes: list[str]
-    relations: list[str]
+    # 법령 Tool 은 지금 그래프 경로를 만들지 않는다 (graph_paths 는 빈 목록). 모양만 계약과 맞춘다.
+    edges: list[GraphEdge]
 
 
 class ToolResult(TypedDict):
