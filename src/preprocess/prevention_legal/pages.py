@@ -88,3 +88,27 @@ def make_citation(key: str, page: int, excerpt: str, block: int = 1) -> dict:
         "printed_page": None,
         "excerpt": excerpt,
     }
+
+
+def make_table_citation(key: str, page: int, excerpt: str, table: int = 1, row: int = 1) -> dict:
+    """표 행 하나의 Citation. chunk_id는 v3.1 형식 <document_id>:p<쪽4자리>:t<표2자리>r<행2자리>.
+
+    표는 행 단위로 청크한다(스키마 v3.1 5-2절). 발췌문은 같은 쪽 원문에 있어야 한다.
+    """
+    if key not in DOCS:
+        raise ValueError(f"문서 키가 없습니다: {key!r}")
+    if page not in _load_pages(key):
+        raise ValueError(f"{key} 문서에 {page}쪽이 없습니다.")
+    if not 1 <= table <= 99 or not 1 <= row <= 99:
+        raise ValueError("table·row 는 1~99 사이여야 합니다.")
+    if not excerpt_in_page(excerpt, key, page):
+        raise ValueError(f"발췌문을 {key} {page}쪽에서 찾지 못했습니다.")
+    document_id, _ = DOCS[key]
+    return {
+        "document_id": document_id,
+        "chunk_id": f"{document_id}:p{page:04d}:t{table:02d}r{row:02d}",
+        "pdf_page": page,
+        "printed_page": None,
+        "excerpt": excerpt,
+    }
+
