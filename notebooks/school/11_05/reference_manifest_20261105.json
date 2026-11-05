@@ -1,0 +1,197 @@
+{
+  "date": "2026-11-05",
+  "lessons": [
+    {
+      "kind": "lesson",
+      "folder": "3_LLM_지식추출",
+      "file": "40-7_개체관계-추출과-적재-근거검증_배포용.ipynb",
+      "cell_1based": 31,
+      "symbol": "block_all",
+      "sha256": "3dbeacd21bb76f6db9f3992b4e9d04147eaffffb5d47150e9fd0604bee88d393"
+    },
+    {
+      "kind": "lesson",
+      "folder": "3_LLM_지식추출",
+      "file": "40-7_개체관계-추출과-적재-근거검증_배포용.ipynb",
+      "cell_1based": 32,
+      "symbol": "ends",
+      "sha256": "7c2ff14fd9c505f71504e02215a82ce10c28f9b3dab31f13194dd124418f8250"
+    },
+    {
+      "kind": "lesson",
+      "folder": "3_LLM_지식추출",
+      "file": "40-7_개체관계-추출과-적재-근거검증_배포용.ipynb",
+      "cell_1based": 34,
+      "symbol": "check",
+      "sha256": "befdaedd545f88eec9c8622d43315ebc3205641ebbae7bf6047666cbbc8a8ecc"
+    },
+    {
+      "kind": "lesson",
+      "folder": "2_그래프분석과검색",
+      "file": "38-1_벡터검색과-전문검색-Vector-FullText인덱스_배포용.ipynb",
+      "cell_1based": 38,
+      "symbol": "by_text",
+      "sha256": "6bf9899f1fba77596ac4423bbf755ac5ed1ead9128078998773dab789f870192"
+    },
+    {
+      "kind": "lesson",
+      "folder": "2_그래프분석과검색",
+      "file": "38-2_리트리버-Vector와-Hybrid검색_배포용.ipynb",
+      "cell_1based": 27,
+      "symbol": "with_source",
+      "sha256": "deb5126542ae41d4d7a17247ff7a53dfdde653a536d18562a0e482942634cea5"
+    },
+    {
+      "kind": "lesson",
+      "folder": "2_그래프분석과검색",
+      "file": "38-3_그래프로-근거넓히기-VectorCypher와-PageRank재랭킹_배포용.ipynb",
+      "cell_1based": 10,
+      "symbol": "EXPAND =",
+      "sha256": "4b0b57164148a402bb324183fcead3d3050772df5907d766c4050d83b066212e"
+    },
+    {
+      "kind": "lesson",
+      "folder": "2_그래프분석과검색",
+      "file": "38-3_그래프로-근거넓히기-VectorCypher와-PageRank재랭킹_배포용.ipynb",
+      "cell_1based": 11,
+      "symbol": "expanded_item",
+      "sha256": "aa9a10907e5cc65ed5e4652965809e17f6b831f8c26a0e60399c91f70593ad1e"
+    },
+    {
+      "kind": "lesson",
+      "folder": "2_그래프분석과검색",
+      "file": "37-6_공종별-공공공사-시장을-묻는-GraphRAG_배포용.ipynb",
+      "cell_1based": 21,
+      "symbol": "rows",
+      "sha256": "b4ae6f7926f0bcf1a02f5e0b42c816f58c3abefad9847de8da03aee14511b301"
+    },
+    {
+      "kind": "lesson",
+      "folder": "2_그래프분석과검색",
+      "file": "37-6_공종별-공공공사-시장을-묻는-GraphRAG_배포용.ipynb",
+      "cell_1based": 25,
+      "symbol": "top_leaders",
+      "sha256": "6892e9132bfb62f33d6d46d5c80bba3a7cf116559214cd2db2e4c9794e6977ce"
+    },
+    {
+      "kind": "lesson",
+      "folder": "2_그래프분석과검색",
+      "file": "38-5_세-방법-비교와-라우터-벡터RAG-GraphRAG-Text2Cypher_배포용.ipynb",
+      "cell_1based": 34,
+      "symbol": "route",
+      "sha256": "5031a2ffd3877e2c21b18429d78c4f1ec63a65d7027788970973c472106d7fc6"
+    },
+    {
+      "kind": "lesson",
+      "folder": "2_그래프분석과검색",
+      "file": "38-5_세-방법-비교와-라우터-벡터RAG-GraphRAG-Text2Cypher_배포용.ipynb",
+      "cell_1based": 50,
+      "symbol": "ToolNode(tools, handle_tool_errors=True)",
+      "sha256": "1761a8477cdf0d1017a13369a18a98ac1b62102093e398032099e602312d1e81"
+    },
+    {
+      "kind": "lesson",
+      "folder": "2_그래프분석과검색",
+      "file": "38-5_세-방법-비교와-라우터-벡터RAG-GraphRAG-Text2Cypher_배포용.ipynb",
+      "cell_1based": 51,
+      "symbol": "ask_agent",
+      "sha256": "6ff3d556180ff38c27cd9bbbc5ebb533b25fa44ac0d9532bc63a69e4702d2488"
+    },
+    {
+      "kind": "lesson",
+      "folder": "3_LLM_지식추출",
+      "file": "42-5_Entity-Linking-회사이름을-공시목록에-연결_배포용.ipynb",
+      "cell_1based": 11,
+      "symbol": "normalize",
+      "sha256": "d94eb1e084b3efe662fbdf8672f2f416cdfdd4463c02ae4dd9d2f6eec01e1234"
+    },
+    {
+      "kind": "lesson",
+      "folder": "3_LLM_지식추출",
+      "file": "42-5_Entity-Linking-회사이름을-공시목록에-연결_배포용.ipynb",
+      "cell_1based": 23,
+      "symbol": "rule_link",
+      "sha256": "c6fd1c3bea54370548e1644aa6f9199a179997326f8a3bc1f395663e4d1ba170"
+    },
+    {
+      "kind": "lesson",
+      "folder": "3_LLM_지식추출",
+      "file": "44-2_다시넣어도-안전하게-증분적재-버전-실패재처리_배포용.ipynb",
+      "cell_1based": 20,
+      "symbol": "content_hash",
+      "sha256": "b3d9a411341b77ad305bd81b8f84d99bd8c198108d144b3b49630ff8eb03be4f"
+    },
+    {
+      "kind": "lesson",
+      "folder": "3_LLM_지식추출",
+      "file": "44-2_다시넣어도-안전하게-증분적재-버전-실패재처리_배포용.ipynb",
+      "cell_1based": 40,
+      "symbol": "run_all",
+      "sha256": "b2b675c7e707da2aa6c19dc1df8d0aba78fe507007a688a2a634a7a62181b0d2"
+    },
+    {
+      "kind": "lesson",
+      "folder": "3_LLM_지식추출",
+      "file": "44-1_보고서-KG-Neo4j-적재-한번에_배포용.ipynb",
+      "cell_1based": 48,
+      "symbol": "gold_keys",
+      "sha256": "500319ecd9125c988ca069509dbc590bae63f63adb1576982e6d0a893c6665c5"
+    }
+  ],
+  "project_documents": [
+    {
+      "source": "교육시설_감염병_GraphRAG_프로젝트_계획서_v2.0.md",
+      "snapshot": "reference_project_plan_v2_20261105.md",
+      "sha256": "87968b3264ac5a88475cd13c258ec94d69d6cfc9ffadbcabeb7409f7eac1e0a3"
+    },
+    {
+      "source": "교육시설_감염병_LangGraph_공통계약_가이드_v2.0.md",
+      "snapshot": "reference_tool_contract_v2_20261105.md",
+      "sha256": "54594a1e127a2c8c71af78c17341d292121f43c17e472c6cbb5d09abac8522e7"
+    },
+    {
+      "source": "교육시설_감염병_GraphRAG_최종_개발일정표_v2.0.md",
+      "snapshot": "reference_schedule_v2_20261105.md",
+      "sha256": "db098a373b4c28d9fd518c6f286dc59d2d9d1b7892066662ac467cbae48b98ef"
+    }
+  ],
+  "reviewed_project_files": [
+    {
+      "file": "src/rag/school/contract_local.py",
+      "sha256_at_review": "3afb6f7a8ae7ad9c28d678335e5f55858a06a34eae2dfc0180ae11e890fdaa26"
+    },
+    {
+      "file": "src/rag/school/validation_local.py",
+      "sha256_at_review": "9a5acba2cbd4d940a23e5ce66ad4cfef8bfff070d3e4d752708a9ff62a4cbd22"
+    },
+    {
+      "file": "src/rag/school/search.py",
+      "sha256_at_review": "0ad15a54120bf4ce8b549de0165991d84f23167fb0b5c2809d5fa58854d9a2f9"
+    },
+    {
+      "file": "src/rag/school/graph.py",
+      "sha256_at_review": "796ebfc3e063cae8aab0c40fe4b15a1178ae2a785c74ac8be6e39deb6cd9429a"
+    },
+    {
+      "file": "src/rag/school/__init__.py",
+      "sha256_at_review": "5c67f038c8f5e53b25751e46ecdeb5d87f251385de22829dae611020092d596c"
+    }
+  ],
+  "runtime_db_checked": false,
+  "note": "Fixtures demonstrate contracts/flow only. No production changes or DB calls.",
+  "verification": {
+    "executed_code_cells": 6,
+    "original_excerpt_count": 17,
+    "schema": "nbformat 4 validated",
+    "langgraph_fixture": "executed, not skipped",
+    "external_services_used": false,
+    "runtime_db_checked": false,
+    "checks": [
+      "source hashes",
+      "v2 snapshots identical",
+      "Markdown links",
+      "fixture assertions",
+      "nbformat schema"
+    ]
+  }
+}

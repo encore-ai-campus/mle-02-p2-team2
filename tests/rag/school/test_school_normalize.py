@@ -435,3 +435,69 @@ def test_explicit_basis_in_example_role_table_is_corrected(world):
     action = next(a for a in result["actions"] if a["candidate_index"] == 1)
     assert action["roles"][0]["basis"] == "EXAMPLE" and "EXPLICIT→EXAMPLE" in action["roles"][0]["basis_corrected"]
     assert all(e["props"] == {"basis": "EXAMPLE"} for e in result["bundle"]["edges"] if e["type"] == "DONE_BY")
+
+
+# ---------------------------------------------------------------- 역할표 확대에서 추가한 보정 규칙
+
+from index.school.normalize import loose_find, settle_modality, settle_stage
+
+
+def test_loose_quote_ignores_br_spaces_and_bullets():
+    row = "|담임교사|대응<br>제3단계|1. 능동감시<br> - 매일 학급 학생들의 감염병(의심) 환자<br>추가 발생 여부 파악|"
+    assert loose_find(row, "매일 학급 학생들의 감염병(의심) 환자 추가 발생 여부 파악") >= 0
+    assert loose_find(row, "매일 학급 학생들의 감염병 의심 환자 추가 발생 여부를 파악") < 0     # 다른 글자는 거부
+    assert row[loose_find(row, "능동감시"):].startswith("능동감시")
+
+
+def test_evidence_across_br_is_accepted_and_offset_is_found(world):
+    changed = MOE_MD.replace("1) 보건교사에게 학생 상태를 전달 2) 교실 환기", "1) 보건교사에게 학생 상태를<br>전달 2) 교실<br>환기")
+    SOURCES["moe.md"] = (*SOURCES["moe.md"][:2], changed, 36, 22)
+    try:
+        chunk = make_chunk("moe.md", "담임교사", 1)
+    finally:
+        SOURCES["moe.md"] = (*SOURCES["moe.md"][:2], MOE_MD, 36, 22)
+    world["raw"]["moe.md"] = changed
+    world["artifacts"]["chunks"][0] = chunk
+    candidate = make_candidate(chunk, "보건교사에게 학생 상태를 전달")      # <br> 없이 이어 쓴 인용
+    world["artifacts"]["candidates"][0] = candidate
+    world["artifacts"]["reviews"][0] = approve(candidate, 1)
+    ready, _ = select_approved(world["artifacts"])
+    normalized, held, _ = normalize_candidates(ready[:1], world["artifacts"]["chunks"], world["raw"],
+                                               world["books"])
+    assert not held and normalized[0]["evidence_offset"] >= 0
+
+
+def test_stage_is_filled_only_from_section_path_and_only_when_unspecified():
+    chunk = {"section": "[표 3-13] 밀접접촉자 파악 및 관리 담당자별 역할",
+             "editorial_context": [{"text": "이 표가 놓인 본문 절: 4. 대응 제3단계: 학교 내 유행 확산 차단 > 나. 관련 조치사항 내용\n"}]}
+    assert settle_stage("UNSPECIFIED", chunk)[0] == "RESPONSE_3"
+    assert settle_stage("RESPONSE_2", chunk) == ("RESPONSE_2", None)          # 모델이 정한 단계는 유지
+    two = {"section": "대응 제1단계와 제2단계", "editorial_context": []}
+    assert settle_stage("UNSPECIFIED", two) == ("UNSPECIFIED", None)          # 단계가 둘이면 고르지 않음
+    assert settle_stage("UNSPECIFIED", {"section": "표 3-2", "editorial_context": []})[0] == "UNSPECIFIED"
+
+
+@pytest.mark.parametrize("modality, evidence, expected", [
+    ("MANDATORY", "발생감시팀은 능동감시를 하고", "UNSPECIFIED"),
+    ("MANDATORY", "혼자 이동하는 것은 원칙적으로 금지", "MANDATORY"),
+    ("RECOMMENDED", "밀접접촉자를 파악하고 관리하는 것이 매우 중요", "UNSPECIFIED"),
+    ("RECOMMENDED", "담당 교사는 담임교사 권장", "RECOMMENDED"),
+    ("UNSPECIFIED", "아무 문장", "UNSPECIFIED"),
+])
+def test_modality_requires_wording_in_evidence(modality, evidence, expected):
+    assert settle_modality(modality, evidence)[0] == expected
+
+
+def test_compound_row_gives_both_roles_only_after_review(world):
+    chunk = world["artifacts"]["chunks"][0]
+    chunk["role_label"] = "교장 및 교감"
+    candidate = make_candidate(chunk, "교실 환기", role="교장 및 교감")
+    world["artifacts"]["candidates"][0] = candidate
+    world["artifacts"]["reviews"][0] = approve(candidate, 1, role_row_checked=False)
+    assert any(h["candidate_index"] == 1 for h in run_pipeline(world)["held"])      # 검수 항목 미완료 → 보류
+    world["artifacts"]["reviews"][0] = approve(candidate, 1)
+    ready, _ = select_approved(world["artifacts"])
+    normalized, _, _ = normalize_candidates(ready, world["artifacts"]["chunks"], world["raw"], world["books"])
+    action = next(a for a in normalized if a["candidate_index"] == 1)
+    assert sorted(r["role_id"] for r in action["roles"]) == ["PRINCIPAL", "VICE_PRINCIPAL"]
+    assert all(r["basis"] == "EXAMPLE" for r in action["roles"])

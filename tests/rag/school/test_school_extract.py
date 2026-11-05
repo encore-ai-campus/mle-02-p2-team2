@@ -201,10 +201,18 @@ def test_pending_concept_is_deferred_and_unknown_is_held(world):  # noqa: F811
 
 # ---------------------------------------------------------------- 검수 전 점검
 
-def test_precheck_flags_role_quoted_from_title(world):  # noqa: F811
+def test_role_evidence_from_title_is_accepted_but_editorial_memo_is_not(world):  # noqa: F811
+    # 예시 단서가 표 제목에 있는 역할표: 제목 인용은 원문 조각이므로 받아들인다.
     candidate = world["artifacts"]["candidates"][1]
     candidate["roles"][0]["basis_evidence"] = "인공 시나리오: 대응 1단계 주요 조치사항"
     rows = precheck(world["artifacts"], world["raw"], world["books"])
-    assert any("역할 근거가 해당 표 행에 없음" in r for r in rows[1]["auto_reasons"])
-    assert not rows[0]["auto_reasons"] and rows[0]["concept"] == "VENTILATE_DISINFECT"
-    assert rows[2]["concept"] == "NEW_CONCEPT"
+    assert not rows[1]["auto_reasons"]
+    # 편집 메모에만 있는 문장 + 행 담당과 다른 표기 → 근거 없음
+    candidate["roles"][0].update(role_text="보건교사", basis_evidence="편집 메모: 실제 역할은 예시입니다.")
+    assert any("역할 근거가 원문 조각" in r for r in precheck(world["artifacts"], world["raw"],
+                                                           world["books"])[1]["auto_reasons"])
+    # 같은 표기가 행 담당과 같으면 근거 위치와 무관하게 행 구조가 근거
+    candidate["roles"][0].update(role_text="담임교사")
+    assert not precheck(world["artifacts"], world["raw"], world["books"])[1]["auto_reasons"]
+    rows = precheck(world["artifacts"], world["raw"], world["books"])
+    assert rows[0]["concept"] == "VENTILATE_DISINFECT" and rows[2]["concept"] == "NEW_CONCEPT"

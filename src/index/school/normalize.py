@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from copy import deepcopy
 from pathlib import Path
 
@@ -269,12 +270,37 @@ def _row_part(chunk: dict) -> dict | None:
     return next((p for p in chunk.get("source_parts") or [] if p.get("part") == "row"), None)
 
 
+_BR = re.compile(r"<br\s*/?>")
+_IGNORED = set(" \t\r\n|-–∙•‣¢·;:,.()[]<>「」『』※‘’“”'\"･")
+
+
+def _loose(text: str) -> list[tuple[str, int]]:
+    """(글자, 원문 위치) 목록. <br>·공백·표 구분자·글머리표·문장부호를 뺀 비교용(원문은 고치지 않는다)."""
+    skip = set()
+    for match in _BR.finditer(text):
+        skip |= set(range(match.start(), match.end()))
+    return [(ch.casefold(), i) for i, ch in enumerate(text) if i not in skip and ch not in _IGNORED]
+
+
+def loose_find(haystack: str, needle: str) -> int:
+    """needle이 haystack에 (줄바꿈·<br>·공백·글머리표 차이를 무시하고) 연속으로 있으면 원문 시작 위치, 없으면 -1."""
+    wanted = "".join(ch for ch, _ in _loose(needle))
+    if not wanted:
+        return -1
+    kept = _loose(haystack)
+    position = "".join(ch for ch, _ in kept).find(wanted)
+    return kept[position][1] if position >= 0 else -1
+
+
 def validate_source(candidate: dict, chunks_by_id: dict[str, dict],
                     chunk_problems: dict[str, list[str]]) -> list[str]:
     """후보의 문서·청크 소속과 인용을 원문 조각에서 확인한다(R02 check의 학교 버전).
 
-    인용은 표 행(row) 조각 하나 안에서만 찾는다. 제목·머리글·편집 메모와 이어 붙인 문장은
-    원문의 연속 인용으로 인정하지 않는다.
+    - 행동 근거(evidence)는 표 **행** 조각 안에서만 찾는다(<br>·공백·글머리표 차이는 무시).
+    - 역할 근거(basis_evidence)는 제목·머리글·행 중 한 조각에서 찾는다. 예시 단서가 표 제목('주요 역할(예시)')에 있는
+      역할표가 있기 때문이다. 단, 모델이 역할을 행의 담당 칸 대신 다른 곳에서 인용했더라도 role_text가 행 담당과
+      같으면 행 구조가 근거이므로 받아들인다. 편집 메모에만 있는 문장은 인정하지 않는다.
+    - 제목·머리글과 이어 붙인 문장은 원문의 연속 인용으로 인정하지 않는다.
     """
     raw = candidate.get("raw", candidate)   # select_approved 결과든 원래 후보든 받는다
     chunk = chunks_by_id.get(raw.get("source_chunk_id"))
@@ -287,12 +313,17 @@ def validate_source(candidate: dict, chunks_by_id: dict[str, dict],
     row_text = row["text"] if row else ""
     evidence = raw.get("evidence") or ""
     # 편집 메모(editorial_context)·제목·머리글에만 있는 문장은 여기서 자동으로 걸러진다.
-    if not evidence.strip() or evidence not in row_text:
+    if not evidence.strip() or (evidence not in row_text and loose_find(row_text, evidence) < 0):
         reasons.append("행동 근거가 해당 표 행 원문에 연속으로 없음")
+    parts_text = [p["text"] for p in chunk.get("source_parts") or []]
+    row_label = compare_key(chunk.get("role_label") or "")
     for role in raw.get("roles") or []:
         basis_evidence = role.get("basis_evidence") or ""
-        if not basis_evidence.strip() or basis_evidence not in row_text:
-            reasons.append(f"역할 근거가 해당 표 행에 없음: {role.get('role_text')}")
+        found = bool(basis_evidence.strip()) and any(
+            basis_evidence in text or loose_find(text, basis_evidence) >= 0 for text in parts_text)
+        same_as_row = bool(row_label) and compare_key(role.get("role_text") or "") == row_label
+        if not (found or same_as_row):
+            reasons.append(f"역할 근거가 원문 조각(제목·머리글·행)에 없음: {role.get('role_text')}")
     return reasons
 
 
@@ -300,6 +331,8 @@ def evidence_offset(candidate: dict, chunk: dict) -> int:
     """행 조각 안에서 근거가 처음 나오는 위치(원문 위→아래 순서 기준)."""
     row = _row_part(chunk)
     position = row["text"].find(candidate["evidence"]) if row else -1
+    if position < 0 and row:
+        position = loose_find(row["text"], candidate["evidence"])
     if position < 0:
         raise ValueError("근거 위치를 찾을 수 없음")
     return position
@@ -425,6 +458,14 @@ def _decide_roles(candidate: dict, chunk: dict, books: dict) -> tuple[list, list
     mentions = raw.get("roles") or []
     row = resolve_mention(chunk.get("role_label") or "", books["role"], "role_id")
     mapped = [(m, resolve_mention(m["role_text"], books["role"], "role_id")) for m in mentions]
+    review = candidate.get("review") or {}
+    if row["status"] == "COMPOUND" and review.get("role_row_checked") is True and mentions:
+        # '교장 및 교감'처럼 한 칸에 두 역할이 적힌 행: 검수자가 '같은 행의 역할'을 확인하면 두 역할 모두 수행자다.
+        # (사전의 compound_mentions 규칙: 사람 검수 후 행동마다 두 역할 모두에 DONE_BY를 둘지 정한다.)
+        bases = {m["basis"] for m in mentions}
+        basis = "EXAMPLE" if "EXAMPLE" in bases else next(iter(bases))
+        return [{"role_id": role_id, "basis": basis, "role_text": chunk["role_label"], "method": "COMPOUND_ROW"}
+                for role_id in row["candidates"]], [], []
     if row["status"] != "RESOLVED":
         roles, reasons = [], []
         for mention, result in mapped:
@@ -446,7 +487,6 @@ def _decide_roles(candidate: dict, chunk: dict, books: dict) -> tuple[list, list
         mention, result = same[0]
         return [{"role_id": row["id"], "basis": mention["basis"], "role_text": mention["role_text"],
                  "method": result["method"]}], dropped, []
-    review = candidate.get("review") or {}
     # '사전에 없음'만 대신한다. 학교 밖 주체(EXCLUDED)·복합 표기(COMPOUND)는 대신하지 않는다.
     if all(r["status"] == "UNRESOLVED" for _, r in others) and review.get("role_row_checked") is True:
         bases = {m["basis"] for m, _ in others}
@@ -478,12 +518,53 @@ def precheck(artifacts: dict, raw_texts: dict[str, str], books: dict) -> list[di
             mapping, map_reasons = map_candidate(wrapper, chunks_by_id[raw["source_chunk_id"]], books)
             reasons += map_reasons
             concept, roles = mapping["concept"], mapping["roles"]
+        chunk = chunks_by_id.get(raw.get("source_chunk_id")) or {}
+        stage, stage_note = settle_stage(raw.get("stage"), chunk)
+        modality, modality_note = settle_modality(raw.get("modality"), raw.get("evidence"))
         rows.append({"candidate_index": index, "source_chunk_id": raw.get("source_chunk_id"),
                      "action_text": raw.get("action_text"),
                      "roles": [f"{r['role_id']}({r['basis']})" for r in roles],
                      "concept": (concept or {}).get("id") or (concept or {}).get("status"),
+                     "stage": stage, "modality": modality,
+                     "corrections": [n for n in (stage_note, modality_note) if n],
                      "auto_reasons": reasons})
     return rows
+
+
+STAGE_WORDS = {"PREVENTION": r"예방단계", "RESPONSE_1": r"(?:대응)?제?1단계", "RESPONSE_2": r"(?:대응)?제?2단계",
+               "RESPONSE_3": r"(?:대응)?제?3단계", "RECOVERY": r"복구단계"}
+MODALITY_MARKERS = {
+    "MANDATORY": r"해야|하여야|반드시|의무|금지|필수",
+    "RECOMMENDED": r"권장|권고|바람직",
+    "DISCRETIONARY": r"할 수 있|재량|자율적|선택",
+}
+SECTION_NOTE = "이 표가 놓인 본문 절:"
+
+
+def settle_stage(raw_stage: str, chunk: dict) -> tuple[str, str | None]:
+    """모델이 단계를 모르면(UNSPECIFIED) 표 제목·본문 절 경로에 단계가 정확히 하나 적혀 있을 때 그것을 쓴다.
+
+    stage는 '원문이 행동을 어느 단계 아래에 배치했는가'를 기록하는 값이다(온톨로지 4절 규칙). 표가 '4. 대응 제3단계'
+    절 아래에 있으면 그 표의 행동은 제3단계에 배치된 것이다. 본문 절 경로는 변환본의 제목에서 기계적으로 만든 값이다
+    (모델 출력이 아님). 모델이 이미 단계를 정했으면 바꾸지 않는다. 반환: (단계, 보정 사유 또는 None).
+    """
+    if raw_stage != "UNSPECIFIED":
+        return raw_stage, None
+    paths = [n["text"].split(SECTION_NOTE, 1)[1] for n in chunk.get("editorial_context") or []
+             if SECTION_NOTE in n.get("text", "")]
+    head = re.sub(r"\s", "", " ".join(paths) + " " + (chunk.get("section") or ""))
+    found = [stage for stage, pattern in STAGE_WORDS.items() if re.search(pattern, head)]
+    if len(found) == 1:
+        return found[0], f"UNSPECIFIED→{found[0]} (표가 놓인 본문 절: {' '.join(paths)[:60]})"
+    return raw_stage, None
+
+
+def settle_modality(raw_modality: str, evidence: str) -> tuple[str, str | None]:
+    """원문 근거에 강도 표현이 없으면 UNSPECIFIED로 낮춘다(온톨로지 4절: 법률상 의무로 단정하지 않는다)."""
+    marker = MODALITY_MARKERS.get(raw_modality)
+    if marker and not re.search(marker, evidence or ""):
+        return "UNSPECIFIED", f"{raw_modality}→UNSPECIFIED (근거 문장에 강도 표현 없음)"
+    return raw_modality, None
 
 
 def normalize_candidates(ready: list[dict], chunks: list[dict], raw_texts: dict[str, str],
@@ -500,11 +581,14 @@ def normalize_candidates(ready: list[dict], chunks: list[dict], raw_texts: dict[
             mapping, map_reasons = map_candidate(candidate, chunk, books)
             reasons += map_reasons
             raw = candidate["raw"]
+            stage, stage_note = settle_stage(raw["stage"], chunk)
+            modality, modality_note = settle_modality(raw["modality"], raw["evidence"])
             row.update({
-                "scope": raw["scope"], "stage": raw["stage"], "step_order": raw["step_order"],
+                "scope": raw["scope"], "stage": stage, "step_order": raw["step_order"],
                 "when_text": raw["when_text"], "timing_text": raw["timing_text"],
-                "modality": raw["modality"], "evidence": raw["evidence"],
-                "evidence_offset": evidence_offset(raw, chunk), **mapping,
+                "modality": modality, "evidence": raw["evidence"],
+                "evidence_offset": evidence_offset(raw, chunk),
+                "corrections": [n for n in (stage_note, modality_note) if n], **mapping,
             })
         row["hold_reasons"] = reasons
         (held if reasons else normalized).append(row)

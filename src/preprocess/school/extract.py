@@ -133,6 +133,80 @@ def build_scenario_chunks(blocks_df, sources_df, verified_pages=PDF_VERIFIED_PAG
     return chunk_rows
 
 
+# ---------------------------------------------------------------- 청크 확대: 담당자별 역할표 행
+
+DOC_KEYS = {"moe_school_manual_v3": "school_manual", "gyeonggi_school_guide_2025": "gyeonggi_guide"}
+BR_NOTE = ("표 셀 안의 <br>은 줄바꿈 표시다. evidence·basis_evidence는 <br>을 가로지르지 말고 "
+           "<br> 사이의 한 구절에서 글자 그대로 복사한다. 번호('1.')·글머리표('-')는 빼도 된다.")
+
+
+def build_role_row_chunks(blocks_df, sources_df, official_ids: list[str], sections: dict[str, str],
+                          verified: bool = True) -> list[dict]:
+    """공식 청크 ID(예: moe_school_manual_v3:p0066:t01r02)가 가리키는 표 행을 추출용 청크로 만든다.
+
+    - TEMP 청크 ID는 `TEMP:{문서}:{블록}:r{행}`(시나리오 4행의 기존 TEMP ID와 겹치지 않는다).
+    - sections: {공식 chunk_id: 본문 장·절 경로 > 표 제목}. 표 제목에 단계가 없는 표(표 3-11~3-16)의 원문 단계를
+      모델이 알 수 있게 '편집자 참고 메모'로만 준다(원문 인용이 아니다).
+    - 쪽 대조(VERIFIED_PDF)는 사용자가 11/4에 선정 쪽수 전체를 확인했다고 알려 준 것을 따른다.
+    """
+    from index.school.ids_local import parse_id
+
+    sources = sources_df.set_index("source_id")
+    chunks = []
+    for official in official_ids:
+        parsed = parse_id(official)
+        doc_key = DOC_KEYS[parsed["document_id"]]
+        tables = blocks_df[(blocks_df["doc_id"] == doc_key) & (blocks_df["source_type"] == "tables")
+                           & (blocks_df["kind"] == "table") & (blocks_df["pdf_page"] == parsed["page"])
+                           ].sort_values("start_offset")
+        if len(tables) < parsed["table"]:
+            raise ValueError(f"표를 찾지 못함: {official}")
+        table = tables.iloc[parsed["table"] - 1]
+        group = blocks_df[(blocks_df["source_id"] == table["source_id"])
+                          & (blocks_df["table_group_id"] == table["table_group_id"])]
+        title_block = group[group["context_role"] == "table_title"].iloc[0]
+        lines = table["text"].splitlines(keepends=True)
+        header = lines[0]
+        rows = [line for line in lines[2:] if line.strip()]
+        if len(rows) < parsed["row"]:
+            raise ValueError(f"행을 찾지 못함: {official}")
+        row = rows[parsed["row"] - 1]
+        source = sources.loc[table["source_id"]]
+        parts = []
+        for label, block, value in (("title", title_block, title_block["text"]),
+                                    ("header", table, header), ("row", table, row)):
+            local_start = block["text"].find(value)
+            if local_start < 0:
+                raise ValueError(f"원문 구성요소 위치를 찾지 못함: {official} {label}")
+            start = int(block["start_offset"]) + local_start
+            parts.append({"part": label, "source_id": block["source_id"], "block_id": block["block_id"],
+                          "start_offset": start, "end_offset": start + len(value), "text": value})
+        if not all(source["text"][p["start_offset"]:p["end_offset"]] == p["text"] for p in parts):
+            raise ValueError(f"원문 구성요소가 Markdown과 다름: {official}")
+        notes = group[group["context_role"] == "supplement_unclassified"]
+        editorial = [{"block_id": b.block_id, "start_offset": int(b.start_offset),
+                      "end_offset": int(b.end_offset), "text": b.text}
+                     for b in notes.itertuples(index=False)]
+        if sections.get(official):
+            editorial.append({"block_id": None, "text": f"이 표가 놓인 본문 절: {sections[official]}\n"})
+        editorial.append({"block_id": None, "text": BR_NOTE + "\n"})
+        printed = None if pd.isna(table["printed_page"]) else int(table["printed_page"])
+        first_cell = row.strip().strip("|").split("|")[0].strip()
+        chunks.append({
+            "document_id": f"TEMP:{doc_key}",
+            "chunk_id": f"TEMP:{doc_key}:{table['block_id']}:r{parsed['row']:02d}",
+            "id_status": "TEMP_UNAPPROVED", "source_id": table["source_id"],
+            "source_path": source["source_path"], "content_hash": source["content_hash"],
+            "pdf_page": int(table["pdf_page"]), "printed_page": printed,
+            "page_verification": "VERIFIED_PDF" if verified else "PENDING_PDF_COMPARISON",
+            "section": table["table_title"], "table_group_id": table["table_group_id"],
+            "role_label": first_cell,
+            "source_block_ids": list(dict.fromkeys(p["block_id"] for p in parts)),
+            "source_parts": parts, "editorial_context": editorial,
+            "text": "".join(p["text"] for p in parts), "official_chunk_id": official})
+    return chunks
+
+
 # ---------------------------------------------------------------- 프롬프트 (셀 extract-008)
 
 def load_concept_draft(root: str | Path) -> str:
