@@ -1,0 +1,92 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "1) 잠복기 ○ 2일~10일(평균 3~4일)",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0090:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MENINGOCOCCAL"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| 수막구균성 수막염 | 두통, 발열, 경부 경직, 오심, 구토 | 항생제 치료 시작 후 24시간까지 | 항생제 치료 시작 후 24시간까지 | 2-10일 (평균 3-4일) | O | O | O |",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0223:t01r09"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MENINGOCOCCAL"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "|수막구균성 수막염| 두통, 발열, 경부 경직, 오심, 구토|항생제 치료 시작 후 24시간까지|항생제 치료 시작 후 24시간까지| 2~10일 (평균 3~4일)|O|O|O|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0159:t01r10"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MENINGOCOCCAL"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0090:b01",
+      "pdf_page": 90,
+      "printed_page": 70,
+      "excerpt": "●● 2026년도 호흡기감염병 관리지침(수막구균 감염증, 성홍열, 급성호흡기감염증)\n\n다  임상양상\n\n1) 잠복기\n\n○ 2일~10일(평균 3~4일)\n\n2) 전파경로\n\n○ 환자나 건강한 보균자의 코나 입의 점막에 있던 수막구균이 비말이나 직접 접촉에 의해 다른\n\n사람에게 전파됨\n\n－ 새로 전파된 수막구균은 비인두 점막에 부착한 후 증식하고 1% 이하에서 점막"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0223:t01r09",
+      "pdf_page": 223,
+      "printed_page": 209,
+      "excerpt": "| 감염병 | 임상 증상 | 전염 가능 기간 | 전파 차단을 위한 등교 중지(격리) 기간 1)2) | 잠복기 3) | 밀접접촉자 파악 | 일시적 격리 4) | 마스크 착용 |\n| 수막구균성<br>수막염 | 두통, 발열, 경부 경직,<br>오심, 구토 | 항생제 치료 시작 후<br>24시간까지 | 항생제 치료 시작 후<br>24시간까지 | 2-10일<br>("
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0159:t01r10",
+      "pdf_page": 159,
+      "printed_page": 149,
+      "excerpt": " 특성 및 관리방안 (계속)\n|감염병|임상증상|감염 가능 기간|등교중지(격리)<br>기간1)2)|잠복기3)|밀접<br>접촉자<br>파악|일시적<br>격리4)|마스크<br>착용|\n|수막구균성<br>수막염|<br>두통, 발열, 경부<br>경직, 오심, 구토|항생제 치료 시작 후<br>24시간까지|항생제 치료 시작 후<br>24시간까지|<br>2~10일<br>("
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0090:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0223:t01r09"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0159:t01r10"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

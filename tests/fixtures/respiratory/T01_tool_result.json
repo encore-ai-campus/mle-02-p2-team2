@@ -1,0 +1,38 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "1) 잠복기: 1∼4일 (평균 2일)",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0006:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0006:b01",
+      "pdf_page": 6,
+      "printed_page": 2,
+      "excerpt": "의 4가지로 분류**\n\nA형과 B형이 사람에게 호흡기 감염을 유발\n\n**2) 항원변이를 통하여 계속적인 인플루엔자의 유행이 초래됨**\n\n#### **다. 임상 양상**\n\n**1) 잠복기:** 1∼4일 (평균 2일)\n\n**2) 임상 증상**\n\n전신 증상 및 호흡기 증상이 갑자기 시작됨\n\n- 발열(고열), 두통, 근육통, 피로감 등의 전신 증상\n\n- 열은 급격"
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0006:b01"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}
