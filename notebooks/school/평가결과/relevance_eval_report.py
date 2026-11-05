@@ -1,0 +1,195 @@
+"""실행된 3차 평가 JSON으로 기존 평가 기록 형식의 보고서와 요약 JSON을 만든다."""
+
+from __future__ import annotations
+
+import json
+from collections import Counter
+from pathlib import Path
+from statistics import mean
+
+ROOT = Path(__file__).resolve().parents[3]
+HERE = Path(__file__).resolve().parent
+DATA = ROOT / "data/interim/school/eval_relevance_20261105"
+REPORT = HERE / "평가_20261105_검색적합성_v3.md"
+SUMMARY = HERE / "평가_20261105_검색적합성_v3.json"
+
+
+def read(path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def citation_metrics(rows):
+    rows = [r for r in rows if r["total"] > 0]
+    n = len(rows)
+    return {"n": n, "any": sum(r["hit"] > 0 for r in rows),
+            "all": sum(r["hit"] == r["total"] for r in rows),
+            "matched": sum(r["hit"] for r in rows), "expected": sum(r["total"] for r in rows),
+            "mean_findings": mean(r["n_find"] for r in rows) if n else 0,
+            "citation_order_mrr": mean(1 / r["first_citation_rank"] if r.get("first_citation_rank") else 0
+                                       for r in rows) if n and all("first_citation_rank" in r for r in rows) else None}
+
+
+def fraction(n, d):
+    return f"{n}/{d} ({100 * n / d:.1f}%)" if d else "—"
+
+
+def escape(value):
+    return str(value).replace("|", "\\|").replace("\n", " ")
+
+
+def main():
+    meta = read(DATA / "metadata.json")
+    assert meta.get("finished_at") and meta["files_changed_during_eval"] == []
+    search, tool, main_rows = read(DATA / "search.json"), read(DATA / "tool.json"), read(DATA / "main.json")
+    old_tool = read(ROOT / "data/interim/school/eval_tool_final.json")
+    old_main = read(ROOT / "data/interim/school/eval_main_final.json")
+    golden = read(ROOT / "data/specs/golden/school.json")
+    questions = {q["id"]: q for q in golden["questions"]}
+    tb, mb = {r["id"]: r for r in tool["rows"]}, {r["id"]: r for r in main_rows}
+    old_tb = {r["id"]: r for r in old_tool["rows"]}
+    changed = [{"id": r["id"], "split": r["split"], "before": old_tb[r["id"]]["hit"],
+                "after": r["hit"], "total": r["total"]} for r in tool["rows"]
+               if r["hit"] != old_tb[r["id"]]["hit"]]
+    metrics = {"search": search["metrics"], "tool_all": citation_metrics(tool["rows"]),
+               "tool_action_only": citation_metrics([r for r in tool["rows"] if r["route"] == "action_search"]),
+               "main_action_only": citation_metrics([r for r in main_rows if r["want_route"] == "action_search"]),
+               "old_tool_all": citation_metrics(old_tool["rows"]),
+               "old_main_action_only": citation_metrics([r for r in old_main if r["want_route"] == "action_search"])}
+    graded = [r for r in main_rows if r["status_ok"] is not None]
+    db_main = [r for r in main_rows if r["dbok"] is not None]
+    db_tool = [r for r in tool["rows"] if r["dbok"] is not None]
+    metrics["main"] = {"route_ok": sum(r["route_ok"] for r in main_rows), "n": len(main_rows),
+                       "status_ok": sum(r["status_ok"] for r in graded), "status_n": len(graded),
+                       "max_calls": max(r["rounds"] for r in main_rows),
+                       "db_ok": sum(r["dbok"] for r in db_main), "db_n": len(db_main)}
+    metrics["tool"] = {"db_ok": sum(r["dbok"] for r in db_tool), "db_n": len(db_tool),
+                       "statuses": dict(Counter(r["status"] for r in tool["rows"])),
+                       "mean_seconds": mean(r["sec"] for r in tool["rows"]),
+                       "db_dropped_findings": sum(r["dropped"] for r in tool["rows"])}
+    evidence = read(ROOT / "data/interim/school/relevance_check_20261105_hybrid.json")
+    payload = {"metadata": meta, "metrics": metrics, "changed_tool_questions": changed,
+               "questions": [{**q, "tool": tb.get(q["id"]), "main": mb[q["id"]],
+                              "rank": {m: ranks.get(q["id"]) for m, ranks in search["rank"].items()}}
+                             for q in golden["questions"]]}
+    SUMMARY.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    lines = [
+        "# school 평가 기록 — 3차: 검색 적합성 보완", "",
+        f"- 평가 시작: {meta['started_at']}", f"- 평가 종료: {meta['finished_at']}",
+        "- 질문셋: `data/specs/golden/school.json` v1.1, 40문항(dev 26 / eval 14). 정답 청크 있는 34문항, 근거 지정 행 73건, 고유 청크 51개. 질문·청크 쌍 중복 9건을 제거한 64쌍으로 인용률을 집계한다.",
+        "- 대상: v2 `action_search`와 `run_main`. 최종 답변은 Finding 나열형이며 이번 작업은 검색 선별과 상태 보완이다.",
+        "- 실제 DB: 학교 문서 청크 1,139개(교육부 325 / 경기도 814). 허용된 다른 문서 청크 27개도 원시 검색 범위에 포함한다.",
+        "- 평가 시점의 선정쪽수: 교육부 90쪽 / 경기도 118쪽. 대화 중 앞선 범위와 같다고 가정하지 않고 현재 CSV를 읽었으며 해시를 기록했다.",
+        f"- 정답 청크의 DB 누락: {len(meta['expected_chunks_missing_from_db'])}개 / 선정 범위 밖: {len(meta['expected_chunks_outside_active_pages'])}개.",
+        "- 같은 실행 안에서는 질문 임베딩을 캐시해 검색·Tool·메인에 같은 벡터를 제공했다. 모델은 `text-embedding-3-small`이다.",
+        "- 코드·질문셋·manifest 해시를 실행 전후 대조했고 평가 중 변경은 없었다. 평가 실패를 보고 제품 규칙을 추가 조정하지 않았다.",
+        "- 과거 eval 문항은 이전 개발 과정에서 확인한 이력이 있어 회귀 지표로 해석한다. 신규 미사용 평가셋의 일반화 점수로 주장하지 않는다.",
+        "", "## 0. 작업 추적 — 무엇을 바꿨나", "",
+        "| 파일 | 변경 내용 | 확인 방법 |", "|---|---|---|",
+        "| `src/rag/school/relevance.py` (신규) | 질병명 마스킹, 승인 name/aliases 인식, 질병 표 행/본문 절의 적용 질병 판별, 학교 조치 표현 검사 | 질병명 속 유행·다른 결막염·넓은 별칭 회귀 검사 |",
+        "| `src/rag/school/action_tool.py` | `plan_action_task`, `retrieve_action_records`, `records_to_tool_result` 보완. 내부 계획의 operation_terms와 제외 사유 로그 추가 | 실DB ToolResult·DB/경로 검증 |",
+        "| `tests/rag/school/test_school_relevance.py` (신규) | 매개변수 사례 포함 19건 회귀 검사 | 직전 구현 검증: school 전체 173개 통과 |",
+        "| `notebooks/school/school_main_tool_call.ipynb` | 직접 질문 셀에 모듈 reload, 상태·Tool 호출 수·질병/단계 힌트·근거 수 출력 추가. 해당 셀의 실DB 출력 갱신 | 노트북 형식 검증 및 하이브리드 질문 4개 |",
+        "| `파일_지도_무엇이_어디에.md`, `ActionSearchTool_메인그래프_인수자료_1105.md` | 파일 역할, 선별 정책, 확인 결과·한계 기록 | 해당 문서의 11/05 보완 절 |",
+        "| `평가결과/golden_eval_tool.py`, `golden_eval_main.py` | 기존 채점에 실제 인용 순서·첫 정답 인용 순위·DB 대조 결과 필드 추가. 메인 출력도 DB 재대조 | 이번 34/40문항 실행 JSON |",
+        "| `평가결과/golden_eval_relevance.py`, `relevance_eval_report.py` (신규) | 기존 평가 코드 재사용, 검색 3방식 재측정, 코드/데이터 해시·요약 JSON·이 보고서 생성 | 아래 재현 명령 |",
+        "", "### 적용 순서와 설정", "",
+        "1. 원래 질문은 보존하고 단계 힌트용 문자열에서만 질병명을 마스킹한다. '유행성각결막염'은 단계 없음, '유행성각결막염이 유행하면'은 제3단계 힌트다.",
+        "2. 질병이 명시된 질문에서는 다른 질병을 다루는 행동·근거를 제외한다. 질병별 표는 해당 행의 질병명이 앞 절 제목보다 우선한다. 미등록 질병 행과 review_aliases('눈병')를 EKC에 자동 연결하지 않는다.",
+        "3. 역할 수행 목록을 묻지 않고 휴업·휴교·등교중지·소독·환기·능동감시를 직접 물으면 해당 조치가 없는 근거를 제외한다. 역할 질문은 조치가 배경일 수 있으므로 이 제한을 적용하지 않는다.",
+        "4. 조치가 명확하면 후보 수는 `min(64, max(32, top_k * 4))`, 그 외는 `max(12, top_k + 4)`다. 기본값에서는 각각 32/12개. 이는 한 Tool 내부 후보 확보이며 Tool 재호출이 아니다.",
+        "5. 기존 점수 계산과 행동 문턱 4는 유지했다. 적합성 검사 후 점수 정렬·역할/문서 분산을 적용한다. 특정 질병·조치의 본문 직접 근거가 있으면 일반 지침/시나리오로 결과를 채우지 않는다. 시나리오를 명시적으로 요청한 질문은 예외다.",
+        "6. 출력은 행동+원문 인용 Finding 합계 `top_k` 이하. 기본 8에서 인용은 최대 4, 행동은 `8 - 인용 수`까지다. 기존 '행동 8 + 인용 최대 4'보다 상한이 줄어 역할 질문의 정답 인용 손실 가능성이 있다.",
+        "7. 일반 지침만 있거나 질문한 질병 일부의 적용 근거가 부족하면 `[미해결]`과 `PARTIAL`을 반환한다. 근거가 없으면 `NO_EVIDENCE`. DB 검증은 ID·관계·발췌의 실재를 별도로 확인한다.",
+        "8. 내부 trace의 `relevance_filter`에 제외 ID·이유, `prefer_direct_evidence`에 배경 근거 제외 수를 기록한다. 공통 ToolResult/QueryOutput 필드와 LLM 최종 답변 생성 방식은 바꾸지 않았다.",
+        "", "## 1. 지표 요약", "", "### 검색 순위 — 정답 청크 있는 34문항, k=10", "",
+        "기존 `golden_eval.py`와 같은 `search_school_chunks` 호출·산식이다. 허용 문서 5개, preferred 학교 문서 2개, 실제 검색 3방식을 사용했다. 이 표는 Tool의 적합성 검사 전 원시 순위다.",
+        "", "| 방식 | Hit@5 | Hit@10 | MRR@10 |", "|---|---|---|---|",
+    ]
+    for mode, m in search["metrics"].items():
+        lines.append(f"| {mode} | {fraction(m['hit5'], m['n'])} | {fraction(m['hit10'], m['n'])} | {m['mrr10']:.3f} |")
+    lines += ["", "- Hit@k: 상위 k개에 지정 정답 청크가 1개 이상 있는 문항 비율.",
+              "- MRR@10: 상위 10개 중 첫 정답 순위의 역수를 문항별로 평균한다. 미검색은 0이며 분모에 포함한다. 전체 순위 MRR은 측정하지 않았다.",
+              "- raw 검색은 이전 기준선과 맞추기 위해 선정쪽수 밖 허용 문서 청크도 포함한다. Tool은 실제 사용 시 manifest 범위로 걸러낸다. 원시 순위와 최종 선별 지표를 혼합하지 않는다.",
+              "- 기존 기록의 Hybrid 19/34·23/34·0.400과 이번 측정은 같다. Fulltext와 vector의 작은 차이는 아래 JSON에 질문별 순위로 남겼으며, DB 시점과 검색 후보 차이를 통제한 전후 실험은 아니다.",
+              "", "### Tool 단독 — 정답 청크 인용", "",
+              "인용률은 지정 골드 청크와의 일치다. 다른 유효 근거의 정답성이나 문장 의미의 정확성은 별도 검토가 필요하다.",
+              "", "| 구분 | 이전 1개 이상 | 이번 1개 이상 | 이전 전부 | 이번 전부 |", "|---|---|---|---|---|"]
+    for label, predicate in [("전체", lambda r: True), ("dev", lambda r: r["split"] == "dev"),
+                             ("eval (기존 노출 이력)", lambda r: r["split"] == "eval"),
+                             ("기대 Tool=action_search", lambda r: r["route"] == "action_search")]:
+        old = citation_metrics([r for r in old_tool["rows"] if predicate(r)])
+        new = citation_metrics([r for r in tool["rows"] if predicate(r)])
+        lines.append(f"| {label} | {fraction(old['any'], old['n'])} | {fraction(new['any'], new['n'])} | "
+                     f"{fraction(old['all'], old['n'])} | {fraction(new['all'], new['n'])} |")
+    ta, old = metrics["tool_all"], metrics["old_tool_all"]
+    lines += ["", f"- 지정 정답 근거 회수: {ta['matched']}/{ta['expected']} ({100 * ta['matched'] / ta['expected']:.1f}%).",
+              f"- 평균 Finding: 이전 {old['mean_findings']:.2f} → 이번 {ta['mean_findings']:.2f}. Tool 평균 실행 {metrics['tool']['mean_seconds']:.2f}초(이번 실행 내 임베딩 캐시 포함).",
+              f"- Tool DB/경로 대조 통과: {metrics['tool']['db_ok']}/{metrics['tool']['db_n']}, DB 대조로 제외한 Finding {metrics['tool']['db_dropped_findings']}개.",
+              "- 이전 값은 저장된 `eval_tool_final.json`을 다시 집계했다. 동일 DB 스냅샷·코드 상태를 재현한 통제 A/B 결과가 아니다.",
+              "", "### 메인 그래프 — 40문항", "", "| 지표 | 결과 |", "|---|---|"]
+    mm, ma = metrics["main"], metrics["main_action_only"]
+    lines += [f"| 라우팅 일치 | {mm['route_ok']}/{mm['n']} |",
+              f"| 연결된 경로 status 일치 | {mm['status_ok']}/{mm['status_n']} |",
+              f"| 기대 Action 문항: 정답 1개 이상 / 전부 인용 | {ma['any']}/{ma['n']} / {ma['all']}/{ma['n']} |",
+              f"| 근거 있는 최종 출력의 별도 DB 재대조 | {mm['db_ok']}/{mm['db_n']} |",
+              f"| 최대 Tool 호출 수 | {mm['max_calls']} |",
+              "| 미연결 disease/legal/crossdoc 경로 | 호출 0회 + ERROR. 최종 status 채점에서 제외 |",
+              "", "미연결 Tool 문항을 Action Tool로 대신 처리하지 않았다. Tool 단독 34문항에는 legal/crossdoc 기대 문항 3개도 참고용으로 포함되며, 메인의 실제 Action 성능은 31문항으로 따로 집계했다.",
+              "", "### 인용 목록 순서 진단 (검색 MRR과 구별)", "",
+              f"- Tool Citation 순서의 첫 정답 역순위 평균: {ta['citation_order_mrr']:.3f} (34문항).",
+              f"- 메인 Citation 순서의 첫 정답 역순위 평균: {ma['citation_order_mrr']:.3f} (Action 31문항).",
+              "- 이는 출력 Citation의 삽입 순서로 계산한 보조값이다. 최종 근거가 별도 순위 모델로 정렬된 것은 아니므로 위 검색 MRR@10의 개선 근거로 사용하지 않는다.",
+              "", "## 2. 질문별 결과", "",
+              "FT/Vec/Hybrid는 첫 정답 순위(검색 상위10 내 미검색은 —), 인용은 정답 청크 일치 수/지정 수다. 미연결 경로의 status 일치는 —이다.",
+              "", "| ID | 구분 | 기대 Tool | FT | Vec | Hybrid | Tool status | Tool 인용 | 메인 status | status 일치 | 메인 인용 | Finding | 호출 |",
+              "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    for q in golden["questions"]:
+        qid, m, t = q["id"], mb[q["id"]], tb.get(q["id"])
+        ranks = [search["rank"][mode].get(qid) or "—" for mode in ("fulltext", "vector", "hybrid")]
+        ok = "—" if m["status_ok"] is None else ("○" if m["status_ok"] else "불일치")
+        lines.append(f"| {qid} | {q['split']} | {escape(q['route'])} | {' | '.join(map(str, ranks))} | "
+                     f"{t['status'] if t else '—'} | {str(t['hit'])+'/'+str(t['total']) if t else '—'} | "
+                     f"{m['got_status']} | {ok} | {str(m['hit'])+'/'+str(m['total']) if m['total'] else '—'} | "
+                     f"{m['n_find']} | {m['rounds']} |")
+    lines += ["", "## 3. 확인된 사실과 퇴행", "",
+              "특정 질문의 잡음 제거와 골든셋 전체의 정답 인용률은 다른 결과를 보였다. 전체 성능이 향상됐다고 결론내리지 않는다.",
+              "", "| 문항 | 이전 Tool 정답 인용 | 이번 | 질문 |", "|---|---|---|---|"]
+    for c in changed:
+        lines.append(f"| {c['id']} ({c['split']}) | {c['before']}/{c['total']} | {c['after']}/{c['total']} | {escape(questions[c['id']]['question'])} |")
+    status_bad = [r for r in graded if not r["status_ok"]]
+    lines += ["", f"- 정답 인용 수 증가 문항 {sum(c['after'] > c['before'] for c in changed)}개, 감소 문항 {sum(c['after'] < c['before'] for c in changed)}개. 위 표에 전부 기재했다.",
+              "- S-Q07은 일반 학교장 역할 질문이며 이번 수정의 EKC 예시와 다른 유형이다. 출력 상한을 합계 8개로 바꾸면서 행동 몫이 인용 수에 따라 줄어드는 설정을 다음 개발용 비교에서 우선 확인해야 한다.",
+              "- S-O04는 문서 비교 문항이다. Tool 단독에서는 인용이 감소했고, 메인에서는 CrossDoc 미연결로 이번에도 답변하지 않는다.",
+              f"- 메인 status 불일치: {', '.join(r['id'] + ' (' + r['want_status'] + '→' + r['got_status'] + ')' for r in status_bad) or '없음'}.",
+              "- DB 검증 통과는 실제 청크·관계·발췌의 실재를 뜻한다. 질문 적합성, 모든 정답 포함, 자연어 의미의 정확성까지 검증한 수치는 아니다.",
+              "", "### 사용자 질문 및 관련 질병 회귀 (직전 실DB 검증 기록)", "",
+              "아래 4건은 앞선 구현 단계에서 실행한 하이브리드 검증이며 이번 40문항과 별개다. 원래 EKC 휴업 질문은 기존 40문항에 없다. 173개 테스트와 4건 질의만으로 Hit/MRR 평가를 했다고 보고하지 않는다.",
+              "", "| 질문 | 상태 | Finding | 단계 힌트 |", "|---|---|---|---|"]
+    for c in evidence["cases"]:
+        lines.append(f"| {escape(c['question'])} | {c['output']['status']} | {len(c['output']['findings'])} | {c['trace']['plan']['stages'] or '없음'} |")
+    lines += ["", "첫 질문은 교육부 PDF 104쪽과 경기도 PDF 236쪽의 비권장 원칙·방역당국 권고 시의 예외를 인용했다. 다른 질병 표 행·손 씻기·일반 보고 절차는 해당 출력에서 빠졌다.",
+              "", "## 4. 예상 원인 및 다음 확인", "", "| 항목 | 현재 해석 | 다음 비교 |", "|---|---|---|",
+              "| 역할 질문 인용 손실 | 합계 top-k 상한과 인용 우선 배정이 행동 근거를 밀어낼 가능성. 이번 실행에서 통제 A/B로 원인을 확정하지 않음 | 개발용 역할 질문에서 행동 우선/역할별 최소 몫과 현재 정책 비교 |",
+              "| 원시 검색 Hit/MRR | 검색 함수·임베딩 모델은 유지. 적합성 필터는 검색 후 단계 | 검색 후보 순위와 필터 후 결과를 분리해서 추적 |",
+              "| 질병별 적용 여부 | 명시 질병명·절·표 행을 사용한 규칙 검사 | 미등록 표기·손상된 절 제목·일반 지침의 적용 사례를 개발용 회귀로 추가 |",
+              "| 근거 충분성 | PARTIAL 보완은 질병별 적용 근거 누락을 확인하는 수준 | 원질문의 역할·단계·조건별 충족 범위 검사는 후속 과제 |",
+              "| 평가셋 | 이전 eval 노출 이력과 이번 회귀 측정 | 새 미사용 eval 세트를 별도 마련하고 이번 결과에 맞춰 정답/규칙을 바꾸지 않음 |",
+              "", "이번 요청에서는 측정·기록만 수행했으며 위 실패에 맞춰 제품 코드를 추가 변경하지 않았다.",
+              "", "## 5. 재현·원시 증빙", "", "프로젝트 루트에서 실행한다.", "", "```powershell",
+              ".venv/Scripts/python.exe -X utf8 notebooks/school/평가결과/golden_eval_relevance.py",
+              ".venv/Scripts/python.exe -X utf8 notebooks/school/평가결과/relevance_eval_report.py", "```", "",
+              "- 집계 JSON: [평가_20261105_검색적합성_v3.json](평가_20261105_검색적합성_v3.json)",
+              "- 원시 검색·Tool·메인 결과와 전체 trace: `data/interim/school/eval_relevance_20261105/{metadata,search,tool,main}.json` (기존 관례대로 Git 제외).",
+              "- 기존 코드 재사용: 원시 검색은 `golden_eval.py`의 호출/산식을 사용하고, Tool·메인은 `golden_eval_tool.py`, `golden_eval_main.py`를 실행했다.",
+              "- 과거 비교 원시값: `data/interim/school/eval_tool_final.json`, `eval_main_final.json`, `eval_20261105_baseline.json`. 기존 기준선 보고서는 그대로 보존했다.",
+              "- DB 작업: 읽기 전용 질의·검증. 모델 API는 질문 임베딩에 사용했다. PDF 재추출·DB 재적재·그래프 관계 변경은 수행하지 않았다.",
+              "", "### 실행 코드·데이터 해시 (SHA-256)", "", "| 경로 | SHA-256 |", "|---|---|"]
+    for name, sha in meta["hashes"].items():
+        lines.append(f"| `{name}` | `{sha}` |")
+    REPORT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(json.dumps(metrics, ensure_ascii=False, indent=2))
+    print("Saved:", REPORT, SUMMARY)
+
+
+if __name__ == "__main__":
+    main()
