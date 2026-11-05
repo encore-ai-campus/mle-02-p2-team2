@@ -1,0 +1,2504 @@
+{
+  "metadata": {
+    "started_at": "2026-11-05T06:08:25.134472+00:00",
+    "read_only_db": true,
+    "question_count": 40,
+    "scored_questions": 34,
+    "citation_rows": 73,
+    "unique_expected_chunks": 51,
+    "hashes": {
+      "data\\specs\\golden\\school.json": "0f1492ea9a80eedaf2f2a74518a3344137aba9be504ed5eea72afeef11febab8",
+      "data\\specs\\source_manifest.csv": "3a2f233857b404b27ad39365db0b8b60e36f040f6a5aa5f252c3448bf68c0b96",
+      "src\\rag\\school\\relevance.py": "48fda6be98d4edc718c18cf47bc0afe1dbba4adc98b435c975f60bb51dec4d50",
+      "src\\rag\\school\\action_tool.py": "c6dc0644a80e08ba9d57af8446c854fcc81ba904a777e63216a73483db30acf5",
+      "src\\rag\\school\\main_graph.py": "c7024b2c7e8860eb035f36863d1cd534aad195411e52de34079e8fc8381d695a",
+      "src\\rag\\school\\search.py": "0ad15a54120bf4ce8b549de0165991d84f23167fb0b5c2809d5fa58854d9a2f9",
+      "src\\rag\\school\\graph.py": "796ebfc3e063cae8aab0c40fe4b15a1178ae2a785c74ac8be6e39deb6cd9429a",
+      "notebooks\\school\\평가결과\\golden_eval_tool.py": "04238e3488a6ca475b2747cc84c52f6036df6b042a71e558f62e41eb31a9b6aa",
+      "notebooks\\school\\평가결과\\golden_eval_main.py": "1b8a0513668b163d62f5957648c942a7000dad00e29187a8500be19aa24d266a",
+      "notebooks\\school\\평가결과\\golden_eval_relevance.py": "79a834e047c069d6f7031c1dfb183cf8f5809d12cf24bfb0b939fd4d39b1e922"
+    },
+    "allowed": [
+      "moe_school_manual_v3",
+      "gyeonggi_school_guide_2025",
+      "kdca_measles_2026",
+      "kdca_diagnosis_reporting_2026",
+      "moleg_infectious_disease_act_21521"
+    ],
+    "preferred_raw_search": [
+      "moe_school_manual_v3",
+      "gyeonggi_school_guide_2025"
+    ],
+    "preferred_tool_main": [],
+    "scope_policy": "raw ranking includes all allowed pages; Tool filters active manifest pages",
+    "git_head": "2c1606b3e3cad8efda2fcbd1a7bd24dd3972c63c",
+    "embedding_model": "text-embedding-3-small",
+    "db_documents": [
+      {
+        "id": "moe_school_manual_v3",
+        "version": "제3차 개정판",
+        "chunks": 325
+      },
+      {
+        "id": "gyeonggi_school_guide_2025",
+        "version": "2024.05 발행본(판권면)",
+        "chunks": 814
+      },
+      {
+        "id": "kdca_measles_2026",
+        "version": "2026",
+        "chunks": 10
+      },
+      {
+        "id": "kdca_diagnosis_reporting_2026",
+        "version": "2026",
+        "chunks": 8
+      },
+      {
+        "id": "moleg_infectious_disease_act_21521",
+        "version": "2026.10.8 시행본",
+        "chunks": 9
+      }
+    ],
+    "expected_chunks_missing_from_db": [],
+    "active_page_counts": {
+      "moe_school_manual_v3": 90,
+      "gyeonggi_school_guide_2025": 118
+    },
+    "expected_chunks_outside_active_pages": [],
+    "finished_at": "2026-11-05T06:12:38.758083+00:00",
+    "unique_embedded_questions": 34,
+    "files_changed_during_eval": []
+  },
+  "metrics": {
+    "search": {
+      "fulltext": {
+        "n": 34,
+        "hit5": 19,
+        "hit10": 21,
+        "mrr10": 0.33872549019607845
+      },
+      "vector": {
+        "n": 34,
+        "hit5": 15,
+        "hit10": 19,
+        "mrr10": 0.268218954248366
+      },
+      "hybrid": {
+        "n": 34,
+        "hit5": 19,
+        "hit10": 23,
+        "mrr10": 0.4003267973856209
+      }
+    },
+    "tool_all": {
+      "n": 34,
+      "any": 24,
+      "all": 13,
+      "matched": 32,
+      "expected": 64,
+      "mean_findings": 7.9411764705882355,
+      "citation_order_mrr": 0.3031862745098039
+    },
+    "tool_action_only": {
+      "n": 31,
+      "any": 21,
+      "all": 13,
+      "matched": 28,
+      "expected": 57,
+      "mean_findings": 7.935483870967742,
+      "citation_order_mrr": 0.2908602150537634
+    },
+    "main_action_only": {
+      "n": 31,
+      "any": 21,
+      "all": 13,
+      "matched": 28,
+      "expected": 57,
+      "mean_findings": 7.935483870967742,
+      "citation_order_mrr": 0.2908602150537634
+    },
+    "old_tool_all": {
+      "n": 34,
+      "any": 25,
+      "all": 15,
+      "matched": 35,
+      "expected": 64,
+      "mean_findings": 11.588235294117647,
+      "citation_order_mrr": null
+    },
+    "old_main_action_only": {
+      "n": 31,
+      "any": 22,
+      "all": 14,
+      "matched": 30,
+      "expected": 57,
+      "mean_findings": 11.548387096774194,
+      "citation_order_mrr": null
+    },
+    "main": {
+      "route_ok": 40,
+      "n": 40,
+      "status_ok": 34,
+      "status_n": 35,
+      "max_calls": 1,
+      "db_ok": 31,
+      "db_n": 31
+    },
+    "tool": {
+      "db_ok": 34,
+      "db_n": 34,
+      "statuses": {
+        "OK": 31,
+        "PARTIAL": 3
+      },
+      "mean_seconds": 2.6470588235294117,
+      "db_dropped_findings": 0
+    }
+  },
+  "changed_tool_questions": [
+    {
+      "id": "S-Q07",
+      "split": "dev",
+      "before": 2,
+      "after": 0,
+      "total": 2
+    },
+    {
+      "id": "S-O04",
+      "split": "dev",
+      "before": 2,
+      "after": 1,
+      "total": 2
+    }
+  ],
+  "questions": [
+    {
+      "id": "S-Q01",
+      "question": "학교에서 유증상 학생이 발견되면 담임교사와 보건교사는 각각 무엇을 확인하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "대응 제1단계 행동만. NEIS 등록·능동감시(제2단계)를 지금 할 일로 섞으면 실패. 역할은 원문이 제시한 예시로 표현",
+      "split": "dev",
+      "tool": {
+        "id": "S-Q01",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 3,
+        "total": 5,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 1,
+        "dbok": true,
+        "sec": 3.3
+      },
+      "main": {
+        "id": "S-Q01",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 3,
+        "total": 5,
+        "first_citation_rank": 1,
+        "cited_order": [
+          "moe_school_manual_v3:p0054:b01",
+          "moe_school_manual_v3:p0197:b02",
+          "moe_school_manual_v3:p0057:b01",
+          "moe_school_manual_v3:p0207:b02",
+          "gyeonggi_school_guide_2025:p0166:t01r01",
+          "moe_school_manual_v3:p0036:t01r02",
+          "gyeonggi_school_guide_2025:p0167:t01r03",
+          "moe_school_manual_v3:p0043:t01r02"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제1단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 8,
+        "vector": 1,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-Q02",
+      "question": "경기도 초등학교에서 성홍열 확진 학생이 1명 나왔어요. 학교(담임·보건교사)는 무엇을 해야 하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "대응 제2단계 학교 행동(범위). 질병 사실(전파·치료)은 Disease Tool 몫이므로 학교 행동만",
+      "split": "dev",
+      "tool": {
+        "id": "S-Q02",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 4,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 5,
+        "dbok": true,
+        "sec": 3.1
+      },
+      "main": {
+        "id": "S-Q02",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 4,
+        "first_citation_rank": 5,
+        "cited_order": [
+          "moe_school_manual_v3:p0060:b01",
+          "gyeonggi_school_guide_2025:p0308:b02",
+          "moe_school_manual_v3:p0207:b02",
+          "gyeonggi_school_guide_2025:p0241:b02",
+          "gyeonggi_school_guide_2025:p0168:t01r01",
+          "moe_school_manual_v3:p0060:t01r03",
+          "gyeonggi_school_guide_2025:p0167:t01r03"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+          "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-Q03",
+      "question": "성홍열도 학교장이 보건소에 신고해야 하나요?",
+      "region": "GYEONGGI",
+      "status": "PARTIAL",
+      "route": "legal_search",
+      "pass": "학교 문서의 8종 목록에 성홍열이 없다는 사실만 인용. 신고 의무 없음으로 단정하지 않고 현행 법 확인 필요를 warnings에",
+      "split": "eval",
+      "tool": {
+        "id": "S-Q03",
+        "split": "eval",
+        "route": "legal_search",
+        "status": "PARTIAL",
+        "hit": 1,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 8,
+        "dbok": true,
+        "sec": 2.9
+      },
+      "main": {
+        "id": "S-Q03",
+        "split": "eval",
+        "want_route": "legal_search",
+        "got_route": "legal_search",
+        "route_ok": true,
+        "want_status": "PARTIAL",
+        "got_status": "ERROR",
+        "status_ok": null,
+        "response_type": "DOMAIN",
+        "tools_used": [],
+        "rounds": 0,
+        "hit": 0,
+        "total": 2,
+        "first_citation_rank": null,
+        "cited_order": [],
+        "dbok": null,
+        "warnings": [
+          "선택한 Tool 'legal_search'이 메인 그래프에 연결되지 않아 호출하지 않았다(연결 오류, 호출 0회). 다른 Tool로 대신 답하지 않는다."
+        ],
+        "n_find": 0
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-Q04",
+      "question": "보호자에게 연락해 진료를 요청하는 일을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "crossdoc_graph_search",
+      "pass": "문서별 Finding 분리. 같은 행동으로 합치지 않고 두 문서의 인용을 따로 둠",
+      "split": "dev",
+      "tool": {
+        "id": "S-Q04",
+        "split": "dev",
+        "route": "crossdoc_graph_search",
+        "status": "PARTIAL",
+        "hit": 2,
+        "total": 3,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 1,
+        "dbok": true,
+        "sec": 2.6
+      },
+      "main": {
+        "id": "S-Q04",
+        "split": "dev",
+        "want_route": "crossdoc_graph_search",
+        "got_route": "crossdoc_graph_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ERROR",
+        "status_ok": null,
+        "response_type": "DOMAIN",
+        "tools_used": [],
+        "rounds": 0,
+        "hit": 0,
+        "total": 3,
+        "first_citation_rank": null,
+        "cited_order": [],
+        "dbok": null,
+        "warnings": [
+          "선택한 Tool 'crossdoc_graph_search'이 메인 그래프에 연결되지 않아 호출하지 않았다(연결 오류, 호출 0회). 다른 Tool로 대신 답하지 않는다."
+        ],
+        "n_find": 0
+      },
+      "rank": {
+        "fulltext": 3,
+        "vector": 2,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-Q05",
+      "question": "대응 제2단계에서 능동감시 대상은 누가 정하고 어디까지 하나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "제2단계는 일부만, 제3단계는 전체로 확대된다는 구분 유지",
+      "split": "dev",
+      "tool": {
+        "id": "S-Q05",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 2,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 5,
+        "dbok": true,
+        "sec": 2.4
+      },
+      "main": {
+        "id": "S-Q05",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 2,
+        "total": 2,
+        "first_citation_rank": 5,
+        "cited_order": [
+          "moe_school_manual_v3:p0060:t02r01",
+          "moe_school_manual_v3:p0060:t02r02",
+          "moe_school_manual_v3:p0059:b02",
+          "moe_school_manual_v3:p0038:t01r03",
+          "moe_school_manual_v3:p0060:t01r03",
+          "gyeonggi_school_guide_2025:p0164:t01r09",
+          "gyeonggi_school_guide_2025:p0165:t02r02"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 4,
+        "vector": null,
+        "hybrid": 6
+      }
+    },
+    {
+      "id": "S-Q06",
+      "question": "능동감시는 언제 끝나나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "종료 조건을 원문대로",
+      "split": "eval",
+      "tool": {
+        "id": "S-Q06",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 6,
+        "paths": 6,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.4
+      },
+      "main": {
+        "id": "S-Q06",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 1,
+        "first_citation_rank": null,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0175:t01r10",
+          "gyeonggi_school_guide_2025:p0176:b03",
+          "moe_school_manual_v3:p0060:t01r03",
+          "gyeonggi_school_guide_2025:p0165:t02r02",
+          "gyeonggi_school_guide_2025:p0164:t01r09",
+          "gyeonggi_school_guide_2025:p0165:t02r05"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 복구단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": 10,
+        "hybrid": 5
+      }
+    },
+    {
+      "id": "S-Q07",
+      "question": "유행이 확산되는 대응 제3단계에서 학교장은 무엇을 하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "역할은 예시. 검토를 시행해야 한다로 바꾸지 않음",
+      "split": "dev",
+      "tool": {
+        "id": "S-Q07",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.6
+      },
+      "main": {
+        "id": "S-Q07",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 2,
+        "first_citation_rank": null,
+        "cited_order": [
+          "moe_school_manual_v3:p0108:b01",
+          "gyeonggi_school_guide_2025:p0239:b01",
+          "gyeonggi_school_guide_2025:p0238:b04",
+          "moe_school_manual_v3:p0063:b01",
+          "moe_school_manual_v3:p0068:t02r04",
+          "gyeonggi_school_guide_2025:p0165:t01r05",
+          "gyeonggi_school_guide_2025:p0164:t01r13",
+          "moe_school_manual_v3:p0060:t01r03"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 5,
+        "vector": null,
+        "hybrid": 3
+      }
+    },
+    {
+      "id": "S-Q08",
+      "question": "교무부장은 유행 시 어떤 일을 맡나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "제3단계(대책 마련)와 복구단계(보충 지휘)를 구분",
+      "split": "dev",
+      "tool": {
+        "id": "S-Q08",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 2,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 5,
+        "dbok": true,
+        "sec": 3.1
+      },
+      "main": {
+        "id": "S-Q08",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 2,
+        "total": 2,
+        "first_citation_rank": 5,
+        "cited_order": [
+          "moe_school_manual_v3:p0072:b01",
+          "gyeonggi_school_guide_2025:p0205:b02",
+          "moe_school_manual_v3:p0068:t02r05",
+          "moe_school_manual_v3:p0068:t02r01",
+          "gyeonggi_school_guide_2025:p0165:t02r07",
+          "moe_school_manual_v3:p0065:t01r03",
+          "gyeonggi_school_guide_2025:p0164:t01r13",
+          "gyeonggi_school_guide_2025:p0165:t02r06"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 1,
+        "vector": null,
+        "hybrid": 3
+      }
+    },
+    {
+      "id": "S-Q09",
+      "question": "학년부장은 능동감시에서 무엇을 하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "담임, 학년부장, 보건교사로 이어지는 보고 흐름 유지",
+      "split": "eval",
+      "tool": {
+        "id": "S-Q09",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 5,
+        "dbok": true,
+        "sec": 2.6
+      },
+      "main": {
+        "id": "S-Q09",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 1,
+        "first_citation_rank": 5,
+        "cited_order": [
+          "moe_school_manual_v3:p0065:b02",
+          "moe_school_manual_v3:p0060:t02r01",
+          "moe_school_manual_v3:p0065:t01r01",
+          "moe_school_manual_v3:p0059:b02",
+          "gyeonggi_school_guide_2025:p0165:t02r08",
+          "moe_school_manual_v3:p0065:t01r03",
+          "moe_school_manual_v3:p0060:t01r03",
+          "gyeonggi_school_guide_2025:p0164:t01r09"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 3,
+        "vector": 8,
+        "hybrid": 4
+      }
+    },
+    {
+      "id": "S-Q10",
+      "question": "유행이 끝나면 학교는 어떤 후속 조치를 하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "복구단계 행동(보고·종료 선언·수업 보충·심리지원)",
+      "split": "dev",
+      "tool": {
+        "id": "S-Q10",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 3,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.4
+      },
+      "main": {
+        "id": "S-Q10",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 3,
+        "first_citation_rank": null,
+        "cited_order": [
+          "moe_school_manual_v3:p0108:b01",
+          "gyeonggi_school_guide_2025:p0237:b04",
+          "gyeonggi_school_guide_2025:p0237:b02",
+          "moe_school_manual_v3:p0105:b02",
+          "moe_school_manual_v3:p0068:t02r01",
+          "gyeonggi_school_guide_2025:p0165:t02r04",
+          "moe_school_manual_v3:p0068:t02r05",
+          "gyeonggi_school_guide_2025:p0165:t01r03"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 복구단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-Q11",
+      "question": "학교 내 유행은 어떤 기준으로 끝난 것으로 보나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "방역당국이 역학조사를 한 경우 그 판단에 따른다는 단서 포함",
+      "split": "eval",
+      "tool": {
+        "id": "S-Q11",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 5,
+        "dbok": true,
+        "sec": 2.4
+      },
+      "main": {
+        "id": "S-Q11",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 1,
+        "first_citation_rank": 5,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0196:b03",
+          "moe_school_manual_v3:p0113:b01",
+          "gyeonggi_school_guide_2025:p0244:b01",
+          "gyeonggi_school_guide_2025:p0168:b01",
+          "moe_school_manual_v3:p0068:t02r01",
+          "gyeonggi_school_guide_2025:p0165:t02r04",
+          "moe_school_manual_v3:p0068:t02r05",
+          "gyeonggi_school_guide_2025:p0165:t01r03"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 복구단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-O01",
+      "question": "일시적 관찰실은 어떤 장소에 어떻게 마련하나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "원칙과 권고 강도를 원문대로",
+      "split": "dev",
+      "tool": {
+        "id": "S-O01",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 5,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-O01",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 1,
+        "first_citation_rank": 5,
+        "cited_order": [
+          "moe_school_manual_v3:p0055:b02",
+          "moe_school_manual_v3:p0056:t01r04",
+          "moe_school_manual_v3:p0040:t01r03",
+          "moe_school_manual_v3:p0044:t01r01",
+          "moe_school_manual_v3:p0056:t01r01",
+          "gyeonggi_school_guide_2025:p0167:t01r03",
+          "gyeonggi_school_guide_2025:p0166:t01r01"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 1,
+        "vector": 9,
+        "hybrid": 4
+      }
+    },
+    {
+      "id": "S-O02",
+      "question": "일시적 관찰실에서 학생은 얼마나 머물고 어떻게 관리하나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "기간·방법·심리지원 포함",
+      "split": "dev",
+      "tool": {
+        "id": "S-O02",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 1,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-O02",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 2,
+        "first_citation_rank": 1,
+        "cited_order": [
+          "moe_school_manual_v3:p0056:t01r04",
+          "moe_school_manual_v3:p0055:b02",
+          "gyeonggi_school_guide_2025:p0198:b01",
+          "gyeonggi_school_guide_2025:p0247:b03",
+          "moe_school_manual_v3:p0056:t01r01",
+          "gyeonggi_school_guide_2025:p0245:t02r02",
+          "moe_school_manual_v3:p0036:t01r02",
+          "gyeonggi_school_guide_2025:p0167:t01r03"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 2,
+        "vector": 2,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-O03",
+      "question": "일시적 관찰실로 보건실을 써도 되나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "바람직하지 않다이지 금지가 아님. 부득이한 경우의 조건까지 답해야 함",
+      "split": "eval",
+      "tool": {
+        "id": "S-O03",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 5,
+        "paths": 5,
+        "dropped": 0,
+        "first_citation_rank": 6,
+        "dbok": true,
+        "sec": 2.4
+      },
+      "main": {
+        "id": "S-O03",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 1,
+        "first_citation_rank": 6,
+        "cited_order": [
+          "moe_school_manual_v3:p0055:b02",
+          "gyeonggi_school_guide_2025:p0198:b01",
+          "moe_school_manual_v3:p0042:t01r01",
+          "moe_school_manual_v3:p0036:t01r02",
+          "gyeonggi_school_guide_2025:p0166:t01r01",
+          "moe_school_manual_v3:p0056:t01r01",
+          "moe_school_manual_v3:p0036:t01r01"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-O04",
+      "question": "일시적 관찰실에서 학생을 돌보는 담당자는 누구로 정하나요? 두 문서가 같은가요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "crossdoc_graph_search",
+      "pass": "권고이지 의무가 아님. 고위험군·보건교사 제외, 특수학교는 부담임·지원인력 대체까지",
+      "split": "dev",
+      "tool": {
+        "id": "S-O04",
+        "split": "dev",
+        "route": "crossdoc_graph_search",
+        "status": "PARTIAL",
+        "hit": 1,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 6,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-O04",
+        "split": "dev",
+        "want_route": "crossdoc_graph_search",
+        "got_route": "crossdoc_graph_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ERROR",
+        "status_ok": null,
+        "response_type": "DOMAIN",
+        "tools_used": [],
+        "rounds": 0,
+        "hit": 0,
+        "total": 2,
+        "first_citation_rank": null,
+        "cited_order": [],
+        "dbok": null,
+        "warnings": [
+          "선택한 Tool 'crossdoc_graph_search'이 메인 그래프에 연결되지 않아 호출하지 않았다(연결 오류, 호출 0회). 다른 Tool로 대신 답하지 않는다."
+        ],
+        "n_find": 0
+      },
+      "rank": {
+        "fulltext": 4,
+        "vector": 1,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-R01",
+      "question": "식중독이 의심되는 유행에서 영양(교)사는 무엇을 하나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "행동 노드가 없으면(역할 사전 미등록) 원문 인용 Finding으로만 답해야 함. 거짓 DONE_BY 금지",
+      "split": "dev",
+      "tool": {
+        "id": "S-R01",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 7,
+        "paths": 7,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.7
+      },
+      "main": {
+        "id": "S-R01",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 1,
+        "first_citation_rank": null,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0191:b01",
+          "moe_school_manual_v3:p0043:t01r01",
+          "gyeonggi_school_guide_2025:p0164:t01r13",
+          "moe_school_manual_v3:p0066:t01r02",
+          "gyeonggi_school_guide_2025:p0167:t01r01",
+          "moe_school_manual_v3:p0040:t01r02",
+          "gyeonggi_school_guide_2025:p0168:t01r01",
+          "moe_school_manual_v3:p0066:t01r01"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 5,
+        "vector": 5,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-R02",
+      "question": "행정실은 유행 시 소독과 관련해 무엇을 하나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "소독 대상 예시 표현 유지",
+      "split": "dev",
+      "tool": {
+        "id": "S-R02",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 2,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 5,
+        "paths": 5,
+        "dropped": 0,
+        "first_citation_rank": 3,
+        "dbok": true,
+        "sec": 2.7
+      },
+      "main": {
+        "id": "S-R02",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 2,
+        "total": 2,
+        "first_citation_rank": 3,
+        "cited_order": [
+          "moe_school_manual_v3:p0107:b03",
+          "gyeonggi_school_guide_2025:p0238:b04",
+          "moe_school_manual_v3:p0040:t01r03",
+          "moe_school_manual_v3:p0044:t01r01",
+          "moe_school_manual_v3:p0067:t02r01",
+          "gyeonggi_school_guide_2025:p0164:t01r13"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 1,
+        "vector": 1,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-R03",
+      "question": "유행의심 상황에서 교장·교감은 무엇을 하나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "신고가 필요한 경우라는 조건 유지. 모든 경우 신고로 단정하면 실패",
+      "split": "eval",
+      "tool": {
+        "id": "S-R03",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 7,
+        "paths": 7,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.7
+      },
+      "main": {
+        "id": "S-R03",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 2,
+        "first_citation_rank": null,
+        "cited_order": [
+          "moe_school_manual_v3:p0065:b01",
+          "gyeonggi_school_guide_2025:p0164:t01r13",
+          "moe_school_manual_v3:p0040:t01r02",
+          "moe_school_manual_v3:p0038:t01r03",
+          "gyeonggi_school_guide_2025:p0165:t02r03",
+          "gyeonggi_school_guide_2025:p0165:t02r05",
+          "moe_school_manual_v3:p0066:t01r02"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-E01",
+      "question": "홍역 환자가 생기면 역학조사에 협조하기 위해 학교는 접촉자를 어떻게 파악하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "역학조사 협조 체크리스트 항목. 질병 사실(잠복기 등)을 지어내지 않음",
+      "split": "dev",
+      "tool": {
+        "id": "S-E01",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 2,
+        "n_find": 6,
+        "n_act": 6,
+        "paths": 6,
+        "dropped": 0,
+        "first_citation_rank": 1,
+        "dbok": true,
+        "sec": 2.8
+      },
+      "main": {
+        "id": "S-E01",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 2,
+        "first_citation_rank": 1,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0203:t01r09",
+          "moe_school_manual_v3:p0066:t02r01",
+          "kdca_measles_2026:p0093:b01",
+          "gyeonggi_school_guide_2025:p0203:t01r07",
+          "moe_school_manual_v3:p0044:t01r01",
+          "gyeonggi_school_guide_2025:p0203:t01r08"
+        ],
+        "dbok": true,
+        "warnings": [
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+          "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+        ],
+        "n_find": 6
+      },
+      "rank": {
+        "fulltext": 1,
+        "vector": 1,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-E02",
+      "question": "홍역 의심 환자가 추가로 생기면 누구에게 연락하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "관할 보건소 연락",
+      "split": "eval",
+      "tool": {
+        "id": "S-E02",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 6,
+        "dbok": true,
+        "sec": 2.8
+      },
+      "main": {
+        "id": "S-E02",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 1,
+        "first_citation_rank": 6,
+        "cited_order": [
+          "moe_school_manual_v3:p0214:b01",
+          "kdca_diagnosis_reporting_2026:p0089:t01r02",
+          "gyeonggi_school_guide_2025:p0167:t01r03",
+          "gyeonggi_school_guide_2025:p0203:t01r16",
+          "kdca_measles_2026:p0093:b01",
+          "gyeonggi_school_guide_2025:p0203:t01r17",
+          "moe_school_manual_v3:p0068:t02r01"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 1,
+        "vector": 3,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-E03",
+      "question": "수두 환자는 언제까지 격리하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "기간을 날짜 수로 바꾸지 않고 원문 조건대로",
+      "split": "dev",
+      "tool": {
+        "id": "S-E03",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 5,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-E03",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 1,
+        "first_citation_rank": 5,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0183:t01r12",
+          "gyeonggi_school_guide_2025:p0188:t01r10",
+          "gyeonggi_school_guide_2025:p0183:t01r08",
+          "moe_school_manual_v3:p0210:b01",
+          "gyeonggi_school_guide_2025:p0185:t01r12",
+          "gyeonggi_school_guide_2025:p0185:t01r03",
+          "gyeonggi_school_guide_2025:p0185:t01r08",
+          "gyeonggi_school_guide_2025:p0185:t01r09"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 1,
+        "vector": null,
+        "hybrid": 5
+      }
+    },
+    {
+      "id": "S-E04",
+      "question": "결핵 접촉자 조사에서 학교는 어떻게 협조하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "접촉자 명단 제공·설명회 협조",
+      "split": "dev",
+      "tool": {
+        "id": "S-E04",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 5,
+        "dbok": true,
+        "sec": 3.2
+      },
+      "main": {
+        "id": "S-E04",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 2,
+        "first_citation_rank": 5,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0170:b03",
+          "gyeonggi_school_guide_2025:p0172:b02",
+          "gyeonggi_school_guide_2025:p0171:t01r08",
+          "gyeonggi_school_guide_2025:p0189:b02",
+          "gyeonggi_school_guide_2025:p0171:t01r04",
+          "moe_school_manual_v3:p0066:t02r01",
+          "gyeonggi_school_guide_2025:p0171:t01r06",
+          "moe_school_manual_v3:p0044:t01r01"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 5,
+        "vector": 4,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-S01",
+      "question": "특수학교에서 감염병 의심 학생을 이동시킬 때 유의할 점은 무엇인가요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "2m 거리 원칙과 특수학생 예외를 함께",
+      "split": "dev",
+      "tool": {
+        "id": "S-S01",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 6,
+        "dbok": true,
+        "sec": 2.6
+      },
+      "main": {
+        "id": "S-S01",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 1,
+        "first_citation_rank": 6,
+        "cited_order": [
+          "moe_school_manual_v3:p0116:b01",
+          "gyeonggi_school_guide_2025:p0244:b01",
+          "moe_school_manual_v3:p0113:b01",
+          "gyeonggi_school_guide_2025:p0247:b02",
+          "gyeonggi_school_guide_2025:p0166:t01r01",
+          "gyeonggi_school_guide_2025:p0245:t02r01"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 2,
+        "vector": null,
+        "hybrid": 10
+      }
+    },
+    {
+      "id": "S-S02",
+      "question": "교육연속성계획(ECP)에는 어떤 내용이 들어가나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "6개 구성 항목을 빠뜨리지 않음. 반드시는 원문의 핵심업무 정의 문장일 뿐 법적 의무가 아님",
+      "split": "eval",
+      "tool": {
+        "id": "S-S02",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 2,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 1,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-S02",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 2,
+        "total": 2,
+        "first_citation_rank": 1,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0307:t01r01",
+          "gyeonggi_school_guide_2025:p0307:t01r05",
+          "gyeonggi_school_guide_2025:p0307:b01",
+          "gyeonggi_school_guide_2025:p0310:b01",
+          "gyeonggi_school_guide_2025:p0307:t01r02",
+          "gyeonggi_school_guide_2025:p0307:t01r06",
+          "gyeonggi_school_guide_2025:p0307:t01r04"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 1,
+        "vector": 4,
+        "hybrid": 2
+      }
+    },
+    {
+      "id": "S-A01",
+      "question": "등교중지 기간의 출석인정을 받으려면 어떤 서류가 필요한가요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "진료확인서·소견서·진단서 중 1개, 부득이하면 처방전",
+      "split": "dev",
+      "tool": {
+        "id": "S-A01",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 2,
+        "total": 3,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 1,
+        "dbok": true,
+        "sec": 2.4
+      },
+      "main": {
+        "id": "S-A01",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 2,
+        "total": 3,
+        "first_citation_rank": 1,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0205:b01",
+          "gyeonggi_school_guide_2025:p0204:b01",
+          "gyeonggi_school_guide_2025:p0350:b02",
+          "gyeonggi_school_guide_2025:p0204:b03",
+          "gyeonggi_school_guide_2025:p0166:t01r01",
+          "moe_school_manual_v3:p0066:t01r02",
+          "moe_school_manual_v3:p0043:t01r02"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 1,
+        "vector": 2,
+        "hybrid": 1
+      }
+    },
+    {
+      "id": "S-A02",
+      "question": "등교중지된 학생은 언제, 어떻게 다시 등교하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "원칙·당일 통보·조기 등교 조건",
+      "split": "eval",
+      "tool": {
+        "id": "S-A02",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 2,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-A02",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 1,
+        "first_citation_rank": 2,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0205:b02",
+          "gyeonggi_school_guide_2025:p0205:b01",
+          "gyeonggi_school_guide_2025:p0204:b03",
+          "gyeonggi_school_guide_2025:p0350:b02",
+          "gyeonggi_school_guide_2025:p0166:t01r01",
+          "moe_school_manual_v3:p0043:t01r02",
+          "moe_school_manual_v3:p0066:t01r02"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 4,
+        "vector": 4,
+        "hybrid": 2
+      }
+    },
+    {
+      "id": "S-A03",
+      "question": "학교에서 감염병 환자가 생기면 교육청에는 어떻게 보고하나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "NEIS 경로. 보건소 신고와 섞지 않음",
+      "split": "dev",
+      "tool": {
+        "id": "S-A03",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.7
+      },
+      "main": {
+        "id": "S-A03",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 2,
+        "first_citation_rank": null,
+        "cited_order": [
+          "moe_school_manual_v3:p0075:b01",
+          "gyeonggi_school_guide_2025:p0207:b01",
+          "moe_school_manual_v3:p0078:b01",
+          "gyeonggi_school_guide_2025:p0191:b01",
+          "gyeonggi_school_guide_2025:p0168:t01r01",
+          "moe_school_manual_v3:p0040:t01r02",
+          "gyeonggi_school_guide_2025:p0164:t01r09",
+          "moe_school_manual_v3:p0038:t01r02"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-A04",
+      "question": "홍역 학생이 확인되면 학교는 보건소 신고 공문을 어떻게 보내나요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "에듀파인 기안, 학교장 결재, 보건소신고일 입력. 의료기관 신고는 학교 행동으로 만들지 않음",
+      "split": "dev",
+      "tool": {
+        "id": "S-A04",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.7
+      },
+      "main": {
+        "id": "S-A04",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 2,
+        "first_citation_rank": null,
+        "cited_order": [
+          "moe_school_manual_v3:p0214:b01",
+          "gyeonggi_school_guide_2025:p0200:b02",
+          "moe_school_manual_v3:p0042:b01",
+          "gyeonggi_school_guide_2025:p0204:b02",
+          "kdca_measles_2026:p0093:b01",
+          "gyeonggi_school_guide_2025:p0164:t01r09",
+          "moe_school_manual_v3:p0040:t01r04",
+          "kdca_measles_2026:p0093:b03"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-F01",
+      "question": "학교 감염병 대응 제1단계는 언제 시작해서 언제 끝나나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "시작·종료를 두 문서 근거로",
+      "split": "dev",
+      "tool": {
+        "id": "S-F01",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 4,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-F01",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 2,
+        "first_citation_rank": 4,
+        "cited_order": [
+          "moe_school_manual_v3:p0051:b01",
+          "gyeonggi_school_guide_2025:p0163:b01",
+          "moe_school_manual_v3:p0053:b01",
+          "moe_school_manual_v3:p0053:t01r01",
+          "gyeonggi_school_guide_2025:p0164:t01r12",
+          "moe_school_manual_v3:p0056:t01r01",
+          "gyeonggi_school_guide_2025:p0164:t01r02"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제1단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+          "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": 2,
+        "hybrid": 9
+      }
+    },
+    {
+      "id": "S-F02",
+      "question": "학교 내 감염병 유행의심 기준은 무엇인가요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "두 기준(동일 학급, 공통 공간 노출)을 원문대로",
+      "split": "eval",
+      "tool": {
+        "id": "S-F02",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-F02",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 1,
+        "first_citation_rank": null,
+        "cited_order": [
+          "gyeonggi_school_guide_2025:p0168:b01",
+          "gyeonggi_school_guide_2025:p0308:b02",
+          "gyeonggi_school_guide_2025:p0351:b02",
+          "gyeonggi_school_guide_2025:p0214:b01",
+          "gyeonggi_school_guide_2025:p0164:t01r13",
+          "moe_school_manual_v3:p0066:t01r02",
+          "gyeonggi_school_guide_2025:p0168:t01r01",
+          "moe_school_manual_v3:p0040:t01r02"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 8,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-F03",
+      "question": "대응 제2단계의 주요 활동은 무엇인가요?",
+      "region": "GYEONGGI",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "단계 정의 표를 근거로",
+      "split": "dev",
+      "tool": {
+        "id": "S-F03",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-F03",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 2,
+        "first_citation_rank": null,
+        "cited_order": [
+          "moe_school_manual_v3:p0058:b01",
+          "moe_school_manual_v3:p0058:t01r01",
+          "gyeonggi_school_guide_2025:p0214:b01",
+          "gyeonggi_school_guide_2025:p0351:b02",
+          "gyeonggi_school_guide_2025:p0165:t01r05",
+          "moe_school_manual_v3:p0068:t02r04",
+          "gyeonggi_school_guide_2025:p0167:t01r03",
+          "moe_school_manual_v3:p0038:t01r01"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": 6,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-T01",
+      "question": "유증상 학생은 담임교사가 반드시 직접 보건실까지 데려가야 하나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "원문은 권장, 고위험군이면 다른 교사로 대체. 반드시라고 답하면 실패",
+      "split": "dev",
+      "tool": {
+        "id": "S-T01",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 3,
+        "dbok": true,
+        "sec": 2.8
+      },
+      "main": {
+        "id": "S-T01",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 2,
+        "first_citation_rank": 3,
+        "cited_order": [
+          "moe_school_manual_v3:p0197:b02",
+          "moe_school_manual_v3:p0057:b01",
+          "moe_school_manual_v3:p0054:b01",
+          "gyeonggi_school_guide_2025:p0198:b03",
+          "gyeonggi_school_guide_2025:p0166:t01r01",
+          "moe_school_manual_v3:p0036:t01r01",
+          "moe_school_manual_v3:p0042:t01r01"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제1단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": 1,
+        "hybrid": 6
+      }
+    },
+    {
+      "id": "S-T02",
+      "question": "학생 한 명이 열이 나서 보건실에 왔어요. 지금 바로 NEIS에 감염병 환자로 등록해야 하나요?",
+      "region": "GYEONGGI",
+      "status": "PARTIAL",
+      "route": "action_search",
+      "pass": "NEIS 보고는 의료기관 확인 후(제2단계) 활동으로 배치. 지금 등록하라고 단정하지 않음",
+      "split": "eval",
+      "tool": {
+        "id": "S-T02",
+        "split": "eval",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 0,
+        "total": 2,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": null,
+        "dbok": true,
+        "sec": 2.5
+      },
+      "main": {
+        "id": "S-T02",
+        "split": "eval",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "PARTIAL",
+        "got_status": "ANSWERED",
+        "status_ok": false,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 0,
+        "total": 2,
+        "first_citation_rank": null,
+        "cited_order": [
+          "moe_school_manual_v3:p0073:b01",
+          "gyeonggi_school_guide_2025:p0210:b01",
+          "gyeonggi_school_guide_2025:p0208:b01",
+          "moe_school_manual_v3:p0036:t01r01",
+          "moe_school_manual_v3:p0040:t01r01",
+          "gyeonggi_school_guide_2025:p0166:t01r01",
+          "moe_school_manual_v3:p0038:t01r02",
+          "gyeonggi_school_guide_2025:p0164:t01r13"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+          "질문 표현에 맞춰 원문의 대응 제1단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-T03",
+      "question": "일시적 관찰실에서 보건교사가 학생을 돌봐야 하나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "action_search",
+      "pass": "원문은 담당 권고 대상에서 보건교사를 제외. 반대로 답하면 실패",
+      "split": "dev",
+      "tool": {
+        "id": "S-T03",
+        "split": "dev",
+        "route": "action_search",
+        "status": "OK",
+        "hit": 1,
+        "total": 1,
+        "n_find": 8,
+        "n_act": 4,
+        "paths": 4,
+        "dropped": 0,
+        "first_citation_rank": 2,
+        "dbok": true,
+        "sec": 2.7
+      },
+      "main": {
+        "id": "S-T03",
+        "split": "dev",
+        "want_route": "action_search",
+        "got_route": "action_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "DOMAIN",
+        "tools_used": [
+          "action_search"
+        ],
+        "rounds": 1,
+        "hit": 1,
+        "total": 1,
+        "first_citation_rank": 2,
+        "cited_order": [
+          "moe_school_manual_v3:p0055:b02",
+          "moe_school_manual_v3:p0056:t01r02",
+          "gyeonggi_school_guide_2025:p0198:b01",
+          "gyeonggi_school_guide_2025:p0196:b01",
+          "moe_school_manual_v3:p0036:t01r02",
+          "gyeonggi_school_guide_2025:p0167:t01r03",
+          "moe_school_manual_v3:p0056:t01r01"
+        ],
+        "dbok": true,
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+          "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+        ],
+        "n_find": 8
+      },
+      "rank": {
+        "fulltext": 4,
+        "vector": 3,
+        "hybrid": 2
+      }
+    },
+    {
+      "id": "S-G01",
+      "question": "우리 반 학생이 열이 나고 몸에 발진이 있어요. 성홍열인지 판단해 주세요.",
+      "region": "NATIONAL",
+      "status": "INSUFFICIENT_EVIDENCE",
+      "route": "(없음: OUT_OF_SCOPE)",
+      "pass": "진단은 서비스 범위 밖. 증상으로 질병을 판정하지 않고 의료기관 진료 안내를 warnings에 — response_type=OUT_OF_SCOPE, Tool 호출 0회(계약 v2.0 §12)",
+      "split": "dev",
+      "tool": null,
+      "main": {
+        "id": "S-G01",
+        "split": "dev",
+        "want_route": "OUT_OF_SCOPE",
+        "got_route": "OUT_OF_SCOPE",
+        "route_ok": true,
+        "want_status": "INSUFFICIENT_EVIDENCE",
+        "got_status": "INSUFFICIENT_EVIDENCE",
+        "status_ok": true,
+        "response_type": "OUT_OF_SCOPE",
+        "tools_used": [],
+        "rounds": 0,
+        "hit": 0,
+        "total": 0,
+        "first_citation_rank": null,
+        "cited_order": [],
+        "dbok": null,
+        "warnings": [
+          "진단·질병 판정은 서비스 범위 밖이다. 증상으로 질병을 판정하지 않으며 의료기관 진료가 필요하다."
+        ],
+        "n_find": 0
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-G02",
+      "question": "○○○ 학생의 등교중지 정보를 NEIS에 대신 입력해 주세요.",
+      "region": "GYEONGGI",
+      "status": "INSUFFICIENT_EVIDENCE",
+      "route": "(없음: OUT_OF_SCOPE)",
+      "pass": "NEIS 연동·자동 입력·개인정보 처리는 서비스 밖. 학생 이름 저장·재사용 금지 — response_type=OUT_OF_SCOPE, Tool 호출 0회(계약 v2.0 §12)",
+      "split": "eval",
+      "tool": null,
+      "main": {
+        "id": "S-G02",
+        "split": "eval",
+        "want_route": "OUT_OF_SCOPE",
+        "got_route": "OUT_OF_SCOPE",
+        "route_ok": true,
+        "want_status": "INSUFFICIENT_EVIDENCE",
+        "got_status": "INSUFFICIENT_EVIDENCE",
+        "status_ok": true,
+        "response_type": "OUT_OF_SCOPE",
+        "tools_used": [],
+        "rounds": 0,
+        "hit": 0,
+        "total": 0,
+        "first_citation_rank": null,
+        "cited_order": [],
+        "dbok": null,
+        "warnings": [
+          "NEIS 입력·제출 등 시스템 대행과 개인정보 처리는 서비스 범위 밖이다."
+        ],
+        "n_find": 0
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-G03",
+      "question": "오늘 점심 메뉴 추천해 줘.",
+      "region": "NATIONAL",
+      "status": "INSUFFICIENT_EVIDENCE",
+      "route": "(없음: OUT_OF_SCOPE)",
+      "pass": "response_type=OUT_OF_SCOPE, Tool 호출 0회",
+      "split": "dev",
+      "tool": null,
+      "main": {
+        "id": "S-G03",
+        "split": "dev",
+        "want_route": "OUT_OF_SCOPE",
+        "got_route": "OUT_OF_SCOPE",
+        "route_ok": true,
+        "want_status": "INSUFFICIENT_EVIDENCE",
+        "got_status": "INSUFFICIENT_EVIDENCE",
+        "status_ok": true,
+        "response_type": "OUT_OF_SCOPE",
+        "tools_used": [],
+        "rounds": 0,
+        "hit": 0,
+        "total": 0,
+        "first_citation_rank": null,
+        "cited_order": [],
+        "dbok": null,
+        "warnings": [
+          "학교 감염병 대응 자료와 관련된 질문으로 보이지 않는다."
+        ],
+        "n_find": 0
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-G04",
+      "question": "안녕하세요, 이 서비스로 무엇을 할 수 있나요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "(없음: GENERAL)",
+      "pass": "response_type=GENERAL, Tool 호출 0회, 서비스 소개만(감염병 사실을 지어내지 않음)",
+      "split": "eval",
+      "tool": null,
+      "main": {
+        "id": "S-G04",
+        "split": "eval",
+        "want_route": "GENERAL",
+        "got_route": "GENERAL",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ANSWERED",
+        "status_ok": true,
+        "response_type": "GENERAL",
+        "tools_used": [],
+        "rounds": 0,
+        "hit": 0,
+        "total": 0,
+        "first_citation_rank": null,
+        "cited_order": [],
+        "dbok": null,
+        "warnings": [],
+        "n_find": 0
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-D01",
+      "question": "홍역의 잠복기는 며칠인가요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "disease_search",
+      "pass": "질병 사실 질문. Action Tool이 아니라 disease_search로 라우팅되어야 함(학교 문서는 보조)",
+      "split": "dev",
+      "tool": null,
+      "main": {
+        "id": "S-D01",
+        "split": "dev",
+        "want_route": "disease_search",
+        "got_route": "disease_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ERROR",
+        "status_ok": null,
+        "response_type": "DOMAIN",
+        "tools_used": [],
+        "rounds": 0,
+        "hit": 0,
+        "total": 0,
+        "first_citation_rank": null,
+        "cited_order": [],
+        "dbok": null,
+        "warnings": [
+          "선택한 Tool 'disease_search'이 메인 그래프에 연결되지 않아 호출하지 않았다(연결 오류, 호출 0회). 다른 Tool로 대신 답하지 않는다."
+        ],
+        "n_find": 0
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    {
+      "id": "S-L01",
+      "question": "감염병예방법상 학교장의 신고 의무는 무엇인가요?",
+      "region": "NATIONAL",
+      "status": "ANSWERED",
+      "route": "legal_search",
+      "pass": "법령 질문. legal_search로 라우팅. 학교 문서 목록만으로 법적 의무를 확정하지 않음",
+      "split": "eval",
+      "tool": null,
+      "main": {
+        "id": "S-L01",
+        "split": "eval",
+        "want_route": "legal_search",
+        "got_route": "legal_search",
+        "route_ok": true,
+        "want_status": "ANSWERED",
+        "got_status": "ERROR",
+        "status_ok": null,
+        "response_type": "DOMAIN",
+        "tools_used": [],
+        "rounds": 0,
+        "hit": 0,
+        "total": 0,
+        "first_citation_rank": null,
+        "cited_order": [],
+        "dbok": null,
+        "warnings": [
+          "선택한 Tool 'legal_search'이 메인 그래프에 연결되지 않아 호출하지 않았다(연결 오류, 호출 0회). 다른 Tool로 대신 답하지 않는다."
+        ],
+        "n_find": 0
+      },
+      "rank": {
+        "fulltext": null,
+        "vector": null,
+        "hybrid": null
+      }
+    }
+  ]
+}

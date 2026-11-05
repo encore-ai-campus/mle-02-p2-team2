@@ -17,7 +17,7 @@
 | 학교 자료·Action Tool·메인 | 주승우 | 진행 중 | 로컬 v4 기록상 D06 수정 후 Tool 정답 인용 25/34, 전부 16/34. 174개 테스트 통과 기록 | main에 최신 코드·증빙 공유, Disease/Legal/CrossDoc 연결 확인, 추출 정답·채점 기준 정비 | 로컬 보고서 `notebooks/school/평가결과/평가_20261105_D06수정_v4.md`는 공유 대기. 이 초기 현황 작성에서 재실행하지 않음 | 2026-11-05 |
 | 질병 자료·Disease Tool·CrossDoc | 송수림 | 담당자 확인 대기 | origin/main에 Disease Tool·공동 DB 점검 커밋 확인 | 담당자가 실제 실행 결과·현재 작업·연동 상태 갱신 | 원격 커밋 `2a82f52`, `81b5053` 확인. 작성자가 실DB/Tool 재검증하지 않음 | 2026-11-05 |
 | 예방·법령·Legal Tool·공통 검증 | 유종혁 | 진행 중 | 전문 검색(chunk_text)·조사 처리·run() 검색 연결, 공동 DB 적재(Document 4·Chunk 33·행동 6·관계 적재), 노트북 19(회귀)·20(중복 실패) 재확인 | Q03 답 카드(평가용 고정 뒤), Q02 카드는 추가 완료, 골든셋 확정 승인, 개념 의미 확인(a05·a06), 메인 `legal_search` 연결(주승우 코드 대기), 테스트 격리 합의(회의 결정 12번) | [골든셋 확정 기록](../data/specs/golden/prevention_legal.md#7-2026-11-05-확정-결정과-현재-상태), [일정 기록](../notebooks/prevention_legal/일정관리_prevention_legal.md), [실험 노트북 17~25](../notebooks/prevention_legal/). 실DB 쓰기는 승인된 항목만 수행. 커밋·푸시는 사용자 승인 대기 | 2026-11-05 |
-| 공통 진행 기록·에이전트 규칙 | 3인 공동 | 리뷰 대기 | AGENTS.md, Claude 가져오기 파일, 공통 진행 현황을 문서 브랜치에 업로드 | PR 생성·팀 리뷰 후 main 반영. 각 담당자가 자기 행·구역 갱신 | [공통 규칙](../AGENTS.md), [Claude 연결](../CLAUDE.md), [문서 브랜치](https://github.com/encore-ai-campus/mle-02-p2-team2/tree/docs/team-agent-progress-20261105). 링크·필수 항목·가져오기 검사 통과. 연동 권한 403으로 PR 자동 생성은 실패 | 2026-11-05 |
+| 공통 진행 기록·에이전트 규칙 | 3인 공동 | 검증 완료 | AGENTS.md·CLAUDE.md·진행 현황이 PR #2로 main에 반영됐고 로컬 main도 a4826db까지 동기화 | 각 담당자가 자기 행·구역을 갱신. 최신 학교 작업·manifest 변경은 별도 공유 필요 | [PR #2](https://github.com/encore-ai-campus/mle-02-p2-team2/pull/2), [공통 규칙](../AGENTS.md), [Claude 연결](../CLAUDE.md). 로컬 CSV 원본 보존·원격 신규 3행 통합·기타 미커밋 파일 해시 보존 검사 통과 | 2026-11-05 |
 
 ## 3. 담당별 상세 기록
 
@@ -54,6 +54,7 @@
 ## 5. 최근 변경
 
 - 2026-11-05 / 주승우 요청·Codex 작성: 팀 공통 AGENTS 규칙과 Claude 연결, 이 현황판을 `docs/team-agent-progress-20261105` 브랜치에 업로드. 다른 담당자의 미확인 상태는 확인 대기로 둠. GitHub 연동의 PR 생성 권한은 403으로 확인되어 [PR 생성 화면](https://github.com/encore-ai-campus/mle-02-p2-team2/compare/main...docs/team-agent-progress-20261105?expand=1)에서 리뷰 절차 진행 필요.
+- 2026-11-05 / 주승우 요청·Codex 정리: 이후 PR #2 병합을 확인하고 로컬 main을 `a4826db`로 fast-forward. pull 충돌 경로 5개만 임시 보관했고, 사용자 수정 manifest의 기존 바이트 전체를 유지한 채 원격 호흡기 문서 3행만 추가. 다른 미커밋 파일은 해시로 보존 확인. 39개 로컬 변경 파일 백업과 복구용 stash는 유지함. 원문 페이지 재선정·추출·재적재는 수행하지 않음.
 
 ## 6. 갱신 방법
 

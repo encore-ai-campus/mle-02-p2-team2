@@ -564,6 +564,9 @@ def settle_modality(raw_modality: str, evidence: str) -> tuple[str, str | None]:
     marker = MODALITY_MARKERS.get(raw_modality)
     if marker and not re.search(marker, evidence or ""):
         return "UNSPECIFIED", f"{raw_modality}→UNSPECIFIED (근거 문장에 강도 표현 없음)"
+    # '원칙적으로 금지'처럼 원칙을 밝히는 표현은 예외를 열어 두므로 의무로 단정하지 않는다(사용자 결정 11/05).
+    if raw_modality == "MANDATORY" and re.search("원칙적으로|원칙적", evidence or ""):
+        return "UNSPECIFIED", "MANDATORY→UNSPECIFIED (원칙적으로: 예외를 열어 둔 표현)"
     return raw_modality, None
 
 

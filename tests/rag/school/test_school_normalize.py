@@ -479,7 +479,8 @@ def test_stage_is_filled_only_from_section_path_and_only_when_unspecified():
 
 @pytest.mark.parametrize("modality, evidence, expected", [
     ("MANDATORY", "발생감시팀은 능동감시를 하고", "UNSPECIFIED"),
-    ("MANDATORY", "혼자 이동하는 것은 원칙적으로 금지", "MANDATORY"),
+    ("MANDATORY", "혼자 이동하는 것은 원칙적으로 금지", "UNSPECIFIED"),
+    ("MANDATORY", "반드시 보고해야 한다", "MANDATORY"),
     ("RECOMMENDED", "밀접접촉자를 파악하고 관리하는 것이 매우 중요", "UNSPECIFIED"),
     ("RECOMMENDED", "담당 교사는 담임교사 권장", "RECOMMENDED"),
     ("UNSPECIFIED", "아무 문장", "UNSPECIFIED"),
