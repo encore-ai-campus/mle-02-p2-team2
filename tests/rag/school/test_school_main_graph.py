@@ -53,6 +53,8 @@ def deps(books):
     ("보호자 연락을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요?", "DOMAIN", "CROSSDOC"),  # T04 유형
     ("수두 환자는 언제까지 격리하나요?", "DOMAIN", "ACTION"),
     ("감염병예방법상 학교장의 신고 의무는 무엇인가요?", "DOMAIN", "LEGAL"),                       # '예방법'≠'방법'
+    ("홍역 의심환자가 생겼을 때 학교 담당교사와 의료기관은 각각 보건소에 무엇을 신고하거나 안내하나요? "
+     "법률과 지침의 조건을 구분해 주세요.", "DOMAIN", "LEGAL"),                                  # Legal 샘플(M3)
     ("대응 제2단계의 주요 활동은 무엇인가요?", "DOMAIN", "ACTION"),
     ("안녕하세요, 이 서비스로 무엇을 할 수 있나요?", "GENERAL", None),
     ("오늘 점심 메뉴 추천해 줘.", "OUT_OF_SCOPE", None),
@@ -143,3 +145,55 @@ def test_allowed_empty_passes_through_to_tool(books):
     out = run_main({"question": "담임교사는 무엇을 하나요?", "region": "GYEONGGI", "allowed_document_ids": []},
                    deps(books), {"action_search": tool})
     assert tool.calls[0]["allowed_document_ids"] == [] and out["status"] == "INSUFFICIENT_EVIDENCE"
+
+
+# ---------------------------------------------------------------- 답변 구성 (역할별 묶음)
+
+def _finding(claim, chunk):
+    return {"claim": claim, "chunk_ids": [chunk], "action_ids": [], "disease_ids": [], "concept_ids": []}
+
+
+def _citation(chunk, page):
+    return {"document_id": chunk.split(":")[0], "chunk_id": chunk, "pdf_page": page, "printed_page": page - 14,
+            "excerpt": "원문"}
+
+
+def test_compose_groups_by_role_merges_same_text_and_shortens_source():
+    from rag.school.main_graph import compose_text
+    a, b, c = "moe_school_manual_v3:p0036:t01r01", "gyeonggi_school_guide_2025:p0166:t01r01", "moe_school_manual_v3:p0054:b01"
+    findings = [
+        _finding("[교육부 매뉴얼 PDF 36쪽 · 대응 제1단계] 원문이 제시한 담당 예시: 담임교사 — 보호자에게 연락한다.", a),
+        _finding("[경기도 가이드북 PDF 166쪽 · 대응 제1단계] 원문이 제시한 담당 예시: 담임교사 — 보호자에게  연락한다.", b),
+        _finding("[교육부 매뉴얼 PDF 36쪽 · 단계 미기재] 원문에 담당 미기재 — 증상을 관찰한다.", a),
+        _finding("[교육부 매뉴얼 PDF 54쪽 · 원문 배치: 대응 제1단계] 원문: “- 혼자 이동하는 것은 원칙적으로 금지”", c)]
+    text = compose_text("ANSWERED", findings, [_citation(a, 36), _citation(b, 166), _citation(c, 54)], [])
+    assert text.count("보호자에게 연락한다") == 1                       # 두 문서의 같은 문구는 한 줄
+    assert "■ 담임교사" in text and "교육부 p.36 · 대응 1단계" in text and "경기도 p.166" in text
+    assert "[1][2]" in text and "PDF" not in text and "원문이 제시한 담당 예시" not in text
+    assert "■ 담당이 원문에 적혀 있지 않은 행동" in text and "■ 원문 그대로" in text
+    assert "“혼자 이동하는 것은 원칙적으로 금지”" in text              # 글머리 기호 제거
+
+
+def test_compose_limits_lines_per_role_and_counts_hidden():
+    from rag.school.main_graph import MAX_PER_SECTION, compose_text
+    chunk = "moe_school_manual_v3:p0036:t01r01"
+    findings = [_finding(f"[교육부 매뉴얼 PDF 36쪽 · 대응 제1단계] 원문이 제시한 담당 예시: 담임교사 — 행동 {n}번을 한다.", chunk)
+                for n in range(MAX_PER_SECTION + 2)]
+    text = compose_text("ANSWERED", findings, [_citation(chunk, 36)], [])
+    assert text.count("- 행동") == MAX_PER_SECTION and "그 밖의 근거 2건" in text
+
+
+def test_compose_keeps_unparsable_claims_as_is():
+    from rag.school.main_graph import compose_text
+    chunk = "kdca_measles_2026:p0010:b01"
+    text = compose_text("ANSWERED", [_finding("홍역의 잠복기는 7~21일이다.", chunk)], [_citation(chunk, 10)], [])
+    assert "홍역의 잠복기는 7~21일이다." in text and "■ 질병관리청 홍역 관리지침" in text and "(질병청 홍역 p.10)" in text
+
+
+def test_compose_marks_off_stage_action():
+    from rag.school.main_graph import compose_text
+    chunk = "moe_school_manual_v3:p0068:t02r04"
+    text = compose_text("ANSWERED", [_finding(
+        "[교육부 매뉴얼 PDF 68쪽 · 복구단계] 원문이 제시한 담당 예시: 학교장 — 조직을 해제한다."
+        " — 원문 배치 단계가 질문 단계와 다름", chunk)], [_citation(chunk, 68)], [])
+    assert "복구단계 · 질문 단계와 다름" in text and "원문 배치 단계가" not in text

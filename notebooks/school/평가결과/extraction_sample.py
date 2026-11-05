@@ -12,6 +12,7 @@
 import json
 import random
 import sys
+from pathlib import Path
 
 sys.path.insert(0, "src")
 from rag.school.capabilities import active_pages, in_scope  # noqa: E402
@@ -20,8 +21,10 @@ BUNDLE = "data/interim/school/full_20261105T032224_612625Z/official_chunks.jsonl
 OUT_MD = "notebooks/school/평가결과/추출정답_주석지_v1.md"
 OUT_JSON = "data/specs/golden/school_extraction_sample_v1.json"
 SEED, PER_STRATUM, FROM_INPUT = 1105, 3, 8
-RUN_CHUNKS = "data/interim/school/run_20261105T024843_281371Z/chunks.jsonl"
+INPUT_IDS = "data/specs/golden/school_extraction_input_ids.json"
 
+if Path(OUT_MD).exists() and "--force" not in sys.argv:
+    sys.exit(f"{OUT_MD}이 이미 있습니다(작성 중인 주석을 덮어쓰지 않음). 새로 만들려면 --force.")
 chunks = [json.loads(line) for line in open(BUNDLE, encoding="utf-8")]
 scope = active_pages()
 pool = [c for c in chunks if c["document_id"] in ("moe_school_manual_v3", "gyeonggi_school_guide_2025")
@@ -34,8 +37,7 @@ for doc in ("moe_school_manual_v3", "gyeonggi_school_guide_2025"):
                          key=lambda c: c["chunk_id"])
         for i, c in enumerate(rng.sample(stratum, PER_STRATUM)):
             picked.append({"chunk_id": c["chunk_id"], "split": "dev" if i % 2 == 0 else "eval", "stratum": f"{doc}/{kind}"})
-extracted = sorted({json.loads(line)["official_chunk_id"] for line in open(RUN_CHUNKS, encoding="utf-8")}
-                   - {p["chunk_id"] for p in picked})
+extracted = sorted(set(json.load(open(INPUT_IDS, encoding="utf-8"))["chunk_ids"]) - {p["chunk_id"] for p in picked})
 for i, chunk_id in enumerate(rng.sample(extracted, FROM_INPUT)):
     picked.append({"chunk_id": chunk_id, "split": "dev" if i % 2 == 0 else "eval", "stratum": "extraction_input"})
 picked.sort(key=lambda p: (p["split"], p["chunk_id"]))

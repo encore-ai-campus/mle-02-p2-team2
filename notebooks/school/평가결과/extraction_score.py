@@ -20,7 +20,7 @@ from rag.school.graph import default_deps  # noqa: E402
 
 SHEET = "notebooks/school/평가결과/추출정답_주석지_v1.md"
 SAMPLE = "data/specs/golden/school_extraction_sample_v1.json"
-RUN_CHUNKS = "data/interim/school/run_20261105T024843_281371Z/chunks.jsonl"
+INPUT_IDS = "data/specs/golden/school_extraction_input_ids.json"   # Git 추적(원 실행 기록은 data/interim, Git 제외)
 MATCH_MIN = 0.45
 OVERRIDES: dict[str, list[tuple[int, str | None]]] = {}   # {chunk_id: [(정답 행 번호, action_id 또는 None=짝 없음)]}
 STAGE = {"예방": "PREVENTION", "대응1": "RESPONSE_1", "대응2": "RESPONSE_2", "대응3": "RESPONSE_3",
@@ -65,7 +65,7 @@ def main(out_path: str | None) -> None:
     blank = [c for c in sample if not gold.get(c, {}).get("rows") and not gold.get(c, {}).get("none")]
     if blank:
         print(f"아직 작성하지 않은 청크 {len(blank)}개: {blank}")
-    extracted_input = {json.loads(line)["official_chunk_id"] for line in open(RUN_CHUNKS, encoding="utf-8")}
+    extracted_input = set(json.load(open(INPUT_IDS, encoding="utf-8"))["chunk_ids"])
     deps = default_deps()
     with deps["driver"].session(database=deps.get("database")) as session:
         rows = session.run("""

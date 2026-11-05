@@ -56,7 +56,7 @@ DOMAIN_WORDS = ("감염", "학교", "학생", "교사", "교직원", "등교", "
                 "관찰실", "방역", "소독", "나이스", "neis", "출결", "출석", "예방", "접종", "잠복", "전파", "환자", "발열",
                 "마스크", "휴업", "교육청", "확진", "의심", "가정통신문", "접촉", "결석", "특수학교", "ecp", "연속성",
                 "식중독", "급식", "보호자", "학부모", "수업결손", "능동감시", "대응", "단계", "관리조직")
-LEGAL_RE = re.compile(r"신고(해야|하여야|의무|대상인|대상이|할의무)|법(령|률)?상|법적|감염병예방법|예방법|시행규칙|시행령|과태료|벌칙|의무가있")
+LEGAL_RE = re.compile(r"신고(해야|하여야|의무|대상인|대상이|할의무)|법(령|률)?상|법률|법령|법적|감염병예방법|예방법|시행규칙|시행령|과태료|벌칙|의무가있")
 PROCEDURE_RE = re.compile(r"공문|어떻게보내|(?<!예)방법|절차|메뉴|입력하|기안")   # '감염병예방법'의 '방법'은 절차가 아님
 DISEASE_FACT = ("잠복기", "전파경로", "감염경로", "전파", "증상은", "증상이뭐", "원인", "치료", "합병증", "특징", "전염력",
                 "백신", "얼마나오래", "감염력")
@@ -269,32 +269,139 @@ STATUS_HEAD = {"ANSWERED": "원문에서 확인한 내용입니다.",
                "PARTIAL": "원문에서 일부만 확인했습니다. 확인한 내용과 남은 확인 사항을 함께 안내합니다.",
                "INSUFFICIENT_EVIDENCE": "허용된 자료에서 질문에 답할 근거를 찾지 못했습니다.",
                "ERROR": "검색 도구를 실행하지 못해 답하지 못했습니다."}
-MAX_ANSWER_LINES = 5      # 화면 답변 줄 수. Tool 근거는 줄이지 않고 findings·citations에 모두 남긴다.
+MAX_PER_SECTION = 3       # 화면 답변에서 역할(구역)마다 보이는 줄 수. Tool 근거는 줄이지 않고 findings·citations에 모두 남긴다.
+MAX_QUOTE_LINES = 2
+QUOTE_CHARS = 130
+NO_ROLE_TITLE = "담당이 원문에 적혀 있지 않은 행동"
+QUOTE_TITLE = "원문 그대로 (행동으로 정리되지 않은 문단·표)"
+DOC_SHORT = {"교육부 매뉴얼": "교육부", "경기도 가이드북": "경기도"}
+# 다른 Tool(질병·법령·문서 비교)의 claim은 형식이 달라 문서별로 묶는다(계약: 문서마다 조건이 다르면 분리해 설명).
+DOC_TITLES = {"moe_school_manual_v3": ("교육부 매뉴얼", "교육부"),
+              "gyeonggi_school_guide_2025": ("경기도 가이드북", "경기도"),
+              "kdca_measles_2026": ("질병관리청 홍역 관리지침", "질병청 홍역"),
+              "kdca_diagnosis_reporting_2026": ("질병관리청 진단·신고 기준", "질병청 신고"),
+              "moleg_infectious_disease_act_21521": ("감염병예방법", "감염병예방법")}
+OFF_STAGE_TAIL = " — 원문 배치 단계가 질문 단계와 다름"
+HEAD_RE = re.compile(r"^\[(?P<head>[^\]]*)\]\s*(?P<body>.*)$", re.S)
+ROLE_RE = re.compile(r"^(?:원문이 제시한 담당 예시|원문이 명시한 담당):\s*(?P<role>.+?)\s*—\s*(?P<text>.+)$", re.S)
+NO_ROLE_RE = re.compile(r"^원문에 담당 미기재\s*—\s*(?P<text>.+)$", re.S)
+QUOTE_RE = re.compile(r"^원문:\s*“(?P<text>.*)”$", re.S)
+PAGE_RE = re.compile(r"^(?P<doc>.*?)\s*PDF\s*(?P<page>\d+)쪽(?P<extra>.*)$")
 
 
-def _claim_key(claim: str) -> str:
-    """문서·쪽 표시를 뺀 주장 본문(두 문서의 같은 문구를 답변 줄에서 묶기 위한 키)."""
-    body = re.sub(r"^\[[^\]]*\]\s*", "", claim)
-    return re.sub(r"\s+", "", body)
+def _short_source(first: str) -> str:
+    match = PAGE_RE.match(first.strip())
+    if not match:
+        return first.strip()
+    doc = DOC_SHORT.get(match["doc"].strip(), match["doc"].strip())
+    extra = "(시나리오 예시)" if "모의훈련 시나리오 예시" in match["extra"] else ""
+    return f"{doc} p.{match['page']}{extra}"
+
+
+def parse_claim(claim: str) -> dict | None:
+    """Action Tool이 만든 Finding.claim 형식(`[출처 · 단계] 담당 — 행동` / `[출처 · 태그] 원문: “…”`)을 읽는다.
+    형식이 다른 Tool의 claim이면 None을 돌려주고 호출자가 원문 그대로 쓴다."""
+    match = HEAD_RE.match(claim)
+    if not match:
+        return None
+    parts = [p.strip() for p in match["head"].split(" · ")]
+    body, off_stage = match["body"].strip(), False
+    if body.endswith(OFF_STAGE_TAIL):
+        body, off_stage = body[: -len(OFF_STAGE_TAIL)], True
+    stage = None
+    role = None
+    for tag in parts[1:]:
+        if tag.startswith("원문 배치:"):
+            label = tag.removeprefix("원문 배치:").strip()
+            off_stage = off_stage or "질문 단계와 다름" in label
+            stage = label.split("—")[0].strip()
+        elif tag.startswith(("원문이 제시한 담당 예시:", "원문의 담당:")):
+            role = tag.split(":", 1)[1].strip()
+        elif tag != "단계 미기재":
+            stage = tag
+    out = {"source": _short_source(parts[0]), "stage": re.sub(r"제(\d)단계", r"\1단계", stage) if stage else None,
+           "off_stage": off_stage}
+    quote = QUOTE_RE.match(body)
+    if quote:
+        # PDF 글머리 기호(사용자 정의 문자 영역 글리프·¢·∙ 등)는 공백으로 바꾸고 앞쪽 기호를 지운다. 낱말은 건드리지 않는다.
+        text = re.sub(r"[\ue000-\uf8ff]", " ", quote["text"])
+        text = re.sub(r"^[^\w(\[「『<]+", "", re.sub(r"\s+", " ", text).strip())
+        return {**out, "kind": "quote", "role": role,
+                "text": text if len(text) <= QUOTE_CHARS else text[: QUOTE_CHARS - 1].rstrip() + "…"}
+    with_role = ROLE_RE.match(body)
+    if with_role:
+        return {**out, "kind": "action", "role": with_role["role"], "text": with_role["text"]}
+    no_role = NO_ROLE_RE.match(body)
+    if no_role:
+        return {**out, "kind": "action", "role": None, "text": no_role["text"]}
+    return None
+
+
+def _group_lines(entries: list[dict], limit: int) -> tuple[list[str], int]:
+    """같은 문구(두 문서에 같은 말)는 한 줄로 묶고 출처를 모은다. (줄 목록, 보이지 않은 줄 수)."""
+    groups: dict[str, dict] = {}
+    for entry in entries:
+        key = re.sub(r"\s+", "", entry["text"])
+        group = groups.setdefault(key, {"text": entry["text"], "sources": [], "refs": set(),
+                                        "role": entry.get("role"), "quote": entry.get("kind") == "quote"})
+        label = (entry["source"] + (f" · {entry['stage']}" if entry.get("stage") else "")
+                 + (" · 질문 단계와 다름" if entry.get("off_stage") else ""))
+        if label not in group["sources"]:
+            group["sources"].append(label)
+        group["refs"].update(entry["refs"])
+    lines = []
+    for group in list(groups.values())[:limit]:
+        who = f"{group['role']}: " if group["role"] and group["quote"] else ""   # 행동은 구역 제목이 역할
+        refs = "".join(f"[{n}]" for n in sorted(group["refs"]))
+        text = f"“{group['text']}”" if group["quote"] else group["text"]
+        sources = "; ".join(s for s in group["sources"] if s)
+        lines.append(f"- {who}{text}" + (f"  ({sources})" if sources else "") + f" {refs}".rstrip())
+    return lines, max(0, len(groups) - limit)
 
 
 def compose_text(status: str, findings: list[Finding], citations: list[Citation], warnings: list[str]) -> str:
-    """검증된 Finding만으로 답변을 쓴다. 같은 문구는 한 줄로 묶되 Finding은 그대로 둔다."""
+    """검증된 Finding만으로 답변을 쓴다. 역할별로 묶고 출처는 줄 끝에 짧게 둔다. 새 사실을 더하지 않으며
+    Finding은 그대로 둔다(같은 문구 합치기·재배열·출처 표기 축약만 한다)."""
     lines = [STATUS_HEAD[status]]
     index = {c["chunk_id"]: i for i, c in enumerate(citations, 1)}
-    groups: dict[str, dict] = {}
+    by_chunk = {c["chunk_id"]: c for c in citations}
+    by_role: dict[str, list[dict]] = {}
+    quotes = []
+    by_doc: dict[str, list[dict]] = {}
     for finding in findings:
-        key = _claim_key(finding["claim"])
-        group = groups.setdefault(key, {"claim": finding["claim"], "refs": []})
-        group["refs"] += [index[c] for c in finding["chunk_ids"] if c in index]
-    for group in list(groups.values())[:MAX_ANSWER_LINES]:
-        refs = "".join(f"[{n}]" for n in sorted(set(group["refs"])))
-        lines.append(f"- {group['claim']} {refs}")
-    if len(groups) > MAX_ANSWER_LINES:
-        lines.append(f"- 외 {len(groups) - MAX_ANSWER_LINES}개 근거는 findings·citations에 있습니다.")
+        refs = {index[c] for c in finding["chunk_ids"] if c in index}
+        parsed = parse_claim(finding["claim"])
+        if parsed is None:
+            cited = [by_chunk[c] for c in finding["chunk_ids"] if c in by_chunk]
+            doc = cited[0]["document_id"] if cited else ""
+            short = DOC_TITLES.get(doc, (doc, doc))[1]
+            pages = ", ".join(dict.fromkeys(f"p.{c['pdf_page']}" for c in cited if c["document_id"] == doc))
+            text = re.sub(r"\s+", " ", finding["claim"]).strip()
+            by_doc.setdefault(doc, []).append({"text": text, "source": f"{short} {pages}".strip(), "refs": refs})
+        elif parsed["kind"] == "quote":
+            quotes.append({**parsed, "refs": refs})
+        else:
+            by_role.setdefault(parsed["role"] or NO_ROLE_TITLE, []).append({**parsed, "refs": refs})
+    sections: list[tuple[str, list[str], int]] = []
+    ordered = [r for r in by_role if r != NO_ROLE_TITLE] + ([NO_ROLE_TITLE] if NO_ROLE_TITLE in by_role else [])
+    for role in ordered:
+        body, hidden = _group_lines(by_role[role], MAX_PER_SECTION)
+        sections.append((role, body, hidden))
+    if quotes:
+        grouped, hidden = _group_lines(quotes, MAX_QUOTE_LINES)
+        sections.append((QUOTE_TITLE, grouped, hidden))
+    for doc, entries in by_doc.items():
+        body, hidden = _group_lines(entries, MAX_PER_SECTION)
+        sections.append((DOC_TITLES.get(doc, (doc or "출처 미상", ""))[0], body, hidden))
+    hidden_total = 0
+    for title, body, hidden in sections:
+        lines += ["", f"■ {title}", *body]
+        hidden_total += hidden
+    if hidden_total:
+        lines += ["", f"그 밖의 근거 {hidden_total}건은 findings·citations에 있습니다."]
     notes = [w.removeprefix(UNRESOLVED).strip() for w in warnings][:4]
     if notes:
-        lines.append("참고: " + " / ".join(notes))
+        lines += ["", "참고: " + " / ".join(notes)]
     return "\n".join(lines)
 
 
