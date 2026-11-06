@@ -99,6 +99,32 @@ def delete_test_blocks(chunk_ids: list[str]) -> int:
     return n
 
 
+def section_candidates(question: str, allowed_document_ids: list[str], k: int = 20) -> list[str]:
+    """질문 단어가 청크의 소제목(section)에 들어 있는 블록을 찾는다. 전문 인덱스는 본문만 보므로 따로 찾는다.
+
+    설명
+    - 소제목은 공동 DB 청크 속성 section 에 있다. 질문 단어 중 2글자 이상이 소제목에 들어 있으면 후보가 된다.
+    - 많이 겹친 순서로 k개를 돌려준다. 카드의 필수어·질문어·제외어 조건은 그대로 적용된다.
+    - 질문 단어가 없거나 허용 문서가 없으면 빈 목록을 돌려준다.
+    """
+    terms = [t for t in (_strip_ending(w) for w in re.findall(r"[0-9A-Za-z가-힣]+", question)) if len(t) >= 2]
+    terms = terms[:MAX_TERMS]
+    if not terms or not allowed_document_ids:
+        return []
+    driver = connect()
+    try:
+        with driver.session() as s:
+            rows = s.run("MATCH (c:Chunk) WHERE c.section IS NOT NULL "
+                         "AND any(d IN $docs WHERE c.chunk_id STARTS WITH d + ':') "
+                         "AND any(t IN $terms WHERE c.section CONTAINS t) "
+                         "RETURN c.chunk_id AS chunk_id, c.section AS section LIMIT 500",
+                         docs=allowed_document_ids, terms=terms).data()
+    finally:
+        driver.close()
+    scored = sorted(((sum(t in r["section"] for t in terms), r["chunk_id"]) for r in rows), reverse=True)
+    return [cid for _, cid in scored[:k]]
+
+
 def fetch_chunks(chunk_ids: list[str]) -> dict[str, dict]:
     """운영 청크의 원문(text)과 쪽 번호(pdf_page)를 Neo4j 에서 읽는다. 로컬 파일을 읽지 않는다.
 
