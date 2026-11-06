@@ -3,10 +3,11 @@
 - 표 행: 표 작업본 Markdown의 표마다 데이터 행 하나 = 청크 하나. ID는 `p{쪽}:t{그 쪽 표 순서}r{행 순서}`
   (id_map.table_row_position과 같은 규칙 → 11/4 적재한 시나리오 표 4행과 같은 ID·본문이 나온다).
   text = 표 제목 + 머리글 + 행(온톨로지 5-2).
-- 본문: 본문 변환본은 PDF 추출본이라 쪽마다 머리글·세로 장 표시·쪽 번호가 섞여 있다.
-  (1) 문서 전체 쪽의 20% 이상에서 반복되는 짧은 줄(머리글·장 표시)을 자동으로 찾아 빼고,
-  (2) 2글자 이하 조각 줄·쪽 번호·구분선을 빼고, (3) 제목 줄('1)', '가.', '[표 3-4]' 등)에서 끊어
-  최대 약 800자 청크로 묶는다. ID는 `p{쪽}:b{쪽 안 순서}`. 원문 줄은 고치지 않고 줄 단위로 보존한다.
+- 본문: 전체 페이지의 구조를 먼저 읽고 선정 페이지의 내용만 출력한다. 장·절·항의
+  위치별 경로를 보존하고 제목 경계에서 분할한 뒤 최대 800자로 묶는다. 짧다는 이유로
+  서로 다른 절을 합치거나 문단을 버리지 않는다. 표 캡션은 본문 참조로도 보존한다.
+- 표 제목은 본문의 해당 표 번호 캡션을 우선하며, 작업본 제목은 추적 정보로 분리한다.
+  변환 순서가 뒤집힌 검증 사례는 school_layout_corrections.json으로 명시한다.
 - 질병 연결(ABOUT)은 표 행에만 만든다: 행 첫 칸이 질병 사전과 정확히 일치하거나, 표 제목이
   '결핵 개요'처럼 한 질병으로 시작할 때. 본문 문단은 질병을 언급해도 연결하지 않는다(언급 ≠ 주제).
 - 쪽 번호는 변환본 표시를 쓴다(사용자가 PDF와 대조 완료, 11/4).
@@ -15,6 +16,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from collections import Counter
 from pathlib import Path
@@ -22,6 +24,15 @@ from pathlib import Path
 from index.school.ids_local import chunk_block_id, chunk_row_id
 from index.school.normalize import resolve_mention
 from preprocess.school.markdown_data import annotate_table_blocks, markdown_blocks
+from preprocess.school.structure import (
+    CAPTION,
+    TABLE_NUMBER,
+    document_structure,
+    heading_kind,
+    path_text,
+    plain_line,
+    table_context,
+)
 
 SOURCES = {
     "moe_school_manual_v3": {
@@ -39,12 +50,8 @@ TITLE_PREFIX = re.compile(
     r"(?:\(\s*인쇄\s*\d+(?:\s*[~～-]\s*\d+)?\s*쪽\s*\)|·\s*인쇄\s*\d+(?:\s*[~～-]\s*\d+)?\s*쪽)?\s*·\s*")
 PRINTED = re.compile(r"인쇄\s*(\d+)")
 HEADING = re.compile(r"^(?:\d+\)|\d+\.?\s|[가-하]\.\s|【|\[표\s?\d|<표\s?\d|[□■○●❶❷❸]|제\d+장|[ⅠⅡⅢⅣⅤⅥ]\s)")
-LEVEL0 = re.compile(r"^[ⅠⅡⅢⅣⅤⅥ]\s+\S")           # 'Ⅲ 등교중지'
-LEVEL1 = re.compile(r"^\d+\.?\s+[^\d\s]")           # '2. 대응 제1단계…', '1 등교중지의 원칙과 절차'
-LEVEL2 = re.compile(r"^[가-하]\.\s+\S")             # '가. 개요'
 MAX_CHARS = 800
-MIN_CHARS = 200
-MIN_FRAGMENT = 60
+CHUNKER_VERSION = "school_structure_v2"
 
 
 def selected_pages(spec: str) -> list[int]:
@@ -138,16 +145,20 @@ def squash(text: str) -> str:
 
 
 def clean_body_lines(text: str, noise: set[str], table_text: str = "") -> list[str]:
-    """table_text: 같은 쪽의 정리된 표 작업본 내용(squash). 본문 변환본 속 뒤섞인 표 조각은 이미
-    표 행 청크로 들어가므로, 그 표에 그대로 있는 줄(6글자 이상)은 문단에서 뺀다."""
+    """내용 줄만 표 중복 필터에 통과시킨다. 제목·표 참조는 항상 보존한다.
+
+    table_text는 같은 쪽의 표 작업본을 squash한 비교 문자열이다.
+    """
     lines = []
     for raw in text.splitlines():
-        line = raw.strip().replace("**", "")
+        line = plain_line(raw)
         if (not line or line in noise or len(line) <= 2 or line == "---" or line.startswith("![")
                 or re.fullmatch(r"\d{1,3}", line) or re.fullmatch(r"제\s*\d+\s*장", line)):
             continue
         key = squash(line)
-        if table_text and (len(key) >= 3 and key in table_text or covered(key, table_text) >= 0.6):
+        # Structure and explicit table references must survive content deduplication.
+        if not (heading_kind(line) or CAPTION.match(line)) and table_text and (
+                len(key) >= 3 and key in table_text or covered(key, table_text) >= 0.6):
             continue
         lines.append(line)
     return lines
@@ -162,57 +173,107 @@ def covered(key: str, table_text: str, n: int = 4) -> float:
 
 
 def body_chunks(document_id: str, body_text: str, pages: list[int], offset: int,
-                source_path: str, table_text_by_page: dict[int, str] | None = None
-                ) -> tuple[list[dict], dict[int, str]]:
-    """반환: (문단 청크, {쪽: 그 쪽에서 유효한 장·절 경로}). 절 경로는 표 행 청크의 section에도 쓴다."""
+                source_path: str, table_text_by_page: dict[int, str] | None = None,
+                *, structure: dict | None = None) -> tuple[list[dict], dict[int, str]]:
+    """Split within a structural scope, never across sibling headings.
+
+    The second result remains a page summary for old callers; table attribution
+    uses caption positions in build_all_chunks, not this lossy summary.
+    """
     table_text_by_page = table_text_by_page or {}
     all_pages = split_body_pages(body_text)
+    structure = structure if structure is not None else document_structure(all_pages)
     noise = repeated_lines(all_pages)
-    chunks, level1, level2, previous = [], None, None, None
-    page_sections: dict[int, str] = {}
+    chunks, page_sections = [], {}
     for page in pages:
-        if previous is not None and page != previous + 1:
-            level1 = level2 = None        # 이어지지 않는 쪽으로 넘어가면 앞 절 제목을 끌고 오지 않는다
-        previous = page
-        lines = clean_body_lines(all_pages.get(page, ""), noise, table_text_by_page.get(page, ""))
-        groups, current = [], []
-        for line in lines:
-            size = sum(len(x) + 1 for x in current)
-            if current and ((HEADING.match(line) and size >= MIN_CHARS) or size + len(line) > MAX_CHARS):
-                groups.append(current)
+        groups, current, current_path = [], [], None
+        for entry in structure.get(page, []):
+            line, path = entry['line'], entry['path']
+            if entry['furniture'] or not clean_body_lines(
+                    line, noise, table_text_by_page.get(page, '')):
+                continue
+            # Preserve every substantive short fragment; structural boundaries
+            # take precedence over length. A caption also starts a new unit.
+            boundary = entry['heading'] or path != current_path
+            if current and (boundary or len('\n'.join(current)) + len(line) + 1 > MAX_CHARS):
+                groups.append((current, current_path))
                 current = []
-            current.append(line)
+            current_path = path
+            # Long extraction lines still need a bounded chunk. Keep exact
+            # substrings so the original characters can be recovered.
+            while len(line) > MAX_CHARS:
+                if current:
+                    groups.append((current, current_path))
+                    current = []
+                groups.append(([line[:MAX_CHARS]], path))
+                line = line[MAX_CHARS:]
+            if line:
+                current.append(line)
         if current:
-            groups.append(current)
-        # 너무 짧은 조각(MIN_FRAGMENT 미만)은 앞 묶음에 붙인다. 쪽에 하나뿐이면 버리지 않는다.
-        merged: list[list[str]] = []
-        for group in groups:
-            if merged and sum(len(x) for x in group) < MIN_FRAGMENT:
-                merged[-1] += group
-            else:
-                merged.append(group)
-        groups = [g for g in merged if sum(len(x) for x in g) >= MIN_FRAGMENT
-                  or (len(merged) == 1 and sum(len(x) for x in g) >= 20)]   # 20자 미만 조각('유무)')은 버림
-        for number, group in enumerate(groups, 1):
-            for line in group:
-                if (LEVEL0.match(line) and len(line) <= 40) or (LEVEL1.match(line) and len(line) <= 60):
-                    level1, level2 = line, None
-                elif LEVEL2.match(line) and len(line) <= 60:
-                    level2 = line
-            section = " > ".join(x for x in (level1, level2) if x) or f"PDF {page}쪽 본문"
-            text = "\n".join(group)
+            groups.append((current, current_path))
+        for number, (group, path) in enumerate(groups, 1):
+            text = '\n'.join(group)
             chunks.append({
-                "chunk_id": chunk_block_id(document_id, page, number), "document_id": document_id,
-                "text": text, "pdf_page": page, "printed_page": page - offset, "section": section,
-                "kind": "paragraph", "temp_chunk_id": None, "row_text": text,
-                "source_path": source_path, "content_hash": sha(body_text)})
-        for line in lines:          # 버려진 조각 안의 제목도 절 경로에는 반영한다
-            if (LEVEL0.match(line) and len(line) <= 40) or (LEVEL1.match(line) and len(line) <= 60):
-                level1, level2 = line, None
-            elif LEVEL2.match(line) and len(line) <= 60:
-                level2 = line
-        page_sections[page] = " > ".join(x for x in (level1, level2) if x)
+                'chunk_id': chunk_block_id(document_id, page, number), 'document_id': document_id,
+                'text': text, 'pdf_page': page, 'printed_page': page - offset,
+                'section': path_text(path) or f'PDF {page}쪽 본문',
+                'kind': 'paragraph', 'temp_chunk_id': None, 'row_text': text,
+                'source_path': source_path, 'content_hash': sha(body_text)})
+        entries = structure.get(page, [])
+        page_sections[page] = path_text(entries[-1]['path']) if entries else ''
     return chunks, page_sections
+
+
+def _attach_table_context(rows: list[dict], structure: dict, corrections: list[dict],
+                          document_id: str) -> None:
+    for row in rows:
+        entries = structure.get(row['pdf_page'], [])
+        entry = table_context(entries, row['section'])
+        if entry:
+            title = entry['line']
+            path = entry['path']
+            # A checklist caption belongs to its subsection, not the last
+            # numbered eligibility condition preceding the table.
+            if '역학조사' in title:
+                path = tuple((r, s) for r, s in path if r < 50)
+            status = 'body_caption'
+        else:
+            # Unnumbered working tables (e.g. disease overview) have no caption.
+            # Prefer the page's opening overview heading, never its final heading.
+            overview = next((e for e in entries if e['line'] == '가. 개요'), None)
+            first = next((e for e in entries if e['heading']), None)
+            if first is None:
+                first = next((e for e in entries if not e['furniture'] and e['line']), None)
+            path = (overview or first or {'path': ()})['path']
+            if not overview and first:
+                # Without a caption anchor, claim only the common enclosing
+                # scope, rather than inventing a last/first subsection match.
+                paths = [e['path'] for e in entries if e['index'] >= first['index']
+                         and not e['furniture'] and not e['heading'] and e['line']]
+                if paths:
+                    common = list(paths[0])
+                    for other in paths[1:]:
+                        common = common[:next((i for i, (a, b) in enumerate(zip(common, other))
+                                               if a != b), min(len(common), len(other)))]
+                    path = tuple(common)
+            title = re.split(r'\s+[—–]\s+', row['section'])[0]
+            status = 'page_common_scope_fallback'
+        number = TABLE_NUMBER.search(title)
+        for correction in corrections:
+            if (correction['document_id'] == document_id
+                    and correction['pdf_page'] == row['pdf_page']
+                    and number and correction['table_number'] == number.group(1)):
+                subsection = correction['subsection']
+                if not any(e['line'] == subsection for e in entries):
+                    raise ValueError(f'보정 소제목을 원문에서 찾지 못함: {correction}')
+                path = tuple((r, s) for r, s in path if r < 40) + ((40, subsection),)
+                status = 'reviewed_layout_correction'
+        working_title = row['section']
+        row['working_table_title'] = working_title
+        row['context_status'] = status
+        row['context_verified'] = status != 'page_common_scope_fallback'
+        row['text'] = title + '\n' + row['text'].split('\n', 1)[1]
+        row['section'] = ' > '.join(x for x in (path_text(path), title) if x)
 
 
 # ---------------------------------------------------------------- 전체
@@ -233,16 +294,17 @@ def build_all_chunks(root: str | Path, manifest: dict[str, dict], books: dict
         by_page: dict[int, str] = {}
         for row in rows:
             by_page[row["pdf_page"]] = by_page.get(row["pdf_page"], "") + squash(row["text"])
-        paragraphs, page_sections = body_chunks(document_id, body_text, pages, spec["offset"],
-                                                spec["body"], by_page)
-        # 표 행 section = 본문 장·절 경로 > 표 제목 (온톨로지 ② section '장·절 경로'). 표 제목에 단계가
-        # 없어도('[표 3-11] 능동감시 실시 담당자별 역할') 절 경로로 원문 단계를 알 수 있다.
-        for row in rows:
-            path = page_sections.get(row["pdf_page"])
-            if path:
-                row["section"] = f"{path} > {row['section']}"
+        structure = document_structure(split_body_pages(body_text))
+        correction_file = root / 'data/specs/school_layout_corrections.json'
+        corrections = (json.loads(correction_file.read_text(encoding='utf-8'))['tables']
+                       if correction_file.exists() else [])
+        _attach_table_context(rows, structure, corrections, document_id)
+        paragraphs, _ = body_chunks(document_id, body_text, pages, spec['offset'],
+                                    spec['body'], by_page, structure=structure)
         chunks += paragraphs
     ids = [c["chunk_id"] for c in chunks]
     if len(ids) != len(set(ids)):
         raise ValueError("청크 ID 중복")
+    for chunk in chunks:
+        chunk['chunker_version'] = CHUNKER_VERSION
     return chunks, about

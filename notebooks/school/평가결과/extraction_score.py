@@ -24,8 +24,8 @@ INPUT_IDS = "data/specs/golden/school_extraction_input_ids.json"   # Git 추적(
 MATCH_MIN = 0.45
 OVERRIDES: dict[str, list[tuple[int, str | None]]] = {}   # {chunk_id: [(정답 행 번호, action_id 또는 None=짝 없음)]}
 STAGE = {"예방": "PREVENTION", "대응1": "RESPONSE_1", "대응2": "RESPONSE_2", "대응3": "RESPONSE_3",
-         "복구": "RECOVERY", "미지정": "UNSPECIFIED"}
-MODALITY = {"반드시": "MANDATORY", "권장": "RECOMMENDED", "금지": "PROHIBITED", "미지정": "UNSPECIFIED"}
+         "복구": "RECOVERY", "전체단계": "ALL_STAGES", "국가위기": "NATIONAL_CRISIS", "미지정": "UNSPECIFIED"}
+MODALITY = {"반드시": "MANDATORY", "권장": "RECOMMENDED", "재량": "DISCRETIONARY", "미지정": "UNSPECIFIED"}
 
 
 def bigrams(text: str) -> set[str]:
