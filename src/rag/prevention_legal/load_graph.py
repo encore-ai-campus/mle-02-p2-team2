@@ -525,3 +525,50 @@ def add_page116_blocks(*, confirm: bool = False) -> dict:
             return s.execute_write(work)
     finally:
         driver.close()
+
+
+# 2026-11-07 (사용자 승인, 영향 확인 조건부): 홍역 지침 94쪽(대학 역할) 블록 1개를 Chunk 로 추가한다.
+# Q06 문서 비교 근거. 문서 노드(kdca_measles_2026)는 이미 있으므로 Document 는 만들지 않는다.
+PAGE94_CHUNK_ID = "kdca_measles_2026:p0094:b01"
+
+
+def add_page94_chunk(*, confirm: bool = False) -> dict:
+    """PAGE94_CHUNK_ID 청크 1개를 기존 Document 와 HAS_CHUNK 로 연결해 추가한다. 관계는 1개뿐이다.
+
+    설명
+    - 청크는 CREATE 로 만든다. 같은 ID 가 있으면 제약이 실패시킨다.
+    - 쓰기 전과 후에 전체 Chunk 수가 정확히 1 늘었는지, HAS_CHUNK 가 1개인지 트랜잭션 안에서 확인한다. 다르면 전체 되돌림.
+    - 문서 노드는 MERGE 하거나 수정하지 않는다. 매칭만 한다(없으면 연결 0 으로 실패).
+    """
+    if not confirm:
+        raise RuntimeError("공동 DB 쓰기 함수입니다. 승인 기록을 확인한 뒤 confirm=True 로 호출하세요.")
+    chunk = next(c for c in build_rows()["chunks"] if c["chunk_id"] == PAGE94_CHUNK_ID)
+    if chunk["document_id"] != "kdca_measles_2026":   # 블록 파일이 잘못되면 다른 문서에 붙지 않게 막는다
+        raise RuntimeError(f"94쪽 블록의 문서 ID가 다릅니다: {chunk['document_id']}")
+    vectors = embed_chunks([chunk])
+    chunk["embedding"] = vectors[0]
+
+    driver = connect()
+    try:
+        with driver.session() as s:
+            def work(tx):
+                clash = tx.run("MATCH (c:Chunk {chunk_id: $id}) RETURN count(c) AS n", id=chunk["chunk_id"]).single()["n"]
+                if clash:
+                    raise RuntimeError("ID 충돌 (롤백): 같은 chunk_id 가 이미 있습니다")
+                before = tx.run("MATCH (c:Chunk) RETURN count(c) AS n").single()["n"]
+                tx.run("CREATE (c:Chunk {chunk_id: $id, text: $text, pdf_page: $page, printed_page: $printed, "
+                       "section: $section, embedding: $emb})", id=chunk["chunk_id"], text=chunk["text"],
+                       page=chunk["pdf_page"], printed=chunk["printed_page"], section=chunk["section"],
+                       emb=chunk["embedding"]).consume()
+                tx.run("MATCH (d:Document {document_id: $doc}), (c:Chunk {chunk_id: $id}) "
+                       "CREATE (d)-[:HAS_CHUNK]->(c)", doc=chunk["document_id"], id=chunk["chunk_id"]).consume()
+                after = tx.run("MATCH (c:Chunk) RETURN count(c) AS n").single()["n"]
+                links = tx.run("MATCH (:Document)-[r:HAS_CHUNK]->(c:Chunk {chunk_id: $id}) RETURN count(r) AS n",
+                               id=chunk["chunk_id"]).single()["n"]
+                if after - before != 1 or links != 1:
+                    raise RuntimeError(f"검사 실패 (롤백): 증가 {after - before}, 연결 {links}")
+                return {"chunk_id": chunk["chunk_id"], "chunk_total_before": before, "chunk_total_after": after}
+
+            return s.execute_write(work)
+    finally:
+        driver.close()

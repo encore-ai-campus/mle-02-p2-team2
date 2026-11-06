@@ -221,6 +221,42 @@ LAW_Q10B_CARD: dict = {
     "필수어": ["학교장"], "질문어": ["신고", "구분", "법적"],
     "제외어": ["수족구", "성홍열", "백일해", "풍진", "결핵", "벌칙", "처벌", "과태료", "벌금"],
 }
+# 문서 비교 (골든 Q06, 2026-11-07). 대학교 역할은 94쪽, 초·중·고 역할은 93쪽 항목 2 를 쓴다.
+# 두 카드는 같은 질문에서만 함께 나온다(필수어 '대학교'). 회귀 결과로만 기록.
+UNIV_ROLE_CARD: dict = {
+    "주체": "대학교 학교[담당교사]", "행동": "전염기간 동안 등교하지 않도록 안내", "조건": "대학교 내 홍역(의심) 진단",
+    "역할근거": "", "basis": None, "단계": "UNSPECIFIED",
+    "chunk_id": "kdca_measles_2026:p0094:b01",
+    "출처": ("measles", 94, "2. 의료기관 진료 결과, 홍역(의심) 진단을 받은 경우에는 전염기간(발진이 나타난 후 4일까지) 동안 등교하지 않도록 안내"),
+    "블록": 1,
+    "주장": "대학교에서 홍역(의심) 진단을 받은 학생은 전염기간(발진이 나타난 후 4일까지) 동안 등교하지 않도록 안내한다(94쪽).",
+    "답문장": "대학교에서는 홍역(의심) 진단을 받은 학생을 전염기간(발진이 나타난 후 4일까지) 동안 등교하지 않도록 안내합니다(홍역 지침 94쪽). 단, 실험실 검사 결과 환자가 아님으로 확인되면 익일 등교를 안내합니다.",
+    "범위문": "이 답은 대학교 역할의 등교 안내 항목만 다룹니다. 감시체계·예방접종 안내 등 다른 항목은 이 답의 범위가 아닙니다.",
+    "필수어": ["대학교", "역할"], "질문어": ["역할", "담당자", "다르"],
+    "제외어": ["수족구", "성홍열", "백일해", "풍진", "결핵", "벌칙", "처벌"],
+}
+ELEM_ROLE_CARD: dict = {
+    "주체": "초·중·고 학교[담당교사]", "행동": "전염기간 동안 등교 및 학원 등원하지 않도록 안내", "조건": "교내 홍역(의심) 진단",
+    "역할근거": "", "basis": None, "단계": "UNSPECIFIED",
+    "출처": ("measles", 93, "2. 의료기관 진료 결과, 홍역(의심) 진단을 받은 경우에는 전염기간(발진이 나타난 후 4일까지) 동안 학교 등교 및 학원 등원하지 않도록 안내"),
+    "블록": 5,
+    "주장": "초·중·고에서 홍역(의심) 진단을 받은 학생은 전염기간(발진이 나타난 후 4일까지) 동안 학교 등교 및 학원 등원하지 않도록 안내한다(93쪽).",
+    "답문장": "초·중·고에서는 홍역(의심) 진단을 받은 학생을 전염기간 동안 학교 등교 및 학원 등원하지 않도록 안내합니다(홍역 지침 93쪽). 단, 실험실 검사 결과 환자가 아님으로 확인되면 익일 등교를 안내합니다.",
+    "범위문": "이 답은 초·중·고와 대학교의 등교 안내 항목만 비교합니다. 감시체계·예방접종 안내 등 다른 항목은 답에 넣지 않았습니다.",
+    "필수어": ["대학교", "역할"], "질문어": ["역할", "담당자", "다르"],
+    "제외어": ["수족구", "성홍열", "백일해", "풍진", "결핵", "벌칙", "처벌"],
+}
+
+# 신고 지연 처벌 질문 (골든 Q28, 2026-11-07). 근거 블록이 없어 확정하지 않는다는 거부 응답이다.
+# 근거 카드가 아니라 거부 카드다. 그래서 Citation 과 Finding 을 만들지 않고 INSUFFICIENT_EVIDENCE 로 돌려준다. 회귀 결과로만 기록.
+PENALTY_REFUSAL_CARD: dict = {
+    "필수어": ["처벌", "늦"], "질문어": ["신고", "확정", "알려"],
+    "제외어": ["수족구", "성홍열", "백일해"],
+    "답문장": "신고가 늦은 경우의 처벌 수위는 확정할 수 없습니다. 이 Tool이 적재한 법령 근거에는 벌칙 조문이 없습니다.",
+    "범위문": "법령 문서 근거에 벌칙 조문이 없어 처벌 수위를 확정하지 않았습니다.",
+}
+REFUSAL_CARDS: list[dict] = [PENALTY_REFUSAL_CARD]
+
 # 학교 임시예방접종 (골든 Q15). 근거는 홍역 지침 116쪽 학교 역할 행(청크 ID 직접 지정). 회귀 결과로만 기록.
 def _vacc_school_card(rid: str, quote: str, answer: str) -> dict:
     return {
@@ -257,6 +293,7 @@ RETRIEVAL_CARDS: list[dict] = [
     ITEM4_CARD, ITEM2_CARD, ITEM2B_CARD,
     HFMD18_CARD, HFMD19_CARD, SCARLET31A_CARD, SCARLET31B_CARD, SCARLET32_CARD, MEASLES_MGR_CARD,
     MEASLES_Q08_CARD, LAW_Q11_CARD, LAW_Q13_CARD, LAW_Q10A_CARD, LAW_Q10B_CARD,
+    UNIV_ROLE_CARD, ELEM_ROLE_CARD,
 ] + Q15_CARDS + Q23_CARDS
 
 
@@ -401,6 +438,24 @@ def run(request: QueryInput) -> QueryOutput:
     # 검색 기반 카드 (샘플 질문이 아닐 때만). 블록이 검색 상위 10개에 있고, 질문에 질문어가 있어야 쓴다.
     if not is_sample_question(request):
         # 상위 30개(2026-11-06 상향: 116쪽 적재 후 성홍열 6쪽 근거가 20위 밖으로 밀림)
+        # 거부 카드는 근거 검색보다 먼저 본다. 맞으면 근거 없이 INSUFFICIENT_EVIDENCE 로 돌려준다.
+        refusals = [c for c in REFUSAL_CARDS
+                    if all(term in request["question"] for term in c["필수어"])
+                    and sum(term in request["question"] for term in c["질문어"]) >= 2
+                    and not any(term in request["question"] for term in c["제외어"])]
+        if refusals:
+            result = {
+                "domain": "prevention_legal",
+                "status": "INSUFFICIENT_EVIDENCE",
+                "findings": [],
+                "citations": [],
+                "action_ids": [],
+                "warnings": [c["범위문"] for c in refusals],
+                "answer": " ".join(c["답문장"] for c in refusals),
+            }
+            validate_query_output(result, request)
+            return result
+
         retrieved_ids = {b["chunk_id"] for b in search_blocks(request, k=30)}
         # 소제목 검색 후보도 더한다 (전문 인덱스는 본문만 본다)
         retrieved_ids |= set(section_candidates(request["question"], request["allowed_document_ids"], k=20))
@@ -411,6 +466,10 @@ def run(request: QueryInput) -> QueryOutput:
                  and all(term in request["question"] for term in c.get("필수어", []))
                  and sum(term in request["question"] for term in c["질문어"]) >= 2
                  and not any(term in request["question"] for term in c["제외어"])]
+        # 문서 비교 카드는 두 문서 근거가 함께 있어야 답한다. 한쪽만 검색되면 비교 답이 되지 않으므로 둘 다 뺀다.
+        pair = [UNIV_ROLE_CARD, ELEM_ROLE_CARD]
+        if any(c in pair for c in cards) and not all(c in cards for c in pair):
+            cards = [c for c in cards if c not in pair]
         if cards:
             citations = build_citations(cards)
             result = {
