@@ -1,7 +1,8 @@
 """질문셋 v1.1 40문항을 메인 그래프(run_main)로 실행해 라우팅·최종 상태·호출 기록·정답 인용을 채점한다.
 
-    uv run python notebooks/school/평가결과/golden_eval_main.py <결과.json> [--all-tools]
+    uv run python notebooks/school/평가결과/golden_eval_main.py <결과.json> [--all-tools] [--router]
 
+- --router(11/06~): LLM 라우터(rag.school.router)로 분류한다. 없으면 규칙 분류기.
 - --all-tools(11/06~): 팀원 Tool(disease/legal/crossdoc)까지 registry로 연결해 실행하고 모든 문항의 status를 채점한다.
   legal_search는 고정 샘플 1개만 받으므로 legal 문항의 결과는 그 한계를 함께 읽는다.
 
@@ -12,13 +13,14 @@
 import collections
 import json
 import sys
+from pathlib import Path
 
 sys.path.insert(0, "src")
-from rag.school.graph import default_deps  # noqa: E402
-from rag.school.main_graph import run_main  # noqa: E402
-from rag.school.validation_local import verify_against_db  # noqa: E402
+from rag.school.graph import default_deps
+from rag.school.main_graph import run_main
+from rag.school.validation_local import verify_against_db
 
-G = json.load(open("data/specs/golden/school.json", encoding="utf-8"))
+G = json.loads(Path("data/specs/golden/school.json").read_text(encoding="utf-8"))
 EXP = collections.defaultdict(set)
 for c in G["citations"]:
     EXP[c["q"]].add(c["chunk_id"])
@@ -33,12 +35,15 @@ def expected_route(route: str) -> str:
 deps = default_deps()
 ALL_TOOLS = "--all-tools" in sys.argv
 REGISTRY = None
+if "--router" in sys.argv:
+    from rag.school.router import make_router
+    deps["router"] = make_router()
 if ALL_TOOLS:
-    from rag.prevention_legal.tool import legal_search  # noqa: E402
-    from rag.respiratory.crossdoc_tool import crossdoc_graph_search  # noqa: E402
-    from rag.respiratory.disease_tool import disease_search  # noqa: E402
-    from rag.school.main_graph import default_registry  # noqa: E402
-    from index.school.dictionaries import load_dictionaries  # noqa: E402
+    from index.school.dictionaries import load_dictionaries
+    from rag.prevention_legal.tool import legal_search
+    from rag.respiratory.crossdoc_tool import crossdoc_graph_search
+    from rag.respiratory.disease_tool import disease_search
+    from rag.school.main_graph import default_registry
     deps["books"] = load_dictionaries()
     REGISTRY = {**default_registry(deps), "legal_search": legal_search,
                 "disease_search": lambda ti: disease_search(ti, deps=deps),
@@ -78,5 +83,5 @@ print(f"연결된 경로 문항 status 일치 {sum(r['status_ok'] for r in grade
 print("호출 0회 문항:", [r["id"] for r in rows if r["rounds"] == 0])
 print("호출 2회 이상:", [r["id"] for r in rows if r["rounds"] > 1] or "없음")
 print("호출 수 분포:", dict(collections.Counter(r["rounds"] for r in rows)))
-json.dump(rows, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+Path(sys.argv[1]).write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
 deps["driver"].close()

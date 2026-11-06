@@ -71,6 +71,9 @@ ACTION_ASK = ("무엇을하", "무엇을해야", "뭘해야", "뭐해야", "어�
               "안내해야", "할일")
 DISEASE_ASK = ("잠복기", "전파경로", "감염경로", "증상은", "증상이뭐", "합병증", "전염력", "감염력", "전염기간")
 MAX_TOOL_CALLS = 3
+# 의도가 하나여도 LLM 라우터의 하위 질문(문서 용어)을 넘기는 Tool. disease_search는 질문 낱말이 든 청크만 찾는다
+# ('홍역은 어떻게 옮아요?' NO_EVIDENCE / '홍역의 전파 경로는 무엇인가요?' OK, 11/06 실DB 확인).
+SUB_QUESTION_TOOLS = frozenset({"disease_search"})
 
 
 class MainState(TypedDict, total=False):
@@ -79,6 +82,7 @@ class MainState(TypedDict, total=False):
     scope_reason: str
     intent: str                   # ACTION / DISEASE / LEGAL / CROSSDOC
     secondary_intents: list[str]
+    sub_questions: dict[str, str]  # Tool 이름 → 하위 질문(LLM 라우터, 의도 2개 이상일 때만)
     selected_tool: str
     next_tool: str
     next_reason: str
@@ -157,11 +161,24 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
                 "next_reason": ""}
 
     def classify_scope(state: MainState) -> dict:
-        result = classify_question(state["request"]["question"], books)
-        log("classify_scope", **{k: result[k] for k in ("response_type", "reason", "confidence") if k in result})
+        """deps['router'](LLM)가 있으면 그 결정을 쓰고, 없거나 실패하면 규칙 분류기 결과를 쓴다. 둘 다 기록한다."""
+        question = state["request"]["question"]
+        rule = classify_question(question, books)
+        result, mode, error, started = rule, "rule", None, time.perf_counter()
+        router = deps.get("router")
+        if router:
+            try:
+                result, mode = router(question, rule), "llm"
+            except Exception as exc:  # noqa: BLE001 - LLM 실패·형식 위반은 규칙 분류로 되돌린다
+                mode, error = "rule_fallback", f"{type(exc).__name__}: {str(exc)[:120]}"
+        brief = ("response_type", "intent", "secondary", "reason", "confidence")
+        log("classify_scope", mode=mode, **{k: result[k] for k in brief if k in result},
+            sub_questions=result.get("sub_questions", {}), rule={k: rule[k] for k in brief if k in rule},
+            error=error, seconds=round(time.perf_counter() - started, 2))
         update = {"response_type": result["response_type"], "scope_reason": result.get("reason", "")}
         if result["response_type"] == "DOMAIN":
-            update |= {"intent": result["intent"], "secondary_intents": result["secondary"]}
+            update |= {"intent": result["intent"], "secondary_intents": result["secondary"],
+                       "sub_questions": result.get("sub_questions", {})}
         return update
 
     def classify_intent(state: MainState) -> dict:
@@ -186,7 +203,13 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         task = TOOL_TASKS[tool] + (f" (요청 힌트: {request['task']})" if request.get("task") else "")
         if state["tool_results"]:
             task += f" (앞선 호출 {state['tools_used']}에서 남은 부분: {state['next_reason'][:120]})"
-        tool_input: ToolInput = {"question": request["question"], "task": task, "region": request["region"],
+        # 하위 질문은 복합 질문이거나 문서 용어가 필요한 Tool에만 넘긴다(원 질문은 task에 남긴다). 그 밖에는 원 질문 그대로.
+        subs = state.get("sub_questions", {})
+        use_sub = len(subs) > 1 or tool in SUB_QUESTION_TOOLS
+        question = (subs.get(tool) if use_sub else None) or request["question"]
+        if question != request["question"]:
+            task += f" (원 질문: {request['question']})"
+        tool_input: ToolInput = {"question": question, "task": task, "region": request["region"],
                                  "allowed_document_ids": list(request["allowed_document_ids"])}
         if request.get("preferred_document_ids"):
             tool_input["preferred_document_ids"] = list(request["preferred_document_ids"])
@@ -211,7 +234,7 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         call = {"request_id": request.get("request_id"), "tool": tool, "status": result["status"],
                 "findings": len(result["findings"]), "citations": len(result["citations"]),
                 "graph_paths": len(result["graph_paths"]), "seconds": round(time.perf_counter() - started, 2),
-                "error": error}
+                "error": error, "sub_question": question if question != request["question"] else None}
         log("execute_tool", **call)
         return {"tool_input": tool_input, "tool_results": state["tool_results"] + [result],
                 "tool_calls": state["tool_calls"] + [call], "tools_used": state["tools_used"] + [tool],

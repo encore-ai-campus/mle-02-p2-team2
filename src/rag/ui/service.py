@@ -43,9 +43,11 @@ def build_resources() -> dict:
 
     deps = default_deps()               # 루트 .env가 없으면(클라우드) 이미 설정된 환경 변수를 그대로 쓴다
     deps["books"] = load_dictionaries()
-    if os.getenv("OPENAI_API_KEY"):     # 답변 다듬기(11/07). 키가 없으면 템플릿 답변만 쓴다.
+    if os.getenv("OPENAI_API_KEY"):     # LLM 라우터·답변 다듬기. 키가 없으면 규칙 분류·템플릿 답변만 쓴다.
         from rag.school.answer_writer import make_answer_writer
+        from rag.school.router import make_router
         deps["answer_writer"] = make_answer_writer()
+        deps["router"] = make_router()
     with deps["driver"].session(database=deps["database"]) as session:
         documents = {r["id"]: {"title": r["title"], "version": r["version"], "issuer": r["issuer"]}
                      for r in session.run("MATCH (d:Document) RETURN d.document_id AS id, d.title AS title, "

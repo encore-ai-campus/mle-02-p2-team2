@@ -31,25 +31,30 @@ QUESTIONS = [
     ("A06", "행정·운영", "학생이 코로나 양성인데 증상이 없대요. 학교에 와도 되나요?"),
 ]
 
-res = build_resources()
-allowed = sorted(res["documents"])
-rows = []
-for qid, kind, question in QUESTIONS:
-    out = ask(res, question, "GYEONGGI", allowed)
-    o, trace = out["output"], out["trace"]
-    scope = next((t for t in trace if t["step"] == "classify_scope"), {})
-    intent = next((t for t in trace if t["step"] == "classify_intent"), {})
-    compose = next((t for t in trace if t["step"] == "compose_answer"), {})
-    rows.append({"id": qid, "kind": kind, "question": question, "response_type": o["response_type"],
-                 "intent": intent.get("intent"), "secondary": intent.get("secondary"),
-                 "tools_used": o["tools_used"], "status": o["status"], "findings": len(o["findings"]),
-                 "citations": len(o["citations"]), "documents": sorted({c["document_id"] for c in o["citations"]}),
-                 "mode": compose.get("mode"), "problems": compose.get("problems", []), "seconds": out["seconds"],
-                 "answer": o["answer"], "claims": [f["claim"][:160] for f in o["findings"]],
-                 "warnings": o["warnings"]})
-    r = rows[-1]
-    print(f"{qid} {r['response_type']:12s} {r['intent']!s:8s} {r['tools_used']} {r['status']:21s} "
-          f"F{r['findings']} C{r['citations']} {r['mode']} {r['seconds']}s")
-res["deps"]["driver"].close()
-Path(sys.argv[1]).write_text(json.dumps({"allowed": allowed, "rows": rows}, ensure_ascii=False, indent=1),
-                             encoding="utf-8")
+
+def main() -> None:
+    res = build_resources()
+    allowed = sorted(res["documents"])
+    rows = []
+    for qid, kind, question in QUESTIONS:
+        out = ask(res, question, "GYEONGGI", allowed)
+        o, trace = out["output"], out["trace"]
+        intent = next((t for t in trace if t["step"] == "classify_intent"), {})
+        compose = next((t for t in trace if t["step"] == "compose_answer"), {})
+        rows.append({"id": qid, "kind": kind, "question": question, "response_type": o["response_type"],
+                     "intent": intent.get("intent"), "secondary": intent.get("secondary"),
+                     "tools_used": o["tools_used"], "status": o["status"], "findings": len(o["findings"]),
+                     "citations": len(o["citations"]), "documents": sorted({c["document_id"] for c in o["citations"]}),
+                     "mode": compose.get("mode"), "problems": compose.get("problems", []), "seconds": out["seconds"],
+                     "answer": o["answer"], "claims": [f["claim"][:160] for f in o["findings"]],
+                     "warnings": o["warnings"]})
+        r = rows[-1]
+        print(f"{qid} {r['response_type']:12s} {r['intent']!s:8s} {r['tools_used']} {r['status']:21s} "
+              f"F{r['findings']} C{r['citations']} {r['mode']} {r['seconds']}s")
+    res["deps"]["driver"].close()
+    Path(sys.argv[1]).write_text(json.dumps({"allowed": allowed, "rows": rows}, ensure_ascii=False, indent=1),
+                                 encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()

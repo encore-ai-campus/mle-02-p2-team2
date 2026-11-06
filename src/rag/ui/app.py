@@ -116,6 +116,8 @@ def show_flow(result: dict) -> None:
                       f"인용 {info.get('citations')} · 경로 {info.get('graph_paths')} · {info.get('seconds')}초")
             if info.get("error"):
                 detail += f" · 오류: {info['error']}"
+            if info.get("sub_question"):
+                detail += f" · 질문: {info['sub_question']}"
         elif step["step"] == "evaluate_evidence":
             detail = f"{info.get('decision')} (상태 {info.get('status')}, 미해결 {info.get('unresolved')})"
             if info.get("next_tool"):
@@ -127,7 +129,13 @@ def show_flow(result: dict) -> None:
             if info.get("problems"):
                 detail += " · 검사: " + " / ".join(info["problems"][:3])
         elif step["step"] == "classify_scope":
-            detail = f"{info.get('response_type')} {('— ' + info['reason']) if info.get('reason') else ''}"
+            mode = {"llm": "LLM 분류", "rule": "규칙 분류", "rule_fallback": "LLM 실패 → 규칙 분류"}.get(
+                info.get("mode"), info.get("mode"))
+            detail = f"{mode} · {info.get('response_type')} {('— ' + info['reason']) if info.get('reason') else ''}"
+            if info.get("error"):
+                detail += f" · 오류: {info['error']}"
+            for tool, sub in (info.get("sub_questions") or {}).items():
+                detail += f"\n  - 하위 질문({tool}): {sub}"
         elif step["step"] == "classify_intent":
             detail = f"주 의도 {info.get('intent')}" + (f", 보조 {info['secondary']}" if info.get("secondary") else "")
         else:
