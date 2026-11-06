@@ -304,11 +304,28 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         return {"status": status, "unresolved": list(dict.fromkeys(unresolved)), "next_tool": next_tool,
                 "next_reason": next_reason}
 
+    def finish(state: MainState) -> dict:
+        """템플릿 답변을 만들고, deps['answer_writer']가 있으면 검사를 통과한 다듬은 답변으로 바꾼다(11/07)."""
+        output = finalize(state)
+        writer = deps.get("answer_writer")
+        if not writer or output["response_type"] != "DOMAIN" or output["status"] not in ("ANSWERED", "PARTIAL"):
+            log("compose_answer", mode="template", reason="다듬기 대상 아님" if writer else "작성기 없음")
+            return {"final_result": output}
+        started = time.perf_counter()
+        try:
+            written = writer(state["request"]["question"], output, books)
+        except Exception as exc:  # noqa: BLE001 - LLM 실패는 템플릿으로 되돌린다
+            written = {"answer": None, "problems": [f"작성기 실패: {type(exc).__name__}"], "draft": ""}
+        polished = written["answer"]
+        log("compose_answer", mode="llm" if polished else "template_fallback", problems=written["problems"],
+            draft=written["draft"], template=output["answer"], seconds=round(time.perf_counter() - started, 2))
+        return {"final_result": {**output, "answer": polished} if polished else output}
+
     def compose_answer(state: MainState) -> dict:
-        return {"final_result": finalize(state)}
+        return finish(state)
 
     def partial_or_insufficient(state: MainState) -> dict:
-        return {"final_result": finalize(state)}
+        return finish(state)
 
     graph = StateGraph(MainState)
     for name, fn in (("normalize_input", normalize_input), ("classify_scope", classify_scope),
