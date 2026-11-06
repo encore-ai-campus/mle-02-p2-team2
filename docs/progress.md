@@ -91,6 +91,8 @@
 
 ## 5. 최근 변경
 
+- 2026-11-06 Git 동기화(Codex): LLM 라우터·하위 질문·UI 연결 및 평가 파일 10개를 `cdc58fd`로 커밋하고 원격 3개 커밋을 pull했다. `d6b968a`에서 `progress.md`와 `src/rag/ui/app.py` 양쪽 변경을 보존해 병합했다. 병합 후 전체 회귀 `.venv/Scripts/python.exe -X utf8 -m pytest tests -q -p no:cacheprovider` **319개 통과**, 변경 Python 구문·자격 증명 패턴 검사 및 `git diff --check` 통과. 실DB·LLM 품질 평가는 이번 Git 동기화에서 재실행하지 않았다. 라우터 작업의 ‘로컬 미커밋’ 표기는 작성 당시 상태이며 이번에 커밋했다.
+
 - 2026-11-06 Git 재동기화(Codex): 학교 진단 기록·스크립트 3개와 진행 기록을 `5c3e02b`로 커밋하고, 원격 UI 변경 `8bdcf77`을 pull해 `af1c701`에서 병합했다. 로컬 학교 진단과 원격 UI 진행 기록을 모두 보존했다. 병합 후 전체 회귀 `.venv/Scripts/python.exe -X utf8 -m pytest tests -q -p no:cacheprovider` **302개 통과**, 새 진단 Python 2개 구문 검사 및 `git diff --check` 통과. 진단 DB·LLM 호출은 이번 동기화에서 재실행하지 않았다. 아래 진단 항목의 ‘로컬 미커밋’은 작성 당시 상태이며 해당 파일은 이번에 커밋했다.
 
 - 2026-11-06 Git 통합 확인: 학교 작업 `d9a23c9` 커밋 후 `git pull --no-rebase --no-edit origin main`으로 원격 2개 커밋을 병합(`142bbc3`). `progress.md`의 학교 기록과 예방·법령 추가 기록을 모두 보존했고 충돌 표식이 없다. 병합 후 전체 테스트도 **260개 통과**, 작업 트리 정리 확인. 아래 과거 기록의 ‘로컬 미커밋·승인 대기’는 각 기록 시점의 상태다.
