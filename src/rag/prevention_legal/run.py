@@ -203,7 +203,7 @@ LAW_Q13_CARD: dict = {
 LAW_Q10A_CARD: dict = {
     "주체": "의사(의료기관 소속)", "행동": "소속 의료기관의 장에게 보고", "조건": "감염병환자등을 진단한 경우",
     "역할근거": "", "basis": None, "단계": "UNSPECIFIED",
-    "출처": ("law", 18, "소속 의료기관의 장에게 보고하여야 하고"), "블록": 1,
+    "출처": ("law", 18, "의사, 치과의사 또는 한의사는 다음 각 호의 어느 하나에 해당하는 사실(제16조제6항에 따라 표본감시 대상이 되는 제4급감염병으로 인한 경우는 제외한다)이 있으면 소속 의료기관의 장에게 보고하여야 하고"), "블록": 1,
     "주장": "의료기관에 소속된 의사는 감염병환자등을 진단하면 소속 의료기관의 장에게 보고하여야 한다(표본감시 대상 제4급감염병으로 인한 경우는 제외).",
     "답문장": "의사는 감염병환자등을 진단하면 소속 의료기관의 장에게 보고해야 합니다. 다만 표본감시 대상 제4급감염병으로 인한 경우는 제외합니다(감염병예방법 제11조 ①, 18쪽).",
     "범위문": "이 답은 의사의 보고 의무만 다룹니다. 의료기관장의 신고 기한과 대상은 이 답의 범위가 아닙니다.",
@@ -214,7 +214,7 @@ LAW_Q10B_CARD: dict = {
     "주체": "학교 관리인·경영자 또는 대표자", "행동": "의사에게 진단·검안을 요구하거나 보건소장에게 신고",
     "조건": "보건복지부령으로 정한 감염병이 발생한 경우", "역할근거": "", "basis": None, "단계": "UNSPECIFIED",
     "상태": "PARTIAL",
-    "출처": ("law", 19, "관리인, 경영자 또는 대표자"), "블록": 1,
+    "출처": ("law", 19, "보건복지부령으로 정하는 감염병이 발생한 경우에는 의사, 치과의사 또는 한의사의 진단이나 검안을 요구하거나 해당 주소지를 관할하는 보건소장에게 신고하여야 한다"), "블록": 1,
     "주장": "보건복지부령으로 정한 감염병이 발생한 경우 학교의 관리인·경영자 또는 대표자는 의사의 진단이나 검안을 요구하거나 주소지 관할 보건소장에게 신고하여야 한다.",
     "답문장": "보건복지부령으로 정한 감염병이 발생하면 학교 관리인·경영자 또는 대표자는 의사의 진단이나 검안을 요구하거나 주소지 관할 보건소장에게 신고해야 합니다(감염병예방법 제12조 ①, 19쪽).",
     "범위문": "질문의 '학교장'이 법의 '학교 관리인·경영자 또는 대표자'에 해당하는지는 이 답이 확인하지 않았습니다. 홍역이 복지부령 감염병인지는 시행규칙 제8조 ①로 확인해야 합니다.",
@@ -249,7 +249,7 @@ def _pertussis_card(rid: str, quote: str, answer: str) -> dict:
         "제외어": ["홍역", "수족구", "성홍열", "풍진"],
     }
 Q23_CARDS: list[dict] = [
-    _pertussis_card("t01r04", "(노출 후 예방요법) 연령, 예방접종력, 증상 발현 유무와 관계없이 예방적 항생제 복용", "접촉자에게 노출 후 예방요법으로 예방적 항생제를 복용하도록 합니다"),
+    _pertussis_card("t01r04", "(노출 후 예방요법) 연령, 예방접종력, 증상 발현 유무와 관계없이 예방적 항생제 복용", "접촉자는 나이·예방접종력·증상 유무와 관계없이 노출 후 예방적 항생제를 복용합니다(환자와 접촉 후 3주 이내)"),
     _pertussis_card("t01r06", "(예방접종) 불완전한 예방접종력을 가진 사람의 경우 연령, 과거 접종력에 따라 예방접종", "접종력이 불완전한 접촉자는 연령과 과거 접종력에 따라 예방접종합니다"),
     _pertussis_card("t01r07", "(모니터링) 마지막 접촉 후 21일까지 증상발생 모니터링", "접촉자는 마지막 접촉 후 21일까지 증상 발생을 모니터링합니다"),
 ]
@@ -400,7 +400,8 @@ def run(request: QueryInput) -> QueryOutput:
 
     # 검색 기반 카드 (샘플 질문이 아닐 때만). 블록이 검색 상위 10개에 있고, 질문에 질문어가 있어야 쓴다.
     if not is_sample_question(request):
-        retrieved_ids = {b["chunk_id"] for b in search_blocks(request, k=20)}
+        # 상위 30개(2026-11-06 상향: 116쪽 적재 후 성홍열 6쪽 근거가 20위 밖으로 밀림)
+        retrieved_ids = {b["chunk_id"] for b in search_blocks(request, k=30)}
         # 소제목 검색 후보도 더한다 (전문 인덱스는 본문만 본다)
         retrieved_ids |= set(section_candidates(request["question"], request["allowed_document_ids"], k=20))
         allowed_docs = set(request["allowed_document_ids"])
@@ -445,12 +446,14 @@ def run(request: QueryInput) -> QueryOutput:
         validate_query_output(result, request)
         return result
 
-    # 2) 검색: 질문과 관련 있는 블록을 찾는다 (허용 문서 안에서만)
-    # 상위 30개(2026-11-06 상향: 항목 5 청크 추가 후 관리인 블록이 20위 밖으로 밀림): 전문 검색 기준 법 블록(18쪽 b01·b02, 19쪽 b01)이 상위 10개 밖이라 20개로 늘렸다 (튜닝 기록: 노트북 19).
-    retrieved_ids = {b["chunk_id"] for b in search_blocks(request, k=30)}
+    # 2) 카드별 직접 조회 (2026-11-06): 이 분기는 샘플 질문과 정확히 일치할 때만 들어온다.
+    #    그래서 상위 k 검색 대신 카드가 가리키는 청크를 직접 읽는다. 허용 문서 밖의 카드는 쓰지 않는다.
+    allowed_docs = set(request["allowed_document_ids"])
+    candidates = [c for c in SAMPLE_CARDS + LAW_CARDS if DOCS[c["출처"][0]][0] in allowed_docs]
+    found = fetch_chunks([expected_chunk_id(c) for c in candidates])
 
-    # 3) 샘플·법 카드 중 검색 결과(상위 20개)에 드는 블록을 가리키는 카드만 근거로 쓴다
-    usable_cards = [c for c in SAMPLE_CARDS + LAW_CARDS if expected_chunk_id(c) in retrieved_ids]
+    # 3) 청크가 DB에 실제로 있는 카드만 근거로 쓴다 (발췌 대조는 build_citations 에서 한다)
+    usable_cards = [c for c in candidates if expected_chunk_id(c) in found]
     if not usable_cards:
         result: QueryOutput = {
             "domain": "prevention_legal",
