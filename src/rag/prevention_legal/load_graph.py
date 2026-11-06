@@ -424,3 +424,104 @@ def add_extension(*, confirm: bool = False) -> dict:
             return s.execute_write(work)
     finally:
         driver.close()
+
+
+# 93쪽 항목 5 청크 1개 (사용자 승인 2026-11-06 "적재해"). 행동·카드는 만들지 않는다. 독립 A 문항 평가용.
+ADDED_CHUNK_ID = "kdca_measles_2026:p0093:b07"
+
+
+def add_chunk_only(*, confirm: bool = False) -> dict:
+    """ADDED_CHUNK_ID 청크 1개를 Document 와 HAS_CHUNK 로 연결해 추가한다. 행동·관계(행동 쪽)는 만들지 않는다.
+
+    설명
+    - 청크는 CREATE 로 만든다. 같은 ID 가 있으면 제약이 실패시킨다.
+    - 전체 Chunk 개수가 정확히 1 늘었는지, HAS_CHUNK 가 1개 생겼는지 확인한다. 다르면 전체 되돌림.
+    - 임베딩은 트랜잭션 밖에서 만든다.
+    """
+    if not confirm:
+        raise RuntimeError("공동 DB 쓰기 함수입니다. 승인 기록을 확인한 뒤 confirm=True 로 호출하세요.")
+    chunk = next(c for c in build_rows()["chunks"] if c["chunk_id"] == ADDED_CHUNK_ID)
+    vectors = embed_chunks([chunk])
+    chunk["embedding"] = vectors[0]
+
+    driver = connect()
+    try:
+        with driver.session() as s:
+            def work(tx):
+                before = tx.run("MATCH (c:Chunk) RETURN count(c) AS n").single()["n"]
+                tx.run("CREATE (c:Chunk {chunk_id: $id, text: $text, pdf_page: $page, printed_page: $printed, "
+                       "section: $section, embedding: $emb})", id=chunk["chunk_id"], text=chunk["text"],
+                       page=chunk["pdf_page"], printed=chunk["printed_page"], section=chunk["section"],
+                       emb=chunk["embedding"]).consume()
+                tx.run("MATCH (d:Document {document_id: $doc}), (c:Chunk {chunk_id: $id}) "
+                       "CREATE (d)-[:HAS_CHUNK]->(c)", doc=chunk["document_id"], id=chunk["chunk_id"]).consume()
+                after = tx.run("MATCH (c:Chunk) RETURN count(c) AS n").single()["n"]
+                links = tx.run("MATCH (:Document)-[r:HAS_CHUNK]->(c:Chunk {chunk_id: $id}) RETURN count(r) AS n",
+                               id=chunk["chunk_id"]).single()["n"]
+                if after - before != 1 or links != 1:
+                    raise RuntimeError(f"검사 실패 (롤백): 증가 {after - before}, 연결 {links}")
+                return {"chunk_id": chunk["chunk_id"], "chunk_total_before": before, "chunk_total_after": after}
+
+            return s.execute_write(work)
+    finally:
+        driver.close()
+
+
+# 2026-11-06 승인 (추천안): Q15 근거(홍역 지침 116쪽 학교 대상 임시예방접종 행 3개)와 Q23 근거(예방접종 지침 116쪽 표 32 행 7개).
+PAGE116_CHUNK_IDS = [f"kdca_measles_2026:p0116:t01r0{i}" for i in range(1, 4)] + \
+                    [f"kdca_vaccine_preventable_2026:p0116:t01r0{i}" for i in range(1, 8)]
+VACCINE_DOC = {"document_id": "kdca_vaccine_preventable_2026",
+               "title": "2026년도 예방접종 대상 감염병 관리 지침", "region": "NATIONAL",
+               "version": "2026", "issuer": "질병관리청"}
+
+
+def add_page116_blocks(*, confirm: bool = False) -> dict:
+    """116쪽 블록 10개(Chunk 10)와 예방접종 지침 문서 노드(Document 1)를 추가한다. 관계는 HAS_CHUNK 10 뿐이다.
+
+    설명
+    - 쓰기 전에 같은 ID 가 있는지 트랜잭션 안에서 다시 확인한다. 있으면 전체 되돌림.
+    - 검사는 이번에 만든 ID 목록만 센다. 전체 개수 증가분으로 판단하지 않는다.
+    - HAS_CHUNK 는 (문서, 청크) 쌍을 기대값과 정확히 비교한다.
+    """
+    if not confirm:
+        raise RuntimeError("공동 DB 쓰기 함수입니다. 승인 기록을 확인한 뒤 confirm=True 로 호출하세요.")
+    rows = {c["chunk_id"]: c for c in build_rows()["chunks"]}
+    chunks = [rows[cid] for cid in PAGE116_CHUNK_IDS]
+    vectors = embed_chunks(chunks)
+    for c, v in zip(chunks, vectors):
+        c["embedding"] = v
+    expected_pairs = sorted((c["document_id"], c["chunk_id"]) for c in chunks)
+
+    driver = connect()
+    try:
+        with driver.session() as s:
+            def work(tx):
+                clash_doc = tx.run("MATCH (d:Document {document_id: $id}) RETURN count(d) AS n",
+                                   id=VACCINE_DOC["document_id"]).single()["n"]
+                clash_chunk = tx.run("MATCH (c:Chunk) WHERE c.chunk_id IN $ids RETURN count(c) AS n",
+                                     ids=PAGE116_CHUNK_IDS).single()["n"]
+                if clash_doc or clash_chunk:
+                    raise RuntimeError(f"ID 충돌 (롤백): 문서 {clash_doc}, 청크 {clash_chunk}")
+
+                tx.run("CREATE (:Document {document_id: $document_id, title: $title, region: $region, "
+                       "version: $version, issuer: $issuer})", **VACCINE_DOC).consume()
+                tx.run("UNWIND $rows AS r CREATE (:Chunk {chunk_id: r.chunk_id, text: r.text, pdf_page: r.pdf_page, "
+                       "printed_page: r.printed_page, section: r.section, embedding: r.embedding})",
+                       rows=chunks).consume()
+                tx.run("UNWIND $rows AS r MATCH (d:Document {document_id: r.document_id}), (c:Chunk {chunk_id: r.chunk_id}) "
+                       "CREATE (d)-[:HAS_CHUNK]->(c)", rows=chunks).consume()
+
+                n_doc = tx.run("MATCH (d:Document {document_id: $id}) RETURN count(d) AS n",
+                               id=VACCINE_DOC["document_id"]).single()["n"]
+                n_chunk = tx.run("MATCH (c:Chunk) WHERE c.chunk_id IN $ids RETURN count(c) AS n",
+                                 ids=PAGE116_CHUNK_IDS).single()["n"]
+                pairs = sorted((r["d"], r["c"]) for r in tx.run(
+                    "MATCH (d:Document)-[:HAS_CHUNK]->(c:Chunk) WHERE c.chunk_id IN $ids "
+                    "RETURN d.document_id AS d, c.chunk_id AS c", ids=PAGE116_CHUNK_IDS).data())
+                if (n_doc, n_chunk) != (1, 10) or pairs != expected_pairs:
+                    raise RuntimeError(f"검사 실패 (롤백): 문서 {n_doc}, 청크 {n_chunk}, 쌍 {len(pairs)}")
+                return {"documents": n_doc, "chunks": n_chunk, "has_chunk_pairs": len(pairs)}
+
+            return s.execute_write(work)
+    finally:
+        driver.close()
