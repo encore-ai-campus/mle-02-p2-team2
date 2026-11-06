@@ -26,7 +26,7 @@ TOOL_LABELS = {
 }
 # 화면에 그대로 알리는 Tool 한계(사실만 적는다).
 TOOL_LIMITS = {
-    "legal_search": "현재 고정 샘플 질문 1개만 처리합니다. 다른 법령·신고 질문은 근거 부족으로 끝날 수 있습니다.",
+    "legal_search": "사람이 원문을 읽고 만든 답 카드가 있는 법령·신고 질문에만 근거를 붙여 답합니다. 그 밖의 질문은 근거 부족으로 끝날 수 있습니다.",
 }
 STATUS_LABELS = {"ANSWERED": "답변 완료", "PARTIAL": "일부 확인", "INSUFFICIENT_EVIDENCE": "근거 부족",
                  "ERROR": "실행 오류"}

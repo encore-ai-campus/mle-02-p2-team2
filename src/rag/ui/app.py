@@ -22,18 +22,14 @@ SRC = Path(__file__).resolve().parents[2]
 if str(SRC) not in sys.path:            # 클라우드는 이 파일의 폴더만 sys.path에 넣는다
     sys.path.insert(0, str(SRC))
 
-from rag.ui import service
+import pandas as pd
+
+from rag.ui import history, service
 
 st.set_page_config(page_title="학교 감염병 대응 길잡이", page_icon="🏫", layout="wide")
 
-EXAMPLES = [
-    ("학교 행동", "학년부장은 능동감시에서 무엇을 하나요?", "GYEONGGI"),
-    ("질병 정보", "홍역의 잠복기는 며칠인가요?", "NATIONAL"),
-    ("문서 비교 (그래프)", "보호자에게 연락해 진료를 요청하는 일을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요?",
-     "GYEONGGI"),
-    ("복합 (재검색)", "학생이 홍역 의심 증상을 보이면 학교는 무엇을 해야 하고, 홍역의 잠복기는 얼마인가요?", "GYEONGGI"),
-]
-REGIONS = {"GYEONGGI": "경기도 학교", "NATIONAL": "전국 공통"}
+# 화면에서 지역을 고르지 않는다(11/07). 참고 문서 범위(allowed_document_ids)가 근거 범위를 정하므로 지역은 한 값으로 고정한다.
+DEFAULT_REGION = "GYEONGGI"
 STEP_LABELS = {"normalize_input": "입력 정리", "classify_scope": "질문 범위 판단", "classify_intent": "질문 의도 분류",
                "select_tool": "검색 도구 선택", "execute_tool": "검색 도구 실행", "merge_and_validate": "근거 병합·DB 대조",
                "evaluate_evidence": "근거 충분성 판단", "compose_answer": "답변 작성"}
@@ -167,20 +163,28 @@ def show_paths(result: dict) -> None:
                                              for e in path["edges"]))
 
 
-def show_result(result: dict, documents: dict) -> None:
+def show_result(result: dict, documents: dict, developer: bool = False) -> None:
+    """답변을 보여 준다. 일반 사용자에게는 상태와 최종 답변만, 개발자에게는 점검용 정보(출처·처리 흐름·경로·주의)도 보여 준다."""
     output = result["output"]
     icon, color = STATUS_STYLE.get(output["status"], ("•", "gray"))
-    tools = ", ".join(service.TOOL_LABELS.get(t, t).split(" (")[0] for t in output["tools_used"]) or "도구 호출 없음"
-    st.markdown(f"{icon} :{color}[**{service.STATUS_LABELS.get(output['status'], output['status'])}**] · {tools}")
+    status_label = service.STATUS_LABELS.get(output["status"], output["status"])
+    if developer:
+        tools = ", ".join(service.TOOL_LABELS.get(t, t).split(" (")[0] for t in output["tools_used"]) or "도구 호출 없음"
+        st.markdown(f"{icon} :{color}[**{status_label}**] · {tools}")
+    else:
+        st.markdown(f"{icon} :{color}[**{status_label}**]")
     compose = next((t for t in result["trace"] if t["step"] == "compose_answer"), {})
     if compose.get("mode") == "llm":
         st.markdown(output["answer"])
-        with st.expander("원문 정리형 답변 보기 (출처 쪽수 포함)"):
-            st.markdown(answer_markdown(compose["template"]))
+        if developer:
+            with st.expander("원문 정리형 답변 보기 (출처 쪽수 포함)"):
+                st.markdown(answer_markdown(compose["template"]))
     else:
         st.markdown(answer_markdown(output["answer"]))
-        if compose.get("mode") == "template_fallback":
+        if developer and compose.get("mode") == "template_fallback":
             st.caption("다듬은 답변이 근거 검사를 통과하지 못해 원문 정리형으로 보여 드립니다.")
+    if not developer:
+        return
     limits = [service.TOOL_LIMITS[t] for t in output["tools_used"] if t in service.TOOL_LIMITS]
     for note in limits:
         st.info(note)
@@ -200,7 +204,84 @@ def show_result(result: dict, documents: dict) -> None:
             st.caption("경고 없음")
 
 
+# ---------------------------------------------------------------- 개발자 화면
+
+def is_developer() -> bool:
+    """주소에 ?dev=1 이 있고 DEV_PASSWORD(Secrets·.env)를 맞게 입력했을 때만 개발자 화면을 연다.
+
+    DEV_PASSWORD 가 비어 있으면 열지 않는다(공개 URL 에서 질문 이력이 노출되지 않게 하는 기본값).
+    비밀번호 없이 로컬에서만 쓰려면 환경 변수 DEV_ALLOW_OPEN=1 을 명시한다.
+    """
+    if st.query_params.get("dev") != "1":
+        return False
+    password = os.getenv("DEV_PASSWORD")
+    if not password:
+        return os.getenv("DEV_ALLOW_OPEN") == "1"
+    typed = st.sidebar.text_input("개발자 비밀번호", type="password", key="dev_pw")
+    return typed == password
+
+
+def _bar(title: str, counts: dict, labels: dict | None = None) -> None:
+    """개수 딕셔너리를 막대그래프로 그린다. labels 로 보기 좋은 이름으로 바꾼다."""
+    st.markdown(f"**{title}**")
+    if not counts:
+        st.caption("데이터 없음")
+        return
+    frame = pd.DataFrame({"이름": [(labels or {}).get(k, k) for k in counts], "횟수": list(counts.values())})
+    st.bar_chart(frame.set_index("이름"))
+
+
+def show_dashboard() -> None:
+    """질문 이력(질문 빈도, 상태·의도·도구 분포, 일별 추이)을 보여 준다. 개발자 화면 전용."""
+    records = history.load_records()
+    st.caption("질문 원문이 로컬 파일(data/interim/ui_history/queries.jsonl, Git 제외)에 저장됩니다. "
+               "QUERY_LOG=0 이면 저장하지 않습니다. 클라우드에서는 앱을 다시 시작하면 지워질 수 있습니다.")
+    if not records:
+        st.info("아직 저장된 질문이 없습니다.")
+        return
+    summary = history.summarize(records)
+    answered = summary["by_status"].get("ANSWERED", 0)
+    insufficient = summary["by_status"].get("INSUFFICIENT_EVIDENCE", 0)
+    cols = st.columns(4)
+    cols[0].metric("전체 질문", summary["total"])
+    cols[1].metric("평균 처리 시간", f"{summary['avg_seconds']}초" if summary["avg_seconds"] is not None else "-")
+    cols[2].metric("답변 완료 비율", f"{answered / summary['total']:.0%}")
+    cols[3].metric("근거 부족 비율", f"{insufficient / summary['total']:.0%}")
+
+    st.markdown("**질문 빈도 TOP 10**")
+    top = pd.DataFrame(summary["top_questions"], columns=["질문", "횟수"])
+    st.bar_chart(top.set_index("질문"))
+    left, right = st.columns(2)
+    with left:
+        _bar("일별 질문 수", summary["by_day"])
+        _bar("답변 상태", summary["by_status"], service.STATUS_LABELS)
+    with right:
+        _bar("질문 의도 (주 의도)", summary["by_intent"])
+        _bar("사용한 검색 도구", summary["by_tool"], {k: v.split(" (")[0] for k, v in service.TOOL_LABELS.items()})
+
+    st.markdown("**최근 질문 30건**")
+    recent = pd.DataFrame(records[-30:][::-1])
+    shown = [c for c in ("ts", "question", "status", "intent", "tools", "citations", "seconds") if c in recent]
+    st.dataframe(recent[shown], width="stretch", hide_index=True)
+    st.download_button("이력 CSV 내려받기", history.csv_safe(pd.DataFrame(records)).to_csv(index=False).encode("utf-8-sig"),
+                       file_name="query_history.csv", mime="text/csv")
+
+
 # ---------------------------------------------------------------- 화면
+
+def render_history(items: list[dict], documents: dict, developer: bool = False) -> None:
+    """최근 대화 10건을 새것부터 보여 준다. developer 가 참이면 점검용 정보도 함께 보여 준다."""
+    for index, item in enumerate(items[:10]):
+        with st.chat_message("user"):
+            st.markdown(item["question"])
+        with st.chat_message("assistant"):
+            if "error" in item:
+                st.error(f"처리 중 오류가 났습니다: {item['error']}")
+            else:
+                show_result(item, documents, developer)
+        if index == 0 and len(items) > 1:
+            st.divider()
+
 
 def main() -> None:
     if not gate():
@@ -213,57 +294,54 @@ def main() -> None:
     documents = res["documents"]
 
     with st.sidebar:
-        st.header("검색 조건")
-        region = st.radio("학교 지역", list(REGIONS), format_func=REGIONS.get, key="region")
-        options = list(documents)
-        default = [d for d in service.EVALUATED_DOCUMENTS if d in documents]
-        allowed = st.multiselect("참고 문서(허용 목록)", options, default=default,
-                                 format_func=lambda d: doc_label(documents, d), key="allowed")
-        st.caption("선택한 문서 안에서만 근거를 찾습니다. 기본값은 골든셋으로 검증한 5개 문서입니다.")
+        st.header("답변 설정")
         can_polish = "answer_writer" in res["deps"]
         polish = st.toggle("답변 다듬기 (LLM + 근거 검사)", value=can_polish, disabled=not can_polish, key="polish",
                            help="검증된 근거만으로 문장을 다시 쓰고, 번호·숫자·주체·강한 표현을 코드로 검사합니다. "
                                 "검사에 걸리면 원문 정리형 답변을 보여 줍니다.")
         st.divider()
-        st.markdown("**사용 범위**\n- 공식 지침의 원문 근거와 쪽수를 안내합니다.\n- 진단·법적 판단을 대신하지 않습니다.\n"
+        st.markdown("**사용 범위**\n- 공식 지침과 법령을 근거로 답합니다.\n- 진단·법적 판단을 대신하지 않습니다.\n"
                     "- 역할은 원문의 예시일 수 있으며 학교 상황에 따라 조정됩니다.")
-        for tool, note in service.TOOL_LIMITS.items():
-            st.caption(f"⚠ {service.TOOL_LABELS[tool].split(' (')[0]}: {note}")
+        if history.logging_enabled():
+            st.caption("입력한 질문은 서비스 점검을 위해 저장될 수 있습니다. 학생 이름·연락처 같은 개인정보는 입력하지 마세요.")
+        developer = is_developer()
+        default = [d for d in service.EVALUATED_DOCUMENTS if d in documents]
+        if developer:
+            # 참고 문서 허용 목록과 도구별 한계는 개발자 점검용이다. 일반 사용자는 골든셋으로 검증한 기본 문서를 쓴다.
+            st.divider()
+            st.subheader("개발자 설정")
+            for tool, note in service.TOOL_LIMITS.items():
+                st.caption(f"⚠ {service.TOOL_LABELS[tool].split(' (')[0]}: {note}")
+            allowed = st.multiselect("참고 문서(허용 목록)", list(documents), default=default,
+                                     format_func=lambda d: doc_label(documents, d), key="allowed")
+            st.caption("선택한 문서 안에서만 근거를 찾습니다. 기본값은 골든셋으로 검증한 5개 문서입니다.")
+        else:
+            allowed = default
 
     st.title("🏫 학교 감염병 대응 길잡이")
     st.caption("교육부·경기도교육청·질병관리청 지침과 감염병예방법을 지식 그래프로 묶어, 근거 원문과 쪽수로 답합니다.")
 
-    cols = st.columns(len(EXAMPLES))
-    for col, (label, question, example_region) in zip(cols, EXAMPLES, strict=True):
-        if col.button(label, help=question, width="stretch"):
-            st.session_state.pending = (question, example_region)
-
     question = st.chat_input("질문을 입력하세요 (예: 결핵 확진 학생이 나오면 담임교사는 무엇을 하나요?)")
+    history_items = st.session_state.setdefault("history", [])
     if question:
-        st.session_state.pending = (question, region)
-
-    history = st.session_state.setdefault("history", [])
-    if st.session_state.get("pending"):
-        question, ask_region = st.session_state.pop("pending")
         if not allowed:
             st.warning("참고 문서를 하나 이상 선택하세요. 빈 목록은 '허용 문서 없음'으로 처리됩니다.")
         with st.spinner("근거를 찾는 중…"):
             try:
-                result = service.ask(res, question, ask_region, allowed, polish=polish)
+                result = service.ask(res, question, DEFAULT_REGION, allowed, polish=polish)
             except Exception as exc:  # noqa: BLE001
                 result = {"error": f"{type(exc).__name__}: {exc}"}
-        history.insert(0, {"question": question, "region": ask_region, **result})
+        history_items.insert(0, {"question": question, **result})
+        if history.logging_enabled():
+            history.append_record(history.make_record(question, result, polish=polish))
 
-    for index, item in enumerate(history[:10]):
-        with st.chat_message("user"):
-            st.markdown(f"{item['question']}  \n:gray[{REGIONS.get(item['region'], item['region'])}]")
-        with st.chat_message("assistant"):
-            if "error" in item:
-                st.error(f"처리 중 오류가 났습니다: {item['error']}")
-            else:
-                show_result(item, documents)
-        if index == 0 and len(history) > 1:
-            st.divider()
-
+    if developer:
+        tab_chat, tab_dashboard = st.tabs(["질문하기", "대시보드"])
+        with tab_chat:
+            render_history(history_items, documents, developer=True)
+        with tab_dashboard:
+            show_dashboard()
+    else:
+        render_history(history_items, documents)
 
 main()
