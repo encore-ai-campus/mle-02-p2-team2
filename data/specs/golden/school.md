@@ -27,7 +27,7 @@
 |---|---|---|---|---|---|---|---|
 | S-Q01 | 학교에서 유증상 학생이 발견되면 담임교사와 보건교사는 각각 무엇을 확인하나요? | GYEONGGI | ANSWERED | action_search | C01, C02, C03, C04, C05, C06 | 대응 제1단계 행동만. NEIS 등록·능동감시(제2단계)를 지금 할 일로 섞으면 실패. 역할은 원문이 제시한 예시로 표현 | dev |
 | S-Q02 | 경기도 초등학교에서 성홍열 확진 학생이 1명 나왔어요. 학교(담임·보건교사)는 무엇을 해야 하나요? | GYEONGGI | ANSWERED | action_search | C07, C08, C09, C10 | 대응 제2단계 학교 행동(범위). 질병 사실(전파·치료)은 Disease Tool 몫이므로 학교 행동만 | dev |
-| S-Q03 | 성홍열도 학교장이 보건소에 신고해야 하나요? | GYEONGGI | PARTIAL | legal_search | C11, C12 | 학교 문서의 8종 목록에 성홍열이 없다는 사실만 인용. 신고 의무 없음으로 단정하지 않고 현행 법 확인 필요를 warnings에 | eval |
+| S-Q03 | 성홍열도 학교장이 보건소에 신고해야 하나요? | GYEONGGI | PARTIAL | action_search | C11, C12 | 학교 문서의 8종 목록에 성홍열이 없다는 사실만 인용. 신고 의무 없음으로 단정하지 않고 현행 법 확인 필요를 warnings에. 기대 Tool은 11/06 legal_search→action_search로 변경(정답 근거 C11·C12가 모두 학교 문서이고, 법령 Tool은 보조로 이어서 호출됨) | eval |
 | S-Q04 | 보호자에게 연락해 진료를 요청하는 일을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요? | NATIONAL | ANSWERED | crossdoc_graph_search | C13, C14, C15 | 문서별 Finding 분리. 같은 행동으로 합치지 않고 두 문서의 인용을 따로 둠 | dev |
 | S-Q05 | 대응 제2단계에서 능동감시 대상은 누가 정하고 어디까지 하나요? | NATIONAL | ANSWERED | action_search | C16, C17, C18 | 제2단계는 일부만, 제3단계는 전체로 확대된다는 구분 유지 | dev |
 | S-Q06 | 능동감시는 언제 끝나나요? | NATIONAL | ANSWERED | action_search | C19 | 종료 조건을 원문대로 | eval |

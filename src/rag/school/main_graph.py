@@ -59,7 +59,11 @@ DOMAIN_WORDS = ("감염", "학교", "학생", "교사", "교직원", "등교", "
                 "관찰실", "방역", "소독", "나이스", "neis", "출결", "출석", "예방", "접종", "잠복", "전파", "환자", "발열",
                 "마스크", "휴업", "교육청", "확진", "의심", "가정통신문", "접촉", "결석", "특수학교", "ecp", "연속성",
                 "식중독", "급식", "보호자", "학부모", "수업결손", "능동감시", "대응", "단계", "관리조직")
-LEGAL_RE = re.compile(r"신고(도|는)?(해야|하여야|의무|대상인|대상이|할의무)|법(령|률)?상|법률|법령|법적|감염병예방법|예방법|시행규칙|시행령|과태료|벌칙|의무가있")
+# 법 조항·처벌을 직접 말하는 질문만 법령(LEGAL)을 먼저 부른다.
+LEGAL_RE = re.compile(r"법(령|률)?상|법률|법령|법적|감염병예방법|예방법|시행규칙|시행령|과태료|벌칙|처벌|의무가있")
+# '신고해야 하나요?'처럼 학교의 신고 의무만 묻고 법 조항은 말하지 않는 질문. 학교 문서(신고 대상 목록·학교장 신고 행동)가
+# 먼저 답하고, 법적 확정은 법령 확인이 필요하다(11/06 S-Q03: 법령만 부르면 카드가 없을 때 막다른 길이 된다).
+SCHOOL_DUTY_RE = re.compile(r"신고(도|는)?(해야|하여야|의무|대상인|대상이|할의무)")
 PROCEDURE_RE = re.compile(r"공문|어떻게보내|(?<!예)방법|절차|메뉴|입력하|기안")   # '감염병예방법'의 '방법'은 절차가 아님
 DISEASE_FACT = ("잠복기", "전파경로", "감염경로", "전파", "증상은", "증상이뭐", "원인", "치료", "합병증", "특징", "전염력",
                 "백신", "얼마나오래", "감염력")
@@ -71,9 +75,6 @@ ACTION_ASK = ("무엇을하", "무엇을해야", "뭘해야", "뭐해야", "어�
               "안내해야", "할일")
 DISEASE_ASK = ("잠복기", "전파경로", "감염경로", "증상은", "증상이뭐", "합병증", "전염력", "감염력", "전염기간")
 MAX_TOOL_CALLS = 3
-# 의도가 하나여도 LLM 라우터의 하위 질문(문서 용어)을 넘기는 Tool. disease_search는 질문 낱말이 든 청크만 찾는다
-# ('홍역은 어떻게 옮아요?' NO_EVIDENCE / '홍역의 전파 경로는 무엇인가요?' OK, 11/06 실DB 확인).
-SUB_QUESTION_TOOLS = frozenset({"disease_search"})
 
 
 class MainState(TypedDict, total=False):
@@ -122,13 +123,17 @@ def classify_question(question: str, books: dict) -> dict:
     intents = []
     if any(c in key for c in CROSS_CUES):
         intents.append("CROSSDOC")
-    legal = bool(LEGAL_RE.search(key)) and not PROCEDURE_RE.search(key)
+    procedure = bool(PROCEDURE_RE.search(key))
+    legal = bool(LEGAL_RE.search(key)) and not procedure
+    school_duty = bool(SCHOOL_DUTY_RE.search(key)) and not legal and not procedure
     if legal:
         intents.append("LEGAL")
     disease_fact = any(c in key for c in DISEASE_FACT) and not any(c in key for c in SCHOOL_ACTION_CUES)
     if disease_fact:
         intents.append("DISEASE")
     intents.append("ACTION")                         # 병명 없는 학교 업무도 Action(일반 대화로 보내지 않음)
+    if school_duty:
+        intents.append("LEGAL")                      # 학교 신고 의무 질문: 학교 문서 먼저, 법령은 보조(법적 확정 확인)
     primary = intents[0]
     # 보조 의도: 첫 Tool 외에 확인이 필요한 영역. 기본값으로 붙인 ACTION은 세지 않고, 학교 행동을 실제로 함께 물을 때만 넣는다.
     secondary = [i for i in dict.fromkeys(intents[1:]) if i != "ACTION"]
@@ -203,10 +208,10 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         task = TOOL_TASKS[tool] + (f" (요청 힌트: {request['task']})" if request.get("task") else "")
         if state["tool_results"]:
             task += f" (앞선 호출 {state['tools_used']}에서 남은 부분: {state['next_reason'][:120]})"
-        # 하위 질문은 복합 질문이거나 문서 용어가 필요한 Tool에만 넘긴다(원 질문은 task에 남긴다). 그 밖에는 원 질문 그대로.
+        # 하위 질문은 복합 질문(의도 2개 이상)일 때만 Tool에 넘긴다(원 질문은 task에 남긴다). 의도가 하나면 원 질문 그대로.
+        # 질병 Tool은 어미·일상어를 직접 처리한다(송수림 a72aef8, 11/06 확인).
         subs = state.get("sub_questions", {})
-        use_sub = len(subs) > 1 or tool in SUB_QUESTION_TOOLS
-        question = (subs.get(tool) if use_sub else None) or request["question"]
+        question = (subs.get(tool) if len(subs) > 1 else None) or request["question"]
         if question != request["question"]:
             task += f" (원 질문: {request['question']})"
         tool_input: ToolInput = {"question": question, "task": task, "region": request["region"],

@@ -52,7 +52,7 @@ rows = []
 for q in G["questions"]:
     out = run_main({"question": q["question"], "region": q["region"], "allowed_document_ids": ALLOWED,
                     "request_id": f"golden-{q['id']}"}, deps, REGISTRY)
-    steps = {t["step"]: t for t in deps["main_trace"]}
+    steps = {t["step"]: t for t in reversed(deps["main_trace"])}   # 같은 단계가 여러 번이면 첫 기록(첫 Tool)
     selected = steps.get("select_tool", {}).get("tool") or out["response_type"]
     want = expected_route(q["route"])
     cited = {c["chunk_id"] for c in out["citations"]}

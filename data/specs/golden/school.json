@@ -23,7 +23,7 @@
       "question": "성홍열도 학교장이 보건소에 신고해야 하나요?",
       "region": "GYEONGGI",
       "status": "PARTIAL",
-      "route": "legal_search",
+      "route": "action_search",
       "pass": "학교 문서의 8종 목록에 성홍열이 없다는 사실만 인용. 신고 의무 없음으로 단정하지 않고 현행 법 확인 필요를 warnings에",
       "split": "eval"
     },
