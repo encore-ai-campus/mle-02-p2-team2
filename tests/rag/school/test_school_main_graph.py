@@ -53,8 +53,8 @@ def deps(books):
     ("보호자 연락을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요?", "DOMAIN", "CROSSDOC"),  # T04 유형
     ("수두 환자는 언제까지 격리하나요?", "DOMAIN", "ACTION"),
     ("감염병예방법상 학교장의 신고 의무는 무엇인가요?", "DOMAIN", "LEGAL"),                       # '예방법'≠'방법'
-    ("홍역 의심환자가 생겼을 때 학교 담당교사와 의료기관은 각각 보건소에 무엇을 신고하거나 안내하나요? "
-     "법률과 지침의 조건을 구분해 주세요.", "DOMAIN", "LEGAL"),                                  # Legal 샘플(M3)
+    (("홍역 의심환자가 생겼을 때 학교 담당교사와 의료기관은 각각 보건소에 무엇을 신고하거나 안내하나요? "
+      "법률과 지침의 조건을 구분해 주세요."), "DOMAIN", "LEGAL"),                                  # Legal 샘플(M3)
     ("대응 제2단계의 주요 활동은 무엇인가요?", "DOMAIN", "ACTION"),
     ("안녕하세요, 이 서비스로 무엇을 할 수 있나요?", "GENERAL", None),
     ("오늘 점심 메뉴 추천해 줘.", "OUT_OF_SCOPE", None),
@@ -197,3 +197,122 @@ def test_compose_marks_off_stage_action():
         "[교육부 매뉴얼 PDF 68쪽 · 복구단계] 원문이 제시한 담당 예시: 학교장 — 조직을 해제한다."
         " — 원문 배치 단계가 질문 단계와 다름", chunk)], [_citation(chunk, 68)], [])
     assert "복구단계 · 질문 단계와 다름" in text and "원문 배치 단계가" not in text
+
+
+# ---------------------------------------------------------------- 11/06 M4 재검색 루프 (가짜 Tool)
+
+def _tool(name, status="OK", warnings=(), chunk="moe_school_manual_v3:p0036:t01r01", disease_ids=(), concept_ids=()):
+    def run(tool_input):
+        if status in ("NO_EVIDENCE", "ERROR"):
+            return {"tool_name": name, "status": status, "findings": [], "citations": [], "graph_paths": [],
+                    "warnings": list(warnings) or ["근거 없음"]}
+        return {"tool_name": name, "status": status,
+                "findings": [{"claim": f"{name}가 확인한 사실", "chunk_ids": [chunk], "action_ids": [],
+                              "disease_ids": list(disease_ids), "concept_ids": list(concept_ids)}],
+                "citations": [{"document_id": chunk.split(":")[0], "chunk_id": chunk, "pdf_page": 36,
+                               "printed_page": 22, "excerpt": "원문"}],
+                "graph_paths": [], "warnings": list(warnings)}
+    return Recorder(run)
+
+
+def _deps_no_db(books, monkeypatch):
+    # 다른 Tool 결과의 DB 대조는 실DB가 필요하므로 이 검사에서는 통과로 둔다(실DB 검사는 노트북).
+    import rag.school.main_graph as mg
+    monkeypatch.setattr(mg, "verify_against_db", lambda *a, **k: {"bad_citations": {}, "bad_findings": {}})
+    monkeypatch.setattr(mg, "check_graph_paths", lambda *a, **k: {})
+    return deps(books)
+
+
+MIXED = "성홍열 학생이 생기면 담임교사는 무엇을 하고, 학교장은 법적으로 보건소에 신고해야 하나요?"
+
+
+def test_classify_adds_action_as_secondary_only_when_school_action_is_asked(books):
+    assert classify_question(MIXED, books)["secondary"] == ["ACTION"]
+    assert classify_question("성홍열도 학교장이 보건소에 신고해야 하나요?", books)["secondary"] == []   # 학교장=신고 주체
+    assert classify_question("홍역 학생이 생기면 학교는 무엇을 해야 하고, 보건소 신고도 해야 하나요?",
+                             books)["intent"] == "LEGAL"
+
+
+def test_sufficient_first_tool_stops_without_extra_call(books, monkeypatch):
+    legal, action = _tool("legal_search"), _tool("action_search")
+    out = run_main(query("성홍열도 학교장이 보건소에 신고해야 하나요?"), _deps_no_db(books, monkeypatch),
+                   {"legal_search": legal, "action_search": action})
+    assert out["status"] == "ANSWERED" and out["search_rounds"] == 1 and action.calls == []
+
+
+def test_secondary_intent_triggers_second_tool_with_context(books, monkeypatch):
+    legal = _tool("legal_search", disease_ids=["SCARLET_FEVER"])
+    action = _tool("action_search", chunk="gyeonggi_school_guide_2025:p0166:t01r01")
+    d = _deps_no_db(books, monkeypatch)
+    out = run_main(query(MIXED), d, {"legal_search": legal, "action_search": action})
+    assert out["tools_used"] == ["legal_search", "action_search"] and out["search_rounds"] == 2
+    assert out["status"] == "ANSWERED" and len(out["citations"]) == 2
+    second = action.calls[0]
+    assert "Disease:SCARLET_FEVER" in second["context_entity_ids"] and "남은 부분" in second["task"]
+    decisions = [t["decision"] for t in d["main_trace"] if t["step"] == "evaluate_evidence"]
+    assert decisions == ["재검색", "종료"]
+
+
+def test_unresolved_warning_naming_a_tool_triggers_it_and_is_resolved_by_ok(books, monkeypatch):
+    action = _tool("action_search", status="PARTIAL",
+                   warnings=["[미해결] 법정 신고 의무 여부는 학교 문서만으로 확정하지 않는다 — legal_search 확인 필요"])
+    legal = _tool("legal_search", chunk="kdca_measles_2026:p0093:b01")
+    out = run_main({**query("담임교사는 무엇을 하나요?"), "allowed_document_ids": ALLOWED + ["kdca_measles_2026"]},
+                   _deps_no_db(books, monkeypatch), {"action_search": action, "legal_search": legal})
+    assert out["tools_used"] == ["action_search", "legal_search"] and out["status"] == "ANSWERED"
+    assert not any("legal_search 확인 필요" in w for w in out["warnings"])
+
+
+def test_call_limit_is_three_and_missing_check_is_reported(books, monkeypatch):
+    chain = {"action_search": "legal_search", "legal_search": "disease_search", "disease_search": "crossdoc_graph_search"}
+    registry = {name: _tool(name, status="PARTIAL", warnings=[f"[미해결] {nxt} 확인 필요"])
+                for name, nxt in chain.items()}
+    registry["crossdoc_graph_search"] = _tool("crossdoc_graph_search")
+    out = run_main(query("담임교사는 무엇을 하나요?"), _deps_no_db(books, monkeypatch), registry)
+    assert out["search_rounds"] == 3 and registry["crossdoc_graph_search"].calls == []
+    assert out["status"] == "PARTIAL" and any("호출 한도(3회)" in w for w in out["warnings"])
+
+
+def test_same_tool_is_never_called_twice(books, monkeypatch):
+    action = _tool("action_search", status="PARTIAL", warnings=["[미해결] action_search로 다시 확인 필요"])
+    out = run_main(query("담임교사는 무엇을 하나요?"), _deps_no_db(books, monkeypatch), {"action_search": action})
+    assert len(action.calls) == 1 and out["search_rounds"] == 1 and out["status"] == "PARTIAL"
+
+
+def test_second_tool_failure_keeps_first_evidence_as_partial(books, monkeypatch):
+    def boom(tool_input):
+        raise RuntimeError("DB down")
+    legal = _tool("legal_search")
+    out = run_main(query(MIXED), _deps_no_db(books, monkeypatch), {"legal_search": legal, "action_search": boom})
+    assert out["search_rounds"] == 2 and out["status"] == "PARTIAL" and len(out["findings"]) == 1
+    assert any("action_search를 호출했지만 근거를 찾지 못했다" in w for w in out["warnings"])
+
+
+def test_unregistered_secondary_is_reported_not_substituted(books, monkeypatch):
+    legal = _tool("legal_search")
+    out = run_main(query(MIXED), _deps_no_db(books, monkeypatch), {"legal_search": legal})
+    assert out["search_rounds"] == 1 and out["status"] == "PARTIAL"
+    assert any("action_search" in w and "연결되지 않아" in w for w in out["warnings"])
+
+
+def test_no_evidence_first_then_secondary_finds_evidence(books, monkeypatch):
+    legal, action = _tool("legal_search", status="NO_EVIDENCE"), _tool("action_search")
+    out = run_main(query(MIXED), _deps_no_db(books, monkeypatch), {"legal_search": legal, "action_search": action})
+    assert out["tools_used"] == ["legal_search", "action_search"] and out["status"] == "PARTIAL"
+    assert len(out["findings"]) == 1
+
+
+def test_disease_fact_inside_action_question_becomes_secondary(books):
+    mixed = classify_question("홍역의 잠복기는 며칠이고, 홍역 학생이 생기면 학교는 무엇을 해야 하나요?", books)
+    assert mixed["intent"] == "ACTION" and mixed["secondary"] == ["DISEASE"]
+    closure = classify_question("유행성각결막염 걸렸을 때도 전파차단 위한 휴업 해야하나요?", books)
+    assert closure["secondary"] == []                                    # '전파'는 행동 문맥의 넓은 낱말
+
+
+def test_failed_tool_pointer_is_reported_once(books, monkeypatch):
+    legal = _tool("legal_search", status="NO_EVIDENCE")
+    action = _tool("action_search", status="PARTIAL",
+                   warnings=["[미해결] 법정 신고 의무 여부는 학교 문서만으로 확정하지 않는다 — legal_search 확인 필요"])
+    out = run_main(query(MIXED), _deps_no_db(books, monkeypatch), {"legal_search": legal, "action_search": action})
+    assert out["status"] == "PARTIAL"
+    assert sum("legal_search" in w for w in out["warnings"]) == 1

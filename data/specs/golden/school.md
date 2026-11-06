@@ -129,9 +129,9 @@
 | C10 | S-Q02 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0160:t01r03 | 160 | 150 | table_row | 항생제 치료 시작 후 24시간까지 | 같은 발췌가 p0160:t01r01 에도 있음 |
 | C11 | S-Q03 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0164:t01r09 | 164 | 154 | table_row | 신고가 필요한 법정감염병인 경우 학교장은 관할 보건소장에게 신고 |  |
 | C12 | S-Q03 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0164:b01 | 164 | 154 | paragraph | 종류: 콜레라, 장티푸스, 파라티푸스, 세균성이질, 장출혈성 대장균 감염증, A형간염, 홍역, 결핵 |  |
-| C13 | S-Q04 | moe_school_manual_v3 | moe_school_manual_v3:p0057:b01 | 57 | 43 | paragraph | 보호자에게 의료기관 진료 여부를 확인하고 미진료 시 진료를 받도록 하며 |  |
+| C13 | S-Q04 | moe_school_manual_v3 | moe_school_manual_v3:p0057:b02 | 57 | 43 | paragraph | 보호자에게 의료기관 진료 여부를 확인하고 미진료 시 진료를 받도록 하며 |  |
 | C14 | S-Q04 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0166:t01r01 | 166 | 156 | table_row | 보호자에게 연락하여 의료기관 진료 요청 |  |
-| C15 | S-Q04 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0204:b02 | 204 | 194 | paragraph | 보호자에게 연락하여 의료기관 진료를 요청하고 |  |
+| C15 | S-Q04 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0204:b03 | 204 | 194 | paragraph | 보호자에게 연락하여 의료기관 진료를 요청하고 |  |
 | C16 | S-Q05 | moe_school_manual_v3 | moe_school_manual_v3:p0060:t01r03 | 60 | 46 | table_row | 보건(담당)교사가 능동감시 대상을 결정 |  |
 | C17 | S-Q05 | moe_school_manual_v3 | moe_school_manual_v3:p0060:t01r03 | 60 | 46 | table_row | 감염병(의심)환자가 발생한 학급이 있는 동일한 층의 학급 |  |
 | C18 | S-Q05 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0164:t01r09 | 164 | 154 | table_row | 학교 내 능동감시체계 운영 방안에 따라 감시범위와 방법을 결정하여 실시 |  |
@@ -171,12 +171,12 @@
 | C52 | S-S01 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0245:t02r01 | 245 | 235 | table_row | 특수학생의 특성상 필요시 라텍스 장갑과 마스크를 착용하고 손을 잡고 |  |
 | C53 | S-S02 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0307:t01r01 | 307 | 297 | table_row | 체계적인 대응 및 의사결정을 위해 비상조직체계 구성 |  |
 | C54 | S-S02 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0307:t01r02 | 307 | 297 | table_row | 반드시 지속해서 수행해야 하는 핵심업무를 선정 |  |
-| C55 | S-A01 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0204:b02 | 204 | 194 | paragraph | ‘진료확인서’, ‘의사 소견서’, ‘진단서’ 중 1개 |  |
-| C56 | S-A01 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0204:b01 | 204 | 194 | paragraph | 진료 결과 감염병이 아니었다 하더라도 결과 확인까지의 기간은 출석으로 인정 |  |
+| C55 | S-A01 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0204:b03 | 204 | 194 | paragraph | ‘진료확인서’, ‘의사 소견서’, ‘진단서’ 중 1개 |  |
+| C56 | S-A01 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0204:b02 | 204 | 194 | paragraph | 진료 결과 감염병이 아니었다 하더라도 결과 확인까지의 기간은 출석으로 인정 |  |
 | C57 | S-A01 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0205:b01 | 205 | 195 | paragraph | 부득이한 경우 처방전 |  |
 | C58 | S-A02 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0205:b01 | 205 | 195 | paragraph | 원칙적으로 의사나 보건소의 의견에 따름 |  |
 | C59 | S-A02 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0205:b01 | 205 | 195 | paragraph | 등교가 재개되며 이때 담임교사는 학생이 등교한 당일 해당 사실을 보건(담당)교사에게 통보 |  |
-| C60 | S-A03 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0206:b01 | 206 | 196 | paragraph | [나이스]-[보건]-[감염병환자관리]-[감염병환자등록] |  |
+| C60 | S-A03 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0206:b02 | 206 | 196 | paragraph | [나이스]-[보건]-[감염병환자관리]-[감염병환자등록] |  |
 | C61 | S-A03 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0209:b01 | 209 | 199 | paragraph | [나이스]-[보건]-[감염병환자관리]-[감염병보고제출] |  |
 | C62 | S-A04 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0211:b01 | 211 | 201 | paragraph | 해당(학교 관할)보건소를 수신자로 지정하여 학교장 결재 |  |
 | C63 | S-A04 | gyeonggi_school_guide_2025 | gyeonggi_school_guide_2025:p0212:b01 | 212 | 202 | paragraph | 보건소에 신고한 학생의 ‘보건소신고일’을 선택 |  |

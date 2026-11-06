@@ -1,0 +1,23 @@
+{
+  "dataset_version": "school_structure_v4_1_item_merge_circled",
+  "status": "applied",
+  "documents": [
+    "moe_school_manual_v3",
+    "gyeonggi_school_guide_2025"
+  ],
+  "bundle_path": "data/interim/school/service_migration_20261106T030252_317651Z/effective_bundle.json",
+  "migration_dir": "data/interim/school/service_migration_20261106T030252_317651Z",
+  "applied_at_utc": "2026-11-06T03:09:31.677657+00:00",
+  "counts": {
+    "Document": 2,
+    "Chunk": 1289,
+    "SchoolAction": 438
+  },
+  "embedding_model": "text-embedding-3-small",
+  "embedding_dimension": 1536,
+  "note": "원시 패키지·백업은 Git 제외 로컬 자료. 공유 DB는 적용 완료.",
+  "previous": {
+    "dataset_version": "school_structure_v4_item_merge",
+    "migration_dir": "data/interim/school/service_migration_20261106T024909_496350Z"
+  }
+}

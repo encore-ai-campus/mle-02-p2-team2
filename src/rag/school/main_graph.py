@@ -1,11 +1,13 @@
-"""메인 LangGraph (주승우) — QueryInput → 1개 Tool 실행 → QueryOutput. 11/05 B07·B08.
+"""메인 LangGraph (주승우) — QueryInput → Tool 호출(최대 3회) → QueryOutput. 11/05 B07·B08, 11/06 M4 재검색 루프.
 
 노드(계약 v2.0 §10): normalize_input → classify_scope → classify_intent → select_tool → execute_tool →
-merge_and_validate → evaluate_evidence → compose_answer | partial_or_insufficient → END.
+merge_and_validate → evaluate_evidence → (select_tool 재진입 | compose_answer | partial_or_insufficient) → END.
 GENERAL·OUT_OF_SCOPE는 Tool 없이 compose_answer로 간다.
 
-- 오늘(11/05)은 Tool 1회 실행 후 종료한다. 재진입 루프·총 3회 한도·동일 입력 반복 방지는 11/06 작업이다.
-  State에 tool_results·unresolved·search_rounds를 두어 내일 연결점을 만든다. recursion_limit은 Tool 3회 제한이 아니다.
+- 재검색(11/06): 근거가 충분하면(ANSWERED) 추가 호출 없이 끝낸다. 부족할 때만, 명시적 신호가 가리키는 아직 부르지 않은
+  Tool을 다음으로 부른다. 신호는 (1) 질문 분류의 보조 의도, (2) Tool 경고의 `[미해결] … <tool 이름> …` 두 가지뿐이다.
+  신호 없이 '혹시 몰라' 다른 Tool을 부르지 않는다. 총 호출은 MAX_TOOL_CALLS(3)회, 같은 Tool은 한 번만 부른다.
+  두 번째 호출부터는 앞선 Finding의 질병·개념 ID를 context_entity_ids로 넘긴다. recursion_limit은 이 한도가 아니다.
 - Tool registry: 승인된 이름 → 실제 callable(ToolInput → ToolResult). 이 모듈은 다른 담당자 폴더를 import하지 않는다
   (팀 규칙). 기본 registry는 action_search만 등록하고, 다른 Tool은 호출자가 `registry=`로 넣는다.
   등록되지 않은 Tool을 고르면 호출하지 않고(0회) 연결 오류로 남긴다. action_search로 대신 부르지 않는다.
@@ -18,7 +20,8 @@ from __future__ import annotations
 
 import re
 import time
-from typing import Callable, TypedDict
+from collections.abc import Callable
+from typing import TypedDict
 
 from langgraph.graph import END, START, StateGraph
 
@@ -26,9 +29,9 @@ from index.school.dictionaries import compare_key
 from rag.school.action_tool import UNRESOLVED, action_search, check_graph_paths
 from rag.school.contract_v2_local import (
     TOOL_NAMES,
+    Citation,
     ContractError,
     Finding,
-    Citation,
     QueryInput,
     QueryOutput,
     ToolInput,
@@ -56,13 +59,18 @@ DOMAIN_WORDS = ("감염", "학교", "학생", "교사", "교직원", "등교", "
                 "관찰실", "방역", "소독", "나이스", "neis", "출결", "출석", "예방", "접종", "잠복", "전파", "환자", "발열",
                 "마스크", "휴업", "교육청", "확진", "의심", "가정통신문", "접촉", "결석", "특수학교", "ecp", "연속성",
                 "식중독", "급식", "보호자", "학부모", "수업결손", "능동감시", "대응", "단계", "관리조직")
-LEGAL_RE = re.compile(r"신고(해야|하여야|의무|대상인|대상이|할의무)|법(령|률)?상|법률|법령|법적|감염병예방법|예방법|시행규칙|시행령|과태료|벌칙|의무가있")
+LEGAL_RE = re.compile(r"신고(도|는)?(해야|하여야|의무|대상인|대상이|할의무)|법(령|률)?상|법률|법령|법적|감염병예방법|예방법|시행규칙|시행령|과태료|벌칙|의무가있")
 PROCEDURE_RE = re.compile(r"공문|어떻게보내|(?<!예)방법|절차|메뉴|입력하|기안")   # '감염병예방법'의 '방법'은 절차가 아님
 DISEASE_FACT = ("잠복기", "전파경로", "감염경로", "전파", "증상은", "증상이뭐", "원인", "치료", "합병증", "특징", "전염력",
                 "백신", "얼마나오래", "감염력")
 SCHOOL_ACTION_CUES = ("학교는", "학교가", "담임", "보건교사", "교장", "교감", "등교", "해야하나요", "무엇을해야", "조치",
                       "역할", "협조", "준비", "격리하나요")
 CROSS_CUES = (*COMPARE_HINTS, "같은가요", "다른가요", "두문서", "문서별")
+# 법령·질병 질문 안에 '학교가 할 일'을 함께 묻는 표현(역할 이름만으로는 넣지 않는다: '학교장이 신고해야'의 학교장은 신고 주체).
+ACTION_ASK = ("무엇을하", "무엇을해야", "뭘해야", "뭐해야", "어떻게해야", "어떤조치", "조치는", "조치를", "역할", "안내하나요",
+              "안내해야", "할일")
+DISEASE_ASK = ("잠복기", "전파경로", "감염경로", "증상은", "증상이뭐", "합병증", "전염력", "감염력", "전염기간")
+MAX_TOOL_CALLS = 3
 
 
 class MainState(TypedDict, total=False):
@@ -72,6 +80,9 @@ class MainState(TypedDict, total=False):
     intent: str                   # ACTION / DISEASE / LEGAL / CROSSDOC
     secondary_intents: list[str]
     selected_tool: str
+    next_tool: str
+    next_reason: str
+    skipped_tools: list[str]
     tool_input: ToolInput
     tool_results: list[ToolResult]
     tool_calls: list[dict]
@@ -115,8 +126,15 @@ def classify_question(question: str, books: dict) -> dict:
         intents.append("DISEASE")
     intents.append("ACTION")                         # 병명 없는 학교 업무도 Action(일반 대화로 보내지 않음)
     primary = intents[0]
-    # 보조 의도: 첫 Tool 외에 확인이 필요한 영역(기본값 ACTION은 보조 의도로 세지 않는다).
+    # 보조 의도: 첫 Tool 외에 확인이 필요한 영역. 기본값으로 붙인 ACTION은 세지 않고, 학교 행동을 실제로 함께 물을 때만 넣는다.
     secondary = [i for i in dict.fromkeys(intents[1:]) if i != "ACTION"]
+    if primary in ("LEGAL", "DISEASE") and any(c in key for c in ACTION_ASK):
+        secondary.append("ACTION")
+    # 학교 행동 질문 안에 병명과 질병 사실(잠복기 등)을 함께 물으면 질병 확인을 보조로 둔다.
+    # '전파 차단을 위한 휴업'처럼 행동 문맥의 넓은 낱말로는 넣지 않는다(DISEASE_ASK는 좁은 목록).
+    if (primary != "DISEASE" and "DISEASE" not in secondary and diseases
+            and any(c in key for c in DISEASE_ASK)):
+        secondary.append("DISEASE")
     return {"response_type": "DOMAIN", "intent": primary, "secondary": secondary, "diseases": diseases,
             "roles": roles, "confidence": "high" if primary != "ACTION" or roles or diseases else "medium"}
 
@@ -135,7 +153,8 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         log("normalize_input", request_id=request.get("request_id"), region=request["region"],
             allowed=len(request["allowed_document_ids"]))
         return {"tool_results": [], "tool_calls": [], "findings": [], "citations": [], "warnings": [],
-                "tools_used": [], "search_rounds": 0, "unresolved": []}
+                "tools_used": [], "search_rounds": 0, "unresolved": [], "skipped_tools": [], "next_tool": "",
+                "next_reason": ""}
 
     def classify_scope(state: MainState) -> dict:
         result = classify_question(state["request"]["question"], books)
@@ -150,23 +169,33 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         return {}
 
     def select_tool(state: MainState) -> dict:
-        tool = INTENT_TOOL[state["intent"]]
+        first = not state["tool_results"] and not state["skipped_tools"]
+        tool = INTENT_TOOL[state["intent"]] if first else state["next_tool"]
+        reason = "질문의 주 의도" if first else state["next_reason"]
         registered = tool in registry
-        log("select_tool", tool=tool, registered=registered)
+        log("select_tool", tool=tool, registered=registered, round=state["search_rounds"] + 1, reason=reason)
         if registered:
-            return {"selected_tool": tool}
-        return {"selected_tool": tool, "warnings": [
-            f"선택한 Tool '{tool}'이 메인 그래프에 연결되지 않아 호출하지 않았다(연결 오류, 호출 0회). "
-            "다른 Tool로 대신 답하지 않는다."]}
+            return {"selected_tool": tool, "next_tool": ""}
+        return {"selected_tool": tool, "next_tool": "", "skipped_tools": state["skipped_tools"] + [tool],
+                "warnings": state["warnings"] + [
+                    (f"선택한 Tool '{tool}'이 메인 그래프에 연결되지 않아 호출하지 않았다(연결 오류, 호출 0회). "
+                     "다른 Tool로 대신 답하지 않는다.")]}
 
     def execute_tool(state: MainState) -> dict:
         request, tool = state["request"], state["selected_tool"]
         task = TOOL_TASKS[tool] + (f" (요청 힌트: {request['task']})" if request.get("task") else "")
+        if state["tool_results"]:
+            task += f" (앞선 호출 {state['tools_used']}에서 남은 부분: {state['next_reason'][:120]})"
         tool_input: ToolInput = {"question": request["question"], "task": task, "region": request["region"],
                                  "allowed_document_ids": list(request["allowed_document_ids"])}
-        for key in ("preferred_document_ids", "context_entity_ids"):
-            if request.get(key):
-                tool_input[key] = list(request[key])
+        if request.get("preferred_document_ids"):
+            tool_input["preferred_document_ids"] = list(request["preferred_document_ids"])
+        context = list(request.get("context_entity_ids", []))
+        for finding in state["findings"]:                         # 앞선 Tool이 확인한 질병·개념을 다음 Tool에 넘긴다
+            context += [f"Disease:{d}" for d in finding["disease_ids"]]
+            context += [f"ActionConcept:{c}" for c in finding["concept_ids"]]
+        if context:
+            tool_input["context_entity_ids"] = list(dict.fromkeys(context))
         started = time.perf_counter()
         error = None
         try:
@@ -174,7 +203,7 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
             validate_tool_result(result, tool_input, expected_tool=tool)
         except ContractError as exc:
             error = f"ToolResult 계약 위반: {exc}"
-        except Exception as exc:  # Tool 내부 예외도 호출 실패로 기록한다
+        except Exception as exc:  # noqa: BLE001 - Tool 내부 예외도 호출 실패로 기록한다
             error = f"Tool 실행 실패: {type(exc).__name__}: {exc}"
         if error:
             result = {"tool_name": tool, "status": "ERROR", "findings": [], "citations": [], "graph_paths": [],
@@ -214,23 +243,66 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
                 "warnings": list(dict.fromkeys(warnings)), "unresolved": list(dict.fromkeys(unresolved))}
 
     def evaluate_evidence(state: MainState) -> dict:
-        """오늘은 1회 실행 후 충분성만 판정한다(추가 Tool 재진입은 11/06)."""
-        results = state["tool_results"]
-        if not results:                                          # 미등록 Tool: 호출 0회
-            status = "ERROR"
+        """근거 충분성 판정 + 다음 Tool 결정. ANSWERED면 끝, 아니면 신호가 가리키는 부르지 않은 Tool을 한도 안에서 고른다."""
+        results, rounds = state["tool_results"], state["search_rounds"]
+        status_of = {r["tool_name"]: r["status"] for r in results}
+        tried = set(status_of) | set(state["skipped_tools"])
+        primary = INTENT_TOOL[state["intent"]]
+        # 신호 1: 보조 의도, 신호 2: '[미해결]' 경고가 이름으로 가리키는 Tool(첫 Tool 자신은 제외)
+        needs: list[tuple[str, str]] = [(INTENT_TOOL[i], f"질문의 일부({i})") for i in state.get("secondary_intents", [])]
+        for warning in state["unresolved"]:
+            needs += [(tool, warning.removeprefix(UNRESOLVED).strip()) for tool in sorted(TOOL_NAMES) if tool in warning]
+        needs = [(tool, why) for tool, why in dict.fromkeys(needs) if tool != primary]
+        needs = list({tool: (tool, why) for tool, why in reversed(needs)}.values())[::-1]   # Tool별 첫 사유만
+        # 어떤 Tool이 OK로 답했으면 그 Tool을 가리키던 [미해결]은 해소된 것으로 본다.
+        # 이미 부른 Tool을 가리키는 [미해결]은 여기서 정리한다: OK면 해소, 실패면 아래 '호출했지만…' 한 줄로 대신한다.
+        # 자기 자신을 가리키는 경고는 정리하지 않는다(같은 Tool은 다시 부르지 않으므로 미해결로 남는다).
+        issuer = {w: r["tool_name"] for r in results for w in r["warnings"]}
+        open_unresolved = [w for w in state["unresolved"]
+                           if not any(tool in w and tool in status_of and tool != issuer.get(w) for tool in TOOL_NAMES)]
+        pending = [(tool, why) for tool, why in needs if tool not in tried]
+        # 주 의도 Tool이 근거를 못 냈거나 연결되지 않았는데 다른 Tool만 답했다면 질문의 핵심이 빠진 것이다.
+        primary_unmet = status_of.get(primary) in ("NO_EVIDENCE", "ERROR", None)
+
+        def partial_result(result: ToolResult) -> bool:
+            if result["status"] != "PARTIAL":
+                return False
+            own = [w for w in result["warnings"] if w.startswith(UNRESOLVED)]
+            return not own or any(w in open_unresolved for w in own)   # 표시 없는 PARTIAL은 Tool 판단을 존중
+
+        if not results:
+            status = "INSUFFICIENT_EVIDENCE" if pending else "ERROR"
         elif state["findings"]:
-            partial = (any(r["status"] == "PARTIAL" for r in results) or state["unresolved"]
-                       or state.get("secondary_intents"))
+            unmet = [tool for tool, _ in needs if status_of.get(tool) != "OK"]
+            partial = any(partial_result(r) for r in results) or open_unresolved or unmet or primary_unmet
             status = "PARTIAL" if partial else "ANSWERED"
         elif any(r["status"] == "ERROR" for r in results):
             status = "ERROR"
         else:
             status = "INSUFFICIENT_EVIDENCE"
-        unresolved = list(state["unresolved"])
-        for intent in state.get("secondary_intents", []):
-            unresolved.append(f"{UNRESOLVED} 질문의 일부는 {INTENT_TOOL[intent]} 확인이 필요하다(추가 호출은 11/06 루프에서).")
-        log("evaluate_evidence", status=status, unresolved=len(unresolved))
-        return {"status": status, "unresolved": unresolved}
+
+        next_tool, next_reason = "", ""
+        if status != "ANSWERED" and rounds < MAX_TOOL_CALLS and pending:
+            next_tool, next_reason = pending[0]
+        unresolved = list(open_unresolved)
+        if not next_tool:
+            if state["findings"] and primary_unmet and primary not in state["skipped_tools"]:
+                unresolved.append(f"{UNRESOLVED} 질문의 주 의도({primary})에서 근거를 찾지 못했다. "
+                                  "아래 내용은 질문의 다른 부분에 대한 근거다.")
+            for tool, why in needs:
+                if status_of.get(tool) in ("NO_EVIDENCE", "ERROR"):
+                    unresolved.append(f"{UNRESOLVED} {tool}를 호출했지만 근거를 찾지 못했다: {why}")
+                elif tool in state["skipped_tools"]:
+                    unresolved.append(f"{UNRESOLVED} {tool}가 연결되지 않아 확인하지 못했다: {why}")
+                elif tool not in status_of:
+                    unresolved.append(f"{UNRESOLVED} 호출 한도({MAX_TOOL_CALLS}회)로 {tool} 확인을 하지 못했다: {why}")
+            if not results and status == "INSUFFICIENT_EVIDENCE":
+                status = "ERROR"                                   # 연결된 Tool이 하나도 없었다
+        log("evaluate_evidence", status=status, rounds=rounds, unresolved=len(unresolved),
+            resolved=len(state["unresolved"]) - len(open_unresolved), next_tool=next_tool or None,
+            decision="재검색" if next_tool else "종료")
+        return {"status": status, "unresolved": list(dict.fromkeys(unresolved)), "next_tool": next_tool,
+                "next_reason": next_reason}
 
     def compose_answer(state: MainState) -> dict:
         return {"final_result": finalize(state)}
@@ -254,8 +326,10 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
                                 {"run": "execute_tool", "skip": "evaluate_evidence"})
     graph.add_edge("execute_tool", "merge_and_validate")
     graph.add_edge("merge_and_validate", "evaluate_evidence")
-    graph.add_conditional_edges("evaluate_evidence", lambda s: "full" if s["status"] == "ANSWERED" else "partial",
-                                {"full": "compose_answer", "partial": "partial_or_insufficient"})
+    graph.add_conditional_edges(
+        "evaluate_evidence",
+        lambda s: "again" if s.get("next_tool") else ("full" if s["status"] == "ANSWERED" else "partial"),
+        {"again": "select_tool", "full": "compose_answer", "partial": "partial_or_insufficient"})
     graph.add_edge("compose_answer", END)
     graph.add_edge("partial_or_insufficient", END)
     return graph.compile()
@@ -282,10 +356,10 @@ DOC_TITLES = {"moe_school_manual_v3": ("교육부 매뉴얼", "교육부"),
               "kdca_diagnosis_reporting_2026": ("질병관리청 진단·신고 기준", "질병청 신고"),
               "moleg_infectious_disease_act_21521": ("감염병예방법", "감염병예방법")}
 OFF_STAGE_TAIL = " — 원문 배치 단계가 질문 단계와 다름"
-HEAD_RE = re.compile(r"^\[(?P<head>[^\]]*)\]\s*(?P<body>.*)$", re.S)
-ROLE_RE = re.compile(r"^(?:원문이 제시한 담당 예시|원문이 명시한 담당):\s*(?P<role>.+?)\s*—\s*(?P<text>.+)$", re.S)
-NO_ROLE_RE = re.compile(r"^원문에 담당 미기재\s*—\s*(?P<text>.+)$", re.S)
-QUOTE_RE = re.compile(r"^원문:\s*“(?P<text>.*)”$", re.S)
+HEAD_RE = re.compile(r"^\[(?P<head>[^\]]*)\]\s*(?P<body>.*)$", re.DOTALL)
+ROLE_RE = re.compile(r"^(?:원문이 제시한 담당 예시|원문이 명시한 담당):\s*(?P<role>.+?)\s*—\s*(?P<text>.+)$", re.DOTALL)
+NO_ROLE_RE = re.compile(r"^원문에 담당 미기재\s*—\s*(?P<text>.+)$", re.DOTALL)
+QUOTE_RE = re.compile(r"^원문:\s*“(?P<text>.*)”$", re.DOTALL)
 PAGE_RE = re.compile(r"^(?P<doc>.*?)\s*PDF\s*(?P<page>\d+)쪽(?P<extra>.*)$")
 
 

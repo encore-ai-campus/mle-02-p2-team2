@@ -1,4 +1,4 @@
-"""Existing DB read-only smoke checks. Does not load the new candidate chunks."""
+"""Current service DB read-only smoke checks. This script does not load data."""
 import json
 import sys
 from pathlib import Path
@@ -12,7 +12,7 @@ def main():
     deps = default_deps()
     deps['embedder'] = None  # fulltext; no paid embedding or LLM call
     allowed = ['moe_school_manual_v3', 'gyeonggi_school_guide_2025']
-    report = {'data': 'existing_db_not_v2_candidate', 'mode': 'fulltext', 'db_writes': 0, 'cases': []}
+    report = {'data': 'current_service_db', 'mode': 'fulltext', 'db_writes': 0, 'cases': []}
     try:
         for question in ['유행성각결막염 걸렸을 때도 전파차단 위한 휴업 해야하나요?',
                          '유행성이하선염의 휴업 기준은?',

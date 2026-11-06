@@ -80,7 +80,7 @@ def test_ecp_nested_letters_return_to_outer_subsection():
             '마. 행정직원\n기기대여\n바. 정보담당교사\n원격근무환경 조성\n'
             '라. 회복 등 조치\n회복 계획')
     cs = body(text)
-    info = next(c for c in cs if c['text'].startswith('바. 정보담당교사'))
+    info = next(c for c in cs if '바. 정보담당교사' in c['text'])
     assert '다. 업무연속성계획' in info['section']
     assert '라. 회복' not in info['text']
     recovery = next(c for c in cs if c['text'].startswith('라. 회복'))
@@ -92,8 +92,22 @@ def test_subsection_table_reference_keeps_its_introduction():
     cs = body('## PDF 2페이지\n3) 환자 관리\n담당자별 역할은 다음과 같음\n'
               '[표 3-12] 환자 관리 담당자별 역할\n4) 밀접접촉자 관리\n'
               '담당자별 역할은 다음과 같음\n[표 3-13] 접촉자 관리 담당자별 역할')
-    assert len(cs) == 2
-    assert '[표 3-12]' in cs[0]['text'] and '[표 3-13]' in cs[1]['text']
+    for caption, intro in (('[표 3-12]', '3) 환자 관리'), ('[표 3-13]', '4) 밀접접촉자 관리')):
+        owner = next(c for c in cs if caption in c['text'])
+        assert intro in owner['text']
+        assert owner['text'].index(intro) < owner['text'].index(caption)
+
+
+def test_short_items_merge_within_parent_but_long_items_split():
+    """v4: `1)` 항목 하나가 청크 하나가 되면 맥락 없는 조각이 검색 상위를 차지했다."""
+    short = body('## PDF 2페이지\n가. 담임교사\n1) 보호자에게 연락\n2) 보건실로 이동\n'
+                 '3) 교무부장에게 보고\n나. 보건교사\n1) 증상 확인')
+    assert [c['text'].splitlines()[0] for c in short] == ['가. 담임교사', '나. 보건교사']
+    assert short[0]['section'] == '가. 담임교사'
+    assert '3) 교무부장에게 보고' in short[0]['text'] and '보건교사' not in short[0]['text']
+    long = body('## PDF 2페이지\n가. 담임교사\n1) ' + '연락' * 110 + '\n2) 보건실로 이동')
+    assert len(long) == 2 and long[1]['text'] == '2) 보건실로 이동'
+    assert long[1]['section'] == '가. 담임교사 > 2) 보건실로 이동'
 
 
 def test_long_lines_and_tiny_fragments_preserve_characters():
@@ -166,11 +180,11 @@ def test_actual_rows_stable_and_all_paths_bounded(actual_chunks):
 def test_actual_remaining_noted_cases(actual_chunks):
     guide = [c for c in actual_chunks if c['document_id'] == 'gyeonggi_school_guide_2025']
     restart = next(c for c in guide if c['pdf_page'] == 238
-                   and c['text'].startswith('다. 정상수업 재개 시'))
+                   and '다. 정상수업 재개 시' in c['text'])
     assert restart['section'].startswith('제5장 전파 차단을 위한 별도 조치 > Ⅰ 휴업 및 휴교 > ')
-    risk = next(c for c in guide if c['pdf_page'] == 244 and c['text'].startswith('가. 일상생활'))
+    risk = next(c for c in guide if c['pdf_page'] == 244 and '가. 일상생활' in c['text'])
     assert '나. 밀접 돌봄' not in risk['text']
-    staff = next(c for c in guide if c['pdf_page'] == 310 and c['text'].startswith('마. 행정직원'))
+    staff = next(c for c in guide if c['pdf_page'] == 310 and '마. 행정직원' in c['text'])
     assert '다. 업무연속성계획 수립을 통한 학사운영 > 1) 학교 핵심인력' in staff['section']
     assert '라. 회복 등 조치' not in staff['text']
     observation = next(c for c in actual_chunks if c['chunk_id'] == 'moe_school_manual_v3:p0056:t01r02')
@@ -179,3 +193,13 @@ def test_actual_remaining_noted_cases(actual_chunks):
                   and c['pdf_page'] == 66 and c['kind'] == 'paragraph']
     for number in [12, 13, 14]:
         assert any(f'[표 3-{number}]' in c['text'] for c in references)
+
+
+def test_circled_bullet_outside_attachment_keeps_disease_section():
+    """11/06 v4: 본문 ②가 rank 30 제목이 되어 `13. 홍역` 절을 밀어냈다(p202~218)."""
+    cs = body('## PDF 1페이지\n4 학생 빈발 감염병\n13. 홍역(Measles)\n다. 접촉자 관리\n'
+              '## PDF 2페이지\n② 보건소 시스템으로 2차 미등록자 선별\n라. 역학조사 시 협조사항\n추가 환자 연락')
+    assert all('13. 홍역(Measles)' in c['section'] for c in cs)
+    assert '미등록자' not in cs[-1]['section']
+    attached = body('## PDF 2페이지\n붙임 1 해외감염병\n① 뎅기열\n모기 매개\n② 지카\n모기 매개')
+    assert [c['section'] for c in attached][-1] == '붙임 1 해외감염병 > ② 지카'

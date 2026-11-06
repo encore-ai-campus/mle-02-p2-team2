@@ -14,6 +14,9 @@ RUNNING_CHAPTER = re.compile(r"^(.*?)\s+제\s*(\d+)\s*장$")
 ROMAN = re.compile(r"^[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ]+[.．]?\s+\S")
 PLAIN = re.compile(r"^\d+\s+[^\d\s]")
 DOTTED = re.compile(r"^\d+\.\s+\S")
+SUBNUMBER = re.compile(r"^\d+-\d+\.\s+\S")
+ATTACHMENT = re.compile(r"^붙임\s*\d+\s+\S")
+CIRCLED = re.compile(r"^[①-⑳]\s*\S")
 LETTER = re.compile(r"^([가나다라마바사아자차카타파하])\.\s+\S")
 PAREN = re.compile(r"^\d+\)\s*\S")
 LETTERS = "가나다라마바사아자차카타파하"
@@ -28,13 +31,39 @@ def heading_kind(line: str) -> str | None:
         return None
     if re.match(r"^\d{3,}[.\s]", line) or re.match(r"^\d+\s+\S+\s+[\d,]+$", line):
         return None  # years, country/count table rows
-    for kind, pattern in (("roman", ROMAN), ("plain", PLAIN), ("number", DOTTED),
+    for kind, pattern in (("roman", ROMAN), ("attachment", ATTACHMENT),
+                          ("circled", CIRCLED), ("plain", PLAIN),
+                          ("number", DOTTED), ("subnumber", SUBNUMBER),
                           ("letter", LETTER), ("item", PAREN)):
         if pattern.match(line):
             return kind
     if re.match(r"^별지\s*\d+\s+", line):
         return "annex"
     return None
+
+
+def footnote_lines(lines: list[str]) -> set[int]:
+    """Numbered definitions referenced by table markers are content, not headings.
+
+    Require both preceding inline references and a consecutive 1),2),... block
+    in the lower half of the page. Do not classify every trailing numbered
+    instruction as a footnote, and never discard the footnote text itself.
+    """
+    nonempty = [i for i, line in enumerate(lines) if line.strip()]
+    for index in nonempty[len(nonempty) // 2:]:
+        if not re.match(r'^1\)\s+', plain_line(lines[index])):
+            continue
+        preceding = '\n'.join(lines[:index])
+        if not re.search(r'\[[1-9][\d)\s]*\)\]', preceding):
+            continue
+        end = next((i for i in range(index + 1, len(lines))
+                    if heading_kind(plain_line(lines[i])) not in {None, 'item'}), len(lines))
+        numbered = [(i, int(m.group(1))) for i in range(index, end)
+                    if (m := re.match(r'^(\d+)\)\s+', plain_line(lines[i])))]
+        numbers = [n for _, n in numbered]
+        if len(numbers) >= 2 and numbers == list(range(1, len(numbers) + 1)):
+            return set(range(index, end))
+    return set()
 
 
 def document_structure(pages: dict[int, str]) -> dict[int, list[dict]]:
@@ -49,6 +78,7 @@ def document_structure(pages: dict[int, str]) -> dict[int, list[dict]]:
     for page, text in sorted(pages.items()):
         entries = []
         raw_lines = text.splitlines()
+        notes = footnote_lines(raw_lines)
         for index, raw in enumerate(raw_lines):
             line = plain_line(raw)
             if line == '부록' and raw.lstrip().startswith('#'):
@@ -68,13 +98,19 @@ def document_structure(pages: dict[int, str]) -> dict[int, list[dict]]:
                                     "furniture": True, "caption": None})
                 continue
             caption = CAPTION.match(line)
-            kind = heading_kind(line) if not caption else None
+            kind = heading_kind(line) if not caption and index not in notes else None
             # Numbered rows in appendix forms are table cells, not sections.
             if kind == "plain" and any(r == 15 for r, _ in stack):
                 kind = None
+            # ①② are sibling titles only inside 붙임 (overseas disease list). In
+            # body text they are sub-bullets; at rank 30 they replaced the
+            # disease section (`13. 홍역` → `② 보건소 ... 선별`, p202~218).
+            if kind == "circled" and not any(s.startswith("붙임") for _, s in stack):
+                kind = "circled_item"
             if kind:
-                rank = {"roman": 10, "annex": 15, "plain": 20, "number": 30,
-                        "letter": 40, "item": 50}[kind]
+                rank = {"roman": 10, "annex": 15, "attachment": 20, "plain": 20,
+                        "circled": 30, "number": 30, "subnumber": 30,
+                        "letter": 40, "item": 50, "circled_item": 55}[kind]
                 if kind == "letter" and any(r == 50 for r, _ in stack):
                     inner = next((s for r, s in stack if r == 60), None)
                     outer = next((s for r, s in stack if r == 40), None)
@@ -89,7 +125,8 @@ def document_structure(pages: dict[int, str]) -> dict[int, list[dict]]:
                         rank = 40
                 stack = [(r, s) for r, s in stack if r < rank] + [(rank, line)]
             entries.append({"line": line, "index": index, "path": tuple(stack), "heading": bool(kind),
-                                "furniture": False, "caption": caption.group(1) if caption else None})
+                                "furniture": False, "caption": caption.group(1) if caption else None,
+                                "footnote": index in notes})
         result[page] = entries
     return result
 

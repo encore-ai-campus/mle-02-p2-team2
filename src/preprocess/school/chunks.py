@@ -4,8 +4,9 @@
   (id_map.table_row_position과 같은 규칙 → 11/4 적재한 시나리오 표 4행과 같은 ID·본문이 나온다).
   text = 표 제목 + 머리글 + 행(온톨로지 5-2).
 - 본문: 전체 페이지의 구조를 먼저 읽고 선정 페이지의 내용만 출력한다. 장·절·항의
-  위치별 경로를 보존하고 제목 경계에서 분할한 뒤 최대 800자로 묶는다. 짧다는 이유로
-  서로 다른 절을 합치거나 문단을 버리지 않는다. 표 캡션은 본문 참조로도 보존한다.
+  위치별 경로를 보존하고 절(가.·1. 이상) 경계에서 분할한 뒤 최대 800자로 묶는다. 짧다는 이유로
+  서로 다른 절을 합치거나 문단을 버리지 않는다. 절 아래 `1)` 항목은 200자까지 함께 묶는다(v4).
+  표 캡션은 본문 참조로도 보존한다.
 - 표 제목은 본문의 해당 표 번호 캡션을 우선하며, 작업본 제목은 추적 정보로 분리한다.
   변환 순서가 뒤집힌 검증 사례는 school_layout_corrections.json으로 명시한다.
 - 질병 연결(ABOUT)은 표 행에만 만든다: 행 첫 칸이 질병 사전과 정확히 일치하거나, 표 제목이
@@ -24,6 +25,7 @@ from pathlib import Path
 from index.school.ids_local import chunk_block_id, chunk_row_id
 from index.school.normalize import resolve_mention
 from preprocess.school.markdown_data import annotate_table_blocks, markdown_blocks
+from preprocess.school.reviewed_context import apply_reviewed_tables, load_review
 from preprocess.school.structure import (
     CAPTION,
     TABLE_NUMBER,
@@ -51,7 +53,12 @@ TITLE_PREFIX = re.compile(
 PRINTED = re.compile(r"인쇄\s*(\d+)")
 HEADING = re.compile(r"^(?:\d+\)|\d+\.?\s|[가-하]\.\s|【|\[표\s?\d|<표\s?\d|[□■○●❶❷❸]|제\d+장|[ⅠⅡⅢⅣⅤⅥ]\s)")
 MAX_CHARS = 800
-CHUNKER_VERSION = "school_structure_v2"
+# 11/06 v4: `1)`·하위 `가.`(rank ≥ 50) 항목은 같은 상위 절(rank < 50) 안에서 MIN_CHARS까지 묶는다.
+# v3는 항목마다 청크를 끊어 본문 1,156개 중 713개가 80자 미만이 됐고, 맥락 없는 조각이
+# 검색 상위를 차지했다(서비스DB 이행 평가 Hybrid Hit@5 19→13/34). 상위 절 경계는 그대로 지킨다.
+ITEM_RANK = 50
+MIN_CHARS = 200
+CHUNKER_VERSION = "school_structure_v4_item_merge"
 
 
 def selected_pages(spec: str) -> list[int]:
@@ -172,6 +179,21 @@ def covered(key: str, table_text: str, n: int = 4) -> float:
     return sum(g in table_text for g in grams) / len(grams)
 
 
+def _scope(path) -> tuple:
+    return tuple(p for p in path if p[0] < ITEM_RANK)
+
+
+def _common_path(paths: list[tuple]) -> tuple:
+    """Section of a merged chunk = the deepest path shared by all of its lines."""
+    common = paths[0]
+    for path in paths[1:]:
+        n = 0
+        while n < min(len(common), len(path)) and common[n] == path[n]:
+            n += 1
+        common = common[:n]
+    return common
+
+
 def body_chunks(document_id: str, body_text: str, pages: list[int], offset: int,
                 source_path: str, table_text_by_page: dict[int, str] | None = None,
                 *, structure: dict | None = None) -> tuple[list[dict], dict[int, str]]:
@@ -186,31 +208,52 @@ def body_chunks(document_id: str, body_text: str, pages: list[int], offset: int,
     noise = repeated_lines(all_pages)
     chunks, page_sections = [], {}
     for page in pages:
-        groups, current, current_path = [], [], None
+        groups, current, paths, current_scope, heads_only = [], [], [], None, True
+
+        def close(groups=groups):
+            nonlocal current, paths, heads_only
+            if current:
+                groups.append((current, _common_path(paths)))
+            current, paths, heads_only = [], [], True
+
         for entry in structure.get(page, []):
             line, path = entry['line'], entry['path']
             if entry['furniture'] or not clean_body_lines(
                     line, noise, table_text_by_page.get(page, '')):
                 continue
-            # Preserve every substantive short fragment; structural boundaries
-            # take precedence over length. A caption also starts a new unit.
-            boundary = entry['heading'] or path != current_path
-            if current and (boundary or len('\n'.join(current)) + len(line) + 1 > MAX_CHARS):
-                groups.append((current, current_path))
-                current = []
-            current_path = path
+            # Sibling/outer sections (rank < ITEM_RANK) are always a boundary and
+            # are never merged. Items below them merge until MIN_CHARS so a
+            # single `4) ...` line keeps its neighbouring context. Captions
+            # remain with their introduction; no fragment is discarded.
+            scope = _scope(path)
+            size = len('\n'.join(current))
+            item_heading = entry['heading'] and path and path[-1][0] >= ITEM_RANK
+            # A heading with no body of its own (e.g. `2. 대응 제1단계` directly
+            # followed by `가. ...`) opens its first child instead of standing alone.
+            # Runs of body-less sibling headings (disease lists, legal enumerations)
+            # form one list chunk up to MIN_CHARS; siblings with their own body
+            # text still start a new chunk.
+            descends = (current_scope is not None and len(scope) > len(current_scope)
+                        and scope[:len(current_scope)] == current_scope)
+            sibling_list = (current_scope is not None and entry['heading'] and size < MIN_CHARS
+                            and len(scope) == len(current_scope) and scope[:-1] == current_scope[:-1])
+            boundary = ((scope != current_scope and not (heads_only and (descends or sibling_list)))
+                        or (item_heading and size >= MIN_CHARS))
+            if current and (boundary or size + len(line) + 1 > MAX_CHARS):
+                close()
+            current_scope = scope
+            # `1)` items are content, not section headings.
+            heads_only = heads_only and bool((entry['heading'] and not item_heading) or entry['caption'])
             # Long extraction lines still need a bounded chunk. Keep exact
             # substrings so the original characters can be recovered.
             while len(line) > MAX_CHARS:
-                if current:
-                    groups.append((current, current_path))
-                    current = []
+                close()
                 groups.append(([line[:MAX_CHARS]], path))
                 line = line[MAX_CHARS:]
             if line:
                 current.append(line)
-        if current:
-            groups.append((current, current_path))
+                paths.append(path)
+        close()
         for number, (group, path) in enumerate(groups, 1):
             text = '\n'.join(group)
             chunks.append({
@@ -299,6 +342,7 @@ def build_all_chunks(root: str | Path, manifest: dict[str, dict], books: dict
         corrections = (json.loads(correction_file.read_text(encoding='utf-8'))['tables']
                        if correction_file.exists() else [])
         _attach_table_context(rows, structure, corrections, document_id)
+        apply_reviewed_tables(rows, load_review(root))
         paragraphs, _ = body_chunks(document_id, body_text, pages, spec['offset'],
                                     spec['body'], by_page, structure=structure)
         chunks += paragraphs
