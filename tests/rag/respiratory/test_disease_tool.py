@@ -567,3 +567,33 @@ def test_influenza_exclusions_do_not_hide_other_diseases(monkeypatch):
 
     assert result["status"] == "PARTIAL"
     assert result["findings"][0]["disease_ids"] == ["COVID19"]
+
+
+# 일상어와 어미가 달라도 문서에 쓰인 전파 용어로 검색해야 한다.
+def test_focus_terms_normalize_everyday_transmission():
+    books = disease_tool.merge_books(load_dictionaries())
+    assert "전파" in disease_tool.focus_terms("홍역은 어떻게 옮아요?", books)
+
+
+# 조사와 어미를 제거한 뒤 두 핵심어를 순서대로 보존해야 한다.
+def test_focus_terms_normalize_adult_transmission():
+    books = disease_tool.merge_books(load_dictionaries())
+    assert disease_tool.focus_terms("수족구병은 성인에게도 전파되나요?", books) == ["성인", "전파"]
+
+
+# 핵심어가 없는 질병 본문은 경고와 PARTIAL로 대체하되 허용 문서만 인용한다.
+def test_missing_focus_uses_disease_body_with_warning(monkeypatch):
+    hit = make_hit(text="인플루엔자는 바이러스에 의해 발생하는 호흡기 감염병입니다.")
+    excluded = make_hit(
+        chunk_id="x:p0001:b01", text="동물 인플루엔자 인체감염증에 대한 설명입니다."
+    )
+    stub_search(monkeypatch, [excluded, hit])
+    request = make_tool_input()
+    # ABOUT 관계가 잘못 연결된 제외 문구도 대체 결과로 섞이지 않아야 한다.
+    deps = make_deps([{"chunk_id": excluded["chunk_id"], "disease_id": "INFLUENZA"}])
+    result = disease_search(request, deps=deps)
+
+    validate_tool_result(result, request)
+    assert result["status"] == "PARTIAL"
+    assert [citation["chunk_id"] for citation in result["citations"]] == [hit["chunk_id"]]
+    assert "핵심어(잠복기) 든 청크 없음→질병 관련 청크로 대체" in result["warnings"]
