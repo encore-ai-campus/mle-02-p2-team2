@@ -1,0 +1,973 @@
+{
+  "scope": "Tool 단독 검색, 실행 시 DB의 전체 문서를 허용; PDF 원본 의미 판독 아님",
+  "allowed_document_ids": [
+    "gyeonggi_school_guide_2025",
+    "kdca_covid19_2026",
+    "kdca_diagnosis_reporting_2026",
+    "kdca_flu_facility_2026",
+    "kdca_hfmd_2026",
+    "kdca_measles_2026",
+    "kdca_respiratory_2026",
+    "kdca_vaccine_preventable_2026",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+  ],
+  "sha256": {
+    "data/specs/golden/respiratory.md": "5350ed63203ce19cf58e703d13a674dd673183465c270503c8f45a7a9e3907f4",
+    "data/specs/source_manifest.csv": "7ce510a0c8ead46ce585ee1d2458e05ac16dd60f1ba0798fec81c3d40dd9ee4d",
+    "src/rag/respiratory/disease_tool.py": "262010e5526ab06e229804ab15d82cac11140bb7fc3e5f419b1761ea7cedbd56",
+    "src/rag/respiratory/crossdoc_tool.py": "b389def457dc933d6f1bf32b476356afa97a52abd2d7e5976f974b3238ad2d55",
+    "src/rag/school/search.py": "0ad15a54120bf4ce8b549de0165991d84f23167fb0b5c2809d5fa58854d9a2f9",
+    "notebooks/respiratory/golden_readonly_check.py": "41c0a81bd07a75fe0c607e44d6bdd2bc288a4e3c5e11d41898d87a7b0960bb7d"
+  },
+  "cases": [
+    {
+      "id": "R-F1",
+      "question": "인플루엔자 잠복기는?",
+      "tool": "disease_search",
+      "status": "OK",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 6,
+          "ranks": [
+            1
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0006:b01",
+          "pdf_page": 6,
+          "printed_page": 2,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0049:t01r08",
+          "pdf_page": 49,
+          "printed_page": 35,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0221:t01r02",
+          "pdf_page": 221,
+          "printed_page": 207,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0224:t01r05",
+          "pdf_page": 224,
+          "printed_page": 210,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r08",
+          "pdf_page": 157,
+          "printed_page": 147,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r01",
+          "pdf_page": 160,
+          "printed_page": 150,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r09",
+          "pdf_page": 160,
+          "printed_page": 150,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 8,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0166:t01r02",
+          "pdf_page": 166,
+          "printed_page": 156,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 8,
+      "bad_paths": {}
+    },
+    {
+      "id": "R-F2",
+      "question": "성홍열 잠복기는?",
+      "tool": "disease_search",
+      "status": "OK",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 109,
+          "ranks": [
+            5
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+          "pdf_page": 160,
+          "printed_page": 150,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0048:b01",
+          "pdf_page": 48,
+          "printed_page": 28,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0067:b01",
+          "pdf_page": 67,
+          "printed_page": 47,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0078:b01",
+          "pdf_page": 78,
+          "printed_page": 58,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0109:b01",
+          "pdf_page": 109,
+          "printed_page": 89,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0050:t01r04",
+          "pdf_page": 50,
+          "printed_page": 36,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0207:b01",
+          "pdf_page": 207,
+          "printed_page": 193,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 8,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0223:t01r06",
+          "pdf_page": 223,
+          "printed_page": 209,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 8,
+      "bad_paths": {}
+    },
+    {
+      "id": "R-F3",
+      "question": "코로나19 잠복기는?",
+      "tool": "disease_search",
+      "status": "OK",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_covid19_2026",
+          "pdf_page": 39,
+          "ranks": [
+            1
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "kdca_covid19_2026",
+          "chunk_id": "kdca_covid19_2026:p0039:b01",
+          "pdf_page": 39,
+          "printed_page": null,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0183:b01",
+          "pdf_page": 183,
+          "printed_page": null,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0067:b01",
+          "pdf_page": 67,
+          "printed_page": 47,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "kdca_covid19_2026",
+          "chunk_id": "kdca_covid19_2026:p0043:b01",
+          "pdf_page": 43,
+          "printed_page": null,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0006:b01",
+          "pdf_page": 6,
+          "printed_page": 2,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0035:b01",
+          "pdf_page": 35,
+          "printed_page": 15,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0048:b01",
+          "pdf_page": 48,
+          "printed_page": 28,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 7,
+      "bad_paths": {}
+    },
+    {
+      "id": "R-F4",
+      "question": "코로나19 확진 학생의 격리 권고 기간은?",
+      "tool": "disease_search",
+      "status": "OK",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_covid19_2026",
+          "pdf_page": 28,
+          "ranks": [
+            5
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0197:t01r10",
+          "pdf_page": 197,
+          "printed_page": 187,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0239:b05",
+          "pdf_page": 239,
+          "printed_page": 229,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "kdca_covid19_2026",
+          "chunk_id": "kdca_covid19_2026:p0039:b01",
+          "pdf_page": 39,
+          "printed_page": null,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0197:t01r11",
+          "pdf_page": 197,
+          "printed_page": 187,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "kdca_covid19_2026",
+          "chunk_id": "kdca_covid19_2026:p0028:b01",
+          "pdf_page": 28,
+          "printed_page": null,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0109:b02",
+          "pdf_page": 109,
+          "printed_page": 95,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0217:b02",
+          "pdf_page": 217,
+          "printed_page": 203,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 8,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0183:b01",
+          "pdf_page": 183,
+          "printed_page": null,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 8,
+      "bad_paths": {}
+    },
+    {
+      "id": "R-Q1",
+      "question": "인플루엔자로 진단받은 학생은 언제까지 등교하면 안 되나?",
+      "tool": "disease_search",
+      "status": "OK",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 15,
+          "ranks": [
+            2
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0018:b01",
+          "pdf_page": 18,
+          "printed_page": 14,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0015:b01",
+          "pdf_page": 15,
+          "printed_page": 11,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0195:t01r10",
+          "pdf_page": 195,
+          "printed_page": 185,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0016:b01",
+          "pdf_page": 16,
+          "printed_page": 12,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0196:b02",
+          "pdf_page": 196,
+          "printed_page": 186,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0017:b01",
+          "pdf_page": 17,
+          "printed_page": 13,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0025:b01",
+          "pdf_page": 25,
+          "printed_page": 21,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 8,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0157:b01",
+          "pdf_page": 157,
+          "printed_page": 147,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 8,
+      "bad_paths": {}
+    },
+    {
+      "id": "R-Q2",
+      "question": "인플루엔자 발생 시 학교(교직원)가 참고할 시설별 예방 조치는?",
+      "tool": "disease_search",
+      "status": "OK",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 17,
+          "ranks": []
+        },
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 18,
+          "ranks": [
+            4
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0196:b02",
+          "pdf_page": 196,
+          "printed_page": 186,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0195:t01r11",
+          "pdf_page": 195,
+          "printed_page": 185,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0015:b01",
+          "pdf_page": 15,
+          "printed_page": 11,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0018:b01",
+          "pdf_page": 18,
+          "printed_page": 14,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0016:b01",
+          "pdf_page": 16,
+          "printed_page": 12,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0005:b01",
+          "pdf_page": 5,
+          "printed_page": null,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0038:t01r04",
+          "pdf_page": 38,
+          "printed_page": 24,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 8,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0003:b01",
+          "pdf_page": 3,
+          "printed_page": null,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 8,
+      "bad_paths": {}
+    },
+    {
+      "id": "R-Q3",
+      "question": "성홍열 진단 학생의 등교중지 기준은?",
+      "tool": "disease_search",
+      "status": "OK",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 118,
+          "ranks": []
+        },
+        {
+          "kind": "보조",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 116,
+          "ranks": [
+            6
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "kdca_diagnosis_reporting_2026",
+          "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+          "pdf_page": 104,
+          "printed_page": 96,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+          "pdf_page": 181,
+          "printed_page": 171,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+          "pdf_page": 180,
+          "printed_page": 170,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0114:b01",
+          "pdf_page": 114,
+          "printed_page": 94,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0113:b01",
+          "pdf_page": 113,
+          "printed_page": 93,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0116:b01",
+          "pdf_page": 116,
+          "printed_page": 96,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0294:b01",
+          "pdf_page": 294,
+          "printed_page": 274,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 8,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+          "pdf_page": 160,
+          "printed_page": 150,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 8,
+      "bad_paths": {}
+    },
+    {
+      "id": "R-Q4",
+      "question": "성홍열 집단발생 기준과 그때 학교가 할 일은?",
+      "tool": "disease_search",
+      "status": "OK",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 116,
+          "ranks": [
+            2
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+          "pdf_page": 181,
+          "printed_page": 171,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0116:b01",
+          "pdf_page": 116,
+          "printed_page": 96,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "kdca_diagnosis_reporting_2026",
+          "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+          "pdf_page": 104,
+          "printed_page": 96,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0115:b01",
+          "pdf_page": 115,
+          "printed_page": 95,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0047:b01",
+          "pdf_page": 47,
+          "printed_page": 27,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0111:b01",
+          "pdf_page": 111,
+          "printed_page": 91,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0117:b01",
+          "pdf_page": 117,
+          "printed_page": 97,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 8,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0003:b01",
+          "pdf_page": 3,
+          "printed_page": null,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 8,
+      "bad_paths": {}
+    },
+    {
+      "id": "R-T1",
+      "question": "인플루엔자가 유행하면 학교는 휴교해야 하나?",
+      "tool": "disease_search",
+      "status": "OK",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 13,
+          "ranks": []
+        },
+        {
+          "kind": "보조",
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 236,
+          "ranks": [
+            4
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "kdca_flu_facility_2026",
+          "chunk_id": "kdca_flu_facility_2026:p0016:b01",
+          "pdf_page": 16,
+          "printed_page": 12,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0195:t01r11",
+          "pdf_page": 195,
+          "printed_page": 185,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0196:b03",
+          "pdf_page": 196,
+          "printed_page": 186,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0236:b04",
+          "pdf_page": 236,
+          "printed_page": 226,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0196:b02",
+          "pdf_page": 196,
+          "printed_page": 186,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0195:t01r03",
+          "pdf_page": 195,
+          "printed_page": 185,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0195:t01r01",
+          "pdf_page": 195,
+          "printed_page": 185,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 8,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0194:b01",
+          "pdf_page": 194,
+          "printed_page": 180,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 8,
+      "bad_paths": {}
+    },
+    {
+      "id": "T01-MEN",
+      "question": "수막구균 감염증 잠복기는?",
+      "tool": "disease_search",
+      "status": "PARTIAL",
+      "expected": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 90,
+          "ranks": [
+            1
+          ]
+        }
+      ],
+      "citations": [
+        {
+          "rank": 1,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0090:b01",
+          "pdf_page": 90,
+          "printed_page": 70,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 2,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0174:b03",
+          "pdf_page": 174,
+          "printed_page": 164,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 3,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0223:t01r09",
+          "pdf_page": 223,
+          "printed_page": 209,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 4,
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0159:t01r10",
+          "pdf_page": 159,
+          "printed_page": 149,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 5,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0048:b01",
+          "pdf_page": 48,
+          "printed_page": 28,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 6,
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0067:b01",
+          "pdf_page": 67,
+          "printed_page": 47,
+          "in_school_selected_pages": true
+        },
+        {
+          "rank": 7,
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0050:t01r05",
+          "pdf_page": 50,
+          "printed_page": 36,
+          "in_school_selected_pages": true
+        }
+      ],
+      "warnings": [
+        "DB에 Disease 노드가 없어 disease_id를 반환하지 않음: MENINGOCOCCAL"
+      ],
+      "bad_citations": {},
+      "bad_findings": {},
+      "paths_count": 7,
+      "bad_paths": {}
+    }
+  ],
+  "crossdoc": {
+    "id": "T04",
+    "status": "OK",
+    "documents": [
+      "gyeonggi_school_guide_2025",
+      "kdca_flu_facility_2026",
+      "moe_school_manual_v3"
+    ],
+    "required_documents": [
+      "gyeonggi_school_guide_2025",
+      "kdca_flu_facility_2026",
+      "moe_school_manual_v3"
+    ],
+    "all_required_documents": true,
+    "citations": [
+      {
+        "rank": 1,
+        "document_id": "gyeonggi_school_guide_2025",
+        "chunk_id": "gyeonggi_school_guide_2025:p0166:t01r01",
+        "pdf_page": 166
+      },
+      {
+        "rank": 2,
+        "document_id": "gyeonggi_school_guide_2025",
+        "chunk_id": "gyeonggi_school_guide_2025:p0167:t01r01",
+        "pdf_page": 167
+      },
+      {
+        "rank": 3,
+        "document_id": "gyeonggi_school_guide_2025",
+        "chunk_id": "gyeonggi_school_guide_2025:p0167:t01r03",
+        "pdf_page": 167
+      },
+      {
+        "rank": 4,
+        "document_id": "kdca_flu_facility_2026",
+        "chunk_id": "kdca_flu_facility_2026:p0017:b01",
+        "pdf_page": 17
+      },
+      {
+        "rank": 5,
+        "document_id": "moe_school_manual_v3",
+        "chunk_id": "moe_school_manual_v3:p0036:t01r01",
+        "pdf_page": 36
+      },
+      {
+        "rank": 6,
+        "document_id": "moe_school_manual_v3",
+        "chunk_id": "moe_school_manual_v3:p0036:t01r02",
+        "pdf_page": 36
+      },
+      {
+        "rank": 7,
+        "document_id": "moe_school_manual_v3",
+        "chunk_id": "moe_school_manual_v3:p0066:t01r02",
+        "pdf_page": 66
+      },
+      {
+        "rank": 8,
+        "document_id": "moe_school_manual_v3",
+        "chunk_id": "moe_school_manual_v3:p0066:t03r02",
+        "pdf_page": 66
+      }
+    ],
+    "warnings": [
+      "gyeonggi_school_guide_2025:담당 담임교사(EXAMPLE), 보건교사(EXAMPLE)",
+      "kdca_flu_facility_2026:담당 명시 없음",
+      "moe_school_manual_v3:담당 담임교사(EXAMPLE), 보건교사(EXAMPLE)"
+    ],
+    "bad_citations": {},
+    "bad_findings": {},
+    "paths_count": 8,
+    "bad_paths": {}
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "status": "OK",
+  "documents": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+  ],
+  "counts": {
+    "findings": 8,
+    "citations": 8,
+    "graph_paths": 8
+  },
+  "citations": [
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "pdf_page": 166,
+      "chunk_id": "gyeonggi_school_guide_2025:p0166:t01r01"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "pdf_page": 167,
+      "chunk_id": "gyeonggi_school_guide_2025:p0167:t01r01"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "pdf_page": 167,
+      "chunk_id": "gyeonggi_school_guide_2025:p0167:t01r03"
+    },
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "pdf_page": 17,
+      "chunk_id": "kdca_flu_facility_2026:p0017:b01"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "pdf_page": 36,
+      "chunk_id": "moe_school_manual_v3:p0036:t01r01"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "pdf_page": 36,
+      "chunk_id": "moe_school_manual_v3:p0036:t01r02"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "pdf_page": 66,
+      "chunk_id": "moe_school_manual_v3:p0066:t01r02"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "pdf_page": 66,
+      "chunk_id": "moe_school_manual_v3:p0066:t03r02"
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "SchoolAction:gyeonggi_school_guide_2025:p0166:a08",
+          "relationship_type": "INSTANCE_OF",
+          "target_ref": "ActionConcept:CONTACT_GUARDIAN"
+        },
+        {
+          "source_ref": "SchoolAction:gyeonggi_school_guide_2025:p0166:a08",
+          "relationship_type": "SUPPORTED_BY",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0166:t01r01"
+        },
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0166:t01r01"
+        },
+        {
+          "source_ref": "SchoolAction:gyeonggi_school_guide_2025:p0166:a08",
+          "relationship_type": "DONE_BY",
+          "target_ref": "SchoolRole:HOMEROOM_TEACHER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "SchoolAction:gyeonggi_school_guide_2025:p0167:a15",
+          "relationship_type": "INSTANCE_OF",
+          "target_ref": "ActionConcept:CONTACT_GUARDIAN"
+        },
+        {
+          "source_ref": "SchoolAction:gyeonggi_school_guide_2025:p0167:a15",
+          "relationship_type": "SUPPORTED_BY",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0167:t01r01"
+        },
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0167:t01r01"
+        },
+        {
+          "source_ref": "SchoolAction:gyeonggi_school_guide_2025:p0167:a15",
+          "relationship_type": "DONE_BY",
+          "target_ref": "SchoolRole:HOMEROOM_TEACHER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "SchoolAction:gyeonggi_school_guide_2025:p0167:a34",
+          "relationship_type": "INSTANCE_OF",
+          "target_ref": "ActionConcept:CONTACT_GUARDIAN"
+        },
+        {
+          "source_ref": "SchoolAction:gyeonggi_school_guide_2025:p0167:a34",
+          "relationship_type": "SUPPORTED_BY",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0167:t01r03"
+        },
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0167:t01r03"
+        },
+        {
+          "source_ref": "SchoolAction:gyeonggi_school_guide_2025:p0167:a34",
+          "relationship_type": "DONE_BY",
+          "target_ref": "SchoolRole:HEALTH_TEACHER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "SchoolAction:kdca_flu_facility_2026:p0017:a04",
+          "relationship_type": "INSTANCE_OF",
+          "target_ref": "ActionConcept:CONTACT_GUARDIAN"
+        },
+        {
+          "source_ref": "SchoolAction:kdca_flu_facility_2026:p0017:a04",
+          "relationship_type": "SUPPORTED_BY",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0017:b01"
+        },
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0017:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0036:a09",
+          "relationship_type": "INSTANCE_OF",
+          "target_ref": "ActionConcept:CONTACT_GUARDIAN"
+        },
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0036:a09",
+          "relationship_type": "SUPPORTED_BY",
+          "target_ref": "Chunk:moe_school_manual_v3:p0036:t01r01"
+        },
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0036:t01r01"
+        },
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0036:a09",
+          "relationship_type": "DONE_BY",
+          "target_ref": "SchoolRole:HOMEROOM_TEACHER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0036:a16",
+          "relationship_type": "INSTANCE_OF",
+          "target_ref": "ActionConcept:CONTACT_GUARDIAN"
+        },
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0036:a16",
+          "relationship_type": "SUPPORTED_BY",
+          "target_ref": "Chunk:moe_school_manual_v3:p0036:t01r02"
+        },
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0036:t01r02"
+        },
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0036:a16",
+          "relationship_type": "DONE_BY",
+          "target_ref": "SchoolRole:HEALTH_TEACHER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0066:a03",
+          "relationship_type": "INSTANCE_OF",
+          "target_ref": "ActionConcept:CONTACT_GUARDIAN"
+        },
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0066:a03",
+          "relationship_type": "SUPPORTED_BY",
+          "target_ref": "Chunk:moe_school_manual_v3:p0066:t01r02"
+        },
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0066:t01r02"
+        },
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0066:a03",
+          "relationship_type": "DONE_BY",
+          "target_ref": "SchoolRole:HOMEROOM_TEACHER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0066:a19",
+          "relationship_type": "INSTANCE_OF",
+          "target_ref": "ActionConcept:CONTACT_GUARDIAN"
+        },
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0066:a19",
+          "relationship_type": "SUPPORTED_BY",
+          "target_ref": "Chunk:moe_school_manual_v3:p0066:t03r02"
+        },
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0066:t03r02"
+        },
+        {
+          "source_ref": "SchoolAction:moe_school_manual_v3:p0066:a19",
+          "relationship_type": "DONE_BY",
+          "target_ref": "SchoolRole:HOMEROOM_TEACHER"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    "gyeonggi_school_guide_2025:담당 담임교사(EXAMPLE), 보건교사(EXAMPLE)",
+    "kdca_flu_facility_2026:담당 명시 없음",
+    "moe_school_manual_v3:담당 담임교사(EXAMPLE), 보건교사(EXAMPLE)"
+  ],
+  "bad_citations": {},
+  "bad_findings": {},
+  "bad_paths": {}
+}

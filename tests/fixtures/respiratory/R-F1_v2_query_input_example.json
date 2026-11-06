@@ -1,0 +1,7 @@
+{
+  "question": "인플루엔자 잠복기는?",
+  "region": "NATIONAL",
+  "allowed_document_ids": [
+    "kdca_flu_facility_2026"
+  ]
+}

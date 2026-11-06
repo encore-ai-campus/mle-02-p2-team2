@@ -15,7 +15,7 @@
 | 영역 | 담당 | 상태 | 확인한 내용 | 다음 확인/남은 일 | 근거·공유 상태 | 갱신일 |
 |---|---|---|---|---|---|---|
 | 학교 자료·Action Tool·메인 | 주승우 | 진행 중 | **11/06 저녁: LLM 라우터 구현(수정 방향 ①)** — 범위·의도·의도별 하위 질문을 LLM 구조화 출력으로 정하고, 실패 시 규칙 분류로 되돌림. 분류: 골든 40/40, 홀드아웃 20문항 규칙 12 → LLM 19, 지연 중앙값 1.6초. 메인 끝까지: 골든 route 40/40·status 37/40·정답 인용 21/34(규칙 분류와 문항별 동일). Streamlit UI·답변 다듬기는 main 반영됨 | ② 청크 단위 검색과 LLM 재순위·충분성 판정, ③ 답변 함의 검사, Streamlit Cloud 배포, legal_search·disease_search 한계 담당자 공유 | [LLM 라우터](../notebooks/school/평가결과/LLM라우터_20261106.md), [진단](../notebooks/school/평가결과/라우터_후보선별_진단_20261106.md), [UI·답변 다듬기](../notebooks/school/평가결과/UI_답변다듬기_20261106.md). 전체 테스트 311개. 라우터 커밋 `cdc58fd`(main 반영). 법령 S-L01 PARTIAL 반영 후 골든 status 38/40, 11/07 신고 라우팅 규칙·S-Q03 수정 후 39/40 | 2026-11-07 |
-| 질병 자료·Disease Tool·CrossDoc | 송수림 | 담당자 확인 대기 | origin/main에 Disease Tool·공동 DB 점검 커밋 확인 | 담당자가 실제 실행 결과·현재 작업·연동 상태 갱신 | 원격 커밋 `2a82f52`, `81b5053` 확인. 작성자가 실DB/Tool 재검증하지 않음 | 2026-11-05 |
+| 질병 자료·Disease Tool·CrossDoc | 송수림 | 진행 중 | 질병명 오인 방지와 표 행 청크 후보 생성·추출 프롬프트 구현, 골든 근거 및 공동 DB 읽기 전용 점검. CrossDoc 보호자 연락 질문에서 세 문서와 경로 확인 | 표·행동 후보 원문 검수 및 DB 이행 검토, 벡터 포함 검색·실제 Streamlit 확인, manifest 판본·URL과 공통 사전 검토 | [호흡기 README](../notebooks/respiratory/README_respiratory.md), [업무 현황](../notebooks/respiratory/업무현황_25개_20261106.md), [ERD v0.2](../notebooks/respiratory/Neo4j_ERD_v0.2.md). 최신 작업은 로컬 변경이며 GitHub 공유 전 | 2026-11-07 |
 | 예방·법령·Legal Tool·공통 검증 | 유종혁 | 진행 중 (검증 완료 범위: 회귀 9개·독립 I·J 재실행 일치 확인) | 공동 DB 적재 완료(Document 4·Chunk 33·행동 6·관계), 전문 검색·조사 처리·run() 연결, 116쪽 적재, 골든 회귀 8/9·독립 I 1/6·독립 J 1/4(분리 보고), 인용 22/22 원문 대조(2026-11-06 재실행) | 골든 개수·유형 기준 사용자 결정(10~15개·5유형 대비 질병·문서 비교 독립 문항 부족), 11/4 공식 게이트 보류, ToolResult 단위 검사 완료(통합 검사 남음), GraphPath 한계 기록, 메인 `legal_search` 연결(주승우 확인 대기), 성홍열 2-Graph 공동 검증(T4 담당자 확인 대기), 테스트 격리 합의(회의 결정 12번) | [일정 기록](../notebooks/prevention_legal/일정관리_prevention_legal.md), [골든 명세 7-18~7-21](../data/specs/golden/prevention_legal.md), [발표용 결과표](../notebooks/prevention_legal/발표용_결과표_2026-11-07.md), [실험 노트북 17~28](../notebooks/prevention_legal/). 실DB 쓰기는 승인된 항목만 수행. 커밋·푸시는 사용자 요청 시 진행 | 2026-11-06 |
 | 공통 진행 기록·에이전트 규칙 | 3인 공동 | 검증 완료 | AGENTS.md·CLAUDE.md·진행 현황이 PR #2로 main에 반영됐고 로컬 main도 a4826db까지 동기화 | 각 담당자가 자기 행·구역을 갱신. 최신 학교 작업·manifest 변경은 별도 공유 필요 | [PR #2](https://github.com/encore-ai-campus/mle-02-p2-team2/pull/2), [공통 규칙](../AGENTS.md), [Claude 연결](../CLAUDE.md). 로컬 CSV 원본 보존·원격 신규 3행 통합·기타 미커밋 파일 해시 보존 검사 통과 | 2026-11-05 |
 
@@ -60,7 +60,10 @@
 ### 송수림 — respiratory / CrossDoc
 
 - 원격 반영 관찰: DiseaseSearchTool과 읽기 전용 공동 DB 점검이 origin/main 커밋에 있음.
-- 최신 작업·실행 명령·정량 결과·CrossDoc/메인 연결 상태: 담당자 갱신 대기.
+- 2026-11-07 검색·골든: 조류·파라인플루엔자 질문이 일반 인플루엔자로 오인되지 않도록 질병명 처리를 수정했다. 두 질병을 함께 물으면 확인한 일반 인플루엔자 근거만 제공하고 전체 비교는 `PARTIAL`로 남긴다. R-Q3은 PDF 116·118·121쪽을 직접 근거로 골든에 추가했고 115쪽은 맥락 근거로 구분했다. 실DB 읽기 전용 전문검색 후보폭 실험은 벡터를 사용하지 않았으며, 벡터 포함 검색과 실제 Streamlit 전체 경로는 별도 확인이 필요하다. [별칭 검토](../notebooks/respiratory/질병명_별칭_검토_20261107.md), [골든셋](../data/specs/golden/respiratory.md), [검색 비교](../notebooks/respiratory/전문검색_후보폭_비교_20261107.md).
+- 2026-11-07 표·추출: 표의 머리글과 행을 보존하는 행별 청크 후보 생성 및 v1 행동 추출 프롬프트를 구현하고 가상 모델로 연결을 확인했다. 성홍열 등교중지·코로나19 행동은 검수 전 후보이며 실제 AI 재추출과 DB 적재는 하지 않았다. [표 행 후보](../notebooks/respiratory/표_행_후보_20261106.md), [코로나19 범위](../notebooks/respiratory/코로나19_추출범위_20261106.md).
+- 2026-11-07 DB·연결: 로컬 호흡기 적재 묶음과 공동 DB를 읽기 전용으로 대조했고 CrossDoc 보호자 연락 질문에서 세 문서와 인용·경로 각 8개를 확인했다. 예방·법령 문서와 실제 관계를 ERD v0.2에 보완했다. DB 내보내기 백업은 로컬 전용이며 실제 복구 시험은 하지 않았다. [적재 대조](../notebooks/respiratory/정규화_적재_대조_20261107.md), [CrossDoc 결과](../notebooks/respiratory/crossdoc_current_20261107.json), [DB 백업 기록](../notebooks/respiratory/DB_백업_20261107.md).
+- 검증·공유 상태: 11/07 pull 전 `uv run pytest tests -q -rs` 결과 347개 통과·10개 건너뜀(학교·법령 로컬 자료 부재). pull 이후 전체 테스트와 실제 Streamlit·벡터 검색은 재실행하지 않았다. 현재 변경은 로컬에 있고 GitHub 업로드는 내일 진행 예정. 일반 UI의 호흡기 문서 허용 범위는 이전 코드 확인 결과이므로 최신 변경과 함께 담당자 재확인이 필요하다. [화면 범위 기록](../notebooks/respiratory/Streamlit_호흡기_범위_확인_20261107.md).
 
 ### 유종혁 — prevention_legal / 공통 검증
 
