@@ -1,0 +1,242 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "|성홍열|미만성 구진, 발열, 두통, 구토, 복통, 오한 및 인후염| 항생제 치료 시작 후 24시간까지|항생제 치료 시작 후 24시간까지| 1~3일|O|O|O|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0160:t01r03"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "또는, 최대잠복기 내에, 동일 집단시설에서 역학적 연관성이 있는 급성호흡기감염증",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0048:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "감염병 잠복기 전염기간 환자관리",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0067:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 밀접접촉자는 마지막 노출가능 시점부터 감염병의 최대 잠복기까지 발병 여부를 감시",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0078:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "1) 잠복기 - 1~7일(평균 2~5일)",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0109:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| 성홍열 | 미만성 구진, 발열, 두통, 구토, 복통, 오한 및 인후염 | 항생제 치료 시작 후 24시간까지 | 항생제 치료 시작 후 24시간까지 | 1-3일 | O | O | O |",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0050:t01r04"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "‣ 환자와 접촉한 가족은 잠복기동안 추가 발생여부 확인",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0207:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| 성홍열 | 미만성 구진, 발열, 두통, 구토, 복통, 오한 및 인후염 | 항생제 치료 시작 후 24시간까지 | 항생제 치료 시작 후 24시간까지 | 1-3일 | O | O | O |",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0223:t01r06"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+      "pdf_page": 160,
+      "printed_page": 150,
+      "excerpt": " 특성 및 관리방안 (계속)\n|감염병|임상증상|감염 가능 기간|등교중지(격리)<br>기간1)2)|잠복기3)|밀접<br>접촉자<br>파악|일시적<br>격리4)|마스크<br>착용|\n|성홍열|미만성 구진, 발열,<br>두통, 구토, 복통,<br>오한 및 인후염|<br>항생제 치료 시작 후<br>24시간까지|항생제 치료 시작 후<br>24시간까지|<br>1~3일|"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0048:b01",
+      "pdf_page": 48,
+      "printed_page": 28,
+      "excerpt": "감염증이\n\n발생하고,\n\n∙\n「감염병의 예방 및 관리에 관한 법률」 제18조의2(역학조사의 요청)에 의하여 의료인 또는\n\n의료기관의 장이 역학조사를 요청하였을 경우\n\n∙\n또는, 최대잠복기 내에, 동일 집단시설에서 역학적 연관성이 있는 급성호흡기감염증\n\n(법정감염병)으로 인한 사망, 중증, 합병증 사례가 2건 이상 발생하여 환자, 보호자 또는\n\n기관장 등이 신"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0067:b01",
+      "pdf_page": 67,
+      "printed_page": 47,
+      "excerpt": " 총 론\n\n###### **6**\n\n**환자 및 접촉자 관리**\n\n**가** **감염병별 관리 개요**\n\n**<표 19> 호흡기감염병 종류별 환자관리 개요**\n\n**감염병** **잠복기** **전염기간** **환자관리**\n\n2~10일\n수막구균 감염증\n(평균 3~4일)\n\n증상발생 7일 전부터 항생제 치료 시작 후\n24시간 경과할 때까지\n\n적절한 항생제\n\n치료"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0078:b01",
+      "pdf_page": 78,
+      "printed_page": 58,
+      "excerpt": " 포함할 수 있음\n\n2) 접촉자 관리\n\n- 일상적인 접촉자 관리는 하지 않으나 유행 시에는 접촉자 중 추가 발생여부 감시\n\n- 밀접접촉자는 마지막 노출가능 시점부터 감염병의 최대 잠복기까지 발병 여부를 감시\n\n- 호흡기감염병 증상이 있는 집단시설 [*] 종사자 등은 검사 결과가 나올 때까지 보육, 환자간호\n\n등 제한\n\n- 어린이집, 유치원, 학교, 요양시설"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0109:b01",
+      "pdf_page": 109,
+      "printed_page": 89,
+      "excerpt": "- 환자와 보균자의 호흡기분비물과 손이나 물건을 통한 간접 접촉\n\n- 긴밀한 접촉이 흔한 학교, 어린이 보호시설, 군대훈련소 등에서 유행 발생\n\n**다** **임상양상**\n\n1) 잠복기\n\n- 1~7일(평균 2~5일)\n\n2) 임상증상\n\n(1) 대부분 발열(38℃ 이상)과 인후통으로 시작, 오한, 두통 또는 몸살, 식욕부진, 복통, 오심·구토 등\n\n(2) 발진"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0050:t01r04",
+      "pdf_page": 50,
+      "printed_page": 36,
+      "excerpt": "감염병의 종류 및 특성\n| 감염병 | 임상 증상 | 감염 가능 기간 | 등교 중지(격리) 기간¹⁾²⁾ | 잠복기³⁾ | 밀접접촉자 파악 | 일시적 격리⁴⁾ | 마스크 착용 |\n| 성홍열 | 미만성 구진, 발열, 두통, 구토, 복통, 오한 및 인후염 | 항생제 치료 시작 후 24시간까지 | 항생제 치료 시작 후 24시간까지 | 1-3일 | O | O | O "
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0207:b01",
+      "pdf_page": 207,
+      "printed_page": 193,
+      "excerpt": "로 입원한 경우는 항생제 치료 시작 후 24시간까지 비말 격리\n∙ 접촉자 관리\n감시 필요\n‣ 마지막 노출일로부터 7일까지 접촉자 중 추가 발생 여부 감시\n‣ 환자와 접촉한 가족은 잠복기동안 추가 발생여부 확인\n‣ 집단 시설에서 침습성 A군 연쇄구균 감염증*, 급성 류마티스열, 연쇄구균감염 후사구체신염 유행\n의심 시 보균자에 대한 항생제 치료 고려\n‣ 괴사성"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0223:t01r06",
+      "pdf_page": 223,
+      "printed_page": 209,
+      "excerpt": "| 감염병 | 임상 증상 | 전염 가능 기간 | 전파 차단을 위한 등교 중지(격리) 기간 1)2) | 잠복기 3) | 밀접접촉자 파악 | 일시적 격리 4) | 마스크 착용 |\n| 성홍열 | 미만성 구진, 발열,<br>두통, 구토, 복통, 오한<br>및 인후염 | 항생제 치료 시작 후<br>24시간까지 | 항생제 치료 시작 후<br>24시간까지 | 1-3일 "
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0160:t01r03"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0160:t01r03",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:SCARLET_FEVER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0048:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0067:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0078:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0109:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0050:t01r04"
+        },
+        {
+          "source_ref": "Chunk:moe_school_manual_v3:p0050:t01r04",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:SCARLET_FEVER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0207:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0223:t01r06"
+        },
+        {
+          "source_ref": "Chunk:moe_school_manual_v3:p0223:t01r06",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:SCARLET_FEVER"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

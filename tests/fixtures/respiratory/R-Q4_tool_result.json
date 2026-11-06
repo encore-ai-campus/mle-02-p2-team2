@@ -1,0 +1,232 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "발생 시 집단발생을 확인하고 예방 및 관리 실시",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0181:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "바 집단발생 관리 학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0116:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "36. [제2급-18] 성홍열(Scarlet fever) | 항목 | 원문 내용 | 신고를 위한 진단기준: ○ 환자 : 성홍열에 부합되는 임상증상을 나타내면서 확인 진단을 위한 검사기준에 따라 감염병병원체 감염이 확인된 사람 ○ 의사환자 - 의심환자 : 임상증상 및 역학적 연관성을 감안하여 성홍열이 의심되나 진단을 위한 검사기준에부합하는 검사결과가 없는 사",
+      "chunk_ids": [
+        "kdca_diagnosis_reporting_2026:p0104:t01r02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 집단발생이나 유행으로 판단되는 경우 현장 출동 전 파악된 내용을 방역통합정보시스템의",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0115:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "가 역학조사 실시기준",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0047:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 감염병의 진단 고시 기준(2017-4호,2017.07.18.)개정 :",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0111:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 집단발생이 3주 이상 지속되는 경우는 추가 조치 검토",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0117:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 본 지침의 급성호흡기감염증 집단발생 역학조사 적용 대상은 지역사회",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0003:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+      "pdf_page": 181,
+      "printed_page": 171,
+      "excerpt": "나. 최초 발견 시 조치사항\n1) 학교 내 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는 성홍열 환자나 의사환자가 2명 이상\n발생 시 집단발생을 확인하고 예방 및 관리 실시\n¢ 집단발생 확인\n- 진단 여부 확인\n- 발생 현황 확인: 발생 건수, 연령, 발생장소(학급, 반 등), 노출자 수 등\n- 중증 사례 확인: 합병증, 입원, 수두 중복"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0116:b01",
+      "pdf_page": 116,
+      "printed_page": 96,
+      "excerpt": "과 동시 보고\n\n- 유행 역학조사: 역학조사 결과보고서를 작성하여 유행종료 후 14일 이내 제출\n\n- 결과보고서는 방역통합정보시스템 결과보고서 업로드를 통해 제출\n\n**바** **집단발생 관리**\n\n학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함\n\n1) 대상\n\n- 학교, 유치원 및 어린이집의 동일 학급이나 동일 반 등에"
+    },
+    {
+      "document_id": "kdca_diagnosis_reporting_2026",
+      "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+      "pdf_page": 104,
+      "printed_page": 96,
+      "excerpt": "36. [제2급-18] 성홍열(Scarlet fever) | 항목 | 원문 내용 | 신고를 위한 진단기준: ○ 환자 : 성홍열에 부합되는 임상증상을 나타내면서 확인 진단을 위한 검사기준에 따라 감염병병원체 감염이 확인된 사람 ○ 의사환자 - 의심환자 : 임상증상 및 역학적 연관성을 감안하여 성홍열이 의심되나 진단을 위한 검사기준에부합하는 검사결과가 없는 사"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0115:b01",
+      "pdf_page": 115,
+      "printed_page": 95,
+      "excerpt": "\n∙ 유행 역학조사: 역학조사 업무 흐름도에 따른 역학조사 실시\n\n1) 유행 여부 확인\n\n- 발생 사례 건수, 신고서 내 기본 정보 확인 및 시간적 공간적 연관성 여부 확인\n\n- 집단발생이나 유행으로 판단되는 경우 현장 출동 전 파악된 내용을 방역통합정보시스템의\n\n｢ ｢\n집단발생관리 ｣ 의 사례기반 집단발생 관리 ｣ 에 입력 및 보고\n\n- “<부록 ‘사’>"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0047:b01",
+      "pdf_page": 47,
+      "printed_page": 27,
+      "excerpt": "단원 Ⅰ 총 론\n\n###### **5 역학조사**\n\n**가** **역학조사 실시기준**\n\n1) 개별사례 역학조사 실시기준\n\n- 제2급감염병 수막구균 감염증\n\n- 수막구균 감염증 환자 및 의사환자\n\n- 제2급감염병 성홍열\n\n- 성홍열 환자 및 의사환자 중 사망, 중증 [1)], 합병증 [2)] 이 발생한 경우\n\n1) 중환자실 입원 등, 2) 급성 류마티스열,"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0111:b01",
+      "pdf_page": 111,
+      "printed_page": 91,
+      "excerpt": ".23.) :\n\n합당한 임상적 특징을 나타내면서 항원검출법을 통해 감염이 확인된 자→\n\n임상적 특징 및 역학적 연관성을 감안하여 의심되나 검사방법에 대해 해당 병원체 감염이\n\n확인되지 아니한 자\n\n- 감염병의 진단 고시 기준(2017-4호,2017.07.18.)개정 :\n\n의사환자를 의심환자와 추정환자로 구분하여 정의\n\nwww.kdca.go.kr [｜] 91"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0117:b01",
+      "pdf_page": 117,
+      "printed_page": 97,
+      "excerpt": "－\n단원 Ⅱ 각 론 성홍열\n\n5) 기간\n\n- 마지막 환자 발생 후 7일까지 추가환자 발생이 없을 때까지\n\n- 집단발생이 3주 이상 지속되는 경우는 추가 조치 검토\n\n6) 보고\n\n･ ･\n\n- 시 군 구 보건소는 집단발생 인지 후 지체 없이 방역통합정보시스템을 통해 보고\n\n- 방역통합정보관리시스템→집단발생관리→집단발생관리(보건소)→집단발생등록→\n\n집단발생보고관"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0003:b01",
+      "pdf_page": 3,
+      "printed_page": null,
+      "excerpt": "종 대상 감염병 관리지침｣\n\n- 본 지침의 총론에서는 호흡기감염병 감시, 역학조사, 관리체계를 기술하였고,\n\n각론은 각 감염병 특성별 기본 정보 및 대응지침을 기술하였습니다.\n\n- 본 지침의 급성호흡기감염증 집단발생 역학조사 적용 대상은 지역사회\n\n동일 집단시설 내에서 급성호흡기감염증 유행시입니다.\n\n｢\n- 의료기관 관리는 의료관련감염 표준예방지침｣을 따름"
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0181:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0116:b01"
+        },
+        {
+          "source_ref": "Chunk:kdca_respiratory_2026:p0116:b01",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:SCARLET_FEVER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_diagnosis_reporting_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_diagnosis_reporting_2026:p0104:t01r02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0115:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0047:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0111:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0117:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0003:b01"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

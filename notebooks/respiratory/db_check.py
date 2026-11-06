@@ -118,6 +118,24 @@ RETURN name, type, state
 ORDER BY name
 """
 
+DUPLICATE_CHUNK_TEXT_QUERY = """
+MATCH (c:Chunk)
+WHERE c.text IS NOT NULL
+WITH c.text AS text, collect(c.chunk_id) AS ids
+WHERE size(ids) > 1
+RETURN ids
+ORDER BY ids[0]
+"""
+DUPLICATE_ACTION_SUPPORT_QUERY = """
+MATCH (a:SchoolAction)-[:SUPPORTED_BY]->(c:Chunk)
+WHERE a.action_text IS NOT NULL
+WITH a.action_text AS action_text, c.chunk_id AS chunk_id,
+     collect(DISTINCT a.action_id) AS ids
+WHERE size(ids) > 1
+RETURN ids
+ORDER BY chunk_id, ids[0]
+"""
+
 
 def read_rows(driver: Any, database: str | None, query: str) -> list[dict[str, Any]]:
     """Neo4j 읽기 세션으로 고정된 조회문만 실행한다."""
@@ -154,6 +172,46 @@ def load_manifest_ids() -> set[str]:
             for row in csv.DictReader(manifest_file)
             if row.get("document_id", "").strip()
         }
+
+
+def duplicate_group_summary(rows: list[dict[str, Any]], prefix: str = "") -> dict[str, Any]:
+    ids = sorted({
+        f"{prefix}{node_id}"
+        for row in rows
+        for node_id in row.get("ids", [])
+        if isinstance(node_id, str) and node_id
+    })
+    return {"count": len(rows), "ids": ids[:10]}
+
+
+def collect_duplicate_checks(driver: Any, database: str | None) -> dict[str, Any]:
+    chunk_rows = read_rows(driver, database, DUPLICATE_CHUNK_TEXT_QUERY)
+    action_rows = read_rows(driver, database, DUPLICATE_ACTION_SUPPORT_QUERY)
+    dictionary_rows = []
+    for label, id_field in (
+        ("Disease", "disease_id"),
+        ("SchoolRole", "role_id"),
+        ("ActionConcept", "concept_id"),
+    ):
+        query = f"""
+MATCH (n:{label})
+WHERE n.name IS NOT NULL
+WITH n.name AS name, collect(n.{id_field}) AS ids
+WHERE size(ids) > 1
+RETURN ids
+ORDER BY name
+"""
+        rows = read_rows(driver, database, query)
+        for row in rows:
+            dictionary_rows.append({
+                "ids": [f"{label}:{node_id}" for node_id in row.get("ids", [])
+                        if isinstance(node_id, str) and node_id],
+            })
+    return {
+        "chunk_same_text": duplicate_group_summary(chunk_rows),
+        "action_text_same_supported_chunk": duplicate_group_summary(action_rows),
+        "dictionary_name": duplicate_group_summary(dictionary_rows),
+    }
 
 
 def collect_report(driver: Any, database: str | None) -> dict[str, Any]:
@@ -336,6 +394,8 @@ def collect_report(driver: Any, database: str | None) -> dict[str, Any]:
         rows = read_rows(driver, database, query)
         dictionary_property_keys[label] = sorted(rows[0]["property_keys"]) if rows else []
 
+    duplicate_checks = collect_duplicate_checks(driver, database)
+
     return {
         "database": database,
         "label_node_counts": read_rows(driver, database, LABEL_COUNTS_QUERY),
@@ -355,6 +415,7 @@ def collect_report(driver: Any, database: str | None) -> dict[str, Any]:
         "constraints": constraints,
         "indexes": indexes,
         "dictionary_property_keys": dictionary_property_keys,
+        "duplicates": duplicate_checks,
     }
 
 
@@ -464,6 +525,15 @@ def print_report(report: dict[str, Any]) -> None:
         ["라벨", "속성 키"],
         [[label, keys] for label, keys in report["dictionary_property_keys"].items()],
     )
+    duplicate_rows = [
+        ["Chunk text", report["duplicates"]["chunk_same_text"]["count"],
+         report["duplicates"]["chunk_same_text"]["ids"]],
+        ["action_text + SUPPORTED_BY", report["duplicates"]["action_text_same_supported_chunk"]["count"],
+         report["duplicates"]["action_text_same_supported_chunk"]["ids"]],
+        ["사전 name", report["duplicates"]["dictionary_name"]["count"],
+         report["duplicates"]["dictionary_name"]["ids"]],
+    ]
+    print_table("⑪ 중복 그룹 (ID는 최대 10개)", ["항목", "건수", "ID"], duplicate_rows)
 
 
 def main() -> None:
@@ -482,6 +552,14 @@ def main() -> None:
         encoding="utf-8",
     )
     print(f"\nJSON 저장: {RESULT_PATH.relative_to(PROJECT_ROOT)}")
+    duplicates = report["duplicates"]
+    print(
+        "중복 요약(그룹 수): "
+        f"Chunk text={duplicates['chunk_same_text']['count']}, "
+        "action_text+SUPPORTED_BY="
+        f"{duplicates['action_text_same_supported_chunk']['count']}, "
+        f"사전 name={duplicates['dictionary_name']['count']}"
+    )
 
 
 if __name__ == "__main__":

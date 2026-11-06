@@ -1,0 +1,247 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "2) 인플루엔자 유행 시 조치사항",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0016:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "인플루엔자 개요 |항목|내용|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0195:t01r11"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "※ 인플루엔자는 표본감시감염병에 해당하므로 역학조사 실시 기준은 없으나, 유행확인을 위해 일부학교 대상으로",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0196:b03"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 인플루엔자, 수두, 유행성이하선염, 수족구병, 유행성각결막염 등의 학생 빈발 감염병에 대해서는 전파 차단을",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0236:b04"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "¢ 유행시기여도 예방접종을 하지 않은 학생에 대해서 예방접종 적극 권장",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0196:b02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "인플루엔자 개요 |항목|내용|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0195:t01r03"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "인플루엔자 개요 |항목|내용|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0195:t01r01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "∙ 가능한 인플루엔자 유행기간에는 교실의 혼잡과 접촉을 줄이도록 함.",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0194:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0016:b01",
+      "pdf_page": 16,
+      "printed_page": 12,
+      "excerpt": "**2) 인플루엔자 유행 시 조치사항**\n\n가) 지침의 권고사항에 따라 환자 및 환경관리 실시\n\n나) 가정통신문 안내문 발송 등 사전예방 활동\n\n#### **다. 적용 기관**\n\n**1) 「영유아보육법」제2조 제3호에 따른 어린이집**\n\n**2) 「유아교육법」제2조 제2호에 따른 유치원**\n\n･\n**3) 「초** **중등 교육법」제2조에 따른 각 학교**\n"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0195:t01r11",
+      "pdf_page": 195,
+      "printed_page": 185,
+      "excerpt": "인플루엔자 개요\n|항목|내용|\n|예 방|∙유행 전 예방접종 시행<br>- 생후 6개월 이상 만 9세 미만 어린이: 인플루엔자 예방접종을 처음 받는 경우(또는 접종력을 모르는 경우)<br>최소 4주 간격으로 2회 접종<br>- 만 9세 이상 어린이 및 성인: 과거 접촉력과 상관없이 1회 접종<br>- 다만, 과거 인플루엔자 백신 접종 후 중증 알레르기반응(아"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0196:b03",
+      "pdf_page": 196,
+      "printed_page": 186,
+      "excerpt": "라. 역학조사 시 협조사항\n※ 인플루엔자는 표본감시감염병에 해당하므로 역학조사 실시 기준은 없으나, 유행확인을 위해 일부학교 대상으로\n역학조사를 실시할 수 있음"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0236:b04",
+      "pdf_page": 236,
+      "printed_page": 226,
+      "excerpt": "라. 휴업 실시의 일반적 기준(권고)\n¢ 전파 차단을 위한 휴업\n- 인플루엔자, 수두, 유행성이하선염, 수족구병, 유행성각결막염 등의 학생 빈발 감염병에 대해서는 전파 차단을\n위한 휴업은 권장하지 않음(단, 방역당국의 역학조사 결과 휴업을 권고하는 경우에는 실시)\n- 신종감염병과 같이 치명률이 높은 감염병으로 방역당국의 권고가 있는 경우에는 학교 내에 단 "
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0196:b02",
+      "pdf_page": 196,
+      "printed_page": 186,
+      "excerpt": "위한 항바이러스제 투여는 통상적으로 권유되지 않으나, 예방접종을 받지\n않은 고위험군 또는 고위험군과 접촉을 하는 사람들에게는 항바이러스제로 예방, 마스크 착용 및 개인위생수칙\n¢ 유행시기여도 예방접종을 하지 않은 학생에 대해서 예방접종 적극 권장\n- 인플루엔자 국가무료접종대상을 확인하여 유행 시기 전(10~11월) 예방접종하도록 안내\n- 학교별 예방접종률을"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0195:t01r03",
+      "pdf_page": 195,
+      "printed_page": 185,
+      "excerpt": "인플루엔자 개요\n|항목|내용|\n|병 원 체|∙인플루엔자 바이러스는 A형, B형, C형, D형의 4가지로 분류<br> - A형과 B형이 사람에게 호흡기 감염을 유발<br>∙항원변이를 통하여 계속적인 인플루엔자의 유행이 초래됨|"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0195:t01r01",
+      "pdf_page": 195,
+      "printed_page": 185,
+      "excerpt": "인플루엔자 개요\n|항목|내용|\n|정 의|∙인플루엔자 바이러스(Influenza virus)감염에 의한 호흡기 증상을 일으키는 질환<br> - Influenza A(H1N1, H3N2), B(Yanagata, Vicatoria)가 주로 유행|"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0194:b01",
+      "pdf_page": 194,
+      "printed_page": 180,
+      "excerpt": "부를 확인하고, 증상이 생기면 의사\n진료를 받도록 하여 학교 내 추가 전파가 되지 않도록 함.\n∙ 생후 6개월 이상의 대상자에게 예방접종 권고지침 및 일반 예방수칙을 준수함.\n∙ 가능한 인플루엔자 유행기간에는 교실의 혼잡과 접촉을 줄이도록 함.\n∙ 합병증(라이증후군: 간과 뇌의 장애 유발) 발생 위험성이 있으므로 인플루엔자 환자에게는 아스피린\n사용을 금함."
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0016:b01"
+        },
+        {
+          "source_ref": "Chunk:kdca_flu_facility_2026:p0016:b01",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0195:t01r11"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0195:t01r11",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0196:b03"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0236:b04"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0196:b02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0195:t01r03"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0195:t01r03",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0195:t01r01"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0195:t01r01",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0194:b01"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

@@ -61,11 +61,14 @@ class FakeRecord(dict):
 
 
 class FakeDriver:
-    def __init__(self, about_rows=None):
+    def __init__(self, about_rows=None, direct_rows=None):
         self.about_rows = about_rows or []
+        self.direct_rows = direct_rows or []
         self.last_params = None
 
     def execute_query(self, query, *, database_, **params):
+        if query == disease_tool.DIRECT_QUERY:
+            return [FakeRecord(row) for row in self.direct_rows], None, None
         self.last_params = params
         rows = [
             row
@@ -247,6 +250,47 @@ def test_focus_terms_remove_disease_name_and_particle():
     assert disease_tool.focus_terms("인플루엔자의 잠복기는?", books) == ["잠복기"]
 
 
+def test_focus_terms_remove_question_style_and_normalize_attendance():
+    books = disease_tool.merge_books(load_dictionaries())
+
+    assert disease_tool.focus_terms(
+        "인플루엔자로 진단받은 학생은 언제까지 등교하면 안 되나?", books
+    ) == ["등교"]
+    assert disease_tool.focus_terms(
+        "인플루엔자가 유행하면 학교는 휴교해야 하나?", books
+    ) == ["유행", "휴교"]
+    assert disease_tool.focus_terms("성홍열 등교중지 기준은?", books) == ["등교", "기준"]
+
+
+def test_direct_candidates_merge_with_rrf_and_exclude_false_matches(monkeypatch):
+    hybrid = make_hit(text="인플루엔자 잠복기 1∼4일")
+    direct = make_hit(chunk_id="kdca_flu_facility_2026:p0007:b01", text="인플루엔자 잠복기 2일")
+    header_only = make_hit(
+        chunk_id="kdca_flu_facility_2026:p0008:b01",
+        text="2026년도 호흡기감염병 관리지침 인플루엔자\n다른 질환의 잠복기 2일",
+    )
+    animal = make_hit(
+        chunk_id="kdca_flu_facility_2026:p0009:b01",
+        text="조류인플루엔자 잠복기 2일",
+    )
+    outside = make_hit(
+        chunk_id="outside:p0001:b01", document_id="outside", text="인플루엔자 잠복기 2일"
+    )
+    stub_search(monkeypatch, [hybrid])
+    deps = make_deps()
+    deps["driver"] = FakeDriver(direct_rows=[hybrid, hybrid, direct, header_only, animal, outside])
+
+    result = disease_search(make_tool_input(), deps=deps)
+
+    assert result["status"] == "OK"
+    assert [c["chunk_id"] for c in result["citations"]] == [hybrid["chunk_id"], direct["chunk_id"]]
+    merged = disease_tool._merge_direct_candidates(
+        [{**hybrid, "score": 1 / 61}], [hybrid, direct], []
+    )
+    assert merged[0]["score"] == 2 / 61
+    assert merged[1]["score"] == 1 / 61
+
+
 def test_korean_disease_name_boundary_rejects_parainfluenza(monkeypatch):
     hits = [
         make_hit(
@@ -315,18 +359,38 @@ def test_meningococcal_question_returns_ok(monkeypatch):
     assert result["findings"][0]["disease_ids"] == ["MENINGOCOCCAL"]
 
 
-def test_extend_books_does_not_mutate_original_books():
+def test_scarlet_fever_section_heading_matches_without_about(monkeypatch):
+    hit = make_hit(
+        chunk_id="kdca_respiratory_2026:p0109:b01",
+        document_id="kdca_respiratory_2026",
+        text="－\n단원 Ⅱ 각 론 성홍열\n\n**나** **역학적 특성**\n\n2) 잠복기\n\n○ 1~7일(평균 2~5일)",
+    )
+    hit["pdf_page"] = 109
+    hit["printed_page"] = 89
+    stub_search(monkeypatch, [hit])
+    request = make_tool_input("성홍열 잠복기는?", allowed=["kdca_respiratory_2026"])
+
+    result = disease_search(request, deps=make_deps())
+
+    assert result["status"] == "OK"
+    assert result["citations"][0]["chunk_id"] == hit["chunk_id"]
+    assert result["findings"][0]["disease_ids"] == ["SCARLET_FEVER"]
+    assert "잠복기" in result["findings"][0]["claim"]
+    assert len(result["graph_paths"][0]["edges"]) == 1
+
+
+def test_merge_books_does_not_mutate_original_books():
     books = load_dictionaries()
     original_count = len(books["disease"]["entries"])
 
-    extended = disease_tool.extend_books(books)
+    extended = disease_tool.merge_books(books)
 
     assert len(books["disease"]["entries"]) == original_count
     assert len(extended["disease"]["entries"]) == original_count + 1
     assert extended["disease"]["entries"] is not books["disease"]["entries"]
 
 
-def test_extend_books_does_not_add_existing_disease_id():
+def test_merge_books_does_not_add_existing_disease_id():
     books = load_dictionaries()
     books["disease"]["entries"].append(
         {
@@ -337,7 +401,7 @@ def test_extend_books_does_not_add_existing_disease_id():
     )
     original_count = len(books["disease"]["entries"])
 
-    extended = disease_tool.extend_books(books)
+    extended = disease_tool.merge_books(books)
 
     assert len(books["disease"]["entries"]) == original_count
     assert len(extended["disease"]["entries"]) == original_count
@@ -348,7 +412,7 @@ def test_extend_books_does_not_add_existing_disease_id():
 
 
 def test_meningococcal_question_focus_terms_exclude_name_fragments():
-    books = disease_tool.extend_books(load_dictionaries())
+    books = disease_tool.merge_books(load_dictionaries())
 
     assert disease_tool.focus_terms("수막구균 감염증의 잠복기는?", books) == ["잠복기"]
 

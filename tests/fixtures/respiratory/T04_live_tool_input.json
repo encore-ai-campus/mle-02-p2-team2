@@ -1,0 +1,19 @@
+{
+  "question": "보호자 연락은 문서마다 누가 하나요?",
+  "task": "문서별 학교 행동과 담당 비교",
+  "region": "NATIONAL",
+  "allowed_document_ids": [
+    "gyeonggi_school_guide_2025",
+    "kdca_covid19_2026",
+    "kdca_diagnosis_reporting_2026",
+    "kdca_flu_facility_2026",
+    "kdca_hfmd_2026",
+    "kdca_measles_2026",
+    "kdca_respiratory_2026",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+  ],
+  "context_entity_ids": [
+    "ActionConcept:CONTACT_GUARDIAN"
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "dictionary": "Disease",
+  "id_field": "disease_id",
+  "version": "respiratory-draft-2026-11-05",
+  "status": "DRAFT_LOCAL_UNAPPROVED",
+  "source": "school 질병 사전 및 호흡기 추가 질병 항목",
+  "notes": [
+    "호흡기 담당 임시 사전이며 공통 사전 승인 전에는 로컬에서 사용한다."
+  ],
+  "entries": [
+    {
+      "disease_id": "SCARLET_FEVER",
+      "name": "성홍열",
+      "aliases": [
+        "Scarlet fever"
+      ],
+      "evidence": [
+        {
+          "document_id": "moe_school_manual_v3",
+          "text": "성홍열",
+          "pdf_pages": [
+            48,
+            50,
+            55
+          ]
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "text": "성홍열",
+          "pdf_pages": [
+            160,
+            180
+          ]
+        }
+      ]
+    },
+    {
+      "disease_id": "INFLUENZA",
+      "name": "인플루엔자",
+      "aliases": [
+        "독감",
+        "Flu"
+      ],
+      "evidence": [
+        {
+          "document_id": "moe_school_manual_v3",
+          "text": "독감",
+          "pdf_pages": [
+            37,
+            38,
+            39
+          ]
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "text": "인플루엔자",
+          "pdf_pages": [
+            195
+          ]
+        }
+      ]
+    },
+    {
+      "disease_id": "COVID19",
+      "name": "코로나바이러스감염증-19",
+      "aliases": [
+        "코로나19",
+        "코로나",
+        "COVID-19"
+      ],
+      "evidence": [
+        {
+          "document_id": "moe_school_manual_v3",
+          "text": "코로나19",
+          "pdf_pages": [
+            16,
+            18
+          ]
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "text": "코로나바이러스감염증-19",
+          "pdf_pages": [
+            197
+          ]
+        }
+      ]
+    },
+    {
+      "disease_id": "MENINGOCOCCAL",
+      "name": "수막구균 감염증",
+      "aliases": [
+        "수막구균",
+        "침습성 수막구균 감염증",
+        "Meningococcal disease"
+      ]
+    }
+  ]
+}

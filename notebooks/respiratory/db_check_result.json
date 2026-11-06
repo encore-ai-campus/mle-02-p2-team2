@@ -7,7 +7,7 @@
     },
     {
       "label": "Chunk",
-      "count": 1567
+      "count": 1569
     },
     {
       "label": "Disease",
@@ -19,7 +19,7 @@
     },
     {
       "label": "SchoolAction",
-      "count": 488
+      "count": 490
     },
     {
       "label": "SchoolRole",
@@ -60,8 +60,8 @@
     {
       "document_id": "kdca_measles_2026",
       "title": "2026년도 홍역 대응 지침",
-      "chunk_count": 10,
-      "school_action_count": 4
+      "chunk_count": 12,
+      "school_action_count": 6
     },
     {
       "document_id": "kdca_respiratory_2026",
@@ -95,23 +95,23 @@
     },
     {
       "type": "DONE_BY",
-      "count": 344
+      "count": 346
     },
     {
       "type": "FOR_DISEASE",
-      "count": 115
+      "count": 117
     },
     {
       "type": "HAS_CHUNK",
-      "count": 1567
+      "count": 1569
     },
     {
       "type": "INSTANCE_OF",
-      "count": 305
+      "count": 307
     },
     {
       "type": "SUPPORTED_BY",
-      "count": 488
+      "count": 490
     }
   ],
   "relationship_patterns": [
@@ -134,7 +134,7 @@
       "end_labels": [
         "SchoolRole"
       ],
-      "count": 344,
+      "count": 346,
       "allowed": true
     },
     {
@@ -145,7 +145,7 @@
       "end_labels": [
         "Disease"
       ],
-      "count": 115,
+      "count": 117,
       "allowed": true
     },
     {
@@ -156,7 +156,7 @@
       "end_labels": [
         "Chunk"
       ],
-      "count": 1567,
+      "count": 1569,
       "allowed": true
     },
     {
@@ -167,7 +167,7 @@
       "end_labels": [
         "ActionConcept"
       ],
-      "count": 305,
+      "count": 307,
       "allowed": true
     },
     {
@@ -178,7 +178,7 @@
       "end_labels": [
         "Chunk"
       ],
-      "count": 488,
+      "count": 490,
       "allowed": true
     }
   ],
@@ -348,7 +348,7 @@
         },
         "kdca_measles_2026": {
           "ABOUT": 0,
-          "FOR_DISEASE": 4
+          "FOR_DISEASE": 6
         },
         "moe_school_manual_v3": {
           "ABOUT": 2,
@@ -522,7 +522,8 @@
       "concept_id": "END_EXCLUSION",
       "concept_name": "등교중지 해제·복귀 확인",
       "instance_of_by_document_id": {
-        "gyeonggi_school_guide_2025": 2
+        "gyeonggi_school_guide_2025": 2,
+        "kdca_measles_2026": 1
       }
     },
     {
@@ -539,6 +540,7 @@
       "instance_of_by_document_id": {
         "gyeonggi_school_guide_2025": 6,
         "kdca_flu_facility_2026": 1,
+        "kdca_measles_2026": 1,
         "moe_school_manual_v3": 2
       }
     },
@@ -744,6 +746,15 @@
       "document_count": 2
     },
     {
+      "concept_id": "END_EXCLUSION",
+      "concept_name": "등교중지 해제·복귀 확인",
+      "document_ids": [
+        "gyeonggi_school_guide_2025",
+        "kdca_measles_2026"
+      ],
+      "document_count": 2
+    },
+    {
       "concept_id": "ESCORT_TO_HEALTH_ROOM",
       "concept_name": "보건실·일시적 관찰실로 이동·동행",
       "document_ids": [
@@ -758,9 +769,10 @@
       "document_ids": [
         "gyeonggi_school_guide_2025",
         "kdca_flu_facility_2026",
+        "kdca_measles_2026",
         "moe_school_manual_v3"
       ],
-      "document_count": 3
+      "document_count": 4
     },
     {
       "concept_id": "HEALTH_EDUCATION",
@@ -987,5 +999,30 @@
       "concept_id",
       "name"
     ]
+  },
+  "duplicates": {
+    "chunk_same_text": {
+      "count": 7,
+      "ids": [
+        "gyeonggi_school_guide_2025:p0268:t01r02",
+        "gyeonggi_school_guide_2025:p0269:t01r02",
+        "gyeonggi_school_guide_2025:p0269:t01r05",
+        "gyeonggi_school_guide_2025:p0269:t01r09",
+        "gyeonggi_school_guide_2025:p0270:t01r02",
+        "gyeonggi_school_guide_2025:p0270:t01r05",
+        "gyeonggi_school_guide_2025:p0270:t01r09",
+        "gyeonggi_school_guide_2025:p0309:t04r03",
+        "gyeonggi_school_guide_2025:p0309:t04r04",
+        "kdca_covid19_2026:p0002:b01"
+      ]
+    },
+    "action_text_same_supported_chunk": {
+      "count": 0,
+      "ids": []
+    },
+    "dictionary_name": {
+      "count": 0,
+      "ids": []
+    }
   }
 }

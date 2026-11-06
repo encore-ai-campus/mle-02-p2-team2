@@ -1,0 +1,200 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "| 잠복기 | 1 ~ 14일(평균 5 ~ 7일) |",
+      "chunk_ids": [
+        "kdca_covid19_2026:p0039:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "잠복기▫평균 3일(2~5일)",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0183:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "감염병 잠복기 전염기간 환자관리",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0067:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "3) 잠복기 - 1 ~ 14일(평균 5 ~ 7일)",
+      "chunk_ids": [
+        "kdca_covid19_2026:p0043:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "1) 잠복기: 1∼4일 (평균 2일)",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0006:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 최대 잠복기 내에, 동일 집단시설에서 역학적 연관성이 있는 급성호흡기감염증(법정감염병)",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0035:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "또는, 최대잠복기 내에, 동일 집단시설에서 역학적 연관성이 있는 급성호흡기감염증",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0048:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "kdca_covid19_2026",
+      "chunk_id": "kdca_covid19_2026:p0039:b01",
+      "pdf_page": 39,
+      "printed_page": null,
+      "excerpt": ": 기침, 재채기, 말하기 등으로 인한 호흡기 비말; 밀폐된 공간에서 공기전파(에어로졸) 가능<br>바이러스에 오염된 표면이나 물체를 만진 후 눈, 코, 입을 만지면 감염 |\n| 잠복기 | 1 ~ 14일(평균 5 ~ 7일) |\n| 진단을 위한 검사기준 | 검체(비인두도말, 구인두도말, 가래 등)에서 특이유전자 검출 |\n| 증상 | 발열(37.5℃ 이상), "
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0183:b01",
+      "pdf_page": 183,
+      "printed_page": null,
+      "excerpt": "속하는 사람 코로나바이러스(Human Coronavirus)\n\n병원소▫사람, 개, 돼지, 고양이, 소, 박쥐, 낙타\n\n전파경로▫감염된 사람의 분비물과 직접 접촉 또는 비말 전파\n\n잠복기▫평균 3일(2~5일)\n\n신고범위▫환자 : 사람 코로나바이러스 감염증에 부합되는 임상증상을 나타내면서 진단을 위한 검사기준에\n따라 감염병병원체 감염이 확인된 사람\n\n진단을\n▫"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0067:b01",
+      "pdf_page": 67,
+      "printed_page": 47,
+      "excerpt": " 총 론\n\n###### **6**\n\n**환자 및 접촉자 관리**\n\n**가** **감염병별 관리 개요**\n\n**<표 19> 호흡기감염병 종류별 환자관리 개요**\n\n**감염병** **잠복기** **전염기간** **환자관리**\n\n2~10일\n수막구균 감염증\n(평균 3~4일)\n\n증상발생 7일 전부터 항생제 치료 시작 후\n24시간 경과할 때까지\n\n적절한 항생제\n\n치료"
+    },
+    {
+      "document_id": "kdca_covid19_2026",
+      "chunk_id": "kdca_covid19_2026:p0043:b01",
+      "pdf_page": 43,
+      "printed_page": null,
+      "excerpt": " and Potential Airborne Transmission, CDC, ’20.10.05.; Transmission of SARS-CoV-2: implications for infection prevention precautions, Scientific Brief, WHO, ’20.07.09\n\n#### 3) 잠복기\n- 1 ~ 14일(평균 5 ~ 7일)"
+    },
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0006:b01",
+      "pdf_page": 6,
+      "printed_page": 2,
+      "excerpt": "의 4가지로 분류**\n\nA형과 B형이 사람에게 호흡기 감염을 유발\n\n**2) 항원변이를 통하여 계속적인 인플루엔자의 유행이 초래됨**\n\n#### **다. 임상 양상**\n\n**1) 잠복기:** 1∼4일 (평균 2일)\n\n**2) 임상 증상**\n\n전신 증상 및 호흡기 증상이 갑자기 시작됨\n\n- 발열(고열), 두통, 근육통, 피로감 등의 전신 증상\n\n- 열은 급격"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0035:b01",
+      "pdf_page": 35,
+      "printed_page": 15,
+      "excerpt": "호흡기감염증이\n\n발생하고,\n\n- 「감염병의 예방 및 관리에 관한 법률」 제18조의2(역학조사의 요청)에 의하여 의료인 또는\n\n의료기관의 장이 역학조사를 요청하였을 경우\n\n- 최대 잠복기 내에, 동일 집단시설에서 역학적 연관성이 있는 급성호흡기감염증(법정감염병)\n\n으로 인한 사망, 중증(입원 등), 합병증 사례가 2건 이상 발생하여 환자, 보호자 또는 기관장"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0048:b01",
+      "pdf_page": 48,
+      "printed_page": 28,
+      "excerpt": "감염증이\n\n발생하고,\n\n∙\n「감염병의 예방 및 관리에 관한 법률」 제18조의2(역학조사의 요청)에 의하여 의료인 또는\n\n의료기관의 장이 역학조사를 요청하였을 경우\n\n∙\n또는, 최대잠복기 내에, 동일 집단시설에서 역학적 연관성이 있는 급성호흡기감염증\n\n(법정감염병)으로 인한 사망, 중증, 합병증 사례가 2건 이상 발생하여 환자, 보호자 또는\n\n기관장 등이 신"
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_covid19_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_covid19_2026:p0039:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0183:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0067:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_covid19_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_covid19_2026:p0043:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0006:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0035:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0048:b01"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

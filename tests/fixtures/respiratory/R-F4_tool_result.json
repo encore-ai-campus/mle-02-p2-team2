@@ -1,0 +1,237 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "코로나바이러스감염증-19 개요",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0197:t01r10"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "¢ 방역당국의 지침 혹은 교육부 학생 감염병 전문가 자문단의 권고를 따르는 것을 원칙으로 하되, 상황에 따라",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0239:b05"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| 전염기간 | 증상 발생 1~3일 전부터 호흡기 검체에서 바이러스가 검출되고 증상이 나타나는 시기에 바이러스 양이 많아 감염 초기에 쉽게 전파 감염 첫주 내에 상부 호흡기 바이러스 양이 최고점에 도달 한 후 점진적으로 감소 |",
+      "chunk_ids": [
+        "kdca_covid19_2026:p0039:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "코로나바이러스감염증-19 개요",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0197:t01r11"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 코로나19 주요 증상(기침, 발열, 두통 등)이 호전된 후 24시간 경과 시까지 격리권고",
+      "chunk_ids": [
+        "kdca_covid19_2026:p0028:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": " 방역당국의 지침 혹은 교육부 학생 감염병 전문가 자문단의 권고를 따르는 것을 원칙으로 하되, 상황에 따라",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0109:b02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "으며 대유행 기간 동안 다른 변종 바이러스가 나타남",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0217:b02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "전염기간▫증상 기간 동안 전파 가능",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0183:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "COVID19"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0197:t01r10",
+      "pdf_page": 197,
+      "printed_page": 187,
+      "excerpt": "코로나바이러스감염증-19 개요\n|항목|내용|\n|환자 관리|∙모든 확진자는 재택치료를 원칙으로 함<br>※ 확진자에게 재택치료 불가 조건 및 의료기관 입원 고려 위험요인이 없을 때<br>∙코로나바이러스감염증-19 주요 증상이 호전된 후 24시간 경과 시까지 권고<br>(단, 중증환자, 면역저하자 등의 경우 의사 판단에 따라 권고 기간 달라질 수 있음)|"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0239:b05",
+      "pdf_page": 239,
+      "printed_page": 229,
+      "excerpt": "나. 단체 교육 활동 참여/개최 제한 기준 설정\n¢ 방역당국의 지침 혹은 교육부 학생 감염병 전문가 자문단의 권고를 따르는 것을 원칙으로 하되, 상황에 따라\n교육(지원)청에서 자율적으로 조정하여 결정\n참고사항\n∙ 코로나바이러스감염증-19(COVID-19) 유행 시 기준: 2020~2021년 사회적 거리두기 단계(1~3단계)에 따라 집합･모임･\n행사 인원의 "
+    },
+    {
+      "document_id": "kdca_covid19_2026",
+      "chunk_id": "kdca_covid19_2026:p0039:b01",
+      "pdf_page": 39,
+      "printed_page": null,
+      "excerpt": "이상, 기저질환자·면역저하자 고위험군 대상으로 치료제 처방<br>* 치료제별 투여대상 및 용법·용량이 다르므로, 「코로나바이러스감염증-19 치료제 사용안내」 확인 필요 |\n| 전염기간 | 증상 발생 1~3일 전부터 호흡기 검체에서 바이러스가 검출되고 증상이 나타나는 시기에 바이러스 양이 많아 감염 초기에 쉽게 전파<br>감염 첫주 내에 상부 호흡기 바이러스"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0197:t01r11",
+      "pdf_page": 197,
+      "printed_page": 187,
+      "excerpt": "코로나바이러스감염증-19 개요\n|항목|내용|\n|예 방|∙예방접종<br>- 연 1회(단, 면역저하자는 연 2회 접종)<br>- 모든 국민 대상(고위험군 적극 권고: 65세 이상, 감염 취약시설 구성원, 면역저하자･기저질환자 등)<br>  ※ 질병관리청 ’23~’24절기 코로나19 예방접종 실시기준 개정 안내(2024. 4. 15. 기준) 참고<br>코로나19"
+    },
+    {
+      "document_id": "kdca_covid19_2026",
+      "chunk_id": "kdca_covid19_2026:p0028:b01",
+      "pdf_page": 28,
+      "printed_page": null,
+      "excerpt": "의료기관 내 감염관리는 「의료관련감염 표준예방지침(2017)」 참고\n\n#### 가. 환자 관리\n- 코로나19 주요 증상(기침, 발열, 두통 등)이 호전된 후 24시간 경과 시까지 격리권고\n- 단, 중증의 증상을 보이거나 면역저하자 등의 경우는 의사의 판단에 따라 등교, 등원, 출근 제한 기간이 달라질 수 있음\n- 의사 진료 및 판단에 따라 60세 이상, 기"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0109:b02",
+      "pdf_page": 109,
+      "printed_page": 95,
+      "excerpt": "나. 단체 교육 활동 참여/개최 제한 기준 설정\n 방역당국의 지침 혹은 교육부 학생 감염병 전문가 자문단의 권고를 따르는 것을 원칙으로 하되, 상황에 따라\n교육(지원)청에서 자율적으로 조정하여 결정\n∙ 코로나바이러스감염증-19(COVID-19) 유행 시 기준 : 2020~2021년 사회적 거리두기 단계(1~3단계)에 따라 집합･모\n임 행사 인원의 제한 기"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0217:b02",
+      "pdf_page": 217,
+      "printed_page": 203,
+      "excerpt": "19(COVID-19)\n1) 코로나바이러스감염증-19란?\n∙ 2019년 발견된 코로나바이러스 SARS-CoV-2에 의한 호흡기 질환으로 전 세계적으로 유행병을 일으켰\n으며 대유행 기간 동안 다른 변종 바이러스가 나타남\n2) 임상 증상\n∙ 무증상, 경증, 중등증, 중증까지 다양\n발열(37.5℃ 이상), 기침, 호흡곤란, 오한, 근육통, 두통, 인후통, 후각 "
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0183:b01",
+      "pdf_page": 183,
+      "printed_page": null,
+      "excerpt": ", 기침, 콧물, 코막힘이 상대적으로 흔한 증상. 그 외 근육통,\n두통, 인후통, 가래 등도 동반\n\n치료  : 해열제 등 대증 치료치  료▫대증\n▫특이적인 항바이러스제 없음\n\n전염기간▫증상 기간 동안 전파 가능\n\n치명률▫사망은 드묾\n\n<환자관리>\n▫표준주의 및 기본적 개인 위생 수칙 준수\n▫증상이 있는 동안 가급적 집에서 휴식을 취하고 다른 사람과 접촉을 "
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0197:t01r10"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0197:t01r10",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:COVID19"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0239:b05"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_covid19_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_covid19_2026:p0039:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0197:t01r11"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0197:t01r11",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:COVID19"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_covid19_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_covid19_2026:p0028:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0109:b02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0217:b02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0183:b01"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

@@ -1,0 +1,17 @@
+{
+  "question": "성홍열 집단발생 기준과 그때 학교가 할 일은?",
+  "task": "질병별 사실과 원문 근거 검색",
+  "region": "NATIONAL",
+  "allowed_document_ids": [
+    "gyeonggi_school_guide_2025",
+    "kdca_covid19_2026",
+    "kdca_diagnosis_reporting_2026",
+    "kdca_flu_facility_2026",
+    "kdca_hfmd_2026",
+    "kdca_measles_2026",
+    "kdca_respiratory_2026",
+    "kdca_vaccine_preventable_2026",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+  ]
+}

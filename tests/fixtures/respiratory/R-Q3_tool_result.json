@@ -1,0 +1,151 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "36. [제2급-18] 성홍열(Scarlet fever) | 항목 | 원문 내용 | 신고를 위한 진단기준: ○ 환자 : 성홍열에 부합되는 임상증상을 나타내면서 확인 진단을 위한 검사기준에 따라 감염병병원체 감염이 확인된 사람 ○ 의사환자 - 의심환자 : 임상증상 및 역학적 연관성을 감안하여 성홍열이 의심되나 진단을 위한 검사기준에부합하는 검사결과가 없는 사",
+      "chunk_ids": [
+        "kdca_diagnosis_reporting_2026:p0104:t01r02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 진단 여부 확인",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0181:b02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "－ 진단 여부 확인: 감염진단 여부 확인 및 필요시 확진검사 시행",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0116:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "라 진단을 위한 검사 기준",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0114:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "나 신고 시기 및 신고를 위한 진단 기준",
+      "chunk_ids": [
+        "kdca_respiratory_2026:p0113:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "kdca_diagnosis_reporting_2026",
+      "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+      "pdf_page": 104,
+      "printed_page": 96,
+      "excerpt": "36. [제2급-18] 성홍열(Scarlet fever) | 항목 | 원문 내용 | 신고를 위한 진단기준: ○ 환자 : 성홍열에 부합되는 임상증상을 나타내면서 확인 진단을 위한 검사기준에 따라 감염병병원체 감염이 확인된 사람 ○ 의사환자 - 의심환자 : 임상증상 및 역학적 연관성을 감안하여 성홍열이 의심되나 진단을 위한 검사기준에부합하는 검사결과가 없는 사"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0181:b02",
+      "pdf_page": 181,
+      "printed_page": 171,
+      "excerpt": "학교 내 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는 성홍열 환자나 의사환자가 2명 이상\n발생 시 집단발생을 확인하고 예방 및 관리 실시\n¢ 집단발생 확인\n- 진단 여부 확인\n- 발생 현황 확인: 발생 건수, 연령, 발생장소(학급, 반 등), 노출자 수 등\n- 중증 사례 확인: 합병증, 입원, 수두 중복 감염 등\n¢ 예방수칙 교육 및 홍"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0116:b01",
+      "pdf_page": 116,
+      "printed_page": 96,
+      "excerpt": "는\n\n성홍열 환자나 의사환자가 2명 이상 발생 시\n\n2) 시기\n\n- 집단발생 인지 후 지체 없이\n\n3) 주관\n\n･ ･\n\n- 시 군 구 보건소\n\n4) 방법\n\n① 집단발생 확인\n\n－ 진단 여부 확인: 감염진단 여부 확인 및 필요시 확진검사 시행\n\n－ 발생 현황 확인: 발생 건수, 연령, 발생 장소(학급, 반 등), 노출자 수 등\n\n－ 중증 사례 확인: 합병증,"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0114:b01",
+      "pdf_page": 114,
+      "printed_page": 94,
+      "excerpt": "- ● 2026년도 호흡기감염병 관리지침(수막구균 감염증, 성홍열, 급성호흡기감염증)\n\n**라** **진단을 위한 검사 기준**\n\n- 확인 진단\n\n－ 검체(구인두도말, 혈액)에서 S. pyogenes 분리 동정\n\n- 추정 진단\n\n－ 검체(구인두도말)에서 특이 항원 검출\n\n###### **4**\n\n**역학조사**\n\n**가** **대상**\n\n- 개별 사례조사\n"
+    },
+    {
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0113:b01",
+      "pdf_page": 113,
+      "printed_page": 93,
+      "excerpt": "－\n단원 Ⅱ 각 론 성홍열\n\n###### **3**\n\n**감시**\n\n**가** **신고범위**\n\n: 환자, 의사환자\n\n**나** **신고 시기 및 신고를 위한 진단 기준**\n\n**<표 2-2> 성홍열 신고를 위한 진단 기준**\n\n**신고 시기** ∙ 24시간 이내\n\n∙ 성홍열에 부합되는 임상증상을 나타내면서 확인 진단을 위한 검사기준에 따라 감염병\n\n병원체"
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_diagnosis_reporting_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_diagnosis_reporting_2026:p0104:t01r02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0181:b02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0116:b01"
+        },
+        {
+          "source_ref": "Chunk:kdca_respiratory_2026:p0116:b01",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:SCARLET_FEVER"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0114:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_respiratory_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_respiratory_2026:p0113:b01"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

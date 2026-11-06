@@ -80,8 +80,18 @@ WHERE c.chunk_id IN $ids
 RETURN c.chunk_id AS chunk_id, x.disease_id AS disease_id
 ORDER BY c.chunk_id, x.disease_id
 """
+DIRECT_QUERY = """
+MATCH (d:Document)-[:HAS_CHUNK]->(c:Chunk)
+WHERE d.document_id IN $allowed_document_ids AND c.text IS NOT NULL
+  AND any(name IN $names WHERE toLower(c.text) CONTAINS toLower(name))
+  AND any(term IN $terms WHERE toLower(c.text) CONTAINS toLower(term))
+RETURN d.document_id AS document_id, c.chunk_id AS chunk_id,
+       c.pdf_page AS pdf_page, c.printed_page AS printed_page, c.text AS text
+ORDER BY c.chunk_id, d.document_id SKIP $offset LIMIT $page_size
+"""
 FIXTURE_DIR = PROJECT_ROOT / "tests/fixtures/respiratory"
-EXTRA_DISEASES_PATH = Path(__file__).with_name("extra_diseases.json")
+RESPIRATORY_DISEASES_PATH = PROJECT_ROOT / "src/index/respiratory/dictionaries/diseases.json"
+EXCLUDE_PHRASES_PATH = Path(__file__).with_name("exclude_phrases.json")
 MAX_TOP_K = 100
 HEADER_RE = re.compile(r"^\W*\d{4}년도?\s*\S+(\s\S+)?\s*관리지침")
 TABLE_CHUNK_RE = re.compile(r":t\d+r\d+$")
@@ -99,19 +109,19 @@ def _result(status: ToolStatus, warnings: list[str] | None = None) -> ToolResult
     }
 
 
-def extend_books(books: dict) -> dict:
-    """외부 질병 항목을 복사본에만 추가한다."""
-    extended = deepcopy(books)
-    extra = json.loads(EXTRA_DISEASES_PATH.read_text(encoding="utf-8"))
-    entries = extended["disease"]["entries"]
+def merge_books(books: dict) -> dict:
+    """머지 전 각자 사전을 disease_id 기준으로 합친다"""
+    merged = deepcopy(books)
+    respiratory = json.loads(RESPIRATORY_DISEASES_PATH.read_text(encoding="utf-8"))
+    entries = merged["disease"]["entries"]
     existing_ids = {entry["disease_id"] for entry in entries}
-    for entry in extra["entries"]:
+    for entry in respiratory["entries"]:
         disease_id = entry["disease_id"]
         if disease_id not in existing_ids:
             entries.append(entry)
             existing_ids.add(disease_id)
-    extended["exclude_phrases"] = deepcopy(extra.get("exclude_phrases", {}))
-    return extended
+    merged["exclude_phrases"] = json.loads(EXCLUDE_PHRASES_PATH.read_text(encoding="utf-8"))
+    return merged
 
 
 def _default_deps() -> dict:
@@ -181,6 +191,10 @@ def _about_diseases(
 def focus_terms(question: str, books: dict) -> list[str]:
     """질문에서 조사·문장부호·질병명·검색 불용어를 뺀 핵심어를 만든다."""
     stopword_keys = {compare_key(word) for word in STOPWORDS}
+    config = books.get("exclude_phrases", {})
+    stopword_keys.update(compare_key(word) for word in config.get("focus_stopwords", []))
+    stopword_prefixes = [compare_key(word) for word in config.get("focus_stopword_prefixes", [])]
+    aliases = config.get("focus_term_aliases", {})
     disease_keys = set()
     for entry in books["disease"]["entries"]:
         for surface in (entry["name"], *entry.get("aliases", [])):
@@ -203,8 +217,18 @@ def focus_terms(question: str, books: dict) -> list[str]:
             if term.endswith(particle):
                 term = term[: -len(particle)]
                 break
+        for canonical, variants in aliases.items():
+            if any(compare_key(term).startswith(compare_key(variant)) for variant in variants):
+                term = canonical
+                break
         key = compare_key(term)
-        if len(term) < 2 or key in stopword_keys or key in disease_keys or key in seen:
+        if (
+            len(term) < 2
+            or key in stopword_keys
+            or any(key.startswith(prefix) for prefix in stopword_prefixes if prefix)
+            or key in disease_keys
+            or key in seen
+        ):
             continue
         terms.append(term)
         seen.add(key)
@@ -274,6 +298,85 @@ def _focus_position(text: str, terms: list[str]) -> int | None:
         for match in re.finditer(re.escape(term), text, re.IGNORECASE)
     ]
     return min(positions) if positions else None
+
+
+def _direct_candidates(driver, database, allowed, disease_ids, names, terms, exclusions):
+    """허용 문서의 직접 일치 후보를 필터 적용 후 최대 20개 반환한다."""
+    if not allowed or not disease_ids or not terms:
+        return []
+    surfaces = list(dict.fromkeys(name for values in names.values() for name in values if name))
+    if not surfaces:
+        return []
+    hits = []
+    seen = set()
+    offset = 0
+    page_size = 100
+    while len(hits) < 20:
+        try:
+            records, _, _ = driver.execute_query(
+                DIRECT_QUERY,
+                database_=database,
+                allowed_document_ids=allowed,
+                names=surfaces,
+                terms=terms,
+                offset=offset,
+                page_size=page_size,
+            )
+        except Exception as error:
+            raise SearchError(f"{type(error).__name__}: 직접 후보 조회 실패") from error
+        for record in records:
+            hit = record.data() if hasattr(record, "data") else dict(record)
+            chunk_id = hit.get("chunk_id")
+            text = hit.get("text")
+            if (
+                hit.get("document_id") not in allowed
+                or not isinstance(chunk_id, str)
+                or not chunk_id
+                or chunk_id in seen
+                or not isinstance(text, str)
+            ):
+                continue
+            searchable = _mask_header_lines(text)
+            if _focus_position(searchable, terms) is None:
+                continue
+            if not any(
+                _text_disease_ids(
+                    _mask_excluded_lines(searchable, exclusions.get(disease_id, [])),
+                    [disease_id],
+                    names,
+                )
+                for disease_id in disease_ids
+            ):
+                continue
+            seen.add(chunk_id)
+            hits.append(hit)
+            if len(hits) == 20:
+                break
+        if len(records) < page_size:
+            break
+        offset += page_size
+    return hits
+
+
+def _merge_direct_candidates(hits, direct, preferred):
+    """직접 후보마다 RRF 1위의 가중치를 더하고 청크를 중복 제거한다."""
+    merged = {}
+    for rank, hit in enumerate(hits, 1):
+        if not isinstance(hit, dict) or not isinstance(hit.get("chunk_id"), str):
+            continue
+        chunk_id = hit["chunk_id"]
+        if chunk_id not in merged:
+            merged[chunk_id] = {**hit, "score": hit.get("score", 1 / (60 + rank))}
+    for hit in direct:
+        chunk_id = hit["chunk_id"]
+        if chunk_id not in merged:
+            merged[chunk_id] = {**hit, "score": 0.0}
+        merged[chunk_id]["score"] += 1 / 61
+    preferred = set(preferred)
+    return sorted(
+        merged.values(),
+        key=lambda hit: (-round(hit["score"], 12), hit["document_id"] not in preferred, hit["chunk_id"]),
+    )
 
 
 def _clean_claim_line(line: str) -> str:
@@ -392,7 +495,7 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
     driver = deps["driver"]
     database = deps.get("database")
     embedder = deps.get("embedder")
-    books = extend_books(deps["books"])
+    books = merge_books(deps["books"])
 
     disease_ids = _context_diseases(tool_input, books)
     if not disease_ids:
@@ -430,6 +533,19 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
     if not isinstance(raw_hits, list):
         raise TypeError("검색 결과 hits가 목록이 아닙니다.")
 
+    names = _disease_names(books, disease_ids)
+    direct_hits = _direct_candidates(
+        driver,
+        database,
+        allowed_document_ids,
+        disease_ids,
+        names,
+        requested_focus_terms,
+        books.get("exclude_phrases", {}),
+    )
+    if direct_hits:
+        raw_hits = _merge_direct_candidates(raw_hits, direct_hits, request.get("preferred_document_ids", []))
+
     allowed = set(allowed_document_ids)
     hits = []
     seen_chunk_ids = set()
@@ -452,7 +568,6 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
     if not hits:
         return _result("NO_EVIDENCE", ["허용 문서에서 질병 근거를 찾지 못함"])
 
-    names = _disease_names(books, disease_ids)
     about_by_chunk = _about_diseases(
         driver,
         [hit["chunk_id"] for hit in hits],

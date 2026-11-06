@@ -1,0 +1,242 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "1) 잠복기: 1∼4일 (평균 2일)",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0006:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| 인플루엔자 | 발열, 두통, 근육통, 인후통, 기침, 객담 | 증상 발생 1일 전부터 5일까지 | 유행차단을 위한 등교 중지는 의미 없지만 환자상태에 따라 실시⁵⁾ | 1-4일 (평균 2일) | X | O | O |",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0049:t01r08"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| b형 헤모필루스 인플루엔자 | 수막염, 후두개염, 폐렴, 관절염 등 | 항생제 치료 후 48시간 | 항생제 치료 시작 후 24시간까지 | 2-4일 | O | O | X |",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0221:t01r02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| 인플루엔자 | 발열, 두통, 근육통, 인후통, 기침, 객담 | 증상 발생 1일 전부터 5일까지 | 유행차단을 위한 등교 중지는 의미없지만 환자상태에 따라 실시 | 1-4일 (평균 2일) | X | O | O |",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0224:t01r05"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "|인플루엔자|발열, 두통, 근육통, 인후통, 기침, 객담|증상 발생 1일 전부터 5일까지|유행차단을 위한 등교중지는 의미 없지만 환자상태에 따라 실시5)|1~4일 (평균 2일)|X|O|O|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0157:t01r08"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "|b형 헤모 필루스 인플루엔자|수막염, 후두개염, 폐렴, 관절염 등|호흡기 분비물에 균이 존재하는 동안 전파 가능하며, 적절한 항생제 투여 후 24시간까지 전파 가능|항생제 치료 시작 후 24시간까지| 명확하지 않음|O|O|X|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0160:t01r01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "|레지오 넬라증|폐렴형(발열, 오한, 마른기침), 독감형(권태감, 근육통, 발열, 오한)| 사람 간 전파 없음|등교중지 안 함|2~10일 (평균 10일)|X|X|X|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0160:t01r09"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "|담임교사|대응 제2단계|1. 능동감시 실시  - 결석, 조퇴, 지각한 학생의 사유를 확인하고, 학급 학생들의 증상 유무를 관찰하는 등 추가 (의심)환자 발생 여부를 파악하여 보건(담당)교사에게 통보 2. 감염병 예방교육 실시  - 학급 조･종례 시간 등을 이용하여 해당 감염병의 주요 증상과 예방법, 증상 발생 시 행동 요령 등에 대한 간단한 교육을 주기적",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0166:t01r02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0006:b01",
+      "pdf_page": 6,
+      "printed_page": 2,
+      "excerpt": "의 4가지로 분류**\n\nA형과 B형이 사람에게 호흡기 감염을 유발\n\n**2) 항원변이를 통하여 계속적인 인플루엔자의 유행이 초래됨**\n\n#### **다. 임상 양상**\n\n**1) 잠복기:** 1∼4일 (평균 2일)\n\n**2) 임상 증상**\n\n전신 증상 및 호흡기 증상이 갑자기 시작됨\n\n- 발열(고열), 두통, 근육통, 피로감 등의 전신 증상\n\n- 열은 급격"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0049:t01r08",
+      "pdf_page": 49,
+      "printed_page": 35,
+      "excerpt": "감염병의 종류 및 특성\n| 감염병 | 임상 증상 | 감염 가능 기간 | 등교 중지(격리) 기간¹⁾²⁾ | 잠복기³⁾ | 밀접접촉자 파악 | 일시적 격리⁴⁾ | 마스크 착용 |\n| 인플루엔자 | 발열, 두통, 근육통, 인후통, 기침, 객담 | 증상 발생 1일 전부터 5일까지 | 유행차단을 위한 등교 중지는 의미 없지만 환자상태에 따라 실시⁵⁾ | 1-4일 ("
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0221:t01r02",
+      "pdf_page": 221,
+      "printed_page": 207,
+      "excerpt": " 증상 | 전염 가능 기간 | 전파 차단을 위한 등교 중지(격리) 기간 1)2) | 잠복기 3) | 밀접접촉자 파악 | 일시적 격리 4) | 마스크 착용 |\n| b형<br>헤모필루스<br>인플루엔자 | 수막염, 후두개염,<br>폐렴, 관절염 등 | 항생제 치료 후<br>48시간 | 항생제 치료 시작 후<br>24시간까지 | 2-4일 | O | O | X |"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0224:t01r05",
+      "pdf_page": 224,
+      "printed_page": 210,
+      "excerpt": "| 감염병 | 임상 증상 | 전염 가능 기간 | 전파 차단을 위한 등교 중지(격리) 기간 1)2) | 잠복기 3) | 밀접접촉자 파악 | 일시적 격리 4) | 마스크 착용 |\n| 인플루엔자 | 발열, 두통, 근육통,<br>인후통, 기침, 객담 | 증상 발생 1일 전부터<br>5일까지 | 유행차단을 위한 등교<br>중지는 의미없지만<br>환자상태에 따라 실시"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r08",
+      "pdf_page": 157,
+      "printed_page": 147,
+      "excerpt": "빈발 감염병의 종류 및 특성\n|감염병|임상증상|감염 가능 기간|등교중지(격리)<br>기간1)2)|잠복기3)|밀접<br>접촉자<br>파악|일시적<br>격리4)|마스크<br>착용|\n|인플루엔자|발열, 두통,<br>근육통,<br>인후통, 기침,<br>객담|증상 발생 1일 전부터<br>5일까지|유행차단을 위한<br>등교중지는 의미<br>없지만 환자상태에<br>따라"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r01",
+      "pdf_page": 160,
+      "printed_page": 150,
+      "excerpt": "병|임상증상|감염 가능 기간|등교중지(격리)<br>기간1)2)|잠복기3)|밀접<br>접촉자<br>파악|일시적<br>격리4)|마스크<br>착용|\n|b형<br>헤모<br>필루스<br>인플루엔자|수막염, 후두개염,<br>폐렴, 관절염 등|호흡기 분비물에 균이<br>존재하는 동안 전파<br>가능하며, 적절한<br>항생제 투여 후<br>24시간까지 전파 가능|항생제"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r09",
+      "pdf_page": 160,
+      "printed_page": 150,
+      "excerpt": "계속)\n|감염병|임상증상|감염 가능 기간|등교중지(격리)<br>기간1)2)|잠복기3)|밀접<br>접촉자<br>파악|일시적<br>격리4)|마스크<br>착용|\n|레지오<br>넬라증|폐렴형(발열, 오한,<br>마른기침),<br>독감형(권태감,<br>근육통, 발열,<br>오한)|<br>사람 간 전파 없음|등교중지 안 함|2~10일<br>(평균 10일)|X|X|X|"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0166:t01r02",
+      "pdf_page": 166,
+      "printed_page": 156,
+      "excerpt": "(의심) 환자와 같은 학급 학생들은 같은 공간에서 일정 시간 이상 함께<br>생활하였기 때문에 해당 감염병의 발생 가능성이 높은 밀접접촉자임<br> - 특히, 학생 빈발 감염병인 인플루엔자, 수두, 유행성이하선염, 수족구병 등은 증상<br>발생 전부터 감염성이 있으므로 밀접접촉자를 파악하고 관리하는 것이 매우 중요<br> - 최대 잠복기 동안 (의심)환자 "
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0006:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0049:t01r08"
+        },
+        {
+          "source_ref": "Chunk:moe_school_manual_v3:p0049:t01r08",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0221:t01r02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0224:t01r05"
+        },
+        {
+          "source_ref": "Chunk:moe_school_manual_v3:p0224:t01r05",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0157:t01r08"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0157:t01r08",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0160:t01r01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0160:t01r09"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0166:t01r02"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

@@ -1,0 +1,247 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "- 학교(유치원) 내 발생 현황, 인플루엔자 예방수칙, 인플루엔자 진단 시 등교(등원) 제한 등 포함",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0018:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "등교(등원) 중지 기간 적용 안내",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0015:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "인플루엔자 개요 |항목|내용|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0195:t01r10"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "- 인플루엔자 유행 시기에는 등원 및 등교 전에 인플루엔자 의심증상 발생 등 건강상태",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0016:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "¢ 등교중지: 해열 후 24시간이 경과할 때까지",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0196:b02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "어린이집, 유치원, 학교 및 학원 등에 등원 등교를 시키지 않도록 함",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0017:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "5. 자녀가 인플루엔자로 진단받은 경우 등교(등원)해도 되나요?",
+      "chunk_ids": [
+        "kdca_flu_facility_2026:p0025:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "1) 전파 차단을 위한 등교중지 기간으로 관련 질환에 대한 질병관리청 매뉴얼의 환자 격리 기간을 바탕으로 작성함",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0157:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "INFLUENZA"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0018:b01",
+      "pdf_page": 18,
+      "printed_page": 14,
+      "excerpt": "⑤ 필요시 학생(유아) 및 학부모 대상 안내문 발송\n\n- 학교(유치원) 내 발생 현황, 인플루엔자 예방수칙, 인플루엔자 진단 시 등교(등원) 제한 등 포함\n\n⑥ 어린이집, 유치원 및 학교의 위생 및 환경 관리\n\n- 문손잡이, 창문, 스위치, 책상과 의자, 장난감 등 전파를 매개하기 쉬운 환경 소독\n\n･ ･\n- 화장실 및 환기시설(가습기 제습기 포함) 난방시"
+    },
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0015:b01",
+      "pdf_page": 15,
+      "printed_page": 11,
+      "excerpt": "2. 시설에서의 인플루엔자 예방 및 관리\n\n# **`2 시설에서의�인플루엔자�예방�및�관리�`**\n\n**등교(등원) 중지 기간 적용 안내**\n\n∙\n인플루엔자에 걸린 경우, 「학교보건법」 제8조 및 동법 시행령 제22조에 따라 감염병 환자 및 의사\n\n환자 등에 대하여 등교(등원) 등을 중지시킬 수 있으며, 「영유아보육법」 제32조 및 동법 시행규칙\n\n33조의"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0195:t01r10",
+      "pdf_page": 195,
+      "printed_page": 185,
+      "excerpt": "인플루엔자 개요\n|항목|내용|\n|환자 관리|∙환자 관리<br>- 인플루엔자로 진단받은 경우는 해열 후 48시간이 경과하여 감염력이 소실될 때까지 등교, 등원, 출근 등을<br>하지 않고 집에서 휴식을 취하도록 함<br>- 집에서 휴식을 취하는 동안 가정 내의 65세 이상 고령자 등 고위험군과의 접촉은 피해야 하며, 병원 방문<br>등의 꼭 필요한 경우 외에"
+    },
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0016:b01",
+      "pdf_page": 16,
+      "printed_page": 12,
+      "excerpt": "의\n\n#### **마. 기관 내 건강 모니터링**\n\n인플루엔자 지역사회 확산을 방지하기 위해 영·유아, 학생 및 교직원은 다음 사항을 준수\n\n- 인플루엔자 유행 시기에는 등원 및 등교 전에 인플루엔자 의심증상 발생 등 건강상태\n\n관찰을 철저히 실시\n\n- 인플루엔자 의심 증상(발열 및 기침, 인후통 등) 발생 시 담당관리자(담임교사, 보육교직원\n\n･\n등)에게"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0196:b02",
+      "pdf_page": 196,
+      "printed_page": 186,
+      "excerpt": "다. 감염병 환자 및 접촉자 관리\n1) 환자 조치사항\n¢ 등교중지: 해열 후 24시간이 경과할 때까지\n¢ 증상 발생 후 해열제 없이 정상체온 회복 후 24시간이 경과될 때까지 등교중지\n2) 접촉자 조치사항\n¢ 관리대상: 환자와 접촉한 사람\n¢ 관리방법: 건강한 접촉자에게 예방을 위한 항바이러스제 투여는 통상적으로 권유되지 않으나, 예방접종을 받지\n않은 고위"
+    },
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0017:b01",
+      "pdf_page": 17,
+      "printed_page": 13,
+      "excerpt": " 충분한\n\n휴식 및 수분·영양 섭취시키기\n\n⑥ 인플루엔자로 진단받은 경우 해열제 없이 정상체온 회복 후 24시간이 경과할 때까지\n\n･\n어린이집, 유치원, 학교 및 학원 등에 등원 등교를 시키지 않도록 함\n\n- 단, 해열제를 투약한 경우, 마지막 해열제 투약 시점부터 48시간 경과 관찰 필요\n\n- 중증의 증상을 보이거나 면역저하자 등의 경우는 의사의 판단에 "
+    },
+    {
+      "document_id": "kdca_flu_facility_2026",
+      "chunk_id": "kdca_flu_facility_2026:p0025:b01",
+      "pdf_page": 25,
+      "printed_page": 21,
+      "excerpt": "하루 전부터 증상이 생긴 후 약 5~7일까지 감염력이 있으나 소아의 경우에는\n\n증상 발생 후 10일 이상 감염력이 있는 경우도 있습니다.\n\n5. 자녀가 인플루엔자로 진단받은 경우 등교(등원)해도 되나요?\n\n인플루엔자로 진단받은 경우, 자녀는 등교(등원)하지 않고 집에서 충분히 휴식을 취하는 것이 좋습니다.\n\n집에서 휴식을 취하는 동안 가정 내의 65세 이상"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0157:b01",
+      "pdf_page": 157,
+      "printed_page": 147,
+      "excerpt": "2 학교 내 빈발 감염병의 종류 및 특성\n<표 3-1> 학교 내 빈발 감염병의 종류 및 특성\n2주까지 2주까지\n1) 전파 차단을 위한 등교중지 기간으로 관련 질환에 대한 질병관리청 매뉴얼의 환자 격리 기간을 바탕으로 작성함\n2) 등교중지 기간은 휴일을 포함\n3) 감염 시작 시점부터 증상과 징후 발생 시점까지의 기간\n4) 전파 우려가 있는 감염병 의심 학생이"
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0018:b01"
+        },
+        {
+          "source_ref": "Chunk:kdca_flu_facility_2026:p0018:b01",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0015:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0195:t01r10"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0195:t01r10",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0016:b01"
+        },
+        {
+          "source_ref": "Chunk:kdca_flu_facility_2026:p0016:b01",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0196:b02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0017:b01"
+        },
+        {
+          "source_ref": "Chunk:kdca_flu_facility_2026:p0017:b01",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:INFLUENZA"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:kdca_flu_facility_2026",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:kdca_flu_facility_2026:p0025:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0157:b01"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}
