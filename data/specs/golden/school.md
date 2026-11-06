@@ -109,7 +109,7 @@
 | ID | 질문 | region | 기대 status | 기대 Tool | 근거(CID) | 통과 조건 | 구분 |
 |---|---|---|---|---|---|---|---|
 | S-D01 | 홍역의 잠복기는 며칠인가요? | NATIONAL | ANSWERED | disease_search | - | 질병 사실 질문. Action Tool이 아니라 disease_search로 라우팅되어야 함(학교 문서는 보조) | dev |
-| S-L01 | 감염병예방법상 학교장의 신고 의무는 무엇인가요? | NATIONAL | ANSWERED | legal_search | - | 법령 질문. legal_search로 라우팅. 학교 문서 목록만으로 법적 의무를 확정하지 않음 | eval |
+| S-L01 | 감염병예방법상 학교장의 신고 의무는 무엇인가요? | NATIONAL | PARTIAL | legal_search | - | 법령 질문. legal_search로 라우팅. 제12조 ① 카드가 PARTIAL로 답함(11/06, 법령 Tool 담당 종혁 확인). 학교장이 관리인·경영자·대표자에 해당하는지, 학교가 복지부령 장소인지는 시행규칙으로 확인 필요 | eval |
 
 ## 2. Citation 검증표
 
