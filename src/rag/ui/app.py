@@ -14,6 +14,7 @@ import html
 import os
 import re
 import sys
+from datetime import datetime
 from pathlib import Path
 
 import streamlit as st
@@ -24,7 +25,7 @@ if str(SRC) not in sys.path:            # 클라우드는 이 파일의 폴더�
 
 import pandas as pd
 
-from rag.ui import history, service
+from rag.ui import history, service, sources
 
 st.set_page_config(page_title="학교 감염병 대응 길잡이", page_icon="🏫", layout="wide")
 
@@ -163,6 +164,42 @@ def show_paths(result: dict) -> None:
                                              for e in path["edges"]))
 
 
+NO_EVIDENCE_NOTICE = "제공된 공식 자료에서 확인하지 못했습니다. 학교 보건 담당자나 관할 보건소, 공식 문서에서 확인해 주세요."
+PARTIAL_NOTICE = "일부만 확인한 답변입니다. 근거 문서와 '확인이 필요한 부분'을 함께 확인하세요."
+
+
+@st.cache_data
+def source_urls() -> dict:
+    """manifest 의 공식 URL(http 주소가 있는 문서만). 한 번 읽어 둔다."""
+    return sources.load_urls()
+
+
+def show_user_notes(output: dict, documents: dict) -> None:
+    """모든 사용자에게 보이는 근거 문서(문서명·판본·PDF 쪽수)와 확인이 필요한 부분. 발췌문은 보이지 않는다."""
+    if output.get("response_type") != "DOMAIN":
+        return
+    lines = sources.source_lines(output.get("citations", []), documents, source_urls())
+    if lines:
+        st.markdown("**근거 문서**")
+        for line in lines:
+            st.markdown("- " + line)
+    else:
+        st.caption("표시할 출처가 없습니다.")
+    agencies = sources.agencies_from_citations(output.get("citations", []))
+    if agencies:
+        st.caption("확인할 곳(근거 문서에 나온 기관): " + " · ".join(agencies)
+                   + ". 연락처는 학교에서 미리 파악해 둔 관할 기관 연락처로 확인하세요.")
+    if output["status"] == "INSUFFICIENT_EVIDENCE":
+        st.info(NO_EVIDENCE_NOTICE)
+    elif output["status"] == "PARTIAL":
+        st.caption(PARTIAL_NOTICE)
+    notes = sources.user_warnings(output.get("warnings", []))
+    if notes:
+        with st.expander(f"확인이 필요한 부분 ({len(notes)})"):
+            for note in notes:
+                st.markdown("- " + note)
+
+
 def show_result(result: dict, documents: dict, developer: bool = False) -> None:
     """답변을 보여 준다. 일반 사용자에게는 상태와 최종 답변만, 개발자에게는 점검용 정보(출처·처리 흐름·경로·주의)도 보여 준다."""
     output = result["output"]
@@ -183,6 +220,7 @@ def show_result(result: dict, documents: dict, developer: bool = False) -> None:
         st.markdown(answer_markdown(output["answer"]))
         if developer and compose.get("mode") == "template_fallback":
             st.caption("다듬은 답변이 근거 검사를 통과하지 못해 원문 정리형으로 보여 드립니다.")
+    show_user_notes(output, documents)
     if not developer:
         return
     limits = [service.TOOL_LIMITS[t] for t in output["tools_used"] if t in service.TOOL_LIMITS]
@@ -269,6 +307,84 @@ def show_dashboard() -> None:
 
 # ---------------------------------------------------------------- 화면
 
+DISCLAIMER = "이 답변은 공식 지침과 법령을 근거로 한 안내이며, 진단·법적 판단을 대신하지 않습니다."
+
+
+def displayed_answer(result: dict) -> str:
+    """화면에 보인 최종 답변 글. 다듬은 답변이면 그대로, 원문 정리형이면 화면과 같은 서식으로 돌려준다."""
+    output = result["output"]
+    compose = next((t for t in result["trace"] if t["step"] == "compose_answer"), {})
+    return output["answer"] if compose.get("mode") == "llm" else answer_markdown(output["answer"])
+
+
+def save_answer(item: dict, documents: dict) -> None:
+    """답변을 이 접속(세션) 안의 '저장한 답변'에 담는다. 서버나 이력 파일에는 저장하지 않는다. 같은 답변은 한 번만 담는다."""
+    saved = st.session_state.setdefault("saved", [])
+    if any(s["id"] == item["request_id"] for s in saved):
+        return
+    saved.insert(0, {"id": item["request_id"], "ts": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                     "question": item["question"], "status": item["output"]["status"],
+                     "answer": displayed_answer(item),
+                     "sources": sources.source_lines(item["output"].get("citations", []), documents, source_urls()),
+                     "notice": {"PARTIAL": PARTIAL_NOTICE, "INSUFFICIENT_EVIDENCE": NO_EVIDENCE_NOTICE}.get(
+                         item["output"]["status"]),
+                     "notes": sources.user_warnings(item["output"].get("warnings", []))})
+
+
+def saved_as_markdown(saved: list[dict]) -> str:
+    """저장한 답변을 내려받기용 마크다운 글로 만든다. 답변마다 안내 문구를 붙인다."""
+    parts = ["# 저장한 답변 — 학교 감염병 대응 길잡이", ""]
+    for number, s in enumerate(saved, 1):
+        status = service.STATUS_LABELS.get(s["status"], s["status"])
+        parts += [f"## {number}. {s['question']}", f"- 저장 시각: {s['ts']} · 상태: {status}", "", s["answer"], ""]
+        if s.get("sources"):
+            parts += ["**근거 문서**", *[f"- {line}" for line in s["sources"]], ""]
+        if s.get("notice"):
+            parts += [f"**{s['notice']}**", ""]
+        if s.get("notes"):
+            parts += ["**확인이 필요한 부분**", *[f"- {note}" for note in s["notes"]], ""]
+        parts += [f"> {DISCLAIMER}", ""]
+    return "\n".join(parts)
+
+
+def show_saved() -> None:
+    """'저장한 답변' 탭. 이 접속 안에서만 유지되며, 창을 닫거나 새로고침하면 사라진다."""
+    saved = st.session_state.get("saved", [])
+    if not saved:
+        st.info("저장한 답변이 없습니다. 답변 아래의 '답변 저장' 버튼을 누르면 여기에 모입니다.")
+        return
+    st.caption("이 화면을 닫거나 새로고침하면 사라집니다. 필요하면 내려받아 두세요. "
+               "내려받는 파일에는 입력한 질문 원문이 들어 있으니, 공유하기 전에 개인정보가 없는지 확인하세요.")
+    st.download_button("저장한 답변 내려받기 (.md)", saved_as_markdown(saved).encode("utf-8"),
+                       file_name="saved_answers.md", mime="text/markdown")
+    for s in list(saved):
+        icon, _ = STATUS_STYLE.get(s["status"], ("•", "gray"))
+        with st.expander(f"{icon} {s['question']}  · {s['ts']}"):
+            st.markdown(s["answer"])
+            if s.get("sources"):
+                st.markdown("**근거 문서**")
+                for line in s["sources"]:
+                    st.markdown("- " + line)
+            if s.get("notice"):
+                st.caption(s["notice"])
+            for note in s.get("notes", []):
+                st.markdown("- " + note)
+            st.caption(DISCLAIMER)
+            if st.button("삭제", key=f"del-{s['id']}"):
+                saved.remove(s)
+                st.rerun()
+
+
+def show_footer() -> None:
+    """화면 맨 아래의 사용 범위 안내."""
+    st.divider()
+    st.markdown("**사용 범위**")
+    st.caption("공식 지침과 법령을 근거로 답합니다. 진단·법적 판단을 대신하지 않습니다. "
+               "역할은 원문의 예시일 수 있으며 학교 상황에 따라 조정됩니다.")
+    if history.logging_enabled():
+        st.caption("입력한 질문은 서비스 점검을 위해 저장될 수 있습니다. 학생 이름·연락처 같은 개인정보는 입력하지 마세요.")
+
+
 def render_history(items: list[dict], documents: dict, developer: bool = False) -> None:
     """최근 대화 10건을 새것부터 보여 준다. developer 가 참이면 점검용 정보도 함께 보여 준다."""
     for index, item in enumerate(items[:10]):
@@ -279,6 +395,9 @@ def render_history(items: list[dict], documents: dict, developer: bool = False) 
                 st.error(f"처리 중 오류가 났습니다: {item['error']}")
             else:
                 show_result(item, documents, developer)
+                if st.button("📌 답변 저장", key=f"save-{item['request_id']}"):
+                    save_answer(item, documents)
+                    st.rerun()
         if index == 0 and len(items) > 1:
             st.divider()
 
@@ -293,30 +412,23 @@ def main() -> None:
         st.stop()
     documents = res["documents"]
 
-    with st.sidebar:
-        st.header("답변 설정")
-        can_polish = "answer_writer" in res["deps"]
-        polish = st.toggle("답변 다듬기 (LLM + 근거 검사)", value=can_polish, disabled=not can_polish, key="polish",
-                           help="검증된 근거만으로 문장을 다시 쓰고, 번호·숫자·주체·강한 표현을 코드로 검사합니다. "
-                                "검사에 걸리면 원문 정리형 답변을 보여 줍니다.")
-        st.divider()
-        st.markdown("**사용 범위**\n- 공식 지침과 법령을 근거로 답합니다.\n- 진단·법적 판단을 대신하지 않습니다.\n"
-                    "- 역할은 원문의 예시일 수 있으며 학교 상황에 따라 조정됩니다.")
-        if history.logging_enabled():
-            st.caption("입력한 질문은 서비스 점검을 위해 저장될 수 있습니다. 학생 이름·연락처 같은 개인정보는 입력하지 마세요.")
-        developer = is_developer()
-        default = [d for d in service.EVALUATED_DOCUMENTS if d in documents]
-        if developer:
-            # 참고 문서 허용 목록과 도구별 한계는 개발자 점검용이다. 일반 사용자는 골든셋으로 검증한 기본 문서를 쓴다.
-            st.divider()
-            st.subheader("개발자 설정")
+    # 일반 사용자에게는 사이드바가 없다. 답변 다듬기(LLM + 근거 검사)는 가능하면 항상 켠다(키가 없으면 원문 정리형).
+    can_polish = "answer_writer" in res["deps"]
+    polish = can_polish
+    developer = is_developer()
+    allowed = [d for d in service.EVALUATED_DOCUMENTS if d in documents]   # 골든셋으로 검증한 기본 문서
+    if developer:
+        # 참고 문서 허용 목록·답변 다듬기 켜고 끄기·도구별 한계는 개발자 점검용이다.
+        with st.sidebar:
+            st.header("개발자 설정")
+            polish = st.toggle("답변 다듬기 (LLM + 근거 검사)", value=can_polish, disabled=not can_polish, key="polish",
+                               help="검증된 근거만으로 문장을 다시 쓰고, 번호·숫자·주체·강한 표현을 코드로 검사합니다. "
+                                    "검사에 걸리면 원문 정리형 답변을 보여 줍니다.")
             for tool, note in service.TOOL_LIMITS.items():
                 st.caption(f"⚠ {service.TOOL_LABELS[tool].split(' (')[0]}: {note}")
-            allowed = st.multiselect("참고 문서(허용 목록)", list(documents), default=default,
+            allowed = st.multiselect("참고 문서(허용 목록)", list(documents), default=allowed,
                                      format_func=lambda d: doc_label(documents, d), key="allowed")
             st.caption("선택한 문서 안에서만 근거를 찾습니다. 기본값은 골든셋으로 검증한 5개 문서입니다.")
-        else:
-            allowed = default
 
     st.title("🏫 학교 감염병 대응 길잡이")
     st.caption("교육부·경기도교육청·질병관리청 지침과 감염병예방법을 지식 그래프로 묶어, 근거 원문과 쪽수로 답합니다.")
@@ -335,13 +447,17 @@ def main() -> None:
         if history.logging_enabled():
             history.append_record(history.make_record(question, result, polish=polish))
 
+    saved = st.session_state.setdefault("saved", [])
+    labels = ["질문하기", f"저장한 답변 ({len(saved)})"] + (["대시보드"] if developer else [])
+    tabs = st.tabs(labels)
+    with tabs[0]:
+        render_history(history_items, documents, developer=developer)
+    with tabs[1]:
+        show_saved()
     if developer:
-        tab_chat, tab_dashboard = st.tabs(["질문하기", "대시보드"])
-        with tab_chat:
-            render_history(history_items, documents, developer=True)
-        with tab_dashboard:
+        with tabs[2]:
             show_dashboard()
-    else:
-        render_history(history_items, documents)
+    show_footer()
+
 
 main()
