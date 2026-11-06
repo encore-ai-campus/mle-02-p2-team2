@@ -40,8 +40,3 @@ def test_real_manifest_loads_without_error():
     assert all(u.startswith(("http://", "https://")) for u in urls.values())
 
 
-def test_agencies_come_only_from_cited_excerpts():
-    cites = [{"excerpt": "관할 보건소로 신고"}, {"excerpt": "교육지원청에 보고"}]
-    assert sources.agencies_from_citations(cites) == ["관할 보건소", "관할 교육지원청"]
-    assert sources.agencies_from_citations([{"excerpt": "등교하지 않도록 안내"}]) == []
-    assert sources.agencies_from_citations([]) == []

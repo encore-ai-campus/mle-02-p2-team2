@@ -164,7 +164,7 @@ def show_paths(result: dict) -> None:
                                              for e in path["edges"]))
 
 
-NO_EVIDENCE_NOTICE = "제공된 공식 자료에서 확인하지 못했습니다. 학교 보건 담당자나 관할 보건소, 공식 문서에서 확인해 주세요."
+NO_EVIDENCE_NOTICE = "제공된 공식 자료에서 확인하지 못했습니다. 공식 문서 원문을 직접 확인해 주세요."
 PARTIAL_NOTICE = "일부만 확인한 답변입니다. 근거 문서와 '확인이 필요한 부분'을 함께 확인하세요."
 
 
@@ -185,10 +185,6 @@ def show_user_notes(output: dict, documents: dict) -> None:
             st.markdown("- " + line)
     else:
         st.caption("표시할 출처가 없습니다.")
-    agencies = sources.agencies_from_citations(output.get("citations", []))
-    if agencies:
-        st.caption("확인할 곳(근거 문서에 나온 기관): " + " · ".join(agencies)
-                   + ". 연락처는 학교에서 미리 파악해 둔 관할 기관 연락처로 확인하세요.")
     if output["status"] == "INSUFFICIENT_EVIDENCE":
         st.info(NO_EVIDENCE_NOTICE)
     elif output["status"] == "PARTIAL":

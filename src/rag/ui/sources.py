@@ -73,10 +73,6 @@ def source_lines(citations: list[dict], documents: dict, urls: dict[str, str]) -
     return [source_line(g, urls.get(g["document_id"])) for g in group_sources(citations, documents)]
 
 
-# 근거 문서의 발췌문에 이 낱말이 나올 때만 해당 기관을 '확인할 곳'으로 안내한다. 연락처는 넣지 않는다.
-AGENCY_WORDS = (("보건소", "관할 보건소"), ("교육지원청", "관할 교육지원청"), ("질병관리청", "질병관리청"))
-
-
 # 사용자에게 보이면 안 되는 내부 낱말(도구 이름·DB 대조 등). 이 낱말이 든 주의 문구는 일반 사용자 화면에서 뺀다.
 INTERNAL_WORDS = ("_search", "Finding", "DB", "chunk", "Tool", "도구", "경로", "registry")
 
@@ -85,9 +81,3 @@ def user_warnings(warnings: list[str], limit: int = 5) -> list[str]:
     """일반 사용자에게 보여 줄 주의 문구. 내부 처리 정보가 든 문구는 뺀다. 공백은 하나로 줄인다."""
     cleaned = [re.sub(r"\s+", " ", w).strip() for w in warnings]
     return [w for w in cleaned if w and not any(word in w for word in INTERNAL_WORDS)][:limit]
-
-
-def agencies_from_citations(citations: list[dict]) -> list[str]:
-    """인용한 근거 문서 발췌문에 실제로 나온 기관 이름. 답변 본문이 아니라 원문 발췌에서만 찾는다."""
-    text = " ".join(c.get("excerpt", "") for c in citations)
-    return [label for word, label in AGENCY_WORDS if word in text]
