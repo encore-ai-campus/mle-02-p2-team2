@@ -3,7 +3,7 @@
 적재 대상 (온톨로지 v3.1 노드 6종 중 우리가 쓰는 것)
 - 1차 적재(load): Document 4, Chunk 31, SchoolRole 1, ActionConcept 1, SchoolAction 4 (93쪽 항목 1·3·4)
 - 확장 적재(add_extension): Chunk 2(b05·b06), SchoolAction 2(a05·a06) — 93쪽 항목 2 (사용자 승인 "a")
-- 현재 블록 파일은 33개, 승인 행동은 6개다. TARGET 상수는 1차 적재 기준이다.
+- 블록 파일의 개수는 적재가 늘 때마다 달라진다(1차 적재 기준은 TARGET 상수). 승인 행동은 6개다.
 - 기존 Disease `MEASLES`, ActionConcept `REQUEST_MEDICAL_VISIT`는 연결만 하고 수정하지 않는다.
 
 안전 장치
@@ -568,6 +568,75 @@ def add_page94_chunk(*, confirm: bool = False) -> dict:
                 if after - before != 1 or links != 1:
                     raise RuntimeError(f"검사 실패 (롤백): 증가 {after - before}, 연결 {links}")
                 return {"chunk_id": chunk["chunk_id"], "chunk_total_before": before, "chunk_total_after": after}
+
+            return s.execute_write(work)
+    finally:
+        driver.close()
+
+
+# 2026-11-07 (주승우 요청): 벌칙 조문 블록. 법 제79~83조(55~58쪽) 11개와 진단·신고기준 지침 27쪽 '3.5 신고의무 위반에 따른 벌칙' 1개.
+# 2026.10.8 시행본 기준이며 같은 쪽에 겹쳐 있는 2027.10.21 시행 예정본(삭제 표시 판)은 넣지 않는다.
+PENALTY_CHUNK_IDS = [
+    "moleg_infectious_disease_act_21521:p0055:b01",
+    "moleg_infectious_disease_act_21521:p0056:b01", "moleg_infectious_disease_act_21521:p0056:b02",
+    "moleg_infectious_disease_act_21521:p0056:b03", "moleg_infectious_disease_act_21521:p0056:b04",
+    "moleg_infectious_disease_act_21521:p0056:b05",
+    "moleg_infectious_disease_act_21521:p0057:b01", "moleg_infectious_disease_act_21521:p0057:b02",
+    "moleg_infectious_disease_act_21521:p0057:b03",
+    "moleg_infectious_disease_act_21521:p0058:b01", "moleg_infectious_disease_act_21521:p0058:b02",
+    "kdca_diagnosis_reporting_2026:p0027:b01",
+]
+
+
+def add_penalty_blocks(*, confirm: bool = False) -> dict:
+    """벌칙 블록 12개(Chunk 12)를 기존 Document 두 개(법, 진단·신고기준)에 HAS_CHUNK 로 연결해 추가한다. 관계는 HAS_CHUNK 12 뿐이다.
+
+    설명
+    - 쓰기 전에 같은 chunk_id 가 있는지, 연결할 Document 두 개가 정확히 하나씩 있는지 트랜잭션 안에서 확인한다. 어긋나면 전체 되돌림.
+    - Document 는 만들거나 고치지 않는다(매칭만 한다).
+    - 검사는 이번에 만든 ID 목록과 (문서, 청크) 쌍만 센다. 전체 개수 증가분은 보조로만 본다.
+    """
+    if not confirm:
+        raise RuntimeError("공동 DB 쓰기 함수입니다. 승인 기록을 확인한 뒤 confirm=True 로 호출하세요.")
+    rows = {c["chunk_id"]: c for c in build_rows()["chunks"]}
+    chunks = [rows[cid] for cid in PENALTY_CHUNK_IDS]
+    allowed_docs = {"moleg_infectious_disease_act_21521", "kdca_diagnosis_reporting_2026"}
+    if {c["document_id"] for c in chunks} - allowed_docs:
+        raise RuntimeError("벌칙 블록의 문서 ID가 예상과 다릅니다")
+    # 청크 ID 의 문서 접두사와 document_id 가 같아야 한다(두 허용 문서 사이에서 문서가 바뀌는 입력을 막는다)
+    if any(not c["chunk_id"].startswith(c["document_id"] + ":") for c in chunks):
+        raise RuntimeError("벌칙 블록의 chunk_id 접두사와 document_id 가 다릅니다")
+    vectors = embed_chunks(chunks)
+    for c, v in zip(chunks, vectors):
+        c["embedding"] = v
+    expected_pairs = sorted((c["document_id"], c["chunk_id"]) for c in chunks)
+
+    driver = connect()
+    try:
+        with driver.session() as s:
+            def work(tx):
+                clash = tx.run("MATCH (c:Chunk) WHERE c.chunk_id IN $ids RETURN count(c) AS n",
+                               ids=PENALTY_CHUNK_IDS).single()["n"]
+                docs = tx.run("MATCH (d:Document) WHERE d.document_id IN $docs RETURN count(d) AS n",
+                              docs=sorted(allowed_docs)).single()["n"]
+                per_doc = tx.run("MATCH (d:Document) WHERE d.document_id IN $docs RETURN d.document_id AS id, count(d) AS n",
+                                 docs=sorted(allowed_docs)).data()
+                if clash or docs != len(allowed_docs) or any(r["n"] != 1 for r in per_doc):
+                    raise RuntimeError(f"사전 검사 실패 (롤백): ID 충돌 {clash}, 문서 {docs}/{len(allowed_docs)}")
+                before = tx.run("MATCH (c:Chunk) RETURN count(c) AS n").single()["n"]
+                tx.run("UNWIND $rows AS r CREATE (:Chunk {chunk_id: r.chunk_id, text: r.text, pdf_page: r.pdf_page, "
+                       "printed_page: r.printed_page, section: r.section, embedding: r.embedding})", rows=chunks).consume()
+                tx.run("UNWIND $rows AS r MATCH (d:Document {document_id: r.document_id}), (c:Chunk {chunk_id: r.chunk_id}) "
+                       "CREATE (d)-[:HAS_CHUNK]->(c)", rows=chunks).consume()
+                n_chunk = tx.run("MATCH (c:Chunk) WHERE c.chunk_id IN $ids RETURN count(c) AS n",
+                                 ids=PENALTY_CHUNK_IDS).single()["n"]
+                pairs = sorted((r["d"], r["c"]) for r in tx.run(
+                    "MATCH (d:Document)-[:HAS_CHUNK]->(c:Chunk) WHERE c.chunk_id IN $ids "
+                    "RETURN d.document_id AS d, c.chunk_id AS c", ids=PENALTY_CHUNK_IDS).data())
+                after = tx.run("MATCH (c:Chunk) RETURN count(c) AS n").single()["n"]
+                if n_chunk != len(chunks) or pairs != expected_pairs or after - before != len(chunks):
+                    raise RuntimeError(f"검사 실패 (롤백): 청크 {n_chunk}, 쌍 일치 {pairs == expected_pairs}, 증가 {after - before}")
+                return {"created": n_chunk, "chunk_total_before": before, "chunk_total_after": after}
 
             return s.execute_write(work)
     finally:
