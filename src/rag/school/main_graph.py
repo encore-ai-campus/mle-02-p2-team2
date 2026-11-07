@@ -108,6 +108,22 @@ class MainState(TypedDict, total=False):
     final_result: QueryOutput
 
 
+def scenario_chunks(deps: dict, chunk_ids: list[str]) -> set[str]:
+    """인용 청크 중 모의훈련 시나리오 절(section에 '시나리오')에 속한 것(읽기 전용 조회 1회, 11/07 ③).
+    다른 Tool의 Finding claim에는 시나리오 표기가 없어 DB section으로 확인한다. DB가 없거나 실패하면 빈 집합."""
+    driver = deps.get("driver")
+    if not driver or not chunk_ids:
+        return set()
+    try:
+        records, _, _ = driver.execute_query(
+            "MATCH (c:Chunk) WHERE c.chunk_id IN $ids AND coalesce(c.section, '') CONTAINS '시나리오' "
+            "RETURN c.chunk_id AS chunk_id", ids=list(dict.fromkeys(chunk_ids)),
+            database_=deps.get("database"), routing_="r")
+    except Exception:  # noqa: BLE001 - 표시를 못 붙여도 답변은 낸다(claim 표기로만 판단)
+        return set()
+    return {r["chunk_id"] for r in records}
+
+
 # ---------------------------------------------------------------- 분류
 
 def classify_question(question: str, books: dict) -> dict:
@@ -397,14 +413,16 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
             log("compose_answer", mode="template", reason="다듬기 대상 아님" if writer else "작성기 없음")
             return {"final_result": output}
         started = time.perf_counter()
+        scenario = scenario_chunks(deps, [c["chunk_id"] for c in output["citations"]])
         try:
             written = writer(state["request"]["question"], output, books, picks=state.get("picks") or {},
-                             on_line=deps.get("on_answer_line"))
+                             on_line=deps.get("on_answer_line"), scenario=scenario)
         except Exception as exc:  # noqa: BLE001 - LLM 실패는 템플릿으로 되돌린다
             written = {"answer": None, "problems": [f"작성기 실패: {type(exc).__name__}"], "draft": ""}
         polished = written["answer"]
         log("compose_answer", mode="llm" if polished else "template_fallback", problems=written["problems"],
-        dropped=written.get("dropped", []), draft=written["draft"], template=output["answer"], seconds=round(time.perf_counter() - started, 2))
+            dropped=written.get("dropped", []), moved=written.get("moved", []), marked=written.get("marked", []),
+            draft=written["draft"], template=output["answer"], seconds=round(time.perf_counter() - started, 2))
         return {"final_result": {**output, "answer": polished} if polished else output}
 
     def compose_answer(state: MainState) -> dict:

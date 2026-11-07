@@ -46,7 +46,7 @@ for q in G["questions"]:
     draft = step.get("draft", "")
     gold = EXP[q["id"]]
     steps = {s["step"]: s for s in deps["main_trace"]}
-    rows.append({"dropped": step.get("dropped", []),
+    rows.append({"dropped": step.get("dropped", []), "moved": step.get("moved", []), "marked": step.get("marked", []),
                  "route_seconds": steps.get("classify_scope", {}).get("seconds"),
                  "rerank_seconds": steps.get("select_evidence", {}).get("seconds"),
                  "tool_seconds": round(sum(s.get("seconds") or 0 for s in deps["main_trace"]
