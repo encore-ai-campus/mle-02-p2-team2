@@ -77,7 +77,11 @@ def source_lines(citations: list[dict], documents: dict, urls: dict[str, str]) -
 INTERNAL_WORDS = ("_search", "Finding", "DB", "chunk", "Tool", "도구", "경로", "registry")
 
 
-def user_warnings(warnings: list[str], limit: int = 5) -> list[str]:
-    """일반 사용자에게 보여 줄 주의 문구. 내부 처리 정보가 든 문구는 뺀다. 공백은 하나로 줄인다."""
-    cleaned = [re.sub(r"\s+", " ", w).strip() for w in warnings]
-    return [w for w in cleaned if w and not any(word in w for word in INTERNAL_WORDS)][:limit]
+def user_warnings(warnings: list[str], limit: int = 3) -> list[str]:
+    """일반 사용자에게 보여 줄 '확인이 필요한 부분'. 확인하지 못한 부분([미해결])만 쉬운 말로 바꿔 보인다.
+    Tool 내부 안내(원문 인용·답 카드·원문 강도·단계 우선 등)는 개발자 화면(주의·한계 탭)에만 둔다(11/07 답변 품질 P0-5)."""
+    from rag.school.answer_writer import user_note
+
+    notes = [re.sub(r"\s+", " ", user_note(w)).strip() for w in warnings if w.startswith("[미해결]")]
+    notes = [n for n in dict.fromkeys(notes) if n and not any(word in n for word in INTERNAL_WORDS)]
+    return notes[:limit]

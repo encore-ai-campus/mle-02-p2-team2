@@ -1,0 +1,237 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "홍역 개요 |항목|내용|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0199:t01r04"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MEASLES"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "|전파 예방 조치|∙홍역 의심 증상자의 경우 즉시 의료기관 권고|☐|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0203:t01r11"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MEASLES"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "홍역은 기침 또는 재채기를 통해 공기로 전파되는 전염성이 매우 강한 감염병으로, 감염 시 고열과 함께 전신에 발진이",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0256:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MEASLES"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "|전파 예방 조치|∙학부모 대상 교내 홍역 유행에 대한 가정통신문 발송|☐|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0203:t01r12"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MEASLES"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| 주요증상 및 임상경과 | ∙전구기(3~5일간): 전염력이 강한 시기 - 발열, 기침, 콧물, 결막염, 특징적인 구강 내 병변(Koplik's spot, 1∼2 mm 크기의 회백색 반점) 등이 나타남 ∙발진기: 전반적인 증상이 가장 심한 시기 - 발진은 바이러스에 노출 후 평균 14일(7∼18일)에 발생하며, 5∼6일 동안 지속되고 7∼10일 이내에 소실",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0267:t01r07"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MEASLES"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "1) 전파 차단을 위한 등교 중지 기간으로 관련 질환에 대한 질병관리청 매뉴얼의 환자 격리 기간을 바탕으로 작성함",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0050:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MEASLES"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "5) 전파 경로 ∙ 감염된 사람의 코와 목 점액에 서식하는 전염성이 강한 바이러스임.",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0212:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MEASLES"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| 홍역 | 발진, 발열, 기침, 콧물, koplik 반점 | 발진 발생 4일 전부터 발진 발생 5일 후까지 | 발진이 나타난 후 5일까지 | 7-18일 (평균 10-12일) | O | O | O |",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0226:t01r03"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "MEASLES"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0199:t01r04",
+      "pdf_page": 199,
+      "printed_page": 189,
+      "excerpt": "홍역 개요\n|항목|내용|\n|감염경로|∙에어로졸화 된 비말핵 공기매개 전파, 호흡기 비말, 환자의 비･인두 분비물과 직접 접촉|"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0203:t01r11",
+      "pdf_page": 203,
+      "printed_page": 193,
+      "excerpt": "<표 3-14> 역학조사 협조를 위한 준비사항 체크리스트\n|구분|내용|확인|\n|전파 예방 조치|∙홍역 의심 증상자의 경우 즉시 의료기관 권고|☐|"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0256:b01",
+      "pdf_page": 256,
+      "printed_page": 246,
+      "excerpt": "국내 입국 후 4명 [*] 이 확진(2023. 7. 15. 기준)\n※ 인도 2명, 태국 1명, 기내노출(카타르 출발→바르셀로나 도착) 1명\n홍역은 기침 또는 재채기를 통해 공기로 전파되는 전염성이 매우 강한 감염병으로, 감염 시 고열과 함께 전신에 발진이\n나타나며, 홍역에 대한 면역이 불충분한 사람이 환자와 접촉 시 90% 이상 감염될 수 있음\n이에 질병관"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0203:t01r12",
+      "pdf_page": 203,
+      "printed_page": 193,
+      "excerpt": "<표 3-14> 역학조사 협조를 위한 준비사항 체크리스트\n|구분|내용|확인|\n|전파 예방 조치|∙학부모 대상 교내 홍역 유행에 대한 가정통신문 발송|☐|"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0267:t01r07",
+      "pdf_page": 267,
+      "printed_page": 257,
+      "excerpt": "<br>∙합병증: 중이염, 기관지염, 모세기관지염, 기관지폐렴, 크룹 등의 호흡기 합병증, 설사, 급성뇌염, 아급성 경화성<br>뇌염(Subacute sclerosing panencephalitis, SSPE) 등<br>< 홍역 바이러스 노출기와 전염기: 원본 삽입 도식, 원본 이미지 확인 ><br>※ 전파관리는 노출 시기, 발진일, 전염기가 가장 중요 |"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0050:b01",
+      "pdf_page": 50,
+      "printed_page": 36,
+      "excerpt": "3-3] 그 외 학교 내 감염병의 종류 및 특성\n(격리) 기간 [1)2)]\n격리 [4)]\n항생제 투여 후 7-20일\n5일까지 (평균 5-10일)\n7일 후까지 (평균 14일)\n1) 전파 차단을 위한 등교 중지 기간으로 관련 질환에 대한 질병관리청 매뉴얼의 환자 격리 기간을 바탕으로 작성함\n2) 등교 중지 기간은 휴일을 포함\n3) 감염 시작 시점부터 증상과 징"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0212:b01",
+      "pdf_page": 212,
+      "printed_page": 198,
+      "excerpt": "4) 전염 기간\n∙ 발진이 나타나기 4일 전부터 발진이 나타나기 4일 후까지\n5) 전파 경로\n∙ 감염된 사람의 코와 목 점액에 서식하는 전염성이 강한 바이러스임.\n∙ 기침과 재채기를 통해 전파(비말감염) 또는 오염된 공기를 마시거나 감염된 표면을 만진 다음 눈, 코\n또는 입을 만져 감염됨(공기감염)\n6) 관리 방안\n∙ 예방접종\n생후 12~15개월, 만 4~"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0226:t01r03",
+      "pdf_page": 226,
+      "printed_page": 212,
+      "excerpt": "| 감염병 | 임상 증상 | 전염 가능 기간 | 전파 차단을 위한 등교 중지(격리) 기간 1)2) | 잠복기 3) | 밀접접촉자 파악 | 일시적 격리 4) | 마스크 착용 |\n| 홍역 | 발진, 발열, 기침,<br>콧물, koplik 반점 | 발진 발생 4일 전부터<br>발진 발생 5일 후까지 | 발진이 나타난 후<br>5일까지 | 7-18일<br>(평균<"
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0199:t01r04"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0199:t01r04",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:MEASLES"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0203:t01r11"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0256:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0203:t01r12"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0267:t01r07"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0050:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0212:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0226:t01r03"
+        },
+        {
+          "source_ref": "Chunk:moe_school_manual_v3:p0226:t01r03",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:MEASLES"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

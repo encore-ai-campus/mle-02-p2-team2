@@ -1,0 +1,10 @@
+{
+  "tool_name": "disease_search",
+  "status": "NO_EVIDENCE",
+  "findings": [],
+  "citations": [],
+  "graph_paths": [],
+  "warnings": [
+    "질문에서 지원 질병을 찾지 못함"
+  ]
+}

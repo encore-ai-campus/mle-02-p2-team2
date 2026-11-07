@@ -217,6 +217,12 @@ def focus_terms(question: str, books: dict) -> list[str]:
             if term.endswith(particle):
                 term = term[: -len(particle)]
                 break
+        # 조사 뒤에 남은 어미를 긴 순서로 한 번만 제거해 원문 용어와 비교한다.
+        for ending in sorted(config.get("focus_endings", []), key=len, reverse=True):
+            if ending and term.endswith(ending):
+                term = term[: -len(ending)]
+                break
+        # 어미 제거 후 일상어를 문서 용어로 정규화하면 한 글자 어간도 살릴 수 있다.
         for canonical, variants in aliases.items():
             if any(compare_key(term).startswith(compare_key(variant)) for variant in variants):
                 term = canonical
@@ -582,6 +588,8 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
     found_disease_ids: set[str] = set()
     disease_name_chunk_seen = False
     focus_chunk_seen = False
+    # 핵심어가 전혀 없는 경우에만 사용할 수 있도록 질병 근거 후보를 따로 보관한다.
+    fallback_candidates = []
     for hit in hits:
         chunk_id = hit["chunk_id"]
         text = hit["text"]
@@ -615,9 +623,28 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
             continue
 
         focus_position = _focus_position(searchable_text, requested_focus_terms)
-        if requested_focus_terms and focus_position is None:
-            continue
+        is_fallback = bool(requested_focus_terms and focus_position is None)
         focus_chunk_seen = focus_chunk_seen or focus_position is not None
+        if is_fallback:
+            # ABOUT 관계가 있어도 해당 질병의 제외 문구만 있는 줄은 대체 근거에서 가린다.
+            excluded = [
+                phrase
+                for disease_id in matched_ids
+                for phrase in exclude_phrases.get(disease_id, [])
+            ]
+            searchable_text = _mask_excluded_lines(searchable_text, excluded)
+            if not searchable_text.strip():
+                continue
+            # 목차의 점선·쪽수와 표 머리글만 있는 청크는 본문 근거로 대체하지 않는다.
+            if re.search(r"(?:…|\.{3,})\s*\d", searchable_text):
+                continue
+            visible_lines = [line.strip() for line in searchable_text.splitlines() if line.strip()]
+            if (
+                visible_lines
+                and all(line.startswith("|") for line in visible_lines)
+                and not any(re.search(r"\d", line) for line in visible_lines)
+            ):
+                continue
         name_positions = [
             position
             for disease_id in matched_ids
@@ -637,20 +664,35 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
             warnings.append("유효한 Citation을 만들 수 없는 청크를 건너뜀")
             continue
 
-        findings.append(
-            {
-                "claim": claim,
-                "chunk_ids": [chunk_id],
-                "action_ids": [],
-                "disease_ids": matched_ids,
-                "concept_ids": [],
-            }
-        )
+        finding = {
+            "claim": claim,
+            "chunk_ids": [chunk_id],
+            "action_ids": [],
+            "disease_ids": matched_ids,
+            "concept_ids": [],
+        }
+        if is_fallback:
+            # 허용 문서·질병 일치·제외 문구·인용 검증을 마친 후보만 순서대로 둔다.
+            fallback_candidates.append((finding, citation, hit, matched_ids, actual_about_ids))
+            continue
+        findings.append(finding)
         citations.append(citation)
         graph_paths.extend(_graph_paths(hit, matched_ids, actual_about_ids))
         found_disease_ids.update(matched_ids)
         if len(findings) >= top_k:
             break
+
+    used_fallback = False
+    if not focus_chunk_seen and fallback_candidates:
+        # 핵심어가 든 청크가 전혀 없을 때만 검색 순위의 상위 근거를 반환한다.
+        used_fallback = True
+        terms_text = ", ".join(requested_focus_terms)
+        warnings.append(f"핵심어({terms_text}) 든 청크 없음→질병 관련 청크로 대체")
+        for finding, citation, hit, matched_ids, actual_about_ids in fallback_candidates[:top_k]:
+            findings.append(finding)
+            citations.append(citation)
+            graph_paths.extend(_graph_paths(hit, matched_ids, actual_about_ids))
+            found_disease_ids.update(matched_ids)
 
     if not findings:
         if requested_focus_terms and disease_name_chunk_seen and not focus_chunk_seen:
@@ -663,7 +705,7 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
 
     missing_disease_ids = [disease_id for disease_id in disease_ids if disease_id not in found_disease_ids]
     warnings.extend(f"근거를 찾지 못한 disease_id: {disease_id}" for disease_id in missing_disease_ids)
-    status: ToolStatus = "PARTIAL" if missing_disease_ids else "OK"
+    status: ToolStatus = "PARTIAL" if missing_disease_ids or used_fallback else "OK"
     return {
         "tool_name": "disease_search",
         "status": status,

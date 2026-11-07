@@ -77,16 +77,50 @@ HOLDOUT = [
     ("휴업은 누가 결정해요?", "ACTION", ""),
 ]
 
+# 홀드아웃 2: 신고 라우팅 규칙(학교 신고 의무 질문 = 학교 문서 먼저, 법령 보조)을 정한 직후, 실행 결과를 보기 전에 작성해 고정했다.
+# 프롬프트·규칙 조정에 쓰지 않는다. 기대값은 Claude가 정했다(팀 검수 전). 'BOTH:ACTION+LEGAL' = 두 Tool이 주·보조 어디든 잡히면 정답.
+HOLDOUT2 = [
+    ("유행성이하선염 환자가 생기면 학교장은 보건소에 신고해야 하나요?", "BOTH:ACTION+LEGAL"),
+    ("수막구균 감염이 의심되면 학교가 따로 신고해야 하나요?", "BOTH:ACTION+LEGAL"),
+    ("신고 대상 감염병 목록에 학교가 알아야 하는 질병이 뭐가 있어요?", "ACTION"),
+    ("감염병예방법에서 신고를 안 한 관리인에게 과태료가 있나요?", "LEGAL"),
+    ("법적으로 학교가 환자 정보를 보건소에 제공해야 하나요?", "LEGAL"),
+    ("신고를 안 하면 처벌되는 감염병이 있나요?", "LEGAL"),
+    ("풍진에 걸리면 임신한 교사에게 위험한가요?", "DISEASE"),
+    ("수두는 예방접종을 몇 번 맞아야 하나요?", "DISEASE"),
+    ("지금 학급에 확진자가 나왔는데 오늘 급식은 어떻게 해야 하나요?", "ACTION"),
+    ("교실 소독은 누가 얼마나 자주 하나요?", "ACTION"),
+    ("결석한 학생에게 학교가 먼저 연락해야 하나요?", "ACTION"),
+    ("교육부와 경기도 자료가 학부모 안내 시점을 다르게 말하나요?", "CROSSDOC"),
+    ("우리 아이 열이 나는데 병원 어디가 좋아요?", "OUT_OF_SCOPE"),
+    ("성홍열 같은데 항생제 먹여도 될까요?", "OUT_OF_SCOPE"),
+    ("이 서비스에서 물어볼 수 있는 질문 예시를 보여주세요", "GENERAL"),
+    ("수족구 학생이 나오면 학교는 어떻게 하고 전염 기간은 얼마예요?", "BOTH:ACTION+DISEASE"),
+]
+# 11/06 기대값 수정(원래 LEGAL 주): 법 조항·처벌을 말하지 않고 학교의 신고 의무만 묻는 질문은 학교 문서 + 법령 둘 다 필요하다.
+# 같은 날 S-Q03 분석(법령만 부르면 막다른 길)에서 나온 원칙이며, 결과를 본 뒤 바꾼 것이므로 원래 기대 결과도 함께 기록한다.
+BOTH_OVERRIDE = {"E05", "H06", "H07"}
+ORIGINAL_EXPECTED = {"E05": "LEGAL", "H06": "LEGAL", "H07": "LEGAL"}
+
 golden = json.loads(Path("data/specs/golden/school.json").read_text(encoding="utf-8"))
 SETS = {"golden": [(q["id"], q["question"], ROUTE_LABEL[q["route"]]) for q in golden["questions"]],
         "everyday": [(f"E{i:02d}", q, exp) for i, (q, exp) in enumerate(EVERYDAY, 1)],
         "staff": [(qid, q, STAFF_EXPECT.get(qid, "ACTION")) for qid, _, q in STAFF],
-        "holdout": [(f"H{i:02d}", q, exp) for i, (q, exp, _) in enumerate(HOLDOUT, 1)]}
+        "holdout": [(f"H{i:02d}", q, exp) for i, (q, exp, _) in enumerate(HOLDOUT, 1)],
+        "holdout2": [(f"K{i:02d}", q, exp) for i, (q, exp) in enumerate(HOLDOUT2, 1)]}
+for _name, _items in SETS.items():       # 수정한 기대값 반영
+    SETS[_name] = [(i, q, "BOTH:ACTION+LEGAL" if i in BOTH_OVERRIDE else e) for i, q, e in _items]
 HOLDOUT_SECONDARY = {f"H{i:02d}": sec for i, (_, _, sec) in enumerate(HOLDOUT, 1) if sec}
 repeat = int(sys.argv[2]) if len(sys.argv) > 2 else 2
 
 books = load_dictionaries()
 router = make_router()
+
+
+def graded_ok(primary: str, secondary: list, expected: str) -> bool:
+    if expected.startswith("BOTH:"):
+        return set(expected[5:].split("+")) <= {primary, *secondary}
+    return primary in expected.split("|")
 
 
 def label(result: dict) -> str:
@@ -107,11 +141,12 @@ for set_name, items in SETS.items():
             runs.append({"label": label(result), "secondary": result.get("secondary", []),
                          "sub_questions": result.get("sub_questions", {}), "reason": result.get("reason", ""),
                          "seconds": round(time.perf_counter() - started, 2), "error": error})
-        allowed = expected.split("|")
         row = {"set": set_name, "id": qid, "question": question, "expected": expected,
-               "rule": label(rule), "rule_secondary": rule.get("secondary", []), "rule_ok": label(rule) in allowed,
-               "llm": runs[0]["label"], "llm_ok": runs[0]["label"] in allowed,
-               "llm_all_ok": all(r["label"] in allowed for r in runs),
+               "expected_original": ORIGINAL_EXPECTED.get(qid),
+               "rule": label(rule), "rule_secondary": rule.get("secondary", []),
+               "rule_ok": graded_ok(label(rule), rule.get("secondary", []), expected),
+               "llm": runs[0]["label"], "llm_ok": graded_ok(runs[0]["label"], runs[0]["secondary"], expected),
+               "llm_all_ok": all(graded_ok(r["label"], r["secondary"], expected) for r in runs),
                "consistent": len({(r["label"], tuple(r["secondary"])) for r in runs}) == 1, "runs": runs}
         if qid in HOLDOUT_SECONDARY:   # 복합 질문: 주 의도 외에 함께 물은 의도가 주·보조 어딘가에 잡혔는가
             got = {runs[0]["label"], *runs[0]["secondary"]}

@@ -7,13 +7,18 @@ ORDER BY doc.document_id, action.action_id
 LIMIT 50
 RETURN path
 
-// 질병 중심: 성홍열 ABOUT 청크·문서와 그 질병을 대상으로 하는 SchoolAction을 보여준다.
-MATCH path =
-  (action:SchoolAction)-[:FOR_DISEASE]->(disease:Disease {disease_id: 'SCARLET_FEVER'})
-  <-[:ABOUT]-(chunk:Chunk)<-[:HAS_CHUNK]-(doc:Document)
-WITH path, doc, action, chunk
-ORDER BY doc.document_id, action.action_id, chunk.chunk_id
-LIMIT 50
+// 질병 중심: 성홍열에 ABOUT으로 연결된 청크·문서와, 성홍열 FOR_DISEASE 행동의 근거 청크·문서를 문서별로 모두 보여준다.
+// (행동×청크 조합을 만들지 않아 LIMIT에 잘리지 않음. 11/6 수정:이전 쿼리는 LIMIT 50에서 경기 문서만 나옴)
+MATCH (disease:Disease {disease_id: 'SCARLET_FEVER'})
+CALL {
+  WITH disease
+  MATCH path = (doc:Document)-[:HAS_CHUNK]->(chunk:Chunk)-[:ABOUT]->(disease)
+  RETURN path
+  UNION
+  WITH disease
+  MATCH path = (doc:Document)-[:HAS_CHUNK]->(chunk:Chunk)<-[:SUPPORTED_BY]-(action:SchoolAction)-[:FOR_DISEASE]->(disease)
+  RETURN path
+}
 RETURN path
 
 // 인플루엔자 시설 지침의 Document·Chunk·SchoolAction·ActionConcept·Disease 구조를 보여준다.

@@ -48,7 +48,7 @@ def deps(books):
     ("학교에서 유증상 학생이 발견되면 담임교사와 보건교사는 각각 무엇을 확인하나요?", "DOMAIN", "ACTION"),   # T02
     ("학생이 열이 나서 보건실에 왔어요. 어떻게 해야 하나요?", "DOMAIN", "ACTION"),                  # 병명 없음 ≠ 일반
     ("홍역의 잠복기는 며칠인가요?", "DOMAIN", "DISEASE"),                                          # T01 유형
-    ("성홍열도 학교장이 보건소에 신고해야 하나요?", "DOMAIN", "LEGAL"),                              # T03 유형
+    ("성홍열도 학교장이 보건소에 신고해야 하나요?", "DOMAIN", "ACTION"),                             # T03 유형(11/06: 학교 문서 먼저)
     ("홍역 학생이 확인되면 학교는 보건소 신고 공문을 어떻게 보내나요?", "DOMAIN", "ACTION"),          # 절차는 Action
     ("보호자 연락을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요?", "DOMAIN", "CROSSDOC"),  # T04 유형
     ("수두 환자는 언제까지 격리하나요?", "DOMAIN", "ACTION"),
@@ -228,16 +228,32 @@ MIXED = "성홍열 학생이 생기면 담임교사는 무엇을 하고, 학교�
 
 def test_classify_adds_action_as_secondary_only_when_school_action_is_asked(books):
     assert classify_question(MIXED, books)["secondary"] == ["ACTION"]
-    assert classify_question("성홍열도 학교장이 보건소에 신고해야 하나요?", books)["secondary"] == []   # 학교장=신고 주체
-    assert classify_question("홍역 학생이 생기면 학교는 무엇을 해야 하고, 보건소 신고도 해야 하나요?",
-                             books)["intent"] == "LEGAL"
+    # 11/06: 법 조항을 말하지 않고 학교의 신고 의무만 묻는 질문은 학교 문서(신고 대상 목록·학교장 신고 행동)가 먼저
+    # 답하고 법령은 보조로 확인한다. 법령만 먼저 부르면 법령 카드가 없을 때 근거 없이 끝난다(S-Q03 실험).
+    duty = classify_question("성홍열도 학교장이 보건소에 신고해야 하나요?", books)
+    assert (duty["intent"], duty["secondary"]) == ("ACTION", ["LEGAL"])
+    both = classify_question("홍역 학생이 생기면 학교는 무엇을 해야 하고, 보건소 신고도 해야 하나요?", books)
+    assert (both["intent"], both["secondary"]) == ("ACTION", ["LEGAL"])
+    for question in ("감염병예방법상 학교장의 신고 의무는 무엇인가요?", "학교장이 신고하지 않으면 처벌받나요?"):
+        law = classify_question(question, books)
+        assert (law["intent"], law["secondary"]) == ("LEGAL", [])           # 법·처벌을 직접 물으면 법령만
 
 
 def test_sufficient_first_tool_stops_without_extra_call(books, monkeypatch):
     legal, action = _tool("legal_search"), _tool("action_search")
-    out = run_main(query("성홍열도 학교장이 보건소에 신고해야 하나요?"), _deps_no_db(books, monkeypatch),
+    out = run_main(query("감염병예방법상 학교장의 신고 의무는 무엇인가요?"), _deps_no_db(books, monkeypatch),
                    {"legal_search": legal, "action_search": action})
     assert out["status"] == "ANSWERED" and out["search_rounds"] == 1 and action.calls == []
+
+
+def test_school_duty_question_goes_to_school_documents_first_then_legal(books, monkeypatch):
+    # 법령 카드가 없어도(NO_EVIDENCE) 학교 문서 근거가 남아 PARTIAL로 끝난다. 법령만 먼저 부르면 근거 없이 끝났다(S-Q03).
+    legal = _tool("legal_search", status="NO_EVIDENCE")
+    action = _tool("action_search")
+    out = run_main(query("성홍열도 학교장이 보건소에 신고해야 하나요?"), _deps_no_db(books, monkeypatch),
+                   {"legal_search": legal, "action_search": action})
+    assert out["tools_used"] == ["action_search", "legal_search"]
+    assert out["status"] == "PARTIAL" and out["citations"]
 
 
 def test_secondary_intent_triggers_second_tool_with_context(books, monkeypatch):

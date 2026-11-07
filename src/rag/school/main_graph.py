@@ -1,7 +1,10 @@
 """메인 LangGraph (주승우) — QueryInput → Tool 호출(최대 3회) → QueryOutput. 11/05 B07·B08, 11/06 M4 재검색 루프.
 
 노드(계약 v2.0 §10): normalize_input → classify_scope → classify_intent → select_tool → execute_tool →
-merge_and_validate → evaluate_evidence → (select_tool 재진입 | compose_answer | partial_or_insufficient) → END.
+merge_and_validate → evaluate_evidence → (select_tool 재진입 | select_evidence → compose_answer | partial_or_insufficient) → END.
+select_evidence(11/07 ②)는 모든 Tool 결과를 모은 뒤 LLM 재순위로 필요한 근거만 남기고 하위 질문별 충분성을 status에 반영한다.
+check_facts(11/07 답변 품질 P0-2)는 select_evidence 앞에서 라우터가 고른 확인 항목(신고 대상·급수·유행의심 기준·신고의무자·
+벌칙·등교중지)의 판단 기준 원문을 DB에서 직접 찾아 근거에 더한다. 이 근거는 선별 뒤에도 남긴다(판단에 꼭 필요한 규칙).
 GENERAL·OUT_OF_SCOPE는 Tool 없이 compose_answer로 간다.
 
 - 재검색(11/06): 근거가 충분하면(ANSWERED) 추가 호출 없이 끝낸다. 부족할 때만, 명시적 신호가 가리키는 아직 부르지 않은
@@ -21,12 +24,15 @@ from __future__ import annotations
 import re
 import time
 from collections.abc import Callable
+from concurrent.futures import Future, ThreadPoolExecutor
 from typing import TypedDict
 
 from langgraph.graph import END, START, StateGraph
 
 from index.school.dictionaries import compare_key
 from rag.school.action_tool import UNRESOLVED, action_search, check_graph_paths
+from rag.school.answer_writer import user_note
+from rag.school.checks import CHECK_LABELS, augment_checks, gather_checks
 from rag.school.contract_v2_local import (
     TOOL_NAMES,
     Citation,
@@ -41,6 +47,7 @@ from rag.school.contract_v2_local import (
     validate_tool_result,
 )
 from rag.school.graph import COMPARE_HINTS, OUT_OF_SCOPE
+from rag.school.rerank import filter_evidence
 from rag.school.validation_local import verify_against_db
 
 ToolCallable = Callable[[ToolInput], ToolResult]
@@ -59,7 +66,11 @@ DOMAIN_WORDS = ("감염", "학교", "학생", "교사", "교직원", "등교", "
                 "관찰실", "방역", "소독", "나이스", "neis", "출결", "출석", "예방", "접종", "잠복", "전파", "환자", "발열",
                 "마스크", "휴업", "교육청", "확진", "의심", "가정통신문", "접촉", "결석", "특수학교", "ecp", "연속성",
                 "식중독", "급식", "보호자", "학부모", "수업결손", "능동감시", "대응", "단계", "관리조직")
-LEGAL_RE = re.compile(r"신고(도|는)?(해야|하여야|의무|대상인|대상이|할의무)|법(령|률)?상|법률|법령|법적|감염병예방법|예방법|시행규칙|시행령|과태료|벌칙|의무가있")
+# 법 조항·처벌을 직접 말하는 질문만 법령(LEGAL)을 먼저 부른다.
+LEGAL_RE = re.compile(r"법(령|률)?상|법률|법령|법적|감염병예방법|예방법|시행규칙|시행령|과태료|벌칙|처벌|의무가있")
+# '신고해야 하나요?'처럼 학교의 신고 의무만 묻고 법 조항은 말하지 않는 질문. 학교 문서(신고 대상 목록·학교장 신고 행동)가
+# 먼저 답하고, 법적 확정은 법령 확인이 필요하다(11/06 S-Q03: 법령만 부르면 카드가 없을 때 막다른 길이 된다).
+SCHOOL_DUTY_RE = re.compile(r"신고(도|는)?(해야|하여야|의무|대상인|대상이|할의무)")
 PROCEDURE_RE = re.compile(r"공문|어떻게보내|(?<!예)방법|절차|메뉴|입력하|기안")   # '감염병예방법'의 '방법'은 절차가 아님
 DISEASE_FACT = ("잠복기", "전파경로", "감염경로", "전파", "증상은", "증상이뭐", "원인", "치료", "합병증", "특징", "전염력",
                 "백신", "얼마나오래", "감염력")
@@ -71,9 +82,13 @@ ACTION_ASK = ("무엇을하", "무엇을해야", "뭘해야", "뭐해야", "어�
               "안내해야", "할일")
 DISEASE_ASK = ("잠복기", "전파경로", "감염경로", "증상은", "증상이뭐", "합병증", "전염력", "감염력", "전염기간")
 MAX_TOOL_CALLS = 3
-# 의도가 하나여도 LLM 라우터의 하위 질문(문서 용어)을 넘기는 Tool. disease_search는 질문 낱말이 든 청크만 찾는다
-# ('홍역은 어떻게 옮아요?' NO_EVIDENCE / '홍역의 전파 경로는 무엇인가요?' OK, 11/06 실DB 확인).
-SUB_QUESTION_TOOLS = frozenset({"disease_search"})
+# 개념 수준 문서 용어 검색 문장을 task로 넘기는 Tool(11/07 ②). 다른 담당자 Tool은 task를 검색어로 쓸 수 있어
+# (crossdoc은 질문+task 글자를 읽는다) 넘기지 않는다.
+DOC_QUERY_TOOLS = frozenset({"action_search"})
+
+
+# 확인 항목 조회를 Tool 실행과 동시에 돌리는 공용 실행기(요청마다 만들지 않는다).
+CHECK_POOL = ThreadPoolExecutor(max_workers=4, thread_name_prefix="check_facts")
 
 
 class MainState(TypedDict, total=False):
@@ -83,6 +98,13 @@ class MainState(TypedDict, total=False):
     intent: str                   # ACTION / DISEASE / LEGAL / CROSSDOC
     secondary_intents: list[str]
     sub_questions: dict[str, str]  # Tool 이름 → 하위 질문(LLM 라우터, 의도 2개 이상일 때만)
+    search_queries: dict[str, str]  # Tool 이름 → 개념 수준 문서 용어 검색 문장(LLM 라우터, 11/07 ②)
+    picks: dict[str, dict]        # 근거 재순위 결과: chunk_id → 역할·하위 질문 번호·원문 대조를 통과한 핵심 구절
+    situation: dict               # 질문 속 사실(질병·확진/의심·인원·범위·질문자 역할, LLM 라우터, 11/07 P0-1)
+    checks: list[str]             # 답하려면 확인할 항목(REPORTABLE·STAGE…)
+    pinned: list[str]             # 확인 항목 근거 chunk_id(선별 뒤에도 남긴다)
+    facts: list[dict]             # 확인 항목에서 코드가 원문과 글자 대조한 사실({chunk_id, text})
+    pin_roles: dict[str, str]     # 확인 항목 근거의 쓰임: ROLE(역할별 할 일 표) / RULE(판단 규칙)
     selected_tool: str
     next_tool: str
     next_reason: str
@@ -98,6 +120,22 @@ class MainState(TypedDict, total=False):
     unresolved: list[str]
     status: str
     final_result: QueryOutput
+
+
+def scenario_chunks(deps: dict, chunk_ids: list[str]) -> set[str]:
+    """인용 청크 중 모의훈련 시나리오 절(section에 '시나리오')에 속한 것(읽기 전용 조회 1회, 11/07 ③).
+    다른 Tool의 Finding claim에는 시나리오 표기가 없어 DB section으로 확인한다. DB가 없거나 실패하면 빈 집합."""
+    driver = deps.get("driver")
+    if not driver or not chunk_ids:
+        return set()
+    try:
+        records, _, _ = driver.execute_query(
+            "MATCH (c:Chunk) WHERE c.chunk_id IN $ids AND coalesce(c.section, '') CONTAINS '시나리오' "
+            "RETURN c.chunk_id AS chunk_id", ids=list(dict.fromkeys(chunk_ids)),
+            database_=deps.get("database"), routing_="r")
+    except Exception:  # noqa: BLE001 - 표시를 못 붙여도 답변은 낸다(claim 표기로만 판단)
+        return set()
+    return {r["chunk_id"] for r in records}
 
 
 # ---------------------------------------------------------------- 분류
@@ -122,13 +160,17 @@ def classify_question(question: str, books: dict) -> dict:
     intents = []
     if any(c in key for c in CROSS_CUES):
         intents.append("CROSSDOC")
-    legal = bool(LEGAL_RE.search(key)) and not PROCEDURE_RE.search(key)
+    procedure = bool(PROCEDURE_RE.search(key))
+    legal = bool(LEGAL_RE.search(key)) and not procedure
+    school_duty = bool(SCHOOL_DUTY_RE.search(key)) and not legal and not procedure
     if legal:
         intents.append("LEGAL")
     disease_fact = any(c in key for c in DISEASE_FACT) and not any(c in key for c in SCHOOL_ACTION_CUES)
     if disease_fact:
         intents.append("DISEASE")
     intents.append("ACTION")                         # 병명 없는 학교 업무도 Action(일반 대화로 보내지 않음)
+    if school_duty:
+        intents.append("LEGAL")                      # 학교 신고 의무 질문: 학교 문서 먼저, 법령은 보조(법적 확정 확인)
     primary = intents[0]
     # 보조 의도: 첫 Tool 외에 확인이 필요한 영역. 기본값으로 붙인 ACTION은 세지 않고, 학교 행동을 실제로 함께 물을 때만 넣는다.
     secondary = [i for i in dict.fromkeys(intents[1:]) if i != "ACTION"]
@@ -148,9 +190,18 @@ def classify_question(question: str, books: dict) -> dict:
 def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
     books = deps["books"]
     trace = deps.setdefault("main_trace", [])
+    # 확인 항목 조회는 라우터 결과만 있으면 시작할 수 있어 Tool 실행과 동시에 돌린다(11/07 지연 개선). 한 번 실행에 하나.
+    background: dict[str, Future] = {}
+    pool = CHECK_POOL
 
     def log(step: str, **info):
         trace.append({"step": step, **info})
+        listener = deps.get("on_event")             # 화면 진행 표시(11/07). 실패해도 그래프는 계속한다.
+        if listener:
+            try:
+                listener(step, info)
+            except Exception:  # noqa: BLE001, S110 - 화면 콜백 오류가 답변을 막지 않게 한다
+                pass
 
     def normalize_input(state: MainState) -> dict:
         request = state["request"]
@@ -169,16 +220,26 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         if router:
             try:
                 result, mode = router(question, rule), "llm"
+                if result["response_type"] == "DOMAIN":      # 질문 낱말로 분명한 확인 항목은 코드가 보탠다(11/07)
+                    result["checks"] = augment_checks(question, result.get("situation", {}), result.get("checks", []))
             except Exception as exc:  # noqa: BLE001 - LLM 실패·형식 위반은 규칙 분류로 되돌린다
                 mode, error = "rule_fallback", f"{type(exc).__name__}: {str(exc)[:120]}"
         brief = ("response_type", "intent", "secondary", "reason", "confidence")
         log("classify_scope", mode=mode, **{k: result[k] for k in brief if k in result},
-            sub_questions=result.get("sub_questions", {}), rule={k: rule[k] for k in brief if k in rule},
+            sub_questions=result.get("sub_questions", {}), search_queries=result.get("search_queries", {}),
+            situation=result.get("situation", {}), checks=result.get("checks", []),
+            rule={k: rule[k] for k in brief if k in rule},
             error=error, seconds=round(time.perf_counter() - started, 2))
         update = {"response_type": result["response_type"], "scope_reason": result.get("reason", "")}
+        if result["response_type"] == "DOMAIN" and result.get("checks") and deps.get("driver"):
+            situation = {**result.get("situation", {}), "_question": question}
+            background["checks"] = pool.submit(gather_checks, list(result["checks"]), situation,
+                                               state["request"]["allowed_document_ids"], deps)
         if result["response_type"] == "DOMAIN":
             update |= {"intent": result["intent"], "secondary_intents": result["secondary"],
-                       "sub_questions": result.get("sub_questions", {})}
+                       "sub_questions": result.get("sub_questions", {}),
+                       "search_queries": result.get("search_queries", {}),
+                       "situation": result.get("situation", {}), "checks": result.get("checks", [])}
         return update
 
     def classify_intent(state: MainState) -> dict:
@@ -203,12 +264,15 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         task = TOOL_TASKS[tool] + (f" (요청 힌트: {request['task']})" if request.get("task") else "")
         if state["tool_results"]:
             task += f" (앞선 호출 {state['tools_used']}에서 남은 부분: {state['next_reason'][:120]})"
-        # 하위 질문은 복합 질문이거나 문서 용어가 필요한 Tool에만 넘긴다(원 질문은 task에 남긴다). 그 밖에는 원 질문 그대로.
+        # 하위 질문은 복합 질문(의도 2개 이상)일 때만 Tool에 넘긴다(원 질문은 task에 남긴다). 의도가 하나면 원 질문 그대로.
+        # 질병 Tool은 어미·일상어를 직접 처리한다(송수림 a72aef8, 11/06 확인).
         subs = state.get("sub_questions", {})
-        use_sub = len(subs) > 1 or tool in SUB_QUESTION_TOOLS
-        question = (subs.get(tool) if use_sub else None) or request["question"]
+        question = (subs.get(tool) if len(subs) > 1 else None) or request["question"]
         if question != request["question"]:
             task += f" (원 질문: {request['question']})"
+        doc_query = state.get("search_queries", {}).get(tool) if tool in DOC_QUERY_TOOLS else None
+        if doc_query:                                             # 11/07 ②: 학교 행동 Tool의 multi-query
+            task += f" (문서 용어 질문: {doc_query.replace(')', ' ')})"
         tool_input: ToolInput = {"question": question, "task": task, "region": request["region"],
                                  "allowed_document_ids": list(request["allowed_document_ids"])}
         if request.get("preferred_document_ids"):
@@ -327,6 +391,84 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         return {"status": status, "unresolved": list(dict.fromkeys(unresolved)), "next_tool": next_tool,
                 "next_reason": next_reason}
 
+    def check_facts(state: MainState) -> dict:
+        """확인 항목의 판단 기준 원문을 찾아 근거 앞에 더한다(읽기 전용). 항목이 없거나 실패하면 그대로 둔다."""
+        checks = state.get("checks") or []
+        if not checks or not deps.get("driver") or state["status"] == "ERROR" and not state["tool_results"]:
+            log("check_facts", mode="skip", checks=checks)
+            return {"pinned": [], "facts": []}
+        try:
+            future = background.pop("checks", None)
+            got = future.result(timeout=20) if future else gather_checks(
+                checks, {**(state.get("situation") or {}), "_question": state["request"]["question"]},
+                state["request"]["allowed_document_ids"], deps)
+        except Exception as exc:  # noqa: BLE001 - 확인 항목 조회 실패는 답변을 막지 않는다
+            log("check_facts", mode="error", checks=checks, error=f"{type(exc).__name__}: {str(exc)[:120]}")
+            return {"pinned": [], "facts": []}
+        have = {c["chunk_id"] for c in state["citations"]}
+        new_cits = [c for c in got["citations"] if c["chunk_id"] not in have]
+        pinned = got["pinned"]
+        status = state["status"]
+        if got["findings"] and status in ("INSUFFICIENT_EVIDENCE", "ERROR"):
+            status = "PARTIAL"                 # Tool은 못 찾았지만 판단 기준 원문은 있다(선별 단계가 충분성을 다시 본다)
+        log("check_facts", mode="db", checks=checks, found={CHECK_LABELS.get(k, k): v for k, v in got["found"].items()},
+            facts=[f["text"] for f in got["facts"]], added=len(new_cits), seconds=got["seconds"])
+        return {"findings": got["findings"] + state["findings"], "citations": new_cits + state["citations"],
+                "pinned": pinned, "facts": got["facts"], "status": status,
+                "pin_roles": {c: "ROLE" for c in got["found"].get("ROLE_TASKS", [])}}
+
+    def select_evidence(state: MainState) -> dict:
+        """근거 재순위·충분성 판정(11/07 ②). deps['reranker']가 없거나 실패하면 근거를 그대로 둔다."""
+        reranker = deps.get("reranker")
+        pinned = [c for c in state.get("pinned", []) if c in {x["chunk_id"] for x in state["citations"]}]
+        if not reranker or state["status"] not in ("ANSWERED", "PARTIAL") or not state["findings"]:
+            log("select_evidence", mode="skip", reason="재순위기 없음" if not reranker else "근거 없음")
+            return {"picks": {}}
+        request = state["request"]
+        subs = state.get("sub_questions", {})
+        parts = list(subs.values()) if len(subs) > 1 else [request["question"]]
+        titles = {doc: names[0] for doc, names in DOC_TITLES.items()}
+        situation = state.get("situation") or {}
+        started = time.perf_counter()
+        try:
+            result = reranker(request["question"], parts, state["findings"], state["citations"], titles,
+                              situation=situation, pinned=pinned, facts=state.get("facts") or [])
+        except Exception as exc:  # noqa: BLE001 - LLM 실패는 재순위 없이 진행한다
+            log("select_evidence", mode="fallback", error=f"{type(exc).__name__}: {str(exc)[:120]}",
+                seconds=round(time.perf_counter() - started, 2))
+            return {"picks": {}}
+        before = (len(state["findings"]), len(state["citations"]))
+        unresolved = list(state["unresolved"])
+        warnings = state["warnings"]
+        order = list(dict.fromkeys(result["order"] + pinned))       # 판단 기준 근거는 선별 뒤에도 남긴다
+        if not result["order"]:
+            # Tool 경고는 버려진 Finding에 대한 안내라 남기지 않는다(답변에 내부 문구가 노출되던 문제, 11/07 A03).
+            status, findings, citations, warnings = "INSUFFICIENT_EVIDENCE", [], [], []
+            unresolved.insert(0, f"{UNRESOLVED} 근거 선별: 검색한 자료 중 이 질문에 직접 답하는 근거를 찾지 못했다.")
+        else:
+            findings, citations = filter_evidence(state["findings"], state["citations"], order)
+            status = state["status"]
+            gaps = [c for c in result["coverage"] if c["status"] != "ANSWERED"]
+            if gaps:
+                status = "PARTIAL"
+                unresolved += [f"{UNRESOLVED} 근거에서 확인하지 못한 부분: {c['missing']}" for c in gaps]
+            elif pinned:
+                # 판단 기준 원문을 더한 뒤 선별 단계가 하위 질문마다 '답함'이라고 판정했으면, Tool 단계의 미해결(다른 Tool이
+                # 못 찾음 등)은 그 원문으로 채워진 것이다(11/07 P0: 기준 원문으로 답할 수 있는데 '일부 확인'으로 끝나던 문제).
+                status, unresolved = "ANSWERED", []
+        log("select_evidence", mode="llm", cards=result["cards"], before=before,
+            candidates=[c["chunk_id"] for c in state["citations"]][:result["cards"]],
+            after=(len(findings), len(citations)), status=status, coverage=result["coverage"],
+            picks=[{"chunk_id": c, **{k: v for k, v in result["picks"][c].items() if k != "card"}}
+                   for c in result["order"]],
+            invalid=result["invalid"], seconds=round(time.perf_counter() - started, 2))
+        picks = dict(result["picks"])
+        for chunk_id in pinned:
+            picks.setdefault(chunk_id, {"role": (state.get("pin_roles") or {}).get(chunk_id, "RULE"), "part": 1,
+                                        "quotes": []})
+        return {"findings": findings, "citations": citations, "status": status, "picks": picks,
+                "warnings": warnings, "unresolved": list(dict.fromkeys(unresolved))}
+
     def finish(state: MainState) -> dict:
         """템플릿 답변을 만들고, deps['answer_writer']가 있으면 검사를 통과한 다듬은 답변으로 바꾼다(11/07)."""
         output = finalize(state)
@@ -335,12 +477,17 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
             log("compose_answer", mode="template", reason="다듬기 대상 아님" if writer else "작성기 없음")
             return {"final_result": output}
         started = time.perf_counter()
+        scenario = scenario_chunks(deps, [c["chunk_id"] for c in output["citations"]])
         try:
-            written = writer(state["request"]["question"], output, books)
+            written = writer(state["request"]["question"], output, books, picks=state.get("picks") or {},
+                             on_line=deps.get("on_answer_line"), scenario=scenario,
+                             context={"situation": state.get("situation") or {}, "facts": state.get("facts") or []})
         except Exception as exc:  # noqa: BLE001 - LLM 실패는 템플릿으로 되돌린다
             written = {"answer": None, "problems": [f"작성기 실패: {type(exc).__name__}"], "draft": ""}
         polished = written["answer"]
         log("compose_answer", mode="llm" if polished else "template_fallback", problems=written["problems"],
+            dropped=written.get("dropped", []), moved=written.get("moved", []), marked=written.get("marked", []),
+            attempts=written.get("attempts"), added=written.get("added", []),
             draft=written["draft"], template=output["answer"], seconds=round(time.perf_counter() - started, 2))
         return {"final_result": {**output, "answer": polished} if polished else output}
 
@@ -354,7 +501,9 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
     for name, fn in (("normalize_input", normalize_input), ("classify_scope", classify_scope),
                      ("classify_intent", classify_intent), ("select_tool", select_tool),
                      ("execute_tool", execute_tool), ("merge_and_validate", merge_and_validate),
-                     ("evaluate_evidence", evaluate_evidence), ("compose_answer", compose_answer),
+                     ("evaluate_evidence", evaluate_evidence), ("check_facts", check_facts),
+                     ("select_evidence", select_evidence),
+                     ("compose_answer", compose_answer),
                      ("partial_or_insufficient", partial_or_insufficient)):
         graph.add_node(name, fn)
     graph.add_edge(START, "normalize_input")
@@ -366,10 +515,11 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
                                 {"run": "execute_tool", "skip": "evaluate_evidence"})
     graph.add_edge("execute_tool", "merge_and_validate")
     graph.add_edge("merge_and_validate", "evaluate_evidence")
-    graph.add_conditional_edges(
-        "evaluate_evidence",
-        lambda s: "again" if s.get("next_tool") else ("full" if s["status"] == "ANSWERED" else "partial"),
-        {"again": "select_tool", "full": "compose_answer", "partial": "partial_or_insufficient"})
+    graph.add_conditional_edges("evaluate_evidence", lambda s: "again" if s.get("next_tool") else "select",
+                                {"again": "select_tool", "select": "check_facts"})
+    graph.add_edge("check_facts", "select_evidence")
+    graph.add_conditional_edges("select_evidence", lambda s: "full" if s["status"] == "ANSWERED" else "partial",
+                                {"full": "compose_answer", "partial": "partial_or_insufficient"})
     graph.add_edge("compose_answer", END)
     graph.add_edge("partial_or_insufficient", END)
     return graph.compile()
@@ -394,7 +544,12 @@ DOC_TITLES = {"moe_school_manual_v3": ("교육부 매뉴얼", "교육부"),
               "gyeonggi_school_guide_2025": ("경기도 가이드북", "경기도"),
               "kdca_measles_2026": ("질병관리청 홍역 관리지침", "질병청 홍역"),
               "kdca_diagnosis_reporting_2026": ("질병관리청 진단·신고 기준", "질병청 신고"),
-              "moleg_infectious_disease_act_21521": ("감염병예방법", "감염병예방법")}
+              "moleg_infectious_disease_act_21521": ("감염병예방법", "감염병예방법"),
+              "kdca_covid19_2026": ("질병관리청 코로나19 관리지침", "질병청 코로나19"),
+              "kdca_respiratory_2026": ("질병관리청 호흡기감염병 관리지침", "질병청 호흡기"),
+              "kdca_flu_facility_2026": ("질병관리청 인플루엔자 관리지침(학교용)", "질병청 인플루엔자"),
+              "kdca_hfmd_2026": ("질병관리청 수족구병 관리지침", "질병청 수족구병"),
+              "kdca_vaccine_preventable_2026": ("질병관리청 예방접종 대상 감염병 지침", "질병청 예방접종")}
 OFF_STAGE_TAIL = " — 원문 배치 단계가 질문 단계와 다름"
 HEAD_RE = re.compile(r"^\[(?P<head>[^\]]*)\]\s*(?P<body>.*)$", re.DOTALL)
 ROLE_RE = re.compile(r"^(?:원문이 제시한 담당 예시|원문이 명시한 담당):\s*(?P<role>.+?)\s*—\s*(?P<text>.+)$", re.DOTALL)
@@ -513,9 +668,11 @@ def compose_text(status: str, findings: list[Finding], citations: list[Citation]
         hidden_total += hidden
     if hidden_total:
         lines += ["", f"그 밖의 근거 {hidden_total}건은 findings·citations에 있습니다."]
-    notes = [w.removeprefix(UNRESOLVED).strip() for w in warnings][:4]
+    # 사용자 화면에는 확인하지 못한 부분만 쉬운 말로 보인다. Tool 내부 경고(원문 인용 Finding·답 카드·원문 강도 안내 등)는
+    # warnings·실행 기록에만 남긴다(11/07 P0-5: 템플릿 답변에 내부 문구가 노출되던 문제).
+    notes = list(dict.fromkeys(user_note(w) for w in warnings if w.startswith(UNRESOLVED)))[:3]
     if notes:
-        lines += ["", "참고: " + " / ".join(notes)]
+        lines += ["", "※ 확인하지 못한 부분:", *(f"- {n}" for n in notes)]
     return "\n".join(lines)
 
 

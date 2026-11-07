@@ -100,13 +100,13 @@ def test_single_intent_passes_original_question(books):
     assert seen["action_search"]["question"] == QUERY["question"]
 
 
-def test_single_intent_disease_gets_document_terms(books):
+def test_single_intent_disease_also_passes_original_question(books):
+    # 질병 Tool은 어미·일상어를 직접 처리한다(a72aef8). 의도가 하나면 어느 Tool에도 원 질문을 그대로 넘긴다.
     decision = RouteDecision(response_type="DOMAIN", parts=[Part(intent="DISEASE", question="홍역의 전파 경로는?")])
     seen = {}
     run_main({**QUERY, "question": "홍역은 어떻게 옮아요?"}, _deps(books, make_router(FakeLLM(decision))),
              _registry(seen))
-    assert seen["disease_search"]["question"] == "홍역의 전파 경로는?"
-    assert "홍역은 어떻게 옮아요?" in seen["disease_search"]["task"]
+    assert seen["disease_search"]["question"] == "홍역은 어떻게 옮아요?"
 
 
 def test_llm_out_of_scope_skips_tools(books):

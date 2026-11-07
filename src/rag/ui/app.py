@@ -33,7 +33,16 @@ st.set_page_config(page_title="학교 감염병 대응 길잡이", page_icon="�
 DEFAULT_REGION = "GYEONGGI"
 STEP_LABELS = {"normalize_input": "입력 정리", "classify_scope": "질문 범위 판단", "classify_intent": "질문 의도 분류",
                "select_tool": "검색 도구 선택", "execute_tool": "검색 도구 실행", "merge_and_validate": "근거 병합·DB 대조",
-               "evaluate_evidence": "근거 충분성 판단", "compose_answer": "답변 작성"}
+               "evaluate_evidence": "근거 충분성 판단", "check_facts": "판단 기준 확인(신고 대상·단계·조문)",
+               "select_evidence": "필요한 근거 선별(재순위)",
+               "compose_answer": "답변 작성"}
+# 처리 중 진행 표시(11/07): 방금 끝난 단계 → 지금 하는 일.
+PROGRESS = {"classify_scope": "질문을 이해했습니다. 검색 도구를 고르는 중…",
+            "select_tool": "공식 자료에서 근거를 찾는 중…",
+            "execute_tool": "찾은 근거를 확인하는 중…",
+            "evaluate_evidence": "신고 대상·대응 단계 같은 판단 기준을 확인하는 중…",
+            "check_facts": "질문에 꼭 필요한 근거를 고르는 중…",
+            "select_evidence": "답변을 작성하는 중…"}
 COMPOSE_MODES = {"llm": "다듬은 답변(검사 통과)", "template": "원문 정리형", "template_fallback": "원문 정리형(다듬은 답변이 검사에 걸림)"}
 STATUS_STYLE = {"ANSWERED": ("✅", "green"), "PARTIAL": ("🟡", "orange"), "INSUFFICIENT_EVIDENCE": ("⚪", "gray"),
                 "ERROR": ("⛔", "red")}
@@ -123,10 +132,31 @@ def show_flow(result: dict) -> None:
             detail = f"{info.get('decision')} (상태 {info.get('status')}, 미해결 {info.get('unresolved')})"
             if info.get("next_tool"):
                 detail += f" → 다음 도구 {info['next_tool']}"
+        elif step["step"] == "check_facts":
+            if info.get("mode") == "db":
+                found = info.get("found") or {}
+                detail = "확인 항목 " + ", ".join(f"{k} {len(v)}건" for k, v in found.items()) + f" · {info.get('seconds')}초"
+                for fact in info.get("facts") or []:
+                    detail += f"\n  - {fact}"
+            else:
+                detail = f"확인 항목 없음 ({info.get('mode')}) {info.get('error') or ''}"
+        elif step["step"] == "select_evidence":
+            if info.get("mode") == "llm":
+                detail = (f"근거 카드 {info.get('cards')}개 → 인용 {info.get('after', ('', ''))[1]}개 "
+                          f"(상태 {info.get('status')}) · {info.get('seconds')}초")
+                for cov in info.get("coverage") or []:
+                    detail += f"\n  - 하위 질문 {cov['part']}: {cov['status']}" + (
+                        f" — {cov['missing']}" if cov.get("missing") else "")
+            else:
+                detail = f"재순위 안 함 ({info.get('mode')}) {info.get('reason') or info.get('error') or ''}"
         elif step["step"] == "compose_answer":
             detail = COMPOSE_MODES.get(info.get("mode"), info.get("mode"))
             if info.get("seconds") is not None:
                 detail += f" · {info['seconds']}초"
+            if info.get("attempts") == 2:
+                detail += " · 첫 줄 검사 실패로 1회 다시 씀"
+            if info.get("dropped") and info.get("mode") == "llm":
+                detail += f" · 검사에 걸려 뺀 줄 {len(info['dropped'])}개"
             if info.get("problems"):
                 detail += " · 검사: " + " / ".join(info["problems"][:3])
         elif step["step"] == "classify_scope":
@@ -406,6 +436,39 @@ def render_history(items: list[dict], documents: dict, developer: bool = False) 
             st.divider()
 
 
+def answer_live(res: dict, question: str, allowed: list[str], polish: bool) -> dict:
+    """질문을 처리하면서 단계 진행을 보여 주고, 근거 검사를 통과한 답변 줄을 바로 출력한다(11/07 스트리밍).
+    다듬은 답변이 최종적으로 검사에 걸려 원문 정리형으로 되돌아가면, 다시 그릴 때 최종 답변으로 바뀐다."""
+    with st.chat_message("user"):
+        st.markdown(question)
+    with st.chat_message("assistant"):
+        progress = st.status("질문을 이해하는 중…", expanded=False)
+        board = st.empty()
+        lines: list[str] = []
+
+        def on_event(step: str, info: dict) -> None:
+            if step in PROGRESS:
+                progress.update(label=PROGRESS[step])
+            if step == "execute_tool":
+                progress.write(f"✓ {service.TOOL_LABELS.get(info.get('tool'), info.get('tool')).split(' (')[0]} "
+                               f"— 근거 {info.get('citations', 0)}개")
+            elif step == "select_evidence" and info.get("mode") == "llm":
+                progress.write(f"✓ 근거 {info.get('cards')}개 중 {info.get('after', ('', ''))[1]}개 선별")
+
+        def on_line(text: str) -> None:
+            lines.append(text)
+            board.markdown("\n".join(lines) + " ▌")
+
+        try:
+            result = service.ask(res, question, DEFAULT_REGION, allowed, polish=polish, on_event=on_event,
+                                 on_line=on_line)
+            progress.update(label="완료", state="complete")
+        except Exception as exc:  # noqa: BLE001
+            progress.update(label="오류", state="error")
+            result = {"error": f"{type(exc).__name__}: {exc}"}
+    return result
+
+
 def main() -> None:
     if not gate():
         return
@@ -420,7 +483,7 @@ def main() -> None:
     can_polish = "answer_writer" in res["deps"]
     polish = can_polish
     developer = is_developer()
-    allowed = [d for d in service.EVALUATED_DOCUMENTS if d in documents]   # 골든셋으로 검증한 기본 문서
+    allowed = service.default_documents(documents)    # 11/07 P0-3: DB에 적재된 모든 문서(판단 기준 원문 포함)
     if developer:
         # 참고 문서 허용 목록·답변 다듬기 켜고 끄기·도구별 한계는 개발자 점검용이다.
         with st.sidebar:
@@ -432,29 +495,26 @@ def main() -> None:
                 st.caption(f"⚠ {service.TOOL_LABELS[tool].split(' (')[0]}: {note}")
             allowed = st.multiselect("참고 문서(허용 목록)", list(documents), default=allowed,
                                      format_func=lambda d: doc_label(documents, d), key="allowed")
-            st.caption("선택한 문서 안에서만 근거를 찾습니다. 기본값은 골든셋으로 검증한 5개 문서입니다.")
+            st.caption("선택한 문서 안에서만 근거를 찾습니다. 기본값은 DB에 적재된 모든 문서입니다.")
 
     st.title("🏫 학교 감염병 대응 길잡이")
     st.caption("교육부·경기도교육청·질병관리청 지침과 감염병예방법을 지식 그래프로 묶어, 근거 원문과 쪽수로 답합니다.")
 
     question = st.chat_input("질문을 입력하세요 (예: 결핵 확진 학생이 나오면 담임교사는 무엇을 하나요?)")
     history_items = st.session_state.setdefault("history", [])
-    if question:
-        if not allowed:
-            st.warning("참고 문서를 하나 이상 선택하세요. 빈 목록은 '허용 문서 없음'으로 처리됩니다.")
-        with st.spinner("근거를 찾는 중…"):
-            try:
-                result = service.ask(res, question, DEFAULT_REGION, allowed, polish=polish)
-            except Exception as exc:  # noqa: BLE001
-                result = {"error": f"{type(exc).__name__}: {exc}"}
-        history_items.insert(0, {"question": question, **result})
-        if history.logging_enabled():
-            history.append_record(history.make_record(question, result, polish=polish))
 
     saved = st.session_state.setdefault("saved", [])
     labels = ["질문하기", f"저장한 답변 ({len(saved)})"] + (["대시보드"] if developer else [])
     tabs = st.tabs(labels)
     with tabs[0]:
+        if question:
+            if not allowed:
+                st.warning("참고 문서를 하나 이상 선택하세요. 빈 목록은 '허용 문서 없음'으로 처리됩니다.")
+            result = answer_live(res, question, allowed, polish)
+            history_items.insert(0, {"question": question, **result})
+            if history.logging_enabled():
+                history.append_record(history.make_record(question, result, polish=polish))
+            st.rerun()      # 스트리밍 화면을 지우고 최종 결과(출처·처리 흐름 포함)로 다시 그린다
         render_history(history_items, documents, developer=developer)
     with tabs[1]:
         show_saved()

@@ -1,0 +1,237 @@
+{
+  "tool_name": "disease_search",
+  "status": "OK",
+  "findings": [
+    {
+      "claim": "수족구병 개요 |항목|내용|",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0186:t01r04"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "HFMD"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "¢ 전파 차단을 위한 휴업",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0236:b04"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "HFMD"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": " 전파 차단을 위한 휴업",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0104:b04"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "HFMD"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "|담임교사|대응 제2단계|1. 능동감시 실시  - 결석, 조퇴, 지각한 학생의 사유를 확인하고, 학급 학생들의 증상 유무를 관찰하는 등 추가 (의심)환자 발생 여부를 파악하여 보건(담당)교사에게 통보 2. 감염병 예방교육 실시  - 학급 조･종례 시간 등을 이용하여 해당 감염병의 주요 증상과 예방법, 증상 발생 시 행동 요령 등에 대한 간단한 교육을 주기적",
+      "chunk_ids": [
+        "gyeonggi_school_guide_2025:p0166:t01r02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "HFMD"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "1) 전파 차단을 위한 등교 중지 기간으로 관련 질환에 대한 질병관리청 매뉴얼의 환자 격리 기간을 바탕으로 작성함",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0049:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "HFMD"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "학교 내 전파를 방지하기 위하여 감염 우려가 있는 학생이 의료기관에 진료를 받으러 가기 전까지 격리하여 관찰하는",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0055:b02"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "HFMD"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "호흡기 전파 감염병의 경우 최대 잠복기 동안 마스크 착용",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0061:b01"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "HFMD"
+      ],
+      "concept_ids": []
+    },
+    {
+      "claim": "| 수족구병 | 발열, 손, 발바닥 및 구강 내 수포 및 궤양 | 발병 후 7일간이 가장 전염력 강함, 피부 병변(수포)에 가피가 생성될 때까지 | 수포 발생 후 6일간 또는 가피가 형성될 때 까지 | 3-7일 | O | O | O |",
+      "chunk_ids": [
+        "moe_school_manual_v3:p0223:t01r10"
+      ],
+      "action_ids": [],
+      "disease_ids": [
+        "HFMD"
+      ],
+      "concept_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0186:t01r04",
+      "pdf_page": 186,
+      "printed_page": 176,
+      "excerpt": "수족구병 개요\n|항목|내용|\n|감염경로|∙직접접촉이나 비말을 통해 사람 간 전파(감염자의 타액, 가래, 콧물, 수포 안의 진물, 대변)<br>∙오염된 물을 마시거나 수영장에서도 전파 가능<br>∙전파의 위험이 높은 장소: 가정(감염자가 있는 경우), 보육시설, 놀이터, 병원, 여름캠프 등 많은 인원이 모이는 장소|"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0236:b04",
+      "pdf_page": 236,
+      "printed_page": 226,
+      "excerpt": "라. 휴업 실시의 일반적 기준(권고)\n¢ 전파 차단을 위한 휴업\n- 인플루엔자, 수두, 유행성이하선염, 수족구병, 유행성각결막염 등의 학생 빈발 감염병에 대해서는 전파 차단을\n위한 휴업은 권장하지 않음(단, 방역당국의 역학조사 결과 휴업을 권고하는 경우에는 실시)\n- 신종감염병과 같이 치명률이 높은 감염병으로 방역당국의 권고가 있는 경우에는 학교 내에 단 "
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0104:b04",
+      "pdf_page": 104,
+      "printed_page": 90,
+      "excerpt": "라. 휴업 실시의 일반적 기준(권고)\n 전파 차단을 위한 휴업\n인플루엔자, 수두, 유행성이하선염, 수족구병, 유행성각결막염 등의 학생 빈발 감염병에 대해서는 전파차단을 위한\n휴업은 권장하지 않음(단, 방역당국의 역학조사 결과 휴업을 권고하는 경우에는 실시)"
+    },
+    {
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0166:t01r02",
+      "pdf_page": 166,
+      "printed_page": 156,
+      "excerpt": "같은 공간에서 일정 시간 이상 함께<br>생활하였기 때문에 해당 감염병의 발생 가능성이 높은 밀접접촉자임<br> - 특히, 학생 빈발 감염병인 인플루엔자, 수두, 유행성이하선염, 수족구병 등은 증상<br>발생 전부터 감염성이 있으므로 밀접접촉자를 파악하고 관리하는 것이 매우 중요<br> - 최대 잠복기 동안 (의심)환자 발생 여부 감시<br> - 손 씻기,"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0049:b01",
+      "pdf_page": 49,
+      "printed_page": 35,
+      "excerpt": "주 발생하는 감염병은 [표 3-3]과 같음\n[표 3-2] 학교 내 빈발 감염병의 종류 및 특성\n(격리) 기간 [1)2)]\n격리 [4)]\n2주까지 2주까지\n따라 실시 [5)]\n1) 전파 차단을 위한 등교 중지 기간으로 관련 질환에 대한 질병관리청 매뉴얼의 환자 격리 기간을 바탕으로 작성함\n2) 등교 중지 기간은 휴일을 포함\n3) 감염 시작 시점부터 증상과 징"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0055:b02",
+      "pdf_page": 55,
+      "printed_page": 41,
+      "excerpt": "3) 일시적 관찰 필요성 판단 및 실시\n 일시적 관찰실\n학교 내 전파를 방지하기 위하여 감염 우려가 있는 학생이 의료기관에 진료를 받으러 가기 전까지 격리하여 관찰하는\n학교 내 공간\n- ’ ‘\n격리된 학생에 대한 낙인효과를 우려하여 ‘격리 대신 관찰’이라는 용어 사용 권장\n 보건(담당)교사가 [표 3-2], [표 3-3], [표 3-5]을 참고하여 일시"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0061:b01",
+      "pdf_page": 61,
+      "printed_page": 47,
+      "excerpt": "를 우선적으로 따름\n 밀접접촉자의 일반적 관리 방안: 대부분의 감염병은 증상 발생 여부 감시만으로 충분함\n최대 잠복기 동안 (의심)환자 발생 여부 감시\n손 씻기, 마스크 사용, 기침 예절 등의 예방 교육 강화\n호흡기 전파 감염병의 경우 최대 잠복기 동안 마스크 착용\n 밀접접촉자의 기타 관리 방안\n격리 실시 등: 역학조사 결과 방역당국의 지시에 따라 실시"
+    },
+    {
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0223:t01r10",
+      "pdf_page": 223,
+      "printed_page": 209,
+      "excerpt": "| 감염병 | 임상 증상 | 전염 가능 기간 | 전파 차단을 위한 등교 중지(격리) 기간 1)2) | 잠복기 3) | 밀접접촉자 파악 | 일시적 격리 4) | 마스크 착용 |\n| 수족구병 | 발열, 손, 발바닥 및<br>구강 내 수포 및 궤양 | 발병 후 7일간이 가장<br>전염력 강함, 피부<br>병변(수포)에 가피가<br>생성될 때까지 | 수포 발생 후"
+    }
+  ],
+  "graph_paths": [
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0186:t01r04"
+        },
+        {
+          "source_ref": "Chunk:gyeonggi_school_guide_2025:p0186:t01r04",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:HFMD"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0236:b04"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0104:b04"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:gyeonggi_school_guide_2025",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:gyeonggi_school_guide_2025:p0166:t01r02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0049:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0055:b02"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0061:b01"
+        }
+      ]
+    },
+    {
+      "edges": [
+        {
+          "source_ref": "Document:moe_school_manual_v3",
+          "relationship_type": "HAS_CHUNK",
+          "target_ref": "Chunk:moe_school_manual_v3:p0223:t01r10"
+        },
+        {
+          "source_ref": "Chunk:moe_school_manual_v3:p0223:t01r10",
+          "relationship_type": "ABOUT",
+          "target_ref": "Disease:HFMD"
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

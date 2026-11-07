@@ -39,11 +39,17 @@ response_type
 
 DOMAIN이면 parts에 질문을 의도별로 나눈다(중요한 순서, 최대 3개, 같은 의도는 한 번만).
 - ACTION: 학교·교직원이 할 일, 담당 역할, 대응 단계, 교육청 보고·NEIS 등록, 출결·서류, 가정통신문·학부모 안내,
-  관찰실·소독·급식, 유행 기준·종료, 그리고 질병별 격리·등교중지 기간과 등교 가능 여부(학교 문서의 질병별 표로 답한다).
+  관찰실·소독·급식, 유행 기준·종료, 질병별 격리·등교중지 기간과 등교 가능 여부(학교 문서의 질병별 표로 답한다),
+  그리고 학교·학교장이 보건소·교육청에 신고·보고하는 일(누가 언제 무엇을 신고하는지, 신고 대상 질병 목록, 신고 공문).
   학교 업무 질문은 병명이 없어도 ACTION이다.
 - DISEASE: 특정 질병 자체의 사실 — 잠복기, 전파 경로, 증상, 합병증, 전염 기간, 질병 간 증상 비교.
-- LEGAL: 법령상 의무·신고 대상과 신고 주체·시기, 처벌·과태료, 법정감염병 분류(급수), "법 때문에 꼭 해야 하나"류.
-  보건소 신고 공문을 어떻게 보내는지 같은 업무 절차는 ACTION이다.
+- LEGAL: 법 조항과 법적 의무의 근거, 과태료·처벌·불이익, 법정감염병 분류(급수)처럼 **법을 직접 묻는** 질문.
+  질문에 법·법령·법적·감염병예방법·과태료·처벌이 들어 있으면 LEGAL이다.
+  학교의 신고 의무만 묻고 법 조항은 말하지 않는 질문(예: "백일해 환자가 나오면 학교가 보건소에 알려야 하나요?",
+  "병원에서 먼저 신고했으면 학교장은 따로 안 해도 되나요?")는 학교 문서가 신고 대상 목록과 학교장의 신고 행동을 설명하므로
+  parts를 [ACTION, LEGAL] 순서로 둔다(학교 문서 먼저, 법적 확정은 법령 확인). 이때 LEGAL part의 question은 법적 의무만 묻게 쓴다.
+  법·처벌을 직접 묻는 질문은 LEGAL 하나만 둔다.
+  신고 공문·NEIS 보고서를 어떻게 작성·발송하는지처럼 **절차·방법**만 묻는 질문은 법적 의무를 묻는 것이 아니므로 ACTION 하나만 둔다(LEGAL을 더하지 않는다).
 - CROSSDOC: 교육부 매뉴얼과 경기도 가이드북(두 문서)이 같은지·다른지·각각 어떻게 설명하는지 비교.
   두 질병을 비교하는 것은 CROSSDOC이 아니라 DISEASE다. 학교 업무를 묻고 "두 문서가 같은가요?"처럼 문서 비교를 함께 물으면
   CROSSDOC 하나로 둔다(CROSSDOC이 문서별 행동·담당을 함께 가져오므로 ACTION을 따로 더하지 않는다).
@@ -52,18 +58,50 @@ DOMAIN이면 parts에 질문을 의도별로 나눈다(중요한 순서, 최대 
 각 part의 question은 그 의도만 묻는 독립된 한국어 질문으로 쓴다. 원 질문의 병명·역할·상황·지역을 유지하고,
 사용자가 묻지 않은 내용을 더하지 않는다. 일상어는 지침 문서에 쓰이는 용어로 바꿔 쓴다
 (예: '옮아요'→'전파 경로', '며칠 쉬어야'→'등교중지 기간', '독감'→'인플루엔자'). 뜻은 바꾸지 않는다.
-reason은 분류 이유를 한 문장으로 쓴다. OUT_OF_SCOPE이면 사용자에게 그대로 보여 줄 수 있게 존댓말로 쓴다."""
+각 part의 search_query는 지침 문서에서 그 내용을 찾을 때 쓸 **개념 수준 검색 문장**이다. 병명·학생·학년 같은 개별 사례를 빼고
+문서 목차나 표 제목에 나올 법한 일반 개념으로 쓴다(예: "독감 걸린 학생은 며칠 쉬어야 해요?" → "감염병별 등교중지 기간",
+"우리 반에 설사하는 애가 많아요" → "감염병 유행의심 기준과 학교 대응").
+reason은 분류 이유를 한 문장으로 쓴다. OUT_OF_SCOPE이면 사용자에게 그대로 보여 줄 수 있게 존댓말로 쓴다.
+
+DOMAIN이면 situation에 질문 속 사실만 옮긴다(추측하지 않는다. 없으면 빈 값).
+- disease: 병명(문서 용어로, 예: '독감'→'인플루엔자', '코로나'→'코로나19'), status: 확진·의심·증상·모름,
+  count: 환자 수(숫자가 없으면 null), scope: 발생 범위(예: '한 반 여러 명', '여러 학급', '전교 5명', '교사 1명'),
+  asker_role: 질문자 역할(예: '담임교사', '보건교사', '학교장'. '내가 담임'처럼 밝힌 경우만), asks: 묻는 것(짧은 낱말 목록).
+checks: 질문에 제대로 답하려면 사용자가 묻지 않았어도 확인해야 하는 항목(해당하는 것만, 없으면 빈 목록).
+- REPORTABLE: 그 질병이 학교(학교장)가 보건소에 신고해야 하는 감염병인지 — 질병이 나오고 신고·보고·학교가 할 일을 물을 때.
+- DISEASE_CLASS: 그 질병의 법정감염병 급수 — 신고·처벌·법적 의무를 판단할 때.
+- STAGE: 대응 단계·유행의심 기준 — 환자가 2명 이상이거나 '퍼지고 있다', '유행'처럼 여러 명 상황일 때, 또는 단계별 할 일을 물을 때.
+- REPORTER_DUTY: 누가 신고 의무자인지(학교장·담임 등) — 신고를 묻거나 질문자가 자신이 신고해야 하는지 물을 때.
+- PENALTY: 신고하지 않았을 때의 벌칙·불이익 — '안 하면 어떻게 돼', 처벌·과태료를 물을 때.
+- EXCLUSION: 등교중지(격리) 기간·등교 기준 — 등교·격리·출석을 물을 때."""
 
 
 class Part(BaseModel):
     intent: Literal["ACTION", "DISEASE", "LEGAL", "CROSSDOC"]
     question: str = Field(description="이 의도만 묻는 독립된 한국어 질문")
+    search_query: str = Field(default="", description="개별 사례를 뺀 개념 수준 문서 용어 검색 문장")
+
+
+CHECKS = ("REPORTABLE", "DISEASE_CLASS", "STAGE", "REPORTER_DUTY", "PENALTY", "EXCLUSION")
+
+
+class Situation(BaseModel):
+    """질문 속 사실(11/07 답변 품질 P0-1). 답변 작성기가 규칙 근거에 대입하고, 확인 항목 조회가 검색어로 쓴다."""
+    disease: str = ""
+    status: Literal["확진", "의심", "증상", "모름"] = "모름"
+    count: int | None = None
+    scope: str = ""
+    asker_role: str = ""
+    asks: list[str] = Field(default_factory=list)
 
 
 class RouteDecision(BaseModel):
     response_type: Literal["DOMAIN", "GENERAL", "OUT_OF_SCOPE"]
     parts: list[Part] = Field(default_factory=list, description="DOMAIN일 때 의도별 하위 질문(중요한 순서)")
     reason: str = ""
+    situation: Situation = Field(default_factory=Situation)
+    checks: list[Literal["REPORTABLE", "DISEASE_CLASS", "STAGE", "REPORTER_DUTY", "PENALTY", "EXCLUSION"]] = Field(
+        default_factory=list, description="답하려면 확인해야 하는 항목")
 
 
 def make_llm():
@@ -85,14 +123,17 @@ def decision_to_route(decision: RouteDecision, rule: dict) -> dict:
         question = part.question.strip()
         if part.intent not in seen and question:
             seen.add(part.intent)
-            parts.append((part.intent, question))
+            parts.append((part.intent, question, part.search_query.strip()))
     parts = parts[:MAX_PARTS]
     if not parts:
         raise ValueError("DOMAIN인데 의도가 없다")
-    sub_questions = {INTENT_TOOL[intent]: question for intent, question in parts}
-    return {"response_type": "DOMAIN", "intent": parts[0][0], "secondary": [i for i, _ in parts[1:]],
+    sub_questions = {INTENT_TOOL[intent]: question for intent, question, _ in parts}
+    search_queries = {INTENT_TOOL[intent]: query for intent, question, query in parts
+                      if query and query != question}
+    return {"response_type": "DOMAIN", "intent": parts[0][0], "secondary": [i for i, *_ in parts[1:]],
             "diseases": rule.get("diseases", []), "roles": rule.get("roles", []), "confidence": "llm",
-            "reason": decision.reason.strip(), "sub_questions": sub_questions}
+            "reason": decision.reason.strip(), "sub_questions": sub_questions, "search_queries": search_queries,
+            "situation": decision.situation.model_dump(), "checks": list(dict.fromkeys(decision.checks))}
 
 
 def make_router(llm=None) -> Callable[[str, dict], dict]:

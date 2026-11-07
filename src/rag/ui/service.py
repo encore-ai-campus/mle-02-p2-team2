@@ -31,9 +31,16 @@ TOOL_LIMITS = {
 STATUS_LABELS = {"ANSWERED": "답변 완료", "PARTIAL": "일부 확인", "INSUFFICIENT_EVIDENCE": "근거 부족",
                  "ERROR": "실행 오류"}
 RESPONSE_LABELS = {"DOMAIN": "감염병 대응 질문", "GENERAL": "일반 안내", "OUT_OF_SCOPE": "지원 범위 밖"}
-# 골든셋 평가에 쓴 문서 묶음(기본 선택). 나머지 DB 문서는 화면에서 추가할 수 있다.
+# 골든셋 평가에 쓴 문서 묶음(골든 평가 스크립트가 쓴다).
 EVALUATED_DOCUMENTS = ["moe_school_manual_v3", "gyeonggi_school_guide_2025", "kdca_measles_2026",
                        "kdca_diagnosis_reporting_2026", "moleg_infectious_disease_act_21521"]
+# 화면 기본 허용 문서(11/07 답변 품질 P0-3, 팀 승인): DB에 적재된 모든 문서. 코로나19 급수(제4급)·미신고 벌칙 요약처럼
+# 판단에 필요한 원문이 질병관리청 지침에 있다. 빈 값이면 DB 문서 전체를 쓴다.
+DEFAULT_DOCUMENTS: list[str] | None = None
+
+
+def default_documents(documents: dict) -> list[str]:
+    return sorted(documents) if DEFAULT_DOCUMENTS is None else [d for d in DEFAULT_DOCUMENTS if d in documents]
 
 
 def build_resources() -> dict:
@@ -43,11 +50,13 @@ def build_resources() -> dict:
 
     deps = default_deps()               # 루트 .env가 없으면(클라우드) 이미 설정된 환경 변수를 그대로 쓴다
     deps["books"] = load_dictionaries()
-    if os.getenv("OPENAI_API_KEY"):     # LLM 라우터·답변 다듬기. 키가 없으면 규칙 분류·템플릿 답변만 쓴다.
+    if os.getenv("OPENAI_API_KEY"):     # LLM 라우터·근거 재순위·답변 다듬기. 키가 없으면 규칙 분류·전체 근거·템플릿 답변.
         from rag.school.answer_writer import make_answer_writer
+        from rag.school.rerank import make_reranker
         from rag.school.router import make_router
         deps["answer_writer"] = make_answer_writer()
         deps["router"] = make_router()
+        deps["reranker"] = make_reranker()
     with deps["driver"].session(database=deps["database"]) as session:
         documents = {r["id"]: {"title": r["title"], "version": r["version"], "issuer": r["issuer"]}
                      for r in session.run("MATCH (d:Document) RETURN d.document_id AS id, d.title AS title, "
@@ -67,14 +76,17 @@ def build_registry(deps: dict) -> dict:
             "crossdoc_graph_search": lambda tool_input: crossdoc_graph_search(tool_input, deps=deps)}
 
 
-def ask(resources: dict, question: str, region: str, allowed_document_ids: list[str], polish: bool = True) -> dict:
+def ask(resources: dict, question: str, region: str, allowed_document_ids: list[str], polish: bool = True,
+        on_event=None, on_line=None) -> dict:
     """질문 하나를 메인 그래프로 실행한다. 반환: output(QueryOutput)·trace·tool_results·seconds·request_id.
-    polish=False면 답변 다듬기를 끄고 템플릿 답변만 쓴다."""
+    polish=False면 답변 다듬기를 끄고 템플릿 답변만 쓴다.
+    on_event(step, info): 노드 실행 기록이 남을 때마다(화면 진행 표시). on_line(text): 근거 검사를 통과한 답변 줄(스트리밍)."""
     from rag.school.main_graph import run_main
 
     deps = dict(resources["deps"])      # 공유 자원(driver·사전)은 그대로, 실행 기록만 요청별로 분리
     if not polish:
         deps.pop("answer_writer", None)
+    deps["on_event"], deps["on_answer_line"] = on_event, on_line
     request_id = f"ui-{uuid.uuid4().hex[:12]}"
     started = time.perf_counter()
     output = run_main({"question": question, "region": region, "allowed_document_ids": list(allowed_document_ids),

@@ -23,7 +23,7 @@
       "question": "성홍열도 학교장이 보건소에 신고해야 하나요?",
       "region": "GYEONGGI",
       "status": "PARTIAL",
-      "route": "legal_search",
+      "route": "action_search",
       "pass": "학교 문서의 8종 목록에 성홍열이 없다는 사실만 인용. 신고 의무 없음으로 단정하지 않고 현행 법 확인 필요를 warnings에",
       "split": "eval"
     },
@@ -355,7 +355,7 @@
       "id": "S-L01",
       "question": "감염병예방법상 학교장의 신고 의무는 무엇인가요?",
       "region": "NATIONAL",
-      "status": "ANSWERED",
+      "status": "PARTIAL",
       "route": "legal_search",
       "pass": "법령 질문. legal_search로 라우팅. 학교 문서 목록만으로 법적 의무를 확정하지 않음",
       "split": "eval"

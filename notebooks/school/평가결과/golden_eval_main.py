@@ -1,8 +1,9 @@
 """질문셋 v1.1 40문항을 메인 그래프(run_main)로 실행해 라우팅·최종 상태·호출 기록·정답 인용을 채점한다.
 
-    uv run python notebooks/school/평가결과/golden_eval_main.py <결과.json> [--all-tools] [--router]
+    uv run python notebooks/school/평가결과/golden_eval_main.py <결과.json> [--all-tools] [--router] [--rerank]
 
 - --router(11/06~): LLM 라우터(rag.school.router)로 분류한다. 없으면 규칙 분류기.
+- --rerank(11/07~): 근거 재순위·충분성 판정(rag.school.rerank)을 켠다. 인용 정밀도(정답 청크/출력 인용)도 출력한다.
 - --all-tools(11/06~): 팀원 Tool(disease/legal/crossdoc)까지 registry로 연결해 실행하고 모든 문항의 status를 채점한다.
   legal_search는 고정 샘플 1개만 받으므로 legal 문항의 결과는 그 한계를 함께 읽는다.
 
@@ -38,6 +39,9 @@ REGISTRY = None
 if "--router" in sys.argv:
     from rag.school.router import make_router
     deps["router"] = make_router()
+if "--rerank" in sys.argv:
+    from rag.school.rerank import make_reranker
+    deps["reranker"] = make_reranker()
 if ALL_TOOLS:
     from index.school.dictionaries import load_dictionaries
     from rag.prevention_legal.tool import legal_search
@@ -52,7 +56,7 @@ rows = []
 for q in G["questions"]:
     out = run_main({"question": q["question"], "region": q["region"], "allowed_document_ids": ALLOWED,
                     "request_id": f"golden-{q['id']}"}, deps, REGISTRY)
-    steps = {t["step"]: t for t in deps["main_trace"]}
+    steps = {t["step"]: t for t in reversed(deps["main_trace"])}   # 같은 단계가 여러 번이면 첫 기록(첫 Tool)
     selected = steps.get("select_tool", {}).get("tool") or out["response_type"]
     want = expected_route(q["route"])
     cited = {c["chunk_id"] for c in out["citations"]}
@@ -83,5 +87,11 @@ print(f"연결된 경로 문항 status 일치 {sum(r['status_ok'] for r in grade
 print("호출 0회 문항:", [r["id"] for r in rows if r["rounds"] == 0])
 print("호출 2회 이상:", [r["id"] for r in rows if r["rounds"] > 1] or "없음")
 print("호출 수 분포:", dict(collections.Counter(r["rounds"] for r in rows)))
+graded_cite = [r for r in rows if r["total"]]
+cited_total = sum(len(r["cited_order"]) for r in graded_cite)
+print(f"정답 청크가 있는 {len(graded_cite)}문항: 정답 1개 이상 인용 {sum(r['hit'] > 0 for r in graded_cite)}, "
+      f"출력 인용 {cited_total}개 중 정답 {sum(r['hit'] for r in graded_cite)}개 "
+      f"(정밀도 하한 {sum(r['hit'] for r in graded_cite) / max(cited_total, 1):.3f}), "
+      f"문항당 인용 중앙값 {sorted(len(r['cited_order']) for r in graded_cite)[len(graded_cite) // 2]}")
 Path(sys.argv[1]).write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
 deps["driver"].close()
