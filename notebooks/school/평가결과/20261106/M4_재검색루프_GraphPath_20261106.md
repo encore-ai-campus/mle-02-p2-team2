@@ -1,6 +1,6 @@
 # M4 — 근거 평가·조건부 재검색 루프 + 실DB GraphPath (2026-11-06)
 
-증빙 노트북: [school_main_m4_loop.ipynb](../school_main_m4_loop.ipynb) · 원시 로그: `data/interim/school/m4_loop_logs_20261106.json`, 골든 회귀 `eval_main_m4_alltools.json` (Git 제외)
+증빙 노트북: [school_main_m4_loop.ipynb](../../school_main_m4_loop.ipynb) · 원시 로그: `data/interim/school/m4_loop_logs_20261106.json`, 골든 회귀 `eval_main_m4_alltools.json` (Git 제외)
 
 ## 기준 (일정표 M4)
 
