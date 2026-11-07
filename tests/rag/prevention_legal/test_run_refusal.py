@@ -21,6 +21,7 @@ def test_penalty_question_is_refused_without_citations(monkeypatch):
     assert out["status"] == "INSUFFICIENT_EVIDENCE"
     assert out["citations"] == [] and out["findings"] == []
     assert "확정할 수 없습니다" in out["answer"]
+    assert "벌칙 조문이 없습니다" not in out["answer"]   # 벌칙 조문을 적재한 뒤라 이 문장은 사실이 아니다
 
 
 def test_refusal_needs_both_penalty_and_delay(monkeypatch):
