@@ -101,6 +101,8 @@
 
 ## 5. 최근 변경
 
+- 2026-11-07 Git 동기화(Codex): 학교 추출 평가·검색 측정 자료를 `fbccd63`으로 커밋하고 원격 법령 작업을 병합했다. 병합 후 전체 회귀 `.venv/Scripts/python.exe -X utf8 -m pytest tests -q -p no:cacheprovider` **368개 통과·1개 건너뜀**, 변경 Python 구문과 JSON 파싱 확인. DB·LLM 평가 재실행 없음. 위 평가 작업의 미커밋 표기는 작업 당시 상태다.
+
 - 2026-11-07 / 주승우 요청·Codex: 학교 평가 보고서 25개를 파일명의 날짜 기준 `20261105`, `20261106`, `20261107` 폴더로 옮기고 [평가 자료 목록](../notebooks/school/평가결과/README.md)과 학교 문서·진행 문서의 상대 링크를 갱신했다. 날짜 미표기 자료와 실행 코드는 기존 위치에 유지했다. 목록 링크 검증; 코드·DB 실행 없음. 로컬 미커밋.
 
 - 2026-11-06 Git 동기화(Codex): LLM 라우터·하위 질문·UI 연결 및 평가 파일 10개를 `cdc58fd`로 커밋하고 원격 3개 커밋을 pull했다. `d6b968a`에서 `progress.md`와 `src/rag/ui/app.py` 양쪽 변경을 보존해 병합했다. 병합 후 전체 회귀 `.venv/Scripts/python.exe -X utf8 -m pytest tests -q -p no:cacheprovider` **319개 통과**, 변경 Python 구문·자격 증명 패턴 검사 및 `git diff --check` 통과. 실DB·LLM 품질 평가는 이번 Git 동기화에서 재실행하지 않았다. 라우터 작업의 ‘로컬 미커밋’ 표기는 작성 당시 상태이며 이번에 커밋했다.
