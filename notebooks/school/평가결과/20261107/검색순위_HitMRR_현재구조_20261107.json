@@ -1,0 +1,841 @@
+{
+ "summary": {
+  "A": {
+   "n": 34,
+   "hit5": 16,
+   "hit10": 20,
+   "mrr10": 0.31204481792717087
+  },
+  "B": {
+   "n": 34,
+   "hit5": 14,
+   "hit10": 22,
+   "mrr10": 0.3031279178338002,
+   "depth": 30,
+   "hit_depth": 31
+  },
+  "C": {
+   "n": 34,
+   "hit5": 22,
+   "hit10": 25,
+   "mrr10": 0.4729108309990662,
+   "median_citations": 19
+  }
+ },
+ "detail": {
+  "S-Q01": {
+   "question": "학교에서 유증상 학생이 발견되면 담임교사와 보건교사는 각각 무엇을 확인하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0166:t01r01",
+    "gyeonggi_school_guide_2025:p0167:t01r03",
+    "moe_school_manual_v3:p0053:b01",
+    "moe_school_manual_v3:p0054:b01",
+    "moe_school_manual_v3:p0055:b01"
+   ],
+   "A": 1,
+   "tool_question": "학교에서 유증상 학생이 발견되면 담임교사와 보건교사는 각각 무엇을 확인하나요?",
+   "doc_query": "유증상 학생 발견 시 담임교사와 보건교사의 역할 및 확인 사항",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "학교에서 유증상 학생이 발견되면 담임교사와 보건교사는 각각 무엇을 확인하나요?"
+    },
+    "search_queries": {
+     "action_search": "유증상 학생 발견 시 담임교사와 보건교사의 역할 및 확인 사항"
+    }
+   },
+   "B": 1,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 21
+  },
+  "S-Q02": {
+   "question": "경기도 초등학교에서 성홍열 확진 학생이 1명 나왔어요. 학교(담임·보건교사)는 무엇을 해야 하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0160:t01r03",
+    "gyeonggi_school_guide_2025:p0164:t01r09",
+    "gyeonggi_school_guide_2025:p0166:t01r02",
+    "gyeonggi_school_guide_2025:p0168:t01r01"
+   ],
+   "A": null,
+   "tool_question": "경기도 초등학교에서 성홍열 확진 학생이 1명 나왔어요. 학교(담임·보건교사)는 무엇을 해야 하나요?",
+   "doc_query": "학교 감염병 발생 시 담임교사와 보건교사의 역할 및 대응 절차",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "경기도 초등학교에서 성홍열 확진 학생이 1명 발생했을 때 담임교사와 보건교사가 해야 할 일은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 발생 시 담임교사와 보건교사의 역할 및 대응 절차"
+    }
+   },
+   "B": 20,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 21
+  },
+  "S-Q03": {
+   "question": "성홍열도 학교장이 보건소에 신고해야 하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0164:b01",
+    "gyeonggi_school_guide_2025:p0164:t01r09"
+   ],
+   "A": null,
+   "tool_question": "성홍열 환자가 발생하면 학교장은 보건소에 신고해야 하나요?",
+   "doc_query": "학교장의 감염병 신고 대상 및 신고 절차",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "성홍열 환자가 발생하면 학교장은 보건소에 신고해야 하나요?",
+     "legal_search": "성홍열 발생 시 학교장의 보건소 신고는 법적 의무인가요?"
+    },
+    "search_queries": {
+     "action_search": "학교장의 감염병 신고 대상 및 신고 절차",
+     "legal_search": "감염병예방법에 따른 학교장의 감염병 신고 의무"
+    }
+   },
+   "B": 7,
+   "B_depth": 30,
+   "C": 2,
+   "C_citations": 21
+  },
+  "S-Q04": {
+   "question": "보호자에게 연락해 진료를 요청하는 일을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0166:t01r01",
+    "gyeonggi_school_guide_2025:p0204:b03",
+    "moe_school_manual_v3:p0057:b02"
+   ],
+   "A": 1,
+   "tool_question": "보호자에게 연락해 진료를 요청하는 일을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요?",
+   "doc_query": null,
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "CROSSDOC",
+    "sub_questions": {
+     "crossdoc_graph_search": "보호자에게 연락해 진료를 요청하는 일을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요?"
+    },
+    "search_queries": {
+     "crossdoc_graph_search": "감염병 의심 학생 보호자 연락 및 의료기관 진료 안내"
+    }
+   },
+   "B": 1,
+   "B_depth": 30,
+   "C": 3,
+   "C_citations": 21
+  },
+  "S-Q05": {
+   "question": "대응 제2단계에서 능동감시 대상은 누가 정하고 어디까지 하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0164:t01r09",
+    "moe_school_manual_v3:p0060:t01r03"
+   ],
+   "A": 5,
+   "tool_question": "대응 제2단계에서 능동감시 대상은 누가 정하고 어디까지 하나요?",
+   "doc_query": "대응 단계별 능동감시 대상 선정 및 감시 범위",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "대응 제2단계에서 능동감시 대상은 누가 정하고 감시 범위는 어디까지인가요?"
+    },
+    "search_queries": {
+     "action_search": "대응 단계별 능동감시 대상 선정 및 감시 범위"
+    }
+   },
+   "B": 4,
+   "B_depth": 64,
+   "C": 1,
+   "C_citations": 20
+  },
+  "S-Q06": {
+   "question": "능동감시는 언제 끝나나요?",
+   "gold": [
+    "moe_school_manual_v3:p0060:t01r04"
+   ],
+   "A": 6,
+   "tool_question": "능동감시는 언제 끝나나요?",
+   "doc_query": "학교 감염병 능동감시 종료 기준",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "능동감시는 언제 종료하나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 능동감시 종료 기준"
+    }
+   },
+   "B": 2,
+   "B_depth": 64,
+   "C": 11,
+   "C_citations": 21
+  },
+  "S-Q07": {
+   "question": "유행이 확산되는 대응 제3단계에서 학교장은 무엇을 하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0165:t02r03",
+    "moe_school_manual_v3:p0040:t01r04"
+   ],
+   "A": 4,
+   "tool_question": "유행이 확산되는 대응 제3단계에서 학교장은 무엇을 하나요?",
+   "doc_query": "학교 감염병 유행 확산 대응 제3단계 학교장 역할",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "유행 확산 대응 제3단계에서 학교장이 해야 할 일은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 유행 확산 대응 제3단계 학교장 역할"
+    }
+   },
+   "B": 1,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 19
+  },
+  "S-Q08": {
+   "question": "교무부장은 유행 시 어떤 일을 맡나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0165:t02r06",
+    "gyeonggi_school_guide_2025:p0165:t02r07"
+   ],
+   "A": 7,
+   "tool_question": "교무부장은 유행 시 어떤 일을 맡나요?",
+   "doc_query": "감염병 유행 시 학교 구성원별 역할과 업무",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "유행 시 교무부장은 어떤 업무를 담당하나요?"
+    },
+    "search_queries": {
+     "action_search": "감염병 유행 시 학교 구성원별 역할과 업무"
+    }
+   },
+   "B": 2,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 19
+  },
+  "S-Q09": {
+   "question": "학년부장은 능동감시에서 무엇을 하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0165:t02r08"
+   ],
+   "A": 4,
+   "tool_question": "학년부장은 능동감시에서 무엇을 하나요?",
+   "doc_query": "학교 감염병 능동감시 담당자별 역할",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "능동감시에서 학년부장은 어떤 역할을 하나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 능동감시 담당자별 역할"
+    }
+   },
+   "B": 3,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 19
+  },
+  "S-Q10": {
+   "question": "유행이 끝나면 학교는 어떤 후속 조치를 하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0165:t01r04",
+    "gyeonggi_school_guide_2025:p0165:t01r05",
+    "moe_school_manual_v3:p0068:t02r03"
+   ],
+   "A": null,
+   "tool_question": "유행이 끝나면 학교는 어떤 후속 조치를 하나요?",
+   "doc_query": "감염병 유행 종료 후 학교의 후속 조치",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "감염병 유행 종료 후 학교의 후속 조치는 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "감염병 유행 종료 후 학교의 후속 조치"
+    }
+   },
+   "B": null,
+   "B_depth": 30,
+   "C": null,
+   "C_citations": 21
+  },
+  "S-Q11": {
+   "question": "학교 내 유행은 어떤 기준으로 끝난 것으로 보나요?",
+   "gold": [
+    "moe_school_manual_v3:p0068:t02r01"
+   ],
+   "A": null,
+   "tool_question": "학교 내 유행은 어떤 기준으로 끝난 것으로 보나요?",
+   "doc_query": "학교 감염병 유행 종료 기준",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "학교 내 감염병 유행은 어떤 기준으로 종료된 것으로 판단하나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 유행 종료 기준"
+    }
+   },
+   "B": 6,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 22
+  },
+  "S-O01": {
+   "question": "일시적 관찰실은 어떤 장소에 어떻게 마련하나요?",
+   "gold": [
+    "moe_school_manual_v3:p0056:t01r01"
+   ],
+   "A": 6,
+   "tool_question": "일시적 관찰실은 어떤 장소에 어떻게 마련하나요?",
+   "doc_query": "일시적 관찰실 설치 장소와 운영 방법",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "일시적 관찰실은 어떤 장소에 어떻게 마련하나요?"
+    },
+    "search_queries": {
+     "action_search": "일시적 관찰실 설치 장소와 운영 방법"
+    }
+   },
+   "B": 7,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 19
+  },
+  "S-O02": {
+   "question": "일시적 관찰실에서 학생은 얼마나 머물고 어떻게 관리하나요?",
+   "gold": [
+    "moe_school_manual_v3:p0056:t01r03",
+    "moe_school_manual_v3:p0056:t01r04"
+   ],
+   "A": 1,
+   "tool_question": "일시적 관찰실에서 학생은 얼마나 머물고 어떻게 관리하나요?",
+   "doc_query": "학교 일시적 관찰실 운영 및 학생 관리",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "일시적 관찰실에서 학생은 얼마나 머물며 어떻게 관리하나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 일시적 관찰실 운영 및 학생 관리"
+    }
+   },
+   "B": 2,
+   "B_depth": 30,
+   "C": 3,
+   "C_citations": 18
+  },
+  "S-O03": {
+   "question": "일시적 관찰실로 보건실을 써도 되나요?",
+   "gold": [
+    "moe_school_manual_v3:p0056:t01r01"
+   ],
+   "A": null,
+   "tool_question": "일시적 관찰실로 보건실을 써도 되나요?",
+   "doc_query": "일시적 관찰실 설치 및 운영 기준",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "보건실을 일시적 관찰실로 사용해도 되나요?"
+    },
+    "search_queries": {
+     "action_search": "일시적 관찰실 설치 및 운영 기준"
+    }
+   },
+   "B": 16,
+   "B_depth": 30,
+   "C": 2,
+   "C_citations": 21
+  },
+  "S-O04": {
+   "question": "일시적 관찰실에서 학생을 돌보는 담당자는 누구로 정하나요? 두 문서가 같은가요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0245:t02r02",
+    "moe_school_manual_v3:p0056:t01r02"
+   ],
+   "A": 2,
+   "tool_question": "일시적 관찰실에서 학생을 돌보는 담당자는 누구로 정하나요? 두 문서가 같은가요?",
+   "doc_query": null,
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "CROSSDOC",
+    "sub_questions": {
+     "crossdoc_graph_search": "일시적 관찰실에서 학생을 돌보는 담당자를 두 문서는 각각 누구로 정하고 있나요?"
+    },
+    "search_queries": {
+     "crossdoc_graph_search": "일시적 관찰실 운영 및 학생 관찰 담당자"
+    }
+   },
+   "B": 2,
+   "B_depth": 30,
+   "C": 4,
+   "C_citations": 19
+  },
+  "S-R01": {
+   "question": "식중독이 의심되는 유행에서 영양(교)사는 무엇을 하나요?",
+   "gold": [
+    "moe_school_manual_v3:p0043:t01r03"
+   ],
+   "A": 1,
+   "tool_question": "식중독이 의심되는 유행에서 영양(교)사는 무엇을 하나요?",
+   "doc_query": "식중독 의심 유행 시 학교 구성원별 역할과 대응 절차",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "식중독 의심 유행에서 영양(교)사의 역할은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "식중독 의심 유행 시 학교 구성원별 역할과 대응 절차"
+    }
+   },
+   "B": 6,
+   "B_depth": 30,
+   "C": 9,
+   "C_citations": 18
+  },
+  "S-R02": {
+   "question": "행정실은 유행 시 소독과 관련해 무엇을 하나요?",
+   "gold": [
+    "moe_school_manual_v3:p0040:t01r03",
+    "moe_school_manual_v3:p0044:t01r01"
+   ],
+   "A": 1,
+   "tool_question": "행정실은 유행 시 소독과 관련해 무엇을 하나요?",
+   "doc_query": "감염병 유행 시 학교 소독 및 행정실 역할",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "유행 시 행정실의 소독 관련 역할은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "감염병 유행 시 학교 소독 및 행정실 역할"
+    }
+   },
+   "B": 3,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 18
+  },
+  "S-R03": {
+   "question": "유행의심 상황에서 교장·교감은 무엇을 하나요?",
+   "gold": [
+    "moe_school_manual_v3:p0040:t01r04",
+    "moe_school_manual_v3:p0043:t01r01"
+   ],
+   "A": null,
+   "tool_question": "유행의심 상황에서 교장·교감은 무엇을 하나요?",
+   "doc_query": "감염병 유행의심 상황에서 학교장과 교감의 역할 및 대응",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "유행의심 상황에서 교장·교감의 역할은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "감염병 유행의심 상황에서 학교장과 교감의 역할 및 대응"
+    }
+   },
+   "B": 20,
+   "B_depth": 30,
+   "C": 4,
+   "C_citations": 19
+  },
+  "S-E01": {
+   "question": "홍역 환자가 생기면 역학조사에 협조하기 위해 학교는 접촉자를 어떻게 파악하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0203:t01r09",
+    "gyeonggi_school_guide_2025:p0203:t01r10"
+   ],
+   "A": 1,
+   "tool_question": "홍역 환자가 생기면 역학조사에 협조하기 위해 학교는 접촉자를 어떻게 파악하나요?",
+   "doc_query": "학교 감염병 역학조사 협조 및 접촉자 파악 절차",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "홍역 환자가 발생하면 학교는 역학조사에 협조하기 위해 접촉자를 어떻게 파악하나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 역학조사 협조 및 접촉자 파악 절차"
+    }
+   },
+   "B": 21,
+   "B_depth": 30,
+   "C": 3,
+   "C_citations": 11
+  },
+  "S-E02": {
+   "question": "홍역 의심 환자가 추가로 생기면 누구에게 연락하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0203:t01r17"
+   ],
+   "A": null,
+   "tool_question": "홍역 의심 환자가 추가로 생기면 누구에게 연락하나요?",
+   "doc_query": "감염병 의심 환자 발생 시 학교의 보건소 및 교육청 보고 절차",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "홍역 의심 환자가 추가로 발생하면 학교는 누구에게 연락해야 하나요?"
+    },
+    "search_queries": {
+     "action_search": "감염병 의심 환자 발생 시 학교의 보건소 및 교육청 보고 절차"
+    }
+   },
+   "B": 13,
+   "B_depth": 30,
+   "C": 12,
+   "C_citations": 18
+  },
+  "S-E03": {
+   "question": "수두 환자는 언제까지 격리하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0185:t01r12"
+   ],
+   "A": 4,
+   "tool_question": "수두 환자는 언제까지 격리하나요?",
+   "doc_query": "감염병별 등교중지 기간과 등교 가능 기준",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "수두 확진 학생의 등교중지 기간과 등교 가능 기준은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "감염병별 등교중지 기간과 등교 가능 기준"
+    }
+   },
+   "B": null,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 14
+  },
+  "S-E04": {
+   "question": "결핵 접촉자 조사에서 학교는 어떻게 협조하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0171:t01r03",
+    "gyeonggi_school_guide_2025:p0171:t01r04"
+   ],
+   "A": 2,
+   "tool_question": "결핵 접촉자 조사에서 학교는 어떻게 협조하나요?",
+   "doc_query": "결핵 접촉자 조사 시 학교의 협조 사항과 역할",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "결핵 접촉자 조사에서 학교는 어떻게 협조하나요?"
+    },
+    "search_queries": {
+     "action_search": "결핵 접촉자 조사 시 학교의 협조 사항과 역할"
+    }
+   },
+   "B": 1,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 19
+  },
+  "S-S01": {
+   "question": "특수학교에서 감염병 의심 학생을 이동시킬 때 유의할 점은 무엇인가요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0245:t02r01"
+   ],
+   "A": null,
+   "tool_question": "특수학교에서 감염병 의심 학생을 이동시킬 때 유의할 점은 무엇인가요?",
+   "doc_query": "감염병 의심 학생 이동 및 보호 조치",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "특수학교에서 감염병 의심 학생을 이동시킬 때 유의할 점은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "감염병 의심 학생 이동 및 보호 조치"
+    }
+   },
+   "B": 9,
+   "B_depth": 30,
+   "C": 2,
+   "C_citations": 16
+  },
+  "S-S02": {
+   "question": "교육연속성계획(ECP)에는 어떤 내용이 들어가나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0307:t01r01",
+    "gyeonggi_school_guide_2025:p0307:t01r02"
+   ],
+   "A": 4,
+   "tool_question": "교육연속성계획(ECP)에는 어떤 내용이 들어가나요?",
+   "doc_query": "학교 감염병 위기 시 교육연속성계획 수립 내용",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "학교 교육연속성계획(ECP)에는 어떤 내용이 포함되나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 위기 시 교육연속성계획 수립 내용"
+    }
+   },
+   "B": 4,
+   "B_depth": 30,
+   "C": 1,
+   "C_citations": 18
+  },
+  "S-A01": {
+   "question": "등교중지 기간의 출석인정을 받으려면 어떤 서류가 필요한가요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0204:b02",
+    "gyeonggi_school_guide_2025:p0204:b03",
+    "gyeonggi_school_guide_2025:p0205:b01"
+   ],
+   "A": 1,
+   "tool_question": "등교중지 기간의 출석인정을 받으려면 어떤 서류가 필요한가요?",
+   "doc_query": "감염병 등교중지 기간 출결 처리 및 출석인정 증빙서류",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "등교중지 기간의 출석인정을 받으려면 어떤 서류가 필요한가요?"
+    },
+    "search_queries": {
+     "action_search": "감염병 등교중지 기간 출결 처리 및 출석인정 증빙서류"
+    }
+   },
+   "B": 1,
+   "B_depth": 64,
+   "C": 5,
+   "C_citations": 16
+  },
+  "S-A02": {
+   "question": "등교중지된 학생은 언제, 어떻게 다시 등교하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0205:b01"
+   ],
+   "A": 2,
+   "tool_question": "등교중지된 학생은 언제, 어떻게 다시 등교하나요?",
+   "doc_query": "감염병별 등교중지 기간 및 등교 기준",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "등교중지된 학생의 등교 가능 시점과 등교 기준은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "감염병별 등교중지 기간 및 등교 기준"
+    }
+   },
+   "B": 15,
+   "B_depth": 64,
+   "C": null,
+   "C_citations": 15
+  },
+  "S-A03": {
+   "question": "학교에서 감염병 환자가 생기면 교육청에는 어떻게 보고하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0206:b02",
+    "gyeonggi_school_guide_2025:p0209:b01"
+   ],
+   "A": null,
+   "tool_question": "학교에서 감염병 환자가 생기면 교육청에는 어떻게 보고하나요?",
+   "doc_query": "학교 감염병 발생 시 교육청 보고 절차와 방법",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "학교에서 감염병 환자가 발생하면 교육청에 어떻게 보고하나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 발생 시 교육청 보고 절차와 방법"
+    }
+   },
+   "B": null,
+   "B_depth": 30,
+   "C": null,
+   "C_citations": 21
+  },
+  "S-A04": {
+   "question": "홍역 학생이 확인되면 학교는 보건소 신고 공문을 어떻게 보내나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0211:b01",
+    "gyeonggi_school_guide_2025:p0212:b01"
+   ],
+   "A": null,
+   "tool_question": "홍역 학생이 확인되면 학교는 보건소 신고 공문을 어떻게 보내나요?",
+   "doc_query": "학교 감염병 발생 시 보건소 신고 절차와 공문 작성·발송 방법",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "홍역 학생이 확인되면 학교는 보건소 신고 공문을 어떻게 작성하고 발송하나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 발생 시 보건소 신고 절차와 공문 작성·발송 방법"
+    }
+   },
+   "B": 27,
+   "B_depth": 30,
+   "C": null,
+   "C_citations": 20
+  },
+  "S-F01": {
+   "question": "학교 감염병 대응 제1단계는 언제 시작해서 언제 끝나나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0164:t01r04",
+    "moe_school_manual_v3:p0053:t01r01"
+   ],
+   "A": null,
+   "tool_question": "학교 감염병 대응 제1단계는 언제 시작해서 언제 끝나나요?",
+   "doc_query": "학교 감염병 대응 단계별 시작 및 종료 기준",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "학교 감염병 대응 제1단계는 언제 시작하고 언제 종료되나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 대응 단계별 시작 및 종료 기준"
+    }
+   },
+   "B": 10,
+   "B_depth": 30,
+   "C": 12,
+   "C_citations": 18
+  },
+  "S-F02": {
+   "question": "학교 내 감염병 유행의심 기준은 무엇인가요?",
+   "gold": [
+    "moe_school_manual_v3:p0062:b01"
+   ],
+   "A": null,
+   "tool_question": "학교 내 감염병 유행의심 기준은 무엇인가요?",
+   "doc_query": "학교 내 감염병 유행의심 기준",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "학교 내 감염병 유행의심 기준은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "학교 내 감염병 유행의심 기준"
+    }
+   },
+   "B": 21,
+   "B_depth": 30,
+   "C": null,
+   "C_citations": 21
+  },
+  "S-F03": {
+   "question": "대응 제2단계의 주요 활동은 무엇인가요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0164:t01r08",
+    "gyeonggi_school_guide_2025:p0164:t01r09"
+   ],
+   "A": null,
+   "tool_question": "대응 제2단계의 주요 활동은 무엇인가요?",
+   "doc_query": "학교 감염병 대응 단계별 주요 활동",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "학교 감염병 대응 제2단계의 주요 활동은 무엇인가요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 대응 단계별 주요 활동"
+    }
+   },
+   "B": 6,
+   "B_depth": 30,
+   "C": 2,
+   "C_citations": 22
+  },
+  "S-T01": {
+   "question": "유증상 학생은 담임교사가 반드시 직접 보건실까지 데려가야 하나요?",
+   "gold": [
+    "moe_school_manual_v3:p0053:b01",
+    "moe_school_manual_v3:p0054:b01"
+   ],
+   "A": 10,
+   "tool_question": "유증상 학생은 담임교사가 반드시 직접 보건실까지 데려가야 하나요?",
+   "doc_query": "유증상 학생 발생 시 담임교사와 보건교사의 역할 및 보건실 인솔 절차",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "유증상 학생을 담임교사가 직접 보건실까지 인솔해야 하나요?"
+    },
+    "search_queries": {
+     "action_search": "유증상 학생 발생 시 담임교사와 보건교사의 역할 및 보건실 인솔 절차"
+    }
+   },
+   "B": 7,
+   "B_depth": 30,
+   "C": 8,
+   "C_citations": 17
+  },
+  "S-T02": {
+   "question": "학생 한 명이 열이 나서 보건실에 왔어요. 지금 바로 NEIS에 감염병 환자로 등록해야 하나요?",
+   "gold": [
+    "gyeonggi_school_guide_2025:p0164:t01r09",
+    "moe_school_manual_v3:p0053:t01r01"
+   ],
+   "A": null,
+   "tool_question": "학생 한 명이 열이 나서 보건실에 왔어요. 지금 바로 NEIS에 감염병 환자로 등록해야 하나요?",
+   "doc_query": "학교 감염병 환자 NEIS 등록 기준과 절차",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "발열 학생을 감염병 환자로 NEIS에 등록해야 하나요?"
+    },
+    "search_queries": {
+     "action_search": "학교 감염병 환자 NEIS 등록 기준과 절차"
+    }
+   },
+   "B": 13,
+   "B_depth": 30,
+   "C": 11,
+   "C_citations": 23
+  },
+  "S-T03": {
+   "question": "일시적 관찰실에서 보건교사가 학생을 돌봐야 하나요?",
+   "gold": [
+    "moe_school_manual_v3:p0056:t01r02"
+   ],
+   "A": 3,
+   "tool_question": "일시적 관찰실에서 보건교사가 학생을 돌봐야 하나요?",
+   "doc_query": "일시적 관찰실 운영과 담당자 역할",
+   "route": {
+    "response_type": "DOMAIN",
+    "intent": "ACTION",
+    "sub_questions": {
+     "action_search": "일시적 관찰실에서 보건교사가 학생을 돌봐야 하나요?"
+    },
+    "search_queries": {
+     "action_search": "일시적 관찰실 운영과 담당자 역할"
+    }
+   },
+   "B": 1,
+   "B_depth": 30,
+   "C": 7,
+   "C_citations": 18
+  }
+ }
+}

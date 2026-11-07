@@ -1,0 +1,921 @@
+[
+ {
+  "id": "K01",
+  "question": "마이코플라스마 폐렴 전염기간은?",
+  "gold": [
+   [
+    "kdca_respiratory_2026",
+    193
+   ],
+   [
+    "kdca_respiratory_2026",
+    67
+   ]
+  ],
+  "key": "20\\s*일",
+  "status": "ANSWERED",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 1,
+  "school_cited": 0,
+  "rerank_cards": 2,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "마이코플라스마 폐렴 전염기간은?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_respiratory_2026",
+    193
+   ]
+  ],
+  "seconds": 8.52,
+  "answer": "**마이코플라스마 폐렴은 증상 발현 2∼8일 전부터 증상 발생 후 20일 이내까지 전염될 수 있습니다. 일부 문헌에서는 14주까지로 보고합니다.**[1]"
+ },
+ {
+  "id": "K02",
+  "question": "마이코플라스마 폐렴 진단서에 등교중지 기간이 안 적혀 있어요. 며칠 쉬게 하고 출석인정 해야 하나요?",
+  "gold": [
+   [
+    "kdca_respiratory_2026",
+    201
+   ],
+   [
+    "kdca_respiratory_2026",
+    193
+   ],
+   [
+    "kdca_respiratory_2026",
+    67
+   ],
+   [
+    "kdca_respiratory_2026",
+    68
+   ]
+  ],
+  "key": "급성기",
+  "status": "PARTIAL",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "PARTIAL"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 2,
+  "school_cited": 7,
+  "rerank_cards": 19,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "마이코플라스마 폐렴 진단서에 등교중지 기간이 안 적혀 있어요. 며칠 쉬게 하고 출석인정 해야 하나요?",
+    "status": "PARTIAL",
+    "missing": "진단서에 기간이 없을 때 적용할 구체적인 등교중지 일수와 마이코플라스마 폐렴의 출석인정 처리 기준을 직접 확정하는 근거가 부족합니다."
+   }
+  ],
+  "cited": [
+   [
+    "gyeonggi_school_guide_2025",
+    204
+   ],
+   [
+    "kdca_respiratory_2026",
+    193
+   ],
+   [
+    "kdca_respiratory_2026",
+    201
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    393
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    205
+   ],
+   [
+    "moe_school_manual_v3",
+    59
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    164
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    204
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ]
+  ],
+  "seconds": 16.09,
+  "answer": "**진단서에 기간이 없으면 며칠로 고정하지 말고, 보건(담당)교사가 최초 증상일부터 적용할 등교중지 기간을 판단하세요. 마이코플라스마 폐렴은 발열 등 급성기 증상이 있는 동안 등교하지 않도록 권고되며, 그 기간의 결석은 출석인정 대상입니다.**[1][3][4]\n\n**상황 판단**\n- 마이코플라스마 폐렴은 제4급감염병이지만, 교육부 매뉴얼의 학교장 신고 대상 목록에는 없습니다. 따라서 해당 목록에 따른 학교장 신고 대상은 아닙니다.[2][6]\n- 질병관리청 지침은 발열 등 급성기 증상이 있는 동안 등교하지 않을 것을 권고합니다. 교육부 매뉴얼은 방역당국의 별도 관리지침이 있으면 우선 적용하도록 합니다.[3][9]\n- 경기도 가이드북은 등교중지가 필요한 감염병으로 확진된 경우 격리 기간 동안 등교중지하고, 격리 기간은 원칙적으로 의사 소견을 따르도록 합니다.[8]\n\n**지금 바로 할 일**\n1. 보건(담당)교사는 진단서에서 질환명을 확인하고, 최초 증상일을 기준으로 해당 감염병의 ‘전파 차단을 위한 등교중지 기간’을 적용합니다.[1]\n\n**이후에 할 일**\n- 등교중지 기간 동안 결석한 경우 출석으로 인정합니다. 경기도 가이드북은 법정감염병 등으로 출석하지 못한 경우를 출석인정 대상으로 정하고 있습니다.[4][8]\n- 등교 재개 시 진료확인서, 의사 소견서 또는 진단서 중 하나를 제출하도록 안내하는 것을 권장합니다.[5]\n\n**신고·법적 사항**\n- 마이코플라스마 폐렴은 교육부 매뉴얼의 학교장 신고 대상 목록에 없으므로, 그 목록에 따른 학교장 신고 대상은 아닙니다.[6]"
+ },
+ {
+  "id": "K03",
+  "question": "마이코플라스마 폐렴 잠복기는?",
+  "gold": [
+   [
+    "kdca_respiratory_2026",
+    193
+   ],
+   [
+    "kdca_respiratory_2026",
+    197
+   ]
+  ],
+  "key": "2\\s*[~∼-]\\s*3\\s*주",
+  "status": "ANSWERED",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 1,
+  "school_cited": 0,
+  "rerank_cards": 6,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "마이코플라스마 폐렴 잠복기는?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_respiratory_2026",
+    193
+   ]
+  ],
+  "seconds": 8.06,
+  "answer": "**마이코플라스마 폐렴의 잠복기는 2~3주이며, 범위는 1~4주입니다.**[1]"
+ },
+ {
+  "id": "K12",
+  "question": "인플루엔자 학생이 해열제를 먹었다면 언제부터 등교할 수 있나요?",
+  "gold": [
+   [
+    "kdca_flu_facility_2026",
+    17
+   ]
+  ],
+  "key": "48\\s*시간",
+  "status": "ANSWERED",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 2,
+  "school_cited": 2,
+  "rerank_cards": 22,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "인플루엔자 학생이 해열제를 먹었다면 언제부터 등교할 수 있나요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_flu_facility_2026",
+    15
+   ],
+   [
+    "kdca_flu_facility_2026",
+    17
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    157
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ]
+  ],
+  "seconds": 11.5,
+  "answer": "**해열제를 먹었다면 마지막 투약 시점부터 48시간 경과를 관찰한 뒤 등교할 수 있습니다.**[1][2]\n\n**상황 판단**\n- 질병관리청 2026 지침은 해열제 없이 정상체온으로 회복한 뒤 24시간이 지나야 등교할 수 있도록 하고, 해열제를 투약했다면 마지막 투약 시점부터 48시간 경과 관찰이 필요하다고 안내합니다.[1][2]\n- 경기도 가이드북(2024)도 해열제 투약 시 마지막 투약 시점부터 2일로 안내하며, 방역당국 지침이 있으면 그 지침을 우선 적용하도록 합니다.[3][4]"
+ },
+ {
+  "id": "K13",
+  "question": "코로나19 전염기간은?",
+  "gold": [
+   [
+    "kdca_covid19_2026",
+    39
+   ]
+  ],
+  "key": "1\\s*[~∼-]\\s*3\\s*일",
+  "status": "ANSWERED",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 1,
+  "school_cited": 0,
+  "rerank_cards": 3,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "코로나19 전염기간은?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_covid19_2026",
+    39
+   ]
+  ],
+  "seconds": 9.59,
+  "answer": "**코로나19는 증상 발생 1~3일 전부터 전파될 수 있고, 바이러스 양은 감염 첫 주 안에 최고점에 도달한 뒤 점차 감소합니다.**[1]\n\n**상황 판단**\n- 전염기간은 증상 발생 전부터 시작될 수 있으며, 감염 초기 전파가 쉽습니다.[1]"
+ },
+ {
+  "id": "K14",
+  "question": "성홍열 환자 접촉자는 며칠까지 추가 발생을 감시하나요?",
+  "gold": [
+   [
+    "kdca_respiratory_2026",
+    118
+   ]
+  ],
+  "key": "7\\s*일",
+  "status": "ANSWERED",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": false,
+  "gold_hit": false,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 2,
+  "school_cited": 2,
+  "rerank_cards": 24,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "성홍열 환자 접촉자는 며칠까지 추가 발생을 감시하나요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_respiratory_2026",
+    115
+   ],
+   [
+    "moe_school_manual_v3",
+    207
+   ],
+   [
+    "kdca_respiratory_2026",
+    78
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ]
+  ],
+  "seconds": 10.9,
+  "answer": "**성홍열 접촉자는 마지막 노출일로부터 7일까지 증상 발생을 감시하세요. 다만 일상적인 접촉자 관리는 하지 않으며, 유행 시 추가 발생 여부를 감시합니다.**[1][3]\n\n**상황 판단**\n- 성홍열 유행 시 접촉자 중 추가 발생 여부를 감시하고, 밀접접촉자는 마지막 노출 가능 시점부터 최대 잠복기까지 발병 여부를 감시합니다.[3]\n- 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용합니다.[4]"
+ },
+ {
+  "id": "K15",
+  "question": "홍역 환자의 전염기간은 언제까지인가요?",
+  "gold": [
+   [
+    "kdca_measles_2026",
+    93
+   ],
+   [
+    "kdca_measles_2026",
+    94
+   ]
+  ],
+  "key": "4\\s*일",
+  "status": "ANSWERED",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 1,
+  "school_cited": 3,
+  "rerank_cards": 8,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "홍역 환자의 전염기간은 언제까지인가요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_measles_2026",
+    93
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    199
+   ],
+   [
+    "moe_school_manual_v3",
+    212
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ]
+  ],
+  "seconds": 8.89,
+  "answer": "**홍역 환자의 전염기간은 발진이 나타난 후 4일까지입니다.**[1]\n\n**상황 판단**\n- 질병관리청 홍역 관리지침(2026)은 의료기관에서 홍역(의심) 진단을 받은 경우 전염기간을 ‘발진이 나타난 후 4일까지’로 안내합니다.[1]\n- 경기도 가이드북(2024)과 교육부 매뉴얼(2023)은 발진 발생 4일 전부터 4일 후까지로 적고 있으나, 교육부 매뉴얼은 방역당국의 별도 관리지침이 있으면 이를 우선 적용하도록 합니다.[2][3][4]"
+ },
+ {
+  "id": "K17",
+  "question": "코로나19 잠복기는?",
+  "gold": [
+   [
+    "kdca_covid19_2026",
+    43
+   ],
+   [
+    "kdca_covid19_2026",
+    48
+   ]
+  ],
+  "key": "1\\s*[~∼-]\\s*14\\s*일",
+  "status": "ANSWERED",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 3,
+  "school_cited": 0,
+  "rerank_cards": 8,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "코로나19 잠복기는?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_covid19_2026",
+    39
+   ],
+   [
+    "kdca_covid19_2026",
+    43
+   ],
+   [
+    "kdca_covid19_2026",
+    48
+   ]
+  ],
+  "seconds": 7.63,
+  "answer": "**코로나19 잠복기는 1~14일이며, 평균 5~7일입니다.**[1]"
+ },
+ {
+  "id": "K18",
+  "question": "백일해 환자와 접촉한 학생은 예방적 항생제를 먹어야 하나요?",
+  "gold": [
+   [
+    "kdca_vaccine_preventable_2026",
+    116
+   ]
+  ],
+  "key": "3\\s*주",
+  "status": "INSUFFICIENT_EVIDENCE",
+  "intent": null,
+  "secondary": null,
+  "tools": [],
+  "gold_in_tools": false,
+  "gold_hit": false,
+  "key_hit": false,
+  "first_key": false,
+  "kdca_cited": 0,
+  "school_cited": 0,
+  "rerank_cards": null,
+  "coverage": null,
+  "cited": [],
+  "seconds": 1.5,
+  "answer": "이 서비스가 답할 수 있는 범위가 아닙니다. 특정 학생의 예방적 항생제 복용 여부를 묻는 개인 의료 상담이므로 안내할 수 없습니다."
+ },
+ {
+  "id": "K19",
+  "question": "수족구병은 다 나은 뒤에도 바이러스가 나오나요?",
+  "gold": [
+   [
+    "kdca_hfmd_2026",
+    30
+   ]
+  ],
+  "key": "8\\s*주",
+  "status": "ANSWERED",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": false,
+  "gold_hit": false,
+  "key_hit": false,
+  "first_key": false,
+  "kdca_cited": 0,
+  "school_cited": 1,
+  "rerank_cards": 8,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "수족구병은 다 나은 뒤에도 바이러스가 나오나요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "gyeonggi_school_guide_2025",
+    187
+   ]
+  ],
+  "seconds": 12.53,
+  "answer": "**네. 수족구병은 회복 후에도 대변에서 바이러스가 수 주간 배출될 수 있으므로 손 위생에 유의하세요.**[1]"
+ },
+ {
+  "id": "K20",
+  "question": "홍역 환자와 같은 반 학생(접촉자)은 어떻게 관리하나요?",
+  "gold": [
+   [
+    "kdca_measles_2026",
+    30
+   ]
+  ],
+  "key": "예방접종",
+  "status": "ANSWERED",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": false,
+  "gold_hit": false,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 0,
+  "school_cited": 8,
+  "rerank_cards": 27,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "홍역 환자와 같은 반 학생(접촉자)은 어떻게 관리하나요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "gyeonggi_school_guide_2025",
+    199
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    202
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    202
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    202
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    201
+   ],
+   [
+    "moe_school_manual_v3",
+    59
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    199
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    164
+   ]
+  ],
+  "seconds": 14.64,
+  "answer": "**홍역 확진자의 같은 반 접촉자는 면역 여부와 예방접종 금기 여부에 따라 관리하고, 증상 발생을 모니터링하세요.**[2][3][4]\n\n**상황 판단**\n- 홍역은 제2급 법정감염병이며, 학교장 신고 대상 목록에 포함됩니다.[6][7]\n- 접촉자 중 면역이 없거나 예방접종력이 불완전한 학생은 예방접종 금기 여부에 따라 조치가 달라집니다.[2][3]\n\n**지금 바로 할 일**\n1. 접촉자별 홍역 면역 여부와 예방접종력을 확인해 감수성자와 면역이 있는 경우를 구분합니다.[2][3][4]\n2. 감수성자 중 백신 접종 금기가 아닌 경우, 노출 후 72시간 이내 MMR 백신 접종을 안내합니다.[2]\n3. 감수성자 중 백신 접종 금기인 경우, 노출 후 6일 이내 면역글로불린 투여를 안내합니다.[3]\n4. 접촉자에게 증상 발생을 모니터링하도록 안내합니다. 감수성자 중 백신 접종 금기가 아닌 경우와 면역이 있는 경우는 21일, 백신 접종 금기인 경우는 28일입니다.[2][3][4]\n\n**이후에 할 일**\n- 접촉자에게 발열과 발진이 발생하면 사람과의 접촉을 최소화하고 마스크를 착용한 상태로 병·의원에 방문하도록 안내합니다.[5]\n- 최장 잠복기인 노출 후 3주 동안 발열과 발진이 발생하면 즉시 의료기관 진료를 받도록 안내하고 관할 보건소로 연락하도록 합니다.[5]\n\n**학교 내 다른 담당의 역할**\n- 학교장은 홍역 확진에 대해 관할 보건소장에게 신고합니다.[6][8]\n- 학교는 나이스(NEIS)를 통해 교육(지원)청에 보고하고, 학교 내 능동감시체계 운영 방안에 따라 감시범위와 방법을 정해 실시합니다.[8]\n\n**신고·법적 사항**\n- 교육부 매뉴얼(2023)은 교육(지원)청 보고절차에 따라 나이스 전자결재로 교육(지원)청과 보건소에 보고하도록 안내하며, 서면 신고가 여의치 않으면 팩스·전화를 활용하도록 적고 있습니다.[6]"
+ },
+ {
+  "id": "K21",
+  "question": "마이코플라스마 폐렴 걸린 학생은 언제부터 등교할 수 있나요?",
+  "gold": [
+   [
+    "kdca_respiratory_2026",
+    201
+   ]
+  ],
+  "key": "급성기",
+  "status": "ANSWERED",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 1,
+  "school_cited": 2,
+  "rerank_cards": 14,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "마이코플라스마 폐렴 걸린 학생은 언제부터 등교할 수 있나요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_respiratory_2026",
+    201
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    166
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ]
+  ],
+  "seconds": 11.58,
+  "answer": "**발열 등 급성기 증상이 있는 동안은 등교하지 않는 것이 권고됩니다. 등교 시점은 증상이 가라앉은 뒤로 판단하시고, 격리 기간이 정해져 있다면 의사의 소견을 따르세요.**[1][2]\n\n**상황 판단**\n- 질병관리청 호흡기감염병 관리지침(2026)은 발열 등 급성기 증상이 있는 동안 등교하지 않을 것을 권고합니다.[1]\n- 경기도 가이드북(2024)은 등교중지가 필요한 감염병으로 확진된 경우 격리 기간 동안 등교중지하고, 격리 기간은 원칙적으로 의사의 소견에 따르도록 안내합니다.[2]\n- 교육부 매뉴얼(2023)은 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 합니다.[3]\n\n**이후에 할 일**\n- 격리 기간이 정해진 경우, 의사의 소견에 따른 기간이 끝난 뒤 등교하도록 안내하세요.[2]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+ },
+ {
+  "id": "C01",
+  "question": "수족구병 진단받은 학생, 언제부터 등교시키면 되나요?",
+  "gold": [
+   [
+    "kdca_hfmd_2026",
+    30
+   ]
+  ],
+  "key": "수포가 마른",
+  "status": "ANSWERED",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 2,
+  "school_cited": 3,
+  "rerank_cards": 21,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "수족구병 진단받은 학생, 언제부터 등교시키면 되나요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_hfmd_2026",
+    30
+   ],
+   [
+    "kdca_hfmd_2026",
+    29
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    187
+   ],
+   [
+    "moe_school_manual_v3",
+    49
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ]
+  ],
+  "seconds": 11.67,
+  "answer": "**발열이 없고 수포가 마른 뒤 등교시키시면 됩니다.** 수족구병 환자는 확산 방지를 위해 등교중지가 권장됩니다.[1][2]\n\n**상황 판단**\n- 질병관리청 수족구병 관리지침(2026)은 발열이 없고 수포가 마른 후 복귀하도록 안내합니다.[1]"
+ },
+ {
+  "id": "C02",
+  "question": "코로나19 확진 학생은 언제부터 다시 등교할 수 있나요?",
+  "gold": [
+   [
+    "kdca_covid19_2026",
+    28
+   ]
+  ],
+  "key": "24\\s*시간",
+  "status": "ANSWERED",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 1,
+  "school_cited": 3,
+  "rerank_cards": 22,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "코로나19 확진 학생은 언제부터 다시 등교할 수 있나요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_covid19_2026",
+    28
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    198
+   ],
+   [
+    "moe_school_manual_v3",
+    218
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ]
+  ],
+  "seconds": 11.36,
+  "answer": "**코로나19 확진 학생은 주요 증상(기침·발열·두통 등)이 호전된 후 24시간이 지나면 등교할 수 있습니다. 중증 증상이나 면역저하가 있는 경우에는 의사의 판단에 따라 제한 기간이 달라질 수 있습니다.**[1]\n\n**상황 판단**\n- 질병관리청 코로나19 관리지침(2026)은 주요 증상이 호전된 후 24시간까지 격리를 권고합니다.[1]\n- 경기도 가이드북(2024)은 같은 기간 등교중지(격리권고) 및 수칙 준수를 안내합니다.[2]"
+ },
+ {
+  "id": "C03",
+  "question": "인플루엔자 진단받은 학생은 언제까지 등교하면 안 되나요?",
+  "gold": [
+   [
+    "kdca_flu_facility_2026",
+    15
+   ],
+   [
+    "kdca_flu_facility_2026",
+    17
+   ]
+  ],
+  "key": "24\\s*시간",
+  "status": "ANSWERED",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 4,
+  "school_cited": 3,
+  "rerank_cards": 24,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "인플루엔자 진단받은 학생은 언제까지 등교하면 안 되나요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_flu_facility_2026",
+    15
+   ],
+   [
+    "kdca_flu_facility_2026",
+    17
+   ],
+   [
+    "kdca_flu_facility_2026",
+    20
+   ],
+   [
+    "kdca_flu_facility_2026",
+    25
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    157
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    195
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ]
+  ],
+  "seconds": 13.66,
+  "answer": "**인플루엔자 확진 학생은 해열제 없이 정상체온을 회복한 뒤 24시간이 지날 때까지 등교하면 안 됩니다. 해열제를 투약했다면 마지막 투약 시점부터 48시간 경과를 관찰한 뒤 등교할 수 있습니다.**[1][2]\n\n**상황 판단**\n- 질병관리청 인플루엔자 관리지침(2026)의 등교중지 기준을 적용합니다. 교육부 매뉴얼(2023)도 방역당국의 별도 관리지침을 우선 적용하도록 안내합니다.[1][7]\n\n**이후에 할 일**\n- 중증 증상이 있거나 면역저하자인 경우에는 의사의 판단에 따라 등교 제한 기간이 달라질 수 있습니다.[2]"
+ },
+ {
+  "id": "C04",
+  "question": "성홍열 잠복기는 며칠인가요?",
+  "gold": [
+   [
+    "kdca_respiratory_2026",
+    109
+   ]
+  ],
+  "key": "1\\s*[~∼-]\\s*7\\s*일",
+  "status": "ANSWERED",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 2,
+  "school_cited": 4,
+  "rerank_cards": 9,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "성홍열 잠복기는 며칠인가요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_respiratory_2026",
+    109
+   ],
+   [
+    "kdca_respiratory_2026",
+    67
+   ],
+   [
+    "moe_school_manual_v3",
+    223
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    160
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ]
+  ],
+  "seconds": 11.73,
+  "answer": "**성홍열 잠복기는 1~7일이며, 평균 2~5일입니다.**[1]\n\n**상황 판단**\n- 교육부 매뉴얼(2023)은 잠복기를 1~3일로 적고 있지만, 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하므로 질병관리청 지침의 1~7일(평균 2~5일)을 기준으로 보시면 됩니다.[1][3][6]"
+ }
+]

@@ -208,3 +208,12 @@ def test_scenario_chunks_reads_db_once_and_tolerates_failure():
     assert scenario_chunks({"driver": driver, "database": "neo4j"}, ["a", "b", "a"]) == {"a"}
     assert driver.calls[0][1]["ids"] == ["a", "b"] and driver.calls[0][1]["routing_"] == "r"
     assert scenario_chunks({"driver": FakeDriver(error=RuntimeError("down"))}, ["a"]) == set()
+
+
+def test_edition_labels_are_not_treated_as_evidence_numbers(books, blocks):
+    # 11/08: 2026 지침 우선 규칙으로 판본을 밝힌 줄('…관리지침(2026)은', '교육부 매뉴얼(2023)은')이 숫자 검사에 걸려 템플릿으로 떨어졌다.
+    from rag.school.answer_writer import _numbers
+    assert _numbers("질병관리청 수족구병 관리지침(2026)은 수포가 마른 후 복귀합니다.[1]") == set()
+    assert _numbers("교육부 매뉴얼(제3차 개정판, 2023)과 경기도 가이드북(2024)은 6일간 등교중지입니다.") == {"6"}
+    assert _numbers("2026년 지침은 3일이라고 합니다.") == {"3"}
+    assert any(p.startswith("근거에 없는 숫자") for p in check_answer("담임교사가 2026일 동안 관찰합니다.[1]", blocks, books))

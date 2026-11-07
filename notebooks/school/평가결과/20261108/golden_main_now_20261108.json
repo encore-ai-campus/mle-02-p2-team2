@@ -1,0 +1,1225 @@
+[
+ {
+  "id": "S-Q01",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 2,
+  "total": 5,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0166:t01r01",
+   "gyeonggi_school_guide_2025:p0167:t01r03"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제1단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 10
+ },
+ {
+  "id": "S-Q02",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search",
+   "disease_search"
+  ],
+  "rounds": 2,
+  "hit": 3,
+  "total": 4,
+  "first_citation_rank": 3,
+  "cited_order": [
+   "moe_school_manual_v3:p0059:b02",
+   "moleg_infectious_disease_act_21521:p0007:b02",
+   "gyeonggi_school_guide_2025:p0164:t01r09",
+   "gyeonggi_school_guide_2025:p0166:t01r02",
+   "gyeonggi_school_guide_2025:p0168:t01r01",
+   "moe_school_manual_v3:p0050:t01r04",
+   "gyeonggi_school_guide_2025:p0166:t01r01",
+   "gyeonggi_school_guide_2025:p0167:t01r03"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다.",
+   "핵심어(경기, 초등학교, 확진, 1명, 나왔) 든 청크 없음→질병 관련 청크로 대체"
+  ],
+  "n_find": 13
+ },
+ {
+  "id": "S-Q03",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "PARTIAL",
+  "got_status": "ANSWERED",
+  "status_ok": false,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search",
+   "disease_search",
+   "legal_search"
+  ],
+  "rounds": 3,
+  "hit": 1,
+  "total": 2,
+  "first_citation_rank": 5,
+  "cited_order": [
+   "moe_school_manual_v3:p0059:b02",
+   "moleg_infectious_disease_act_21521:p0007:b02",
+   "moleg_infectious_disease_act_21521:p0019:b01",
+   "moleg_infectious_disease_act_21521:p0019:b02",
+   "gyeonggi_school_guide_2025:p0164:t01r09"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다.",
+   "이 질문에 맞는 답 카드가 없거나, 카드의 근거 문서가 허용 목록에 없거나, 카드의 근거 블록이 검색되지 않아 근거를 찾지 못했습니다."
+  ],
+  "n_find": 6
+ },
+ {
+  "id": "S-Q04",
+  "split": "dev",
+  "want_route": "crossdoc_graph_search",
+  "got_route": "crossdoc_graph_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "crossdoc_graph_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 3,
+  "first_citation_rank": 3,
+  "cited_order": [
+   "moe_school_manual_v3:p0036:t01r01",
+   "moe_school_manual_v3:p0036:t01r02",
+   "gyeonggi_school_guide_2025:p0166:t01r01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "gyeonggi_school_guide_2025:담당 담임교사(EXAMPLE)",
+   "kdca_measles_2026:담당 학교[담당교사](EXPLICIT)",
+   "moe_school_manual_v3:담당 담임교사(EXAMPLE), 보건교사(EXAMPLE)"
+  ],
+  "n_find": 6
+ },
+ {
+  "id": "S-Q05",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 2,
+  "total": 2,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "moe_school_manual_v3:p0060:t01r03",
+   "moe_school_manual_v3:p0060:b01",
+   "gyeonggi_school_guide_2025:p0168:t01r01",
+   "gyeonggi_school_guide_2025:p0165:t02r02",
+   "gyeonggi_school_guide_2025:p0245:t02r03",
+   "gyeonggi_school_guide_2025:p0164:t01r09",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 16
+ },
+ {
+  "id": "S-Q06",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "moe_school_manual_v3:p0060:t01r04"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 복구단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 1
+ },
+ {
+  "id": "S-Q07",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 2,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0165:t02r03",
+   "gyeonggi_school_guide_2025:p0165:t02r01",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+  ],
+  "n_find": 9
+ },
+ {
+  "id": "S-Q08",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 2,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0165:t02r06",
+   "gyeonggi_school_guide_2025:p0165:b02",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+  ],
+  "n_find": 10
+ },
+ {
+  "id": "S-Q09",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0165:t02r08",
+   "moe_school_manual_v3:p0065:t01r03"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 3
+ },
+ {
+  "id": "S-Q10",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 0,
+  "total": 3,
+  "first_citation_rank": null,
+  "cited_order": [
+   "moe_school_manual_v3:p0068:t02r01",
+   "moe_school_manual_v3:p0068:t02r05",
+   "moe_school_manual_v3:p0068:t02r04",
+   "gyeonggi_school_guide_2025:p0165:t02r04",
+   "gyeonggi_school_guide_2025:p0165:t01r03",
+   "moe_school_manual_v3:p0068:t01r01",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 복구단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+  ],
+  "n_find": 9
+ },
+ {
+  "id": "S-Q11",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "moe_school_manual_v3:p0068:t02r01",
+   "gyeonggi_school_guide_2025:p0165:t02r04",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 복구단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 8
+ },
+ {
+  "id": "S-O01",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "moe_school_manual_v3:p0056:t01r01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 7
+ },
+ {
+  "id": "S-O02",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 2,
+  "total": 2,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "moe_school_manual_v3:p0056:t01r03",
+   "moe_school_manual_v3:p0056:t01r04",
+   "moe_school_manual_v3:p0055:b02",
+   "moe_school_manual_v3:p0056:t01r02",
+   "moe_school_manual_v3:p0056:t01r05"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 5
+ },
+ {
+  "id": "S-O03",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "moe_school_manual_v3:p0056:t01r01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 3
+ },
+ {
+  "id": "S-O04",
+  "split": "dev",
+  "want_route": "crossdoc_graph_search",
+  "got_route": "crossdoc_graph_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "PARTIAL",
+  "status_ok": false,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "crossdoc_graph_search"
+  ],
+  "rounds": 1,
+  "hit": 0,
+  "total": 2,
+  "first_citation_rank": null,
+  "cited_order": [
+   "moe_school_manual_v3:p0036:t01r02",
+   "moe_school_manual_v3:p0036:t01r01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "gyeonggi_school_guide_2025:담당 교감(EXAMPLE), 학년부장(EXAMPLE), 담임교사(EXAMPLE)",
+   "moe_school_manual_v3:담당 담임교사(EXAMPLE), 보건교사(EXAMPLE), 학교장(EXAMPLE), 교감(EXAMPLE)",
+   "[미해결] 근거에서 확인하지 못한 부분: 교육부 매뉴얼은 교무부장에게 격리 담당 교사 결정을 요청한다고 하지만, 경기도 가이드북에서 일시적 관찰실 담당자를 정하는 내용은 확인되지 않는다."
+  ],
+  "n_find": 3
+ },
+ {
+  "id": "S-R01",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "moe_school_manual_v3:p0043:t01r03",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+  ],
+  "n_find": 3
+ },
+ {
+  "id": "S-R02",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 2,
+  "first_citation_rank": 2,
+  "cited_order": [
+   "moe_school_manual_v3:p0067:t02r01",
+   "moe_school_manual_v3:p0044:t01r01",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+  ],
+  "n_find": 12
+ },
+ {
+  "id": "S-R03",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 2,
+  "first_citation_rank": 3,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0165:t02r03",
+   "gyeonggi_school_guide_2025:p0165:t02r05",
+   "moe_school_manual_v3:p0040:t01r04",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+  ],
+  "n_find": 14
+ },
+ {
+  "id": "S-E01",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search",
+   "disease_search"
+  ],
+  "rounds": 2,
+  "hit": 1,
+  "total": 2,
+  "first_citation_rank": 2,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0203:t01r07",
+   "gyeonggi_school_guide_2025:p0203:t01r09",
+   "gyeonggi_school_guide_2025:p0203:t01r08",
+   "gyeonggi_school_guide_2025:p0203:t01r06",
+   "gyeonggi_school_guide_2025:p0203:b01",
+   "moe_school_manual_v3:p0059:b02",
+   "gyeonggi_school_guide_2025:p0199:t01r02",
+   "gyeonggi_school_guide_2025:p0164:t01r09"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 12
+ },
+ {
+  "id": "S-E02",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search",
+   "disease_search"
+  ],
+  "rounds": 2,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 3,
+  "cited_order": [
+   "kdca_measles_2026:p0093:b01",
+   "kdca_measles_2026:p0093:b03",
+   "gyeonggi_school_guide_2025:p0203:t01r17",
+   "gyeonggi_school_guide_2025:p0168:t01r01",
+   "moe_school_manual_v3:p0059:b02",
+   "moleg_infectious_disease_act_21521:p0019:b01",
+   "moleg_infectious_disease_act_21521:p0019:b02",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10",
+   "moe_school_manual_v3:p0050:b01"
+  ],
+  "dbok": false,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 14
+ },
+ {
+  "id": "S-E03",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search",
+   "disease_search"
+  ],
+  "rounds": 2,
+  "hit": 0,
+  "total": 1,
+  "first_citation_rank": null,
+  "cited_order": [
+   "moe_school_manual_v3:p0049:t01r02",
+   "gyeonggi_school_guide_2025:p0157:t01r02",
+   "gyeonggi_school_guide_2025:p0184:b01",
+   "gyeonggi_school_guide_2025:p0184:b03",
+   "moe_school_manual_v3:p0197:b01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다."
+  ],
+  "n_find": 8
+ },
+ {
+  "id": "S-E04",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search",
+   "disease_search"
+  ],
+  "rounds": 2,
+  "hit": 2,
+  "total": 2,
+  "first_citation_rank": 4,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0170:b03",
+   "gyeonggi_school_guide_2025:p0170:b02",
+   "gyeonggi_school_guide_2025:p0171:t01r02",
+   "gyeonggi_school_guide_2025:p0171:t01r03",
+   "gyeonggi_school_guide_2025:p0171:t01r06",
+   "gyeonggi_school_guide_2025:p0171:t01r05",
+   "gyeonggi_school_guide_2025:p0171:t01r04",
+   "gyeonggi_school_guide_2025:p0171:t01r08",
+   "gyeonggi_school_guide_2025:p0172:b01",
+   "moe_school_manual_v3:p0059:b02",
+   "gyeonggi_school_guide_2025:p0169:t01r02",
+   "gyeonggi_school_guide_2025:p0164:t01r09"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+  ],
+  "n_find": 21
+ },
+ {
+  "id": "S-S01",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0245:t02r01",
+   "gyeonggi_school_guide_2025:p0166:t01r01",
+   "moe_school_manual_v3:p0054:b01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+  ],
+  "n_find": 9
+ },
+ {
+  "id": "S-S02",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 2,
+  "total": 2,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0307:t01r01",
+   "gyeonggi_school_guide_2025:p0307:t01r02",
+   "gyeonggi_school_guide_2025:p0307:t01r03",
+   "gyeonggi_school_guide_2025:p0307:t01r04",
+   "gyeonggi_school_guide_2025:p0307:t01r05",
+   "gyeonggi_school_guide_2025:p0307:t01r06"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 16
+ },
+ {
+  "id": "S-A01",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 2,
+  "total": 3,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0205:b01",
+   "moe_school_manual_v3:p0071:b02",
+   "gyeonggi_school_guide_2025:p0204:b02",
+   "gyeonggi_school_guide_2025:p0393:b03"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+  ],
+  "n_find": 5
+ },
+ {
+  "id": "S-A02",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0205:b01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님)."
+  ],
+  "n_find": 1
+ },
+ {
+  "id": "S-A03",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 0,
+  "total": 2,
+  "first_citation_rank": null,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0168:t01r01",
+   "gyeonggi_school_guide_2025:p0164:t01r09",
+   "moe_school_manual_v3:p0075:b01",
+   "gyeonggi_school_guide_2025:p0207:b01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 7
+ },
+ {
+  "id": "S-A04",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search",
+   "disease_search"
+  ],
+  "rounds": 2,
+  "hit": 0,
+  "total": 2,
+  "first_citation_rank": null,
+  "cited_order": [
+   "moe_school_manual_v3:p0059:b02",
+   "kdca_measles_2026:p0093:b01",
+   "gyeonggi_school_guide_2025:p0200:b02",
+   "gyeonggi_school_guide_2025:p0164:b01",
+   "gyeonggi_school_guide_2025:p0210:b01",
+   "moleg_infectious_disease_act_21521:p0019:b01",
+   "gyeonggi_school_guide_2025:p0199:t01r02",
+   "moleg_infectious_disease_act_21521:p0019:b02",
+   "gyeonggi_school_guide_2025:p0164:t01r09",
+   "moe_school_manual_v3:p0050:b01"
+  ],
+  "dbok": false,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 13
+ },
+ {
+  "id": "S-F01",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 2,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0164:t01r04"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제1단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 1
+ },
+ {
+  "id": "S-F02",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제3단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 3
+ },
+ {
+  "id": "S-F03",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 2,
+  "total": 2,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0164:t01r08",
+   "gyeonggi_school_guide_2025:p0164:t01r09",
+   "gyeonggi_school_guide_2025:p0168:t01r01",
+   "moe_school_manual_v3:p0059:b01",
+   "moe_school_manual_v3:p0062:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r10"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제2단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다."
+  ],
+  "n_find": 8
+ },
+ {
+  "id": "S-T01",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 2,
+  "first_citation_rank": 2,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0166:t01r01",
+   "moe_school_manual_v3:p0054:b01",
+   "moe_school_manual_v3:p0036:t01r01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제1단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 11
+ },
+ {
+  "id": "S-T02",
+  "split": "eval",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "PARTIAL",
+  "got_status": "PARTIAL",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 0,
+  "total": 2,
+  "first_citation_rank": null,
+  "cited_order": [
+   "moe_school_manual_v3:p0073:b01",
+   "gyeonggi_school_guide_2025:p0164:t01r13",
+   "moe_school_manual_v3:p0040:t01r01"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "질문 표현에 맞춰 원문의 대응 제1단계 근거를 우선했다. 원문이 배치한 단계이며 현재 상황의 단계를 판정한 것이 아니다.",
+   "[미해결] 근거에서 확인하지 못한 부분: 열만 있는 학생을 즉시 감염병 환자로 등록해야 하는지, 등록 시점과 증상만으로 등록 가능한지는 근거에 명시되어 있지 않다."
+  ],
+  "n_find": 4
+ },
+ {
+  "id": "S-T03",
+  "split": "dev",
+  "want_route": "action_search",
+  "got_route": "action_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "action_search"
+  ],
+  "rounds": 1,
+  "hit": 1,
+  "total": 1,
+  "first_citation_rank": 1,
+  "cited_order": [
+   "moe_school_manual_v3:p0056:t01r02",
+   "moe_school_manual_v3:p0055:b02",
+   "gyeonggi_school_guide_2025:p0167:t01r03"
+  ],
+  "dbok": true,
+  "warnings": [
+   "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다.",
+   "역할은 원문이 제시한 예시이며 학교 상황에 따라 조정할 수 있다(의무 배정 아님).",
+   "'원문 강도'는 원문 표현의 강도이며 법적 의무 여부를 확정하지 않는다."
+  ],
+  "n_find": 3
+ },
+ {
+  "id": "S-G01",
+  "split": "dev",
+  "want_route": "OUT_OF_SCOPE",
+  "got_route": "OUT_OF_SCOPE",
+  "route_ok": true,
+  "want_status": "INSUFFICIENT_EVIDENCE",
+  "got_status": "INSUFFICIENT_EVIDENCE",
+  "status_ok": true,
+  "response_type": "OUT_OF_SCOPE",
+  "tools_used": [],
+  "rounds": 0,
+  "hit": 0,
+  "total": 0,
+  "first_citation_rank": null,
+  "cited_order": [],
+  "dbok": null,
+  "warnings": [
+   "학생의 발열과 발진이 성홍열인지 진단·판정해 달라는 개인 의료 상담은 학교 감염병 대응 안내 범위에 해당하지 않습니다."
+  ],
+  "n_find": 0
+ },
+ {
+  "id": "S-G02",
+  "split": "eval",
+  "want_route": "OUT_OF_SCOPE",
+  "got_route": "OUT_OF_SCOPE",
+  "route_ok": true,
+  "want_status": "INSUFFICIENT_EVIDENCE",
+  "got_status": "INSUFFICIENT_EVIDENCE",
+  "status_ok": true,
+  "response_type": "OUT_OF_SCOPE",
+  "tools_used": [],
+  "rounds": 0,
+  "hit": 0,
+  "total": 0,
+  "first_citation_rank": null,
+  "cited_order": [],
+  "dbok": null,
+  "warnings": [
+   "NEIS에 정보를 대신 입력해 달라는 시스템 입력 요청은 지원 범위가 아닙니다."
+  ],
+  "n_find": 0
+ },
+ {
+  "id": "S-G03",
+  "split": "dev",
+  "want_route": "OUT_OF_SCOPE",
+  "got_route": "OUT_OF_SCOPE",
+  "route_ok": true,
+  "want_status": "INSUFFICIENT_EVIDENCE",
+  "got_status": "INSUFFICIENT_EVIDENCE",
+  "status_ok": true,
+  "response_type": "OUT_OF_SCOPE",
+  "tools_used": [],
+  "rounds": 0,
+  "hit": 0,
+  "total": 0,
+  "first_citation_rank": null,
+  "cited_order": [],
+  "dbok": null,
+  "warnings": [
+   "학교 감염병 대응과 무관한 점심 메뉴 추천 요청입니다."
+  ],
+  "n_find": 0
+ },
+ {
+  "id": "S-G04",
+  "split": "eval",
+  "want_route": "GENERAL",
+  "got_route": "GENERAL",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "GENERAL",
+  "tools_used": [],
+  "rounds": 0,
+  "hit": 0,
+  "total": 0,
+  "first_citation_rank": null,
+  "cited_order": [],
+  "dbok": null,
+  "warnings": [],
+  "n_find": 0
+ },
+ {
+  "id": "S-D01",
+  "split": "dev",
+  "want_route": "disease_search",
+  "got_route": "disease_search",
+  "route_ok": true,
+  "want_status": "ANSWERED",
+  "got_status": "ANSWERED",
+  "status_ok": true,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "disease_search"
+  ],
+  "rounds": 1,
+  "hit": 0,
+  "total": 0,
+  "first_citation_rank": null,
+  "cited_order": [
+   "gyeonggi_school_guide_2025:p0158:t01r09",
+   "moe_school_manual_v3:p0050:t01r07",
+   "moe_school_manual_v3:p0211:b03"
+  ],
+  "dbok": true,
+  "warnings": [],
+  "n_find": 3
+ },
+ {
+  "id": "S-L01",
+  "split": "eval",
+  "want_route": "legal_search",
+  "got_route": "legal_search",
+  "route_ok": true,
+  "want_status": "PARTIAL",
+  "got_status": "ANSWERED",
+  "status_ok": false,
+  "response_type": "DOMAIN",
+  "tools_used": [
+   "legal_search"
+  ],
+  "rounds": 1,
+  "hit": 0,
+  "total": 0,
+  "first_citation_rank": null,
+  "cited_order": [
+   "moleg_infectious_disease_act_21521:p0019:b01",
+   "moleg_infectious_disease_act_21521:p0019:b02"
+  ],
+  "dbok": true,
+  "warnings": [
+   "질문의 '학교장'이 법의 '관리인, 경영자 또는 대표자'에 해당하는지, 해당 학교가 보건복지부령으로 정한 장소인지, 어떤 감염병이 보건복지부령 대상인지는 이 답이 확인하지 않았습니다. 시행규칙으로 확인해야 합니다."
+  ],
+  "n_find": 3
+ }
+]

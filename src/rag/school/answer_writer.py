@@ -83,6 +83,12 @@ SYSTEM_PROMPT = """너는 학교 감염병 대응 안내 서비스의 답변 작
 7. '예시' 담당을 의무처럼 쓰지 않는다. 근거에 없는 '반드시', '의무', '법적' 같은 강한 표현을 쓰지 않는다.
 8. 근거에 '표시'(시나리오 예시·원문 단계)가 있으면 그 근거를 쓴 줄에 밝힌다. 시나리오 예시를 일반 지침처럼 쓰지 않는다.
    예/아니요는 '표시'가 없는 본문 지침·법령 근거로 정한다. 근거가 말하는 대상·범위를 넓히지 않는다.
+9. 근거의 문서 이름 뒤 괄호는 판본이다. 질병관리청 질병별 지침(2026)은 매년 개정되는 최신 기준이고, 교육부 매뉴얼(2023)·
+   경기도 가이드북(2024)은 그보다 오래됐다. 같은 항목(등교중지·복귀 기준, 전염기간, 잠복기, 접촉자 관리 등)을 두 쪽이 다르게
+   말하면 결론(첫 줄)은 질병관리청 2026 지침 기준으로 쓰고 그 번호를 붙인다. 학교 문서 기준은 지우지 말고 **상황 판단**에
+   "교육부 매뉴얼(2023)은 '…'로 적고 있습니다"처럼 함께 쓰고, '판단 기준: 지침 우선 적용' 근거가 있으면 그 번호를 붙여
+   학교 문서도 방역당국 지침을 우선 적용하도록 한다고 밝힌다. 두 쪽이 같은 말을 하면 차이를 만들어 쓰지 않는다.
+   질병관리청 지침에만 있는 내용(학교 문서에 없는 기준)도 그대로 답에 쓴다.
 
 형식(마크다운, 존댓말, 전체 24줄 이내)
 - 첫 줄: 굵은 글씨의 결론 1~2문장(**…**[n]). 질문에 바로 답한다(예/아니요, 누가, 무엇을). 인사·공감 문장으로 시작하지 않는다.
@@ -116,7 +122,7 @@ def evidence_blocks(output: dict, picks: dict | None = None, scenario: set[str] 
     """citations 순서대로 [n] 근거. 각 근거 = 문서 이름 + 그 청크를 쓴 Finding claim + 원문 발췌
     (+ 재순위가 고른 근거면 역할과 원문 대조를 통과한 핵심 구절, + 시나리오·다른 단계 표시).
     scenario: 모의훈련 시나리오 청크 ID(메인 그래프가 DB section으로 확인한다. 없으면 claim 표기로만 판단)."""
-    from rag.school.main_graph import DOC_TITLES
+    from rag.school.main_graph import DOC_EDITIONS, DOC_TITLES
 
     blocks = []
     for number, citation in enumerate(output["citations"], 1):
@@ -125,6 +131,8 @@ def evidence_blocks(output: dict, picks: dict | None = None, scenario: set[str] 
         excerpt = re.sub(r"[ \t]+", " ", excerpt).strip()
         blocks.append({"n": number, "chunk_id": citation["chunk_id"],
                        "document": DOC_TITLES.get(citation["document_id"], (citation["document_id"],))[0],
+                       # 판본은 프롬프트 표시에만 쓴다(줄 검사 원문에 넣으면 '제3차·2023' 숫자가 근거 숫자로 잡힌다).
+                       "edition": DOC_EDITIONS.get(citation["document_id"], ""),
                        "claims": claims, "excerpt": excerpt[:EXCERPT_CHARS],
                        "role": (picks or {}).get(citation["chunk_id"], {}).get("role"),
                        "quotes": (picks or {}).get(citation["chunk_id"], {}).get("quotes", []),
@@ -136,7 +144,11 @@ ROLE_NAMES = {"DIRECT": "직접 답", "CONDITION": "조건·예외", "PREMISE": 
               "ROLE": "역할 표 — 질문자(질문 속 역할)의 '지금 바로 할 일'에 쓸 것"}
 # 문서의 대상(누가 쓰는 문서인지). 의료기관용 신고 기준을 학교의 신고로 옮기지 않게 한다(11/07 데모 D07).
 DOC_NOTES = {"kdca_diagnosis_reporting_2026": "의사·의료기관이 감염병을 진단·신고하는 기준(학교의 신고 절차가 아님)",
-             "kdca_covid19_2026": "보건소·의료기관용 관리지침", "kdca_respiratory_2026": "보건소·의료기관용 관리지침"}
+             # 11/08: '보건소·의료기관용'만 적으면 작성기가 등교·집단생활 제한 기준과 질병 정보까지 학교에 쓰지 않았다.
+             "kdca_covid19_2026": ("보건소·의료기관용 관리지침. 질병 정보(잠복기·전염기간)와 등교·출근 제한 권고는 학교에도 "
+                                   "적용되는 최신 기준이고, 역학조사·신고·검사는 보건소·의료기관의 업무"),
+             "kdca_respiratory_2026": ("보건소·의료기관용 관리지침. 질병 정보(잠복기·전염기간)와 등교·집단생활 제한 권고는 학교에도 "
+                                       "적용되는 최신 기준이고, 역학조사·신고·검사는 보건소·의료기관의 업무")}
 SITUATION_NAMES = {"disease": "질병", "status": "확진/의심", "count": "환자 수", "scope": "발생 범위",
                    "asker_role": "질문자 역할", "asks": "묻는 것"}
 
@@ -155,7 +167,9 @@ def evidence_prompt(question: str, output: dict, blocks: list[dict], context: di
     parts.append("[근거]")
     for block in blocks:
         claims = "\n".join(f"  · {c}" for c in block["claims"])
-        head = f"[{block['n']}] {block['document']}" + (f" ({ROLE_NAMES[block['role']]})" if block.get("role") else "")
+        edition = f"({block['edition']})" if block.get("edition") else ""
+        head = (f"[{block['n']}] {block['document']}{edition}"
+                + (f" ({ROLE_NAMES[block['role']]})" if block.get("role") else ""))
         doc_note = DOC_NOTES.get(block.get("chunk_id", "").split(":", 1)[0])
         head += f"\n  문서 성격: {doc_note}" if doc_note else ""
         quotes = "".join(f"\n  핵심 구절: “{q}”" for q in block.get("quotes", []))
@@ -213,10 +227,14 @@ def actor_terms(books: dict) -> dict[str, str]:
 
 
 NAME_NUMBER_RE = re.compile(r"(?:코로나\s*|COVID-?|covid-?)19")      # 병명 속 숫자(11/07 데모 D01·D12 오탐)
+# 문서 판본 표기(11/08): 답변이 출처의 판본을 밝히는 '(2026)'·'(제3차 개정판, 2023)'·'2026년 지침'은 근거 내용 숫자가 아니다.
+# 프롬프트가 판본을 밝히라고 하므로 숫자 검사에서 뺀다(빼지 않으면 2026 지침 우선 줄이 모두 걸려 템플릿으로 떨어졌다, C01).
+EDITION_RE = re.compile(r"\((?:제\s*3\s*차\s*개정판,?\s*)?20\d\d(?:\.\d{1,2}\.\d{1,2}\.?\s*시행)?\)"
+                        r"|20\d\d\s*년?\s*(?:판|도판|지침|관리지침|개정)|제\s*3\s*차\s*개정판")
 
 
 def _numbers(text: str) -> set[str]:
-    text = NAME_NUMBER_RE.sub(" ", REF_RE.sub(" ", text))
+    text = EDITION_RE.sub(" ", NAME_NUMBER_RE.sub(" ", REF_RE.sub(" ", text)))
     return {n.replace(",", "") for n in NUMBER_RE.findall(text)}
 
 
@@ -306,7 +324,10 @@ class LineChecker:
         self.question_numbers = _numbers(question)   # 질문 속 숫자(예: 5명)는 적용 판단 줄에 다시 써도 된다
         self.blocks = {b["n"]: b for b in blocks}
         # 코드가 원문과 대조해 그 청크에 붙인 사실(facts)도 그 근거의 글로 본다(11/07 데모 D02: '담임교사는 신고의무자 목록에 없다').
-        self.source = {b["n"]: " ".join([b["document"], *b["claims"], b["excerpt"], *b.get("facts", [])]) for b in blocks}
+        # 근거 선별이 원문과 글자 대조한 핵심 구절(quotes)도 그 근거의 글로 본다(11/08: 청크 본문 일치 구간에서 고른 답 줄이
+        # Tool 발췌 밖에 있을 수 있다. 예: 마이코플라스마 전염기간 '증상 발생 후 20일 이내').
+        self.source = {b["n"]: " ".join([b["document"], *b["claims"], b["excerpt"], *b.get("facts", []),
+                                         *b.get("quotes", [])]) for b in blocks}
         self.source_actors = _evidence_actors(" ".join(self.source.values()), self.terms)
         self.notes = notes
         self.heading_actors: set[str] = set()     # 직전 소제목이 가리키는 담당

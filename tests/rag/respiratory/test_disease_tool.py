@@ -61,14 +61,17 @@ class FakeRecord(dict):
 
 
 class FakeDriver:
-    def __init__(self, about_rows=None, direct_rows=None):
+    def __init__(self, about_rows=None, direct_rows=None, scoped_rows=None):
         self.about_rows = about_rows or []
         self.direct_rows = direct_rows or []
+        self.scoped_rows = scoped_rows or []   # 2026-11-08 질병 전용 문서·소제목 후보 조회(SCOPED_QUERY)
         self.last_params = None
 
     def execute_query(self, query, *, database_, **params):
         if query == disease_tool.DIRECT_QUERY:
             return [FakeRecord(row) for row in self.direct_rows], None, None
+        if query == disease_tool.SCOPED_QUERY:
+            return [FakeRecord(row) for row in self.scoped_rows], None, None
         self.last_params = params
         rows = [
             row
@@ -597,3 +600,35 @@ def test_missing_focus_uses_disease_body_with_warning(monkeypatch):
     assert result["status"] == "PARTIAL"
     assert [citation["chunk_id"] for citation in result["citations"]] == [hit["chunk_id"]]
     assert "핵심어(잠복기) 든 청크 없음→질병 관련 청크로 대체" in result["warnings"]
+
+
+# ---------------------------------------------------------------- 2026-11-08 지침 전용 근거 (주승우 팀장 승인 하에 Claude 추가)
+
+def test_infectious_period_is_not_rewritten_to_transmission():
+    # '전파': ['전염'] 앞부분 일치 때문에 '전염기간'이 '전파'로 바뀌어 전파경로 줄을 근거로 냈다(마이코플라스마 전염기간).
+    books = disease_tool.merge_books(load_dictionaries())
+    assert disease_tool.focus_terms("마이코플라스마 폐렴 전염기간은?", books) == ["전염기간"]
+    assert disease_tool.focus_terms("마이코플라스마 폐렴의 전염 기간은 어떻게 되나요?", books) == ["전염기간"]
+    assert "전파" in disease_tool.focus_terms("홍역은 어떻게 옮아요?", books)
+
+
+def test_dedicated_guideline_chunk_without_disease_name_is_used(monkeypatch):
+    # 수족구 지침 '복귀 기준' 청크는 본문에 병명이 없고 ABOUT 관계도 없다. 전용 문서이고 소제목에 핵심어가 있으면 근거로 쓴다.
+    row = {"document_id": "kdca_hfmd_2026", "chunk_id": "kdca_hfmd_2026:p0030:b01", "pdf_page": 30,
+           "printed_page": None, "text": "발열이 없고, 수포가 마른 후 복귀", "section": "다. 복귀 기준(등교, 등원 중지자) (30쪽)"}
+    stub_search(monkeypatch, [])
+    deps = {**make_deps(), "driver": FakeDriver(scoped_rows=[row])}
+    result = disease_search(make_tool_input("수족구병 진단받은 학생, 언제부터 등교시키면 되나요?",
+                                            allowed=["kdca_hfmd_2026"]), deps=deps)
+    assert result["status"] == "OK"
+    assert [c["chunk_id"] for c in result["citations"]] == ["kdca_hfmd_2026:p0030:b01"]
+    assert all(e["relationship_type"] != "ABOUT" for p in result["graph_paths"] for e in p["edges"])  # 없는 관계를 만들지 않는다
+
+
+def test_dedicated_document_does_not_override_exclusion_phrase():
+    names = {"INFLUENZA": ["인플루엔자"]}
+    exclusions = {"INFLUENZA": ["파라인플루엔자"]}
+    hit = {"document_id": "kdca_flu_facility_2026", "text": "파라인플루엔자 감염증", "section": ""}
+    assert disease_tool._scope_disease_ids(hit, ["INFLUENZA"], names, exclusions) == set()
+    hit = {"document_id": "kdca_flu_facility_2026", "text": "해열제 없이 24시간", "section": ""}
+    assert disease_tool._scope_disease_ids(hit, ["INFLUENZA"], names, exclusions) == {"INFLUENZA"}

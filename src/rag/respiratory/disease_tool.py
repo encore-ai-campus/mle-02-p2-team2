@@ -207,6 +207,9 @@ def focus_terms(question: str, books: dict) -> list[str]:
 
     terms = []
     seen = set()
+    # '전염 기간'처럼 띄어 쓴 문서 용어를 붙여 쓴다(띄어 쓰면 '전염'이 '전파'로 바뀌어 '전염기간' 줄을 찾지 못했다, 2026-11-08).
+    question = re.sub(r"(전염|감염)\s+(가능\s*)?(기간|력)", lambda m: m.group(1) + (m.group(2) or "").replace(" ", "")
+                      + m.group(3), question)
     for raw_term in question.split():
         term = "".join(
             character
@@ -362,6 +365,69 @@ def _direct_candidates(driver, database, allowed, disease_ids, names, terms, exc
             break
         offset += page_size
     return hits
+
+
+# 한 질병만 다루는 질병관리청 2026 지침(문서 제목 기준). 이 문서의 청크는 본문에 병명이 없어도 그 질병의 근거다.
+DEDICATED_DOCS = {
+    "kdca_hfmd_2026": "HFMD",
+    "kdca_measles_2026": "MEASLES",
+    "kdca_flu_facility_2026": "INFLUENZA",
+    "kdca_covid19_2026": "COVID19",
+}
+SCOPED_QUERY = """
+MATCH (d:Document)-[:HAS_CHUNK]->(c:Chunk)
+WHERE d.document_id IN $allowed_document_ids AND c.text IS NOT NULL
+  AND (d.document_id IN $docs OR any(name IN $names WHERE coalesce(c.section, '') CONTAINS name))
+  AND any(term IN $terms WHERE c.text CONTAINS term OR coalesce(c.section, '') CONTAINS term)
+RETURN d.document_id AS document_id, c.chunk_id AS chunk_id, c.pdf_page AS pdf_page,
+       c.printed_page AS printed_page, c.text AS text, c.section AS section
+ORDER BY c.chunk_id LIMIT 200
+"""
+
+
+def _scope_disease_ids(
+    hit: dict,
+    disease_ids: list[str],
+    names: dict[str, list[str]],
+    exclusions: dict | None = None,
+) -> set[str]:
+    """질병 전용 문서이거나 소제목에 병명이 있으면 그 질병 ID.
+    단, 본문·소제목에 그 질병의 제외 문구(예: 인플루엔자의 '파라인플루엔자'·'조류인플루엔자')가 있으면 보지 않는다."""
+    section = hit.get("section") or ""
+    body = section + " " + (hit.get("text") or "")
+    matched = set()
+    for disease_id in disease_ids:
+        if any(phrase and phrase in body for phrase in (exclusions or {}).get(disease_id, [])):
+            continue
+        if DEDICATED_DOCS.get(hit.get("document_id")) == disease_id or any(
+            name and name in section for name in names.get(disease_id, [])
+        ):
+            matched.add(disease_id)
+    return matched
+
+
+def _scoped_candidates(driver, database, allowed, disease_ids, names, terms, exclusions=None, limit=10):
+    """질병 전용 문서·병명 소제목 청크 중 핵심어가 든 것(핵심어를 많이 담은 순서로 최대 limit개)."""
+    if not allowed or not disease_ids or not terms:
+        return []
+    docs = [doc for doc, disease_id in DEDICATED_DOCS.items() if disease_id in disease_ids and doc in allowed]
+    surfaces = [name for disease_id in disease_ids for name in names.get(disease_id, []) if len(name) >= 2]
+    try:
+        records, _, _ = driver.execute_query(
+            SCOPED_QUERY, database_=database, allowed_document_ids=list(allowed), docs=docs,
+            names=surfaces, terms=list(terms),
+        )
+    except Exception as error:
+        raise SearchError(f"{type(error).__name__}: 질병 전용 후보 조회 실패") from error
+    rows = [record.data() if hasattr(record, "data") else dict(record) for record in records]
+    rows = [row for row in rows if _scope_disease_ids(row, disease_ids, names, exclusions)]
+
+    def overlap(row):
+        body = (row.get("section") or "") + " " + (row.get("text") or "")
+        return sum(term in body for term in terms)
+
+    rows.sort(key=lambda row: (-overlap(row), row["chunk_id"]))
+    return rows[:limit]
 
 
 def _merge_direct_candidates(hits, direct, preferred):
@@ -551,6 +617,13 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
     )
     if direct_hits:
         raw_hits = _merge_direct_candidates(raw_hits, direct_hits, request.get("preferred_document_ids", []))
+    # 질병 전용 지침·소제목 후보(2026-11-08, 주승우 팀장 승인 하에 Claude 추가). 2026 질병별 지침 청크는 본문에 병명이 없는
+    # 경우가 많고(수족구 지침 '발열이 없고, 수포가 마른 후 복귀'), ABOUT 관계도 거의 없어(코로나19·홍역·수족구 0개)
+    # 위 경로로는 찾지 못했다. 질문 질병의 전용 문서이거나 소제목에 병명이 있는 청크 중 핵심어가 든 것을 후보에 더한다.
+    scoped_hits = _scoped_candidates(driver, database, allowed_document_ids, disease_ids, names, requested_focus_terms,
+                                     books.get("exclude_phrases", {}))
+    if scoped_hits:
+        raw_hits = _merge_direct_candidates(raw_hits, scoped_hits, request.get("preferred_document_ids", []))
 
     allowed = set(allowed_document_ids)
     hits = []
@@ -612,6 +685,8 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
                 names,
             )
         }
+        # 질병 전용 문서·소제목의 병명도 본문 병명과 같게 본다(2026-11-08).
+        text_matches |= _scope_disease_ids(hit, disease_ids, names, exclude_phrases)
         disease_name_chunk_seen = disease_name_chunk_seen or bool(text_matches)
         actual_about_ids = about_by_chunk.get(chunk_id, set())
         matched_ids = [
@@ -623,6 +698,8 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
             continue
 
         focus_position = _focus_position(searchable_text, requested_focus_terms)
+        if focus_position is None and _focus_position(hit.get("section") or "", requested_focus_terms) is not None:
+            focus_position = 0   # 핵심어가 소제목에만 있는 짧은 청크(예: '복귀 기준' 절의 한 줄)는 청크 처음을 근거 위치로 본다
         is_fallback = bool(requested_focus_terms and focus_position is None)
         focus_chunk_seen = focus_chunk_seen or focus_position is not None
         if is_fallback:
