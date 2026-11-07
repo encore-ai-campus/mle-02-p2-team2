@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field
 
 DEFAULT_MODEL = "gpt-6-luna"
 MAX_CARDS = 36
-MAX_PICKS = 8                  # 문서별 근거를 따로 고르므로 6 → 8(11/07)
+MAX_PICKS = 10                 # 문서별 근거를 따로 고르므로 6 → 8, 상황형 질문의 할 일·판단 근거를 함께 담게 8 → 10(11/07 P1-6)
 EXCERPT_CHARS = 420
 CLAIM_CHARS = 220
 MIN_QUOTE = 4
@@ -41,6 +41,10 @@ RERANK_PROMPT = """너는 학교 감염병 대응 안내 서비스의 근거 선
   (문서별 근거를 합치지 않는다). 같은 문서 안에서 같은 내용이 반복되면 하나만 고른다.
 - '모의훈련 시나리오 예시'와 '질문 단계와 다름' 표시가 있는 카드는 본문 지침 근거가 없을 때만 고른다.
 - 질문이 여러 담당('각각')·여러 단계·여러 항목을 물으면 항목마다 그에 답하는 근거를 고른다(한 항목만 답하지 않는다).
+- 질문 상황(질병·인원·질문자 역할)에 맞는 근거를 고른다. 질문자가 '내가 담임'처럼 역할을 밝혔으면 그 역할이 지금 할 일과,
+  그 상황에서 학교가 할 일(보고·신고 등)을 함께 고른다. 환자가 여러 명이면 그 단계(유행의심·대응 제3단계)의 행동을 우선한다.
+- '[판단 기준]' 표시 카드는 신고 대상 목록·유행의심 기준·조문·벌칙처럼 상황을 판단하는 규칙이다. 따로 고르지 않아도 답변에
+  들어간다. coverage를 판정할 때는 이 카드도 근거로 친다.
 - 질문과 주제만 비슷하고 답에 쓰이지 않는 카드는 고르지 않는다. 최대 {max_picks}개.
 - 답할 근거가 하나도 없으면 picks를 비운다.
 
@@ -95,13 +99,21 @@ def evidence_cards(findings: list[dict], citations: list[dict], titles: dict[str
     return cards
 
 
-def rerank_prompt(question: str, parts: list[str], cards: list[dict]) -> str:
-    lines = [f"[원 질문]\n{question}\n", "[하위 질문]"]
+def rerank_prompt(question: str, parts: list[str], cards: list[dict], situation: dict | None = None,
+                  pinned: set[str] | None = None, facts: list[dict] | None = None) -> str:
+    lines = [f"[원 질문]\n{question}\n"]
+    known = {k: v for k, v in (situation or {}).items() if not k.startswith("_") and v not in ("", None, [], "모름")}
+    if known:
+        lines.append("[질문 상황] " + ", ".join(f"{k}: {v}" for k, v in known.items()) + "\n")
+    if facts:
+        lines.append("[코드가 원문과 대조한 사실(판단 기준 카드에 있음)]\n" + "\n".join(f"- {f['text']}" for f in facts) + "\n")
+    lines.append("[하위 질문]")
     lines += [f"{i}. {p}" for i, p in enumerate(parts, 1)]
     lines.append("\n[근거 카드]")
     for card in cards:
         claims = "\n".join(f"  정리: {c}" for c in card["claims"])
-        lines.append(f"[{card['id']}] {card['document']} PDF {card['page']}쪽\n{claims}\n  원문: {card['excerpt']}")
+        tag = " [판단 기준]" if card["chunk_id"] in (pinned or set()) else ""
+        lines.append(f"[{card['id']}]{tag} {card['document']} PDF {card['page']}쪽\n{claims}\n  원문: {card['excerpt']}")
     return "\n".join(lines)
 
 
@@ -170,12 +182,13 @@ def make_reranker(llm=None) -> Callable[[str, list[str], list[dict], list[dict],
     structured = (llm or make_llm()).with_structured_output(RerankDecision)
 
     def reranker(question: str, parts: list[str], findings: list[dict], citations: list[dict],
-                 titles: dict[str, str]) -> dict:
+                 titles: dict[str, str], situation: dict | None = None, pinned: list[str] | None = None,
+                 facts: list[dict] | None = None) -> dict:
         cards = evidence_cards(findings, citations, titles)
         if not cards:
             return {"picks": {}, "order": [], "coverage": [], "invalid": [], "cards": 0}
         raw = structured.invoke([("system", RERANK_PROMPT.format(max_picks=MAX_PICKS)),
-                                 ("user", rerank_prompt(question, parts, cards))])
+                                 ("user", rerank_prompt(question, parts, cards, situation, set(pinned or []), facts))])
         decision = raw if isinstance(raw, RerankDecision) else RerankDecision.model_validate(raw)
         return {**apply_decision(decision, cards, parts), "cards": len(cards)}
 

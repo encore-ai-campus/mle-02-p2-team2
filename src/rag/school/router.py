@@ -61,7 +61,19 @@ DOMAIN이면 parts에 질문을 의도별로 나눈다(중요한 순서, 최대 
 각 part의 search_query는 지침 문서에서 그 내용을 찾을 때 쓸 **개념 수준 검색 문장**이다. 병명·학생·학년 같은 개별 사례를 빼고
 문서 목차나 표 제목에 나올 법한 일반 개념으로 쓴다(예: "독감 걸린 학생은 며칠 쉬어야 해요?" → "감염병별 등교중지 기간",
 "우리 반에 설사하는 애가 많아요" → "감염병 유행의심 기준과 학교 대응").
-reason은 분류 이유를 한 문장으로 쓴다. OUT_OF_SCOPE이면 사용자에게 그대로 보여 줄 수 있게 존댓말로 쓴다."""
+reason은 분류 이유를 한 문장으로 쓴다. OUT_OF_SCOPE이면 사용자에게 그대로 보여 줄 수 있게 존댓말로 쓴다.
+
+DOMAIN이면 situation에 질문 속 사실만 옮긴다(추측하지 않는다. 없으면 빈 값).
+- disease: 병명(문서 용어로, 예: '독감'→'인플루엔자', '코로나'→'코로나19'), status: 확진·의심·증상·모름,
+  count: 환자 수(숫자가 없으면 null), scope: 발생 범위(예: '한 반 여러 명', '여러 학급', '전교 5명', '교사 1명'),
+  asker_role: 질문자 역할(예: '담임교사', '보건교사', '학교장'. '내가 담임'처럼 밝힌 경우만), asks: 묻는 것(짧은 낱말 목록).
+checks: 질문에 제대로 답하려면 사용자가 묻지 않았어도 확인해야 하는 항목(해당하는 것만, 없으면 빈 목록).
+- REPORTABLE: 그 질병이 학교(학교장)가 보건소에 신고해야 하는 감염병인지 — 질병이 나오고 신고·보고·학교가 할 일을 물을 때.
+- DISEASE_CLASS: 그 질병의 법정감염병 급수 — 신고·처벌·법적 의무를 판단할 때.
+- STAGE: 대응 단계·유행의심 기준 — 환자가 2명 이상이거나 '퍼지고 있다', '유행'처럼 여러 명 상황일 때, 또는 단계별 할 일을 물을 때.
+- REPORTER_DUTY: 누가 신고 의무자인지(학교장·담임 등) — 신고를 묻거나 질문자가 자신이 신고해야 하는지 물을 때.
+- PENALTY: 신고하지 않았을 때의 벌칙·불이익 — '안 하면 어떻게 돼', 처벌·과태료를 물을 때.
+- EXCLUSION: 등교중지(격리) 기간·등교 기준 — 등교·격리·출석을 물을 때."""
 
 
 class Part(BaseModel):
@@ -70,10 +82,26 @@ class Part(BaseModel):
     search_query: str = Field(default="", description="개별 사례를 뺀 개념 수준 문서 용어 검색 문장")
 
 
+CHECKS = ("REPORTABLE", "DISEASE_CLASS", "STAGE", "REPORTER_DUTY", "PENALTY", "EXCLUSION")
+
+
+class Situation(BaseModel):
+    """질문 속 사실(11/07 답변 품질 P0-1). 답변 작성기가 규칙 근거에 대입하고, 확인 항목 조회가 검색어로 쓴다."""
+    disease: str = ""
+    status: Literal["확진", "의심", "증상", "모름"] = "모름"
+    count: int | None = None
+    scope: str = ""
+    asker_role: str = ""
+    asks: list[str] = Field(default_factory=list)
+
+
 class RouteDecision(BaseModel):
     response_type: Literal["DOMAIN", "GENERAL", "OUT_OF_SCOPE"]
     parts: list[Part] = Field(default_factory=list, description="DOMAIN일 때 의도별 하위 질문(중요한 순서)")
     reason: str = ""
+    situation: Situation = Field(default_factory=Situation)
+    checks: list[Literal["REPORTABLE", "DISEASE_CLASS", "STAGE", "REPORTER_DUTY", "PENALTY", "EXCLUSION"]] = Field(
+        default_factory=list, description="답하려면 확인해야 하는 항목")
 
 
 def make_llm():
@@ -104,7 +132,8 @@ def decision_to_route(decision: RouteDecision, rule: dict) -> dict:
                       if query and query != question}
     return {"response_type": "DOMAIN", "intent": parts[0][0], "secondary": [i for i, *_ in parts[1:]],
             "diseases": rule.get("diseases", []), "roles": rule.get("roles", []), "confidence": "llm",
-            "reason": decision.reason.strip(), "sub_questions": sub_questions, "search_queries": search_queries}
+            "reason": decision.reason.strip(), "sub_questions": sub_questions, "search_queries": search_queries,
+            "situation": decision.situation.model_dump(), "checks": list(dict.fromkeys(decision.checks))}
 
 
 def make_router(llm=None) -> Callable[[str, dict], dict]:

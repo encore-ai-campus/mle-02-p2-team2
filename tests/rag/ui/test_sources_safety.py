@@ -20,7 +20,9 @@ def test_url_with_parentheses_and_spaces_is_encoded_and_non_http_dropped(tmp_pat
     assert " " not in urls["A"] and ")" not in urls["A"] and "(" not in urls["A"]
 
 
-def test_user_warnings_drop_internal_and_limit():
-    warns = ["legal_search 결과 중 DB 대조 실패 Finding 1개를 제외했다.", "이 답은   의사의 보고만 다룹니다.", "도구 연결 안 됨"]
-    assert sources.user_warnings(warns) == ["이 답은 의사의 보고만 다룹니다."]
-    assert len(sources.user_warnings([f"문구 {i}" for i in range(9)])) == 5
+def test_user_warnings_show_only_unresolved_in_plain_words():
+    """11/07: 사용자 화면에는 확인하지 못한 부분만 쉬운 말로. Tool 내부 안내는 개발자 화면에만."""
+    warns = ["legal_search 결과 중 DB 대조 실패 Finding 1개를 제외했다.", "이 질문에 맞는 답 카드가 없거나 …",
+             "[미해결] 근거에서 확인하지 못한 부분: 단축수업   기준", "[미해결] legal_search를 호출했지만 근거를 찾지 못했다: x"]
+    assert sources.user_warnings(warns) == ["단축수업 기준", "법령 자료에서 관련 근거를 찾지 못했습니다."]
+    assert len(sources.user_warnings([f"[미해결] 문구 {i}" for i in range(9)])) == 3

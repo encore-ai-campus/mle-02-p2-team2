@@ -31,9 +31,16 @@ TOOL_LIMITS = {
 STATUS_LABELS = {"ANSWERED": "답변 완료", "PARTIAL": "일부 확인", "INSUFFICIENT_EVIDENCE": "근거 부족",
                  "ERROR": "실행 오류"}
 RESPONSE_LABELS = {"DOMAIN": "감염병 대응 질문", "GENERAL": "일반 안내", "OUT_OF_SCOPE": "지원 범위 밖"}
-# 골든셋 평가에 쓴 문서 묶음(기본 선택). 나머지 DB 문서는 화면에서 추가할 수 있다.
+# 골든셋 평가에 쓴 문서 묶음(골든 평가 스크립트가 쓴다).
 EVALUATED_DOCUMENTS = ["moe_school_manual_v3", "gyeonggi_school_guide_2025", "kdca_measles_2026",
                        "kdca_diagnosis_reporting_2026", "moleg_infectious_disease_act_21521"]
+# 화면 기본 허용 문서(11/07 답변 품질 P0-3, 팀 승인): DB에 적재된 모든 문서. 코로나19 급수(제4급)·미신고 벌칙 요약처럼
+# 판단에 필요한 원문이 질병관리청 지침에 있다. 빈 값이면 DB 문서 전체를 쓴다.
+DEFAULT_DOCUMENTS: list[str] | None = None
+
+
+def default_documents(documents: dict) -> list[str]:
+    return sorted(documents) if DEFAULT_DOCUMENTS is None else [d for d in DEFAULT_DOCUMENTS if d in documents]
 
 
 def build_resources() -> dict:
