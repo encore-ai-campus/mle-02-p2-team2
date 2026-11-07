@@ -1,0 +1,109 @@
+{
+ "seed": 1105,
+ "population": 1289,
+ "bundle": "data/interim/school/chunking_v4_20261106T030231_664214Z/official_chunks.jsonl",
+ "derived_from": "data/specs/golden/school_extraction_sample_v1.json",
+ "note": "v1과 같은 청크 ID. population은 현재 청크 수(표본은 v1 층화 그대로)",
+ "sample": [
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0179:t01r07",
+   "split": "dev",
+   "stratum": "gyeonggi_school_guide_2025/table_row"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0179:t01r13",
+   "split": "dev",
+   "stratum": "extraction_input"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0185:t01r06",
+   "split": "dev",
+   "stratum": "extraction_input"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0194:t01r12",
+   "split": "dev",
+   "stratum": "extraction_input"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0203:t01r17",
+   "split": "dev",
+   "stratum": "extraction_input"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0238:b04",
+   "split": "dev",
+   "stratum": "gyeonggi_school_guide_2025/text"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0244:b02",
+   "split": "dev",
+   "stratum": "gyeonggi_school_guide_2025/text"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0269:t01r13",
+   "split": "dev",
+   "stratum": "gyeonggi_school_guide_2025/table_row"
+  },
+  {
+   "chunk_id": "moe_school_manual_v3:p0038:b01",
+   "split": "dev",
+   "stratum": "moe_school_manual_v3/text"
+  },
+  {
+   "chunk_id": "moe_school_manual_v3:p0038:t01r04",
+   "split": "dev",
+   "stratum": "moe_school_manual_v3/table_row"
+  },
+  {
+   "chunk_id": "moe_school_manual_v3:p0066:t03r02",
+   "split": "dev",
+   "stratum": "moe_school_manual_v3/table_row"
+  },
+  {
+   "chunk_id": "moe_school_manual_v3:p0214:b03",
+   "split": "dev",
+   "stratum": "moe_school_manual_v3/text"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0164:t01r03",
+   "split": "eval",
+   "stratum": "extraction_input"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0171:t01r04",
+   "split": "eval",
+   "stratum": "extraction_input"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0182:t01r05",
+   "split": "eval",
+   "stratum": "extraction_input"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0186:t01r08",
+   "split": "eval",
+   "stratum": "gyeonggi_school_guide_2025/table_row"
+  },
+  {
+   "chunk_id": "gyeonggi_school_guide_2025:p0310:b03",
+   "split": "eval",
+   "stratum": "gyeonggi_school_guide_2025/text"
+  },
+  {
+   "chunk_id": "moe_school_manual_v3:p0049:t01r03",
+   "split": "eval",
+   "stratum": "moe_school_manual_v3/table_row"
+  },
+  {
+   "chunk_id": "moe_school_manual_v3:p0056:t01r02",
+   "split": "eval",
+   "stratum": "extraction_input"
+  },
+  {
+   "chunk_id": "moe_school_manual_v3:p0066:b01",
+   "split": "eval",
+   "stratum": "moe_school_manual_v3/text"
+  }
+ ]
+}
