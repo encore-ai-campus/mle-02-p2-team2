@@ -43,11 +43,13 @@ def build_resources() -> dict:
 
     deps = default_deps()               # 루트 .env가 없으면(클라우드) 이미 설정된 환경 변수를 그대로 쓴다
     deps["books"] = load_dictionaries()
-    if os.getenv("OPENAI_API_KEY"):     # LLM 라우터·답변 다듬기. 키가 없으면 규칙 분류·템플릿 답변만 쓴다.
+    if os.getenv("OPENAI_API_KEY"):     # LLM 라우터·근거 재순위·답변 다듬기. 키가 없으면 규칙 분류·전체 근거·템플릿 답변.
         from rag.school.answer_writer import make_answer_writer
+        from rag.school.rerank import make_reranker
         from rag.school.router import make_router
         deps["answer_writer"] = make_answer_writer()
         deps["router"] = make_router()
+        deps["reranker"] = make_reranker()
     with deps["driver"].session(database=deps["database"]) as session:
         documents = {r["id"]: {"title": r["title"], "version": r["version"], "issuer": r["issuer"]}
                      for r in session.run("MATCH (d:Document) RETURN d.document_id AS id, d.title AS title, "
@@ -67,14 +69,17 @@ def build_registry(deps: dict) -> dict:
             "crossdoc_graph_search": lambda tool_input: crossdoc_graph_search(tool_input, deps=deps)}
 
 
-def ask(resources: dict, question: str, region: str, allowed_document_ids: list[str], polish: bool = True) -> dict:
+def ask(resources: dict, question: str, region: str, allowed_document_ids: list[str], polish: bool = True,
+        on_event=None, on_line=None) -> dict:
     """질문 하나를 메인 그래프로 실행한다. 반환: output(QueryOutput)·trace·tool_results·seconds·request_id.
-    polish=False면 답변 다듬기를 끄고 템플릿 답변만 쓴다."""
+    polish=False면 답변 다듬기를 끄고 템플릿 답변만 쓴다.
+    on_event(step, info): 노드 실행 기록이 남을 때마다(화면 진행 표시). on_line(text): 근거 검사를 통과한 답변 줄(스트리밍)."""
     from rag.school.main_graph import run_main
 
     deps = dict(resources["deps"])      # 공유 자원(driver·사전)은 그대로, 실행 기록만 요청별로 분리
     if not polish:
         deps.pop("answer_writer", None)
+    deps["on_event"], deps["on_answer_line"] = on_event, on_line
     request_id = f"ui-{uuid.uuid4().hex[:12]}"
     started = time.perf_counter()
     output = run_main({"question": question, "region": region, "allowed_document_ids": list(allowed_document_ids),

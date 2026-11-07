@@ -1,7 +1,8 @@
 """메인 LangGraph (주승우) — QueryInput → Tool 호출(최대 3회) → QueryOutput. 11/05 B07·B08, 11/06 M4 재검색 루프.
 
 노드(계약 v2.0 §10): normalize_input → classify_scope → classify_intent → select_tool → execute_tool →
-merge_and_validate → evaluate_evidence → (select_tool 재진입 | compose_answer | partial_or_insufficient) → END.
+merge_and_validate → evaluate_evidence → (select_tool 재진입 | select_evidence → compose_answer | partial_or_insufficient) → END.
+select_evidence(11/07 ②)는 모든 Tool 결과를 모은 뒤 LLM 재순위로 필요한 근거만 남기고 하위 질문별 충분성을 status에 반영한다.
 GENERAL·OUT_OF_SCOPE는 Tool 없이 compose_answer로 간다.
 
 - 재검색(11/06): 근거가 충분하면(ANSWERED) 추가 호출 없이 끝낸다. 부족할 때만, 명시적 신호가 가리키는 아직 부르지 않은
@@ -41,6 +42,7 @@ from rag.school.contract_v2_local import (
     validate_tool_result,
 )
 from rag.school.graph import COMPARE_HINTS, OUT_OF_SCOPE
+from rag.school.rerank import filter_evidence
 from rag.school.validation_local import verify_against_db
 
 ToolCallable = Callable[[ToolInput], ToolResult]
@@ -75,6 +77,9 @@ ACTION_ASK = ("무엇을하", "무엇을해야", "뭘해야", "뭐해야", "어�
               "안내해야", "할일")
 DISEASE_ASK = ("잠복기", "전파경로", "감염경로", "증상은", "증상이뭐", "합병증", "전염력", "감염력", "전염기간")
 MAX_TOOL_CALLS = 3
+# 개념 수준 문서 용어 검색 문장을 task로 넘기는 Tool(11/07 ②). 다른 담당자 Tool은 task를 검색어로 쓸 수 있어
+# (crossdoc은 질문+task 글자를 읽는다) 넘기지 않는다.
+DOC_QUERY_TOOLS = frozenset({"action_search"})
 
 
 class MainState(TypedDict, total=False):
@@ -84,6 +89,8 @@ class MainState(TypedDict, total=False):
     intent: str                   # ACTION / DISEASE / LEGAL / CROSSDOC
     secondary_intents: list[str]
     sub_questions: dict[str, str]  # Tool 이름 → 하위 질문(LLM 라우터, 의도 2개 이상일 때만)
+    search_queries: dict[str, str]  # Tool 이름 → 개념 수준 문서 용어 검색 문장(LLM 라우터, 11/07 ②)
+    picks: dict[str, dict]        # 근거 재순위 결과: chunk_id → 역할·하위 질문 번호·원문 대조를 통과한 핵심 구절
     selected_tool: str
     next_tool: str
     next_reason: str
@@ -156,6 +163,12 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
 
     def log(step: str, **info):
         trace.append({"step": step, **info})
+        listener = deps.get("on_event")             # 화면 진행 표시(11/07). 실패해도 그래프는 계속한다.
+        if listener:
+            try:
+                listener(step, info)
+            except Exception:  # noqa: BLE001, S110 - 화면 콜백 오류가 답변을 막지 않게 한다
+                pass
 
     def normalize_input(state: MainState) -> dict:
         request = state["request"]
@@ -178,12 +191,13 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
                 mode, error = "rule_fallback", f"{type(exc).__name__}: {str(exc)[:120]}"
         brief = ("response_type", "intent", "secondary", "reason", "confidence")
         log("classify_scope", mode=mode, **{k: result[k] for k in brief if k in result},
-            sub_questions=result.get("sub_questions", {}), rule={k: rule[k] for k in brief if k in rule},
+            sub_questions=result.get("sub_questions", {}), search_queries=result.get("search_queries", {}), rule={k: rule[k] for k in brief if k in rule},
             error=error, seconds=round(time.perf_counter() - started, 2))
         update = {"response_type": result["response_type"], "scope_reason": result.get("reason", "")}
         if result["response_type"] == "DOMAIN":
             update |= {"intent": result["intent"], "secondary_intents": result["secondary"],
-                       "sub_questions": result.get("sub_questions", {})}
+                       "sub_questions": result.get("sub_questions", {}),
+                       "search_queries": result.get("search_queries", {})}
         return update
 
     def classify_intent(state: MainState) -> dict:
@@ -214,6 +228,9 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         question = (subs.get(tool) if len(subs) > 1 else None) or request["question"]
         if question != request["question"]:
             task += f" (원 질문: {request['question']})"
+        doc_query = state.get("search_queries", {}).get(tool) if tool in DOC_QUERY_TOOLS else None
+        if doc_query:                                             # 11/07 ②: 학교 행동 Tool의 multi-query
+            task += f" (문서 용어 질문: {doc_query.replace(')', ' ')})"
         tool_input: ToolInput = {"question": question, "task": task, "region": request["region"],
                                  "allowed_document_ids": list(request["allowed_document_ids"])}
         if request.get("preferred_document_ids"):
@@ -332,6 +349,46 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         return {"status": status, "unresolved": list(dict.fromkeys(unresolved)), "next_tool": next_tool,
                 "next_reason": next_reason}
 
+    def select_evidence(state: MainState) -> dict:
+        """근거 재순위·충분성 판정(11/07 ②). deps['reranker']가 없거나 실패하면 근거를 그대로 둔다."""
+        reranker = deps.get("reranker")
+        if not reranker or state["status"] not in ("ANSWERED", "PARTIAL") or not state["findings"]:
+            log("select_evidence", mode="skip", reason="재순위기 없음" if not reranker else "근거 없음")
+            return {"picks": {}}
+        request = state["request"]
+        subs = state.get("sub_questions", {})
+        parts = list(subs.values()) if len(subs) > 1 else [request["question"]]
+        titles = {doc: names[0] for doc, names in DOC_TITLES.items()}
+        started = time.perf_counter()
+        try:
+            result = reranker(request["question"], parts, state["findings"], state["citations"], titles)
+        except Exception as exc:  # noqa: BLE001 - LLM 실패는 재순위 없이 진행한다
+            log("select_evidence", mode="fallback", error=f"{type(exc).__name__}: {str(exc)[:120]}",
+                seconds=round(time.perf_counter() - started, 2))
+            return {"picks": {}}
+        before = (len(state["findings"]), len(state["citations"]))
+        unresolved = list(state["unresolved"])
+        warnings = state["warnings"]
+        if not result["order"]:
+            # Tool 경고는 버려진 Finding에 대한 안내라 남기지 않는다(답변에 내부 문구가 노출되던 문제, 11/07 A03).
+            status, findings, citations, warnings = "INSUFFICIENT_EVIDENCE", [], [], []
+            unresolved.insert(0, f"{UNRESOLVED} 근거 선별: 검색한 자료 중 이 질문에 직접 답하는 근거를 찾지 못했다.")
+        else:
+            findings, citations = filter_evidence(state["findings"], state["citations"], result["order"])
+            status = state["status"]
+            gaps = [c for c in result["coverage"] if c["status"] != "ANSWERED"]
+            if gaps:
+                status = "PARTIAL"
+                unresolved += [f"{UNRESOLVED} 근거에서 확인하지 못한 부분: {c['missing']}" for c in gaps]
+        log("select_evidence", mode="llm", cards=result["cards"], before=before,
+            candidates=[c["chunk_id"] for c in state["citations"]][:result["cards"]],
+            after=(len(findings), len(citations)), status=status, coverage=result["coverage"],
+            picks=[{"chunk_id": c, **{k: v for k, v in result["picks"][c].items() if k != "card"}}
+                   for c in result["order"]],
+            invalid=result["invalid"], seconds=round(time.perf_counter() - started, 2))
+        return {"findings": findings, "citations": citations, "status": status, "picks": result["picks"],
+                "warnings": warnings, "unresolved": list(dict.fromkeys(unresolved))}
+
     def finish(state: MainState) -> dict:
         """템플릿 답변을 만들고, deps['answer_writer']가 있으면 검사를 통과한 다듬은 답변으로 바꾼다(11/07)."""
         output = finalize(state)
@@ -341,12 +398,13 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
             return {"final_result": output}
         started = time.perf_counter()
         try:
-            written = writer(state["request"]["question"], output, books)
+            written = writer(state["request"]["question"], output, books, picks=state.get("picks") or {},
+                             on_line=deps.get("on_answer_line"))
         except Exception as exc:  # noqa: BLE001 - LLM 실패는 템플릿으로 되돌린다
             written = {"answer": None, "problems": [f"작성기 실패: {type(exc).__name__}"], "draft": ""}
         polished = written["answer"]
         log("compose_answer", mode="llm" if polished else "template_fallback", problems=written["problems"],
-            draft=written["draft"], template=output["answer"], seconds=round(time.perf_counter() - started, 2))
+        dropped=written.get("dropped", []), draft=written["draft"], template=output["answer"], seconds=round(time.perf_counter() - started, 2))
         return {"final_result": {**output, "answer": polished} if polished else output}
 
     def compose_answer(state: MainState) -> dict:
@@ -359,7 +417,8 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
     for name, fn in (("normalize_input", normalize_input), ("classify_scope", classify_scope),
                      ("classify_intent", classify_intent), ("select_tool", select_tool),
                      ("execute_tool", execute_tool), ("merge_and_validate", merge_and_validate),
-                     ("evaluate_evidence", evaluate_evidence), ("compose_answer", compose_answer),
+                     ("evaluate_evidence", evaluate_evidence), ("select_evidence", select_evidence),
+                     ("compose_answer", compose_answer),
                      ("partial_or_insufficient", partial_or_insufficient)):
         graph.add_node(name, fn)
     graph.add_edge(START, "normalize_input")
@@ -371,10 +430,10 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
                                 {"run": "execute_tool", "skip": "evaluate_evidence"})
     graph.add_edge("execute_tool", "merge_and_validate")
     graph.add_edge("merge_and_validate", "evaluate_evidence")
-    graph.add_conditional_edges(
-        "evaluate_evidence",
-        lambda s: "again" if s.get("next_tool") else ("full" if s["status"] == "ANSWERED" else "partial"),
-        {"again": "select_tool", "full": "compose_answer", "partial": "partial_or_insufficient"})
+    graph.add_conditional_edges("evaluate_evidence", lambda s: "again" if s.get("next_tool") else "select",
+                                {"again": "select_tool", "select": "select_evidence"})
+    graph.add_conditional_edges("select_evidence", lambda s: "full" if s["status"] == "ANSWERED" else "partial",
+                                {"full": "compose_answer", "partial": "partial_or_insufficient"})
     graph.add_edge("compose_answer", END)
     graph.add_edge("partial_or_insufficient", END)
     return graph.compile()

@@ -5,10 +5,15 @@ ToolInput → ToolResult. 학교가 수행하는 행동·담당 역할·대응 �
 부품(11/05 지시서 B03~B06)
 - B03 plan_action_task: 승인 사전으로 역할·질병·단계 힌트를 읽는다. 질문은 바꾸지 않는다.
   역할이 '…에게'처럼 수신자로만 나오면 수행자로 보지 않는다. 단계는 원문 검색 범위 힌트일 뿐 현재 상황 판정이 아니다.
-- B04 retrieve_action_records: (1) 역할이 있으면 고정 Cypher로 SchoolAction-DONE_BY-SchoolRole을 직접 찾고
-  (2) 질문 표현은 청크 검색(hybrid/fulltext) 뒤 SUPPORTED_BY로 연결된 행동을 찾는다. 후보 확보 방식(via)과
-  관계를 통한 근거 확인(get_action_evidence)을 구분한다. 모든 조회에 allowed를 다시 적용하고,
-  담당 문서의 선정쪽수 밖 청크(capabilities.active_pages)는 쓰지 않는다.
+- B04 retrieve_action_records(11/07 ②): 넓게 찾는 단계다(필요한 근거 선별은 메인 그래프의 LLM 재순위가 한다).
+  (1) 청크 검색(hybrid/fulltext)을 질문과 '문서 용어 질문'(메인이 task에 넣는 개념 수준 검색 문장)으로 각각 하고
+  순위로 합친다(multi-query, RRF). 검색된 청크에 SUPPORTED_BY로 연결된 행동과, 행동이 없는 청크의 원문 인용이 후보다.
+  (2) 역할을 물었으면 고정 Cypher로 그 역할의 행동을 ROLE_ROUTE_CAP개까지, (3) 행동 전체를 점수로 훑어
+  SCAN_ROUTE_CAP개까지 더한다(청크 검색이 놓친 행동용). 11/06 진단에 따라 점수 문턱(4점)과 '훑은 행동 전부를 후보로'
+  넣던 방식은 없앴다(후보 444개가 모두 들어가고 문턱이 거르지 못했다). 점수(_score)는 순서와 경로별 상한에만 쓴다.
+  원문 인용 후보(행동 없는 청크)는 검색 순위대로 QUOTE_CANDIDATES개까지 두고, 단계·글자쌍 규칙으로 버리지 않는다.
+  관계를 통한 근거 확인(get_action_evidence), allowed 재적용, 선정쪽수 밖 청크 제외, 질병·조치 불일치 제외,
+  본문 직접 근거 우선(prefer_direct_evidence)은 그대로다.
 - B05 records_to_tool_result: Finding(원자적 주장)·Citation(실제 청크 원문)·GraphPath(실제 조회한 관계, 저장 방향).
 - B06 verify_tool_result_db: 구조 검사(contract_v2_local) + DB 대조(기존 verify_against_db) + GraphPath 실재·방향·
   허용 범위 검사. 실패한 주장·경로는 제거하고 사유를 warnings에 남긴다(새 표현으로 고쳐 통과시키지 않음).
@@ -20,6 +25,7 @@ ToolInput → ToolResult. 학교가 수행하는 행동·담당 역할·대응 �
 from __future__ import annotations
 
 import re
+from concurrent.futures import ThreadPoolExecutor
 
 from index.school.dictionaries import compare_key, load_dictionaries
 from rag.school.capabilities import active_pages, in_scope
@@ -60,6 +66,7 @@ from rag.school.search import (
     SearchError,
     _rows,
     expand_school_actions,
+    fuse_rrf,
     get_action_evidence,
     get_role_actions,
     search_school_chunks,
@@ -67,7 +74,12 @@ from rag.school.search import (
 from rag.school.validation_local import verify_against_db
 
 TOOL_NAME = "action_search"
-DEFAULT_TOP_K = 8
+DEFAULT_TOP_K = 16             # 11/07 ②: 넓게 찾는 단계(행동 상한). 원문 인용은 그 절반까지
+ROLE_ROUTE_CAP = 8             # 역할에서 출발한 후보(검색된 청크와 무관한 행동) 상한
+SCAN_ROUTE_CAP = 6             # 행동 전체를 점수로 훑어 더하는 후보 상한(11/07: 문턱 대신 개수 상한, 재현율용)
+SCAN_MIN_SCORE = 3             # 훑기 후보는 내용·질병·역할 신호가 있어야 한다(글자쌍 2개=3점, 질병·단계 일치=3점)
+QUOTE_CANDIDATES = 12         # 행동이 없는 청크의 원문 인용 후보 상한(검색 순위 순)
+DOC_QUERY_RE = re.compile(r"문서 용어 질문:\s*([^)]+)\)")   # 메인 그래프가 task에 넣는 개념 수준 검색 문장
 UNRESOLVED = "[미해결]"          # 메인 그래프가 다음 Tool 판단에 쓰는 warnings 접두어
 ID_PROPERTY = {"Document": "document_id", "Chunk": "chunk_id", "SchoolAction": "action_id",
                "SchoolRole": "role_id", "ActionConcept": "concept_id", "Disease": "disease_id"}
@@ -177,8 +189,8 @@ def page_of(chunk_id: str) -> int | None:
 
 
 def scan_actions(driver, allowed: list[str], *, limit: int = 3000, database=None) -> list[dict]:
-    """허용 문서의 학교 행동 전체(행동·근거 청크별 1행)와 근거 청크의 표 제목·절. 학교 문서 행동은 수백 개라
-    전수 조회 후 행동 문장·표 제목으로 관련도를 매긴다(청크 검색이 놓친 행동을 구조로 찾는 경로)."""
+    """허용 문서의 학교 행동 전체(행동·근거 청크별 1행). 11/07부터 점수 상위 SCAN_ROUTE_CAP개만 후보에 더한다
+    (청크 검색이 놓친 행동을 구조로 찾는 보조 경로. 전체를 후보로 넣던 11/06 이전 방식은 쓰지 않는다)."""
     if not allowed:
         return []
     return _rows(driver, f"""
@@ -187,6 +199,11 @@ WHERE d.document_id IN $allowed
 WITH DISTINCT a, c, d
 RETURN {ACTION_FIELDS}, c.section AS section
 ORDER BY document_id, chunk_id, a.step_order, action_id LIMIT $limit""", database, allowed=allowed, limit=limit)
+
+
+def doc_queries(task: str) -> list[str]:
+    """메인 그래프가 task에 '(문서 용어 질문: …)'으로 넣은 개념 수준 검색 문장들."""
+    return [q.strip() for q in DOC_QUERY_RE.findall(task or "") if q.strip()]
 
 
 def _score(action: dict, plan: dict, chunk_rank: dict[str, int], names: dict[str, str]) -> float:
@@ -278,13 +295,26 @@ def retrieve_action_records(tool_input: ToolInput, plan: dict, deps: dict) -> di
 
     request = {"question": tool_input["question"], "allowed_document_ids": allowed,
                "preferred_document_ids": tool_input.get("preferred_document_ids", [])}
-    candidate_k = max(12, plan["top_k"] + 4)
+    candidate_k = max(30, plan["top_k"] + 4)
     if plan["operation_terms"]:
         # 질병명만 겹치는 상위 청크를 제외한 뒤에도 조치 근거가 남도록 후보를 넓게 확보한다.
         # 출력 top_k와 검색 후보 수는 다르며, Tool 추가 호출/재진입은 아니다.
         candidate_k = min(64, max(32, plan["top_k"] * 4))
-    found = search_school_chunks(driver, request, books, embedder=deps.get("embedder"), mode=plan["mode"],
-                                 k=candidate_k, database=database)
+    queries = list(dict.fromkeys([tool_input["question"], *doc_queries(tool_input.get("task", ""))]))
+    def run_query(query: str) -> dict:
+        return search_school_chunks(driver, {**request, "question": query}, books, embedder=deps.get("embedder"),
+                                    mode=plan["mode"], k=candidate_k, database=database)
+
+    # 질의끼리 독립이라 동시에 실행한다(11/07: 순서대로 하면 Tool 시간이 약 1초 늘었다). 결과 순서는 질의 순서를 따른다.
+    if len(queries) > 1:
+        with ThreadPoolExecutor(max_workers=len(queries)) as pool:
+            results = list(pool.map(run_query, queries))
+    else:
+        results = [run_query(queries[0])]
+    mode = results[0]["mode"]
+    lists = [[{**h, "method": f"q{number}"} for h in found["hits"]] for number, found in enumerate(results, 1)]
+    merged = lists[0] if len(lists) == 1 else fuse_rrf(lists, request["preferred_document_ids"], candidate_k)
+    found = {"hits": merged, "mode": mode if len(lists) == 1 else f"{mode}×{len(lists)}"}
     scoped_hits = [h for h in found["hits"] if in_scope(h["document_id"], h["pdf_page"], scope)]
     rejected_hits, hits = [], []
     for hit in scoped_hits:
@@ -299,7 +329,7 @@ def retrieve_action_records(tool_input: ToolInput, plan: dict, deps: dict) -> di
             hits.append(hit)
     chunk_rank = {h["chunk_id"]: h["rank"] for h in hits}
     rows = expand_school_actions(driver, list(chunk_rank), allowed, limit=200, database=database)
-    log.append({"step": f"chunk_{found['mode']}", "candidate_k": candidate_k,
+    log.append({"step": f"chunk_{found['mode']}", "candidate_k": candidate_k, "queries": queries,
                 "hits": len(found["hits"]), "in_scope": len(scoped_hits), "relevant_hits": len(hits),
                 "linked_actions": len(rows), "kept": add(rows, "chunk")})
     rows = scan_actions(driver, allowed, database=database)
@@ -311,8 +341,12 @@ def retrieve_action_records(tool_input: ToolInput, plan: dict, deps: dict) -> di
     for item in candidates.values():
         item["score"] = _score(item, plan, chunk_rank, names)
     ranked = sorted(candidates.values(), key=lambda a: (-a["score"], a["action_id"]))
-    # 관련성 문턱: 역할로 찾은 넓은 역할 질문이 아니면, 질문 특징과 겹치거나 상위 청크에 붙은 행동만.
-    keep = [item for item in ranked if item["score"] >= 4 or (plan["broad"] and "role" in item["via"])]
+    # 11/07 ②: 점수 문턱 없음. 검색된 청크에 붙은 행동은 모두 후보로 두고, 역할에서만 온 행동은 상한까지.
+    role_only = [item for item in ranked if "role" in item["via"] and "chunk" not in item["via"]][:ROLE_ROUTE_CAP]
+    scan_only = [item for item in ranked if item["via"] == {"scan"} and item["score"] >= SCAN_MIN_SCORE][:SCAN_ROUTE_CAP]
+    keep = list({item["action_id"]: item for item in
+                 [*(i for i in ranked if "chunk" in i["via"]), *role_only, *scan_only]}.values())
+    keep.sort(key=lambda a: (-a["score"], a["action_id"]))
     selected = diversify(keep, plan, plan["top_k"])
 
     evidence = get_action_evidence(driver, [a["action_id"] for a in selected], allowed, database=database)
@@ -335,7 +369,7 @@ def retrieve_action_records(tool_input: ToolInput, plan: dict, deps: dict) -> di
     # 다른 단계 행동을 '지금 할 일'로 섞지 않는 것이 함정 질문의 핵심 기준이다.
     state = {"question": tool_input["question"], "plan": plan}
     used = {c["chunk_id"] for a in actions for c in a["evidence"]}
-    quotes = [q for q in quote_findings(state, hits, books, used)
+    quotes = [q for q in quote_findings(state, hits, books, used, lenient=True, limit=QUOTE_CANDIDATES)
               if matches_operation(q["excerpt"] + " " + (q["hit"].get("section") or ""), plan["operation_terms"])]
     if (plan["diseases"] and plan["operation_terms"]
             and not any(word in tool_input["question"] for word in ("시나리오", "모의훈련", "모의 훈련"))):
@@ -353,7 +387,7 @@ def retrieve_action_records(tool_input: ToolInput, plan: dict, deps: dict) -> di
     # 행동(top_k까지)과 원문 인용(top_k//2까지)은 따로 상한을 둔다. 둘을 한 상한으로 묶으면 인용이 먼저 자리를
     # 차지해 이 Tool의 핵심인 역할 행동이 잘린다(11/05 3차 평가 S-Q07 2/2→0/2, 같은 8개 중 5·8번째가 절단).
     # 화면에 몇 개를 보일지는 메인 그래프 답변 구성이 정한다. 순서: 질문 단계와 같은(또는 단계 미지정) 행동 → 점수.
-    quotes = quotes[: max(1, plan["top_k"] // 2)]
+    quotes = quotes[: max(1, min(QUOTE_CANDIDATES, plan["top_k"] * 3 // 4))]
     actions.sort(key=lambda a: (_off_stage(a, plan), -a["score"]))
     log.append({"step": "quotes", "rows": len(quotes)})
     return {"actions": actions, "quotes": quotes, "hits": hits, "log": log}

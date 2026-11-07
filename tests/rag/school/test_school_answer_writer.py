@@ -89,7 +89,7 @@ def test_main_graph_falls_back_to_template_when_check_fails_or_llm_errors(books)
     step = next(t for t in d["main_trace"] if t["step"] == "compose_answer")
     assert step["mode"] == "template_fallback" and step["problems"] and out["answer"].startswith("원문에서 확인한 내용")
 
-    def broken(*_):
+    def broken(*_, **__):
         raise TimeoutError
     d = _deps(books, broken)
     out = run_main(QUERY, d, {"action_search": _action})

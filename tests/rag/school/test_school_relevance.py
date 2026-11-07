@@ -87,8 +87,9 @@ def test_disease_section_supplies_context_but_action_mismatch_is_rejected(books)
 
 def retrieve_fixture(monkeypatch, books, req, hits, actions=()):
     monkeypatch.setattr(action_tool, "search_school_chunks", lambda *a, **k: {"hits": hits, "mode": "fulltext"})
-    monkeypatch.setattr(action_tool, "expand_school_actions", lambda *a, **k: [])
-    monkeypatch.setattr(action_tool, "scan_actions", lambda *a, **k: list(actions))
+    # 11/07 ②: 전수 훑기가 없어져 행동 후보는 검색된 청크의 확장으로만 들어온다.
+    monkeypatch.setattr(action_tool, "expand_school_actions", lambda *a, **k: list(actions))
+    monkeypatch.setattr(action_tool, "scan_actions", lambda *a, **k: [])
     monkeypatch.setattr(action_tool, "get_action_evidence",
                         lambda driver, ids, *a, **k: [dict(h, action_id=x["action_id"])
                                                      for x in actions if x["action_id"] in ids

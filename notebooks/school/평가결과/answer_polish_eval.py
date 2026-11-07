@@ -45,7 +45,13 @@ for q in G["questions"]:
     template = step.get("template", out["answer"])
     draft = step.get("draft", "")
     gold = EXP[q["id"]]
-    rows.append({"id": q["id"], "split": q["split"], "question": q["question"], "status": out["status"],
+    steps = {s["step"]: s for s in deps["main_trace"]}
+    rows.append({"dropped": step.get("dropped", []),
+                 "route_seconds": steps.get("classify_scope", {}).get("seconds"),
+                 "rerank_seconds": steps.get("select_evidence", {}).get("seconds"),
+                 "tool_seconds": round(sum(s.get("seconds") or 0 for s in deps["main_trace"]
+                                           if s["step"] == "execute_tool"), 2),
+                 "id": q["id"], "split": q["split"], "question": q["question"], "status": out["status"],
                  "response_type": out["response_type"], "tools_used": out["tools_used"], "mode": step["mode"],
                  "problems": step.get("problems", []), "polish_seconds": step.get("seconds"), "seconds": seconds,
                  "template": template, "draft": draft, "answer": out["answer"],
@@ -54,7 +60,13 @@ for q in G["questions"]:
                  "gold_in_template_text": len(cited_chunks(template, out["citations"]) & gold),
                  "gold_in_draft_text": len(cited_chunks(draft, out["citations"]) & gold),
                  "refs_template": len(set(REF.findall(template))), "refs_draft": len(set(REF.findall(draft))),
-                 "len_template": len(template), "len_answer": len(out["answer"]), "len_draft": len(draft)})
+                 "len_template": len(template), "len_answer": len(out["answer"]), "len_draft": len(draft),
+                 # 줄 단위 사람 판독용(11/07): 답변 [n]이 가리키는 원문과 근거 선별 결과
+                 "citations": [{k: c.get(k) for k in ("document_id", "chunk_id", "pdf_page", "excerpt")}
+                               for c in out["citations"]],
+                 "findings": [{"claim": f["claim"], "chunk_ids": f["chunk_ids"]} for f in out["findings"]],
+                 "picks": steps.get("select_evidence", {}).get("picks", []),
+                 "coverage": steps.get("select_evidence", {}).get("coverage", [])})
     r = rows[-1]
     print(f"{r['id']} {r['status']:21s} {r['mode']:17s} gold out {r['gold_in_output']}/{r['gold_total']} "
           f"text T{r['gold_in_template_text']} D{r['gold_in_draft_text']} | {r['polish_seconds']}s "
@@ -79,6 +91,13 @@ summary = {
     "median_len_draft": sorted(r["len_draft"] for r in target)[len(target) // 2] if target else None,
     "median_polish_seconds": sorted(r["polish_seconds"] or 0 for r in target)[len(target) // 2] if target else None,
     "status_counts": dict(collections.Counter(r["status"] for r in rows)),
+    "llm_with_dropped_lines": sum(r["mode"] == "llm" and bool(r["dropped"]) for r in target),
+    "dropped_lines_total": sum(len(r["dropped"]) for r in target if r["mode"] == "llm"),
+    "median_citations": sorted(r["n_citations"] for r in target)[len(target) // 2] if target else None,
+    "seconds_median_p90_max": [sorted(r["seconds"] for r in rows)[len(rows) // 2],
+                               sorted(r["seconds"] for r in rows)[int(len(rows) * 0.9)], max(r["seconds"] for r in rows)],
+    "stage_median": {k: sorted(r[k] or 0 for r in target)[len(target) // 2] if target else None
+                     for k in ("route_seconds", "tool_seconds", "rerank_seconds", "polish_seconds")},
 }
 print(json.dumps(summary, ensure_ascii=False, indent=2))
 Path(sys.argv[1]).write_text(json.dumps({"summary": summary, "rows": rows}, ensure_ascii=False, indent=2), encoding="utf-8")

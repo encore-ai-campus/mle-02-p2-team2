@@ -58,12 +58,16 @@ DOMAIN이면 parts에 질문을 의도별로 나눈다(중요한 순서, 최대 
 각 part의 question은 그 의도만 묻는 독립된 한국어 질문으로 쓴다. 원 질문의 병명·역할·상황·지역을 유지하고,
 사용자가 묻지 않은 내용을 더하지 않는다. 일상어는 지침 문서에 쓰이는 용어로 바꿔 쓴다
 (예: '옮아요'→'전파 경로', '며칠 쉬어야'→'등교중지 기간', '독감'→'인플루엔자'). 뜻은 바꾸지 않는다.
+각 part의 search_query는 지침 문서에서 그 내용을 찾을 때 쓸 **개념 수준 검색 문장**이다. 병명·학생·학년 같은 개별 사례를 빼고
+문서 목차나 표 제목에 나올 법한 일반 개념으로 쓴다(예: "독감 걸린 학생은 며칠 쉬어야 해요?" → "감염병별 등교중지 기간",
+"우리 반에 설사하는 애가 많아요" → "감염병 유행의심 기준과 학교 대응").
 reason은 분류 이유를 한 문장으로 쓴다. OUT_OF_SCOPE이면 사용자에게 그대로 보여 줄 수 있게 존댓말로 쓴다."""
 
 
 class Part(BaseModel):
     intent: Literal["ACTION", "DISEASE", "LEGAL", "CROSSDOC"]
     question: str = Field(description="이 의도만 묻는 독립된 한국어 질문")
+    search_query: str = Field(default="", description="개별 사례를 뺀 개념 수준 문서 용어 검색 문장")
 
 
 class RouteDecision(BaseModel):
@@ -91,14 +95,16 @@ def decision_to_route(decision: RouteDecision, rule: dict) -> dict:
         question = part.question.strip()
         if part.intent not in seen and question:
             seen.add(part.intent)
-            parts.append((part.intent, question))
+            parts.append((part.intent, question, part.search_query.strip()))
     parts = parts[:MAX_PARTS]
     if not parts:
         raise ValueError("DOMAIN인데 의도가 없다")
-    sub_questions = {INTENT_TOOL[intent]: question for intent, question in parts}
-    return {"response_type": "DOMAIN", "intent": parts[0][0], "secondary": [i for i, _ in parts[1:]],
+    sub_questions = {INTENT_TOOL[intent]: question for intent, question, _ in parts}
+    search_queries = {INTENT_TOOL[intent]: query for intent, question, query in parts
+                      if query and query != question}
+    return {"response_type": "DOMAIN", "intent": parts[0][0], "secondary": [i for i, *_ in parts[1:]],
             "diseases": rule.get("diseases", []), "roles": rule.get("roles", []), "confidence": "llm",
-            "reason": decision.reason.strip(), "sub_questions": sub_questions}
+            "reason": decision.reason.strip(), "sub_questions": sub_questions, "search_queries": search_queries}
 
 
 def make_router(llm=None) -> Callable[[str, dict], dict]:

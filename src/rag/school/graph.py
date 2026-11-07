@@ -274,13 +274,16 @@ def best_excerpt(hit: dict, focus: set[str], role_pairs: set[str] = frozenset(),
     return best[0].strip(), max(best[1], 0)
 
 
-def quote_findings(state: SchoolState, hits: list[dict], books: dict, skip: set[str]) -> list[dict]:
+def quote_findings(state: SchoolState, hits: list[dict], books: dict, skip: set[str], *, lenient: bool = False,
+                   limit: int = MAX_QUOTE_FINDINGS) -> list[dict]:
     """학교 행동 노드가 없는 청크에서 원문을 그대로 인용한 Finding 후보.
 
     - 질문 단계와 다른 단계의 청크는 뺀다. 단, 질문의 영문 핵심어(예: NEIS)를 담은 청크는
       '원문 배치 단계'를 밝히고 넣는다(S-T2: 'NEIS 보고는 제2단계 활동'이라는 근거가 답의 핵심).
     - 역할을 물었으면 다른 역할의 표 행은 뺀다. 예시 역할표 문서의 역할 행은 '담당 예시'로 표시한다.
     - 넓은 역할 질문이 아니면 질문 특징 2글자가 2개 이상 겹치는 발췌만 쓴다.
+    - lenient(11/07 ②, action_search의 넓게 찾기): 단계 불일치·글자쌍 규칙으로 버리지 않고 검색 순위대로 limit개까지 둔다.
+      단계가 다르면 claim에 '질문 단계와 다름'을 표시하고, 필요 여부는 메인 그래프의 재순위가 판단한다.
     """
     plan = state["plan"]
     focus = set(plan["focus"])
@@ -292,18 +295,18 @@ def quote_findings(state: SchoolState, hits: list[dict], books: dict, skip: set[
                 role_pairs |= bigrams(name)
     rows = []
     for hit in hits:
-        if hit["chunk_id"] in skip or len(rows) >= MAX_QUOTE_FINDINGS:
+        if hit["chunk_id"] in skip or len(rows) >= limit:
             continue
         stages = chunk_stages(hit)
         off_stage = bool(plan["stages"] and stages and not stages & set(plan["stages"]))
         names_term = any(w in hit["text"].casefold() for w in explicit)
-        if off_stage and not names_term:
+        if off_stage and not names_term and not lenient:
             continue
         role = row_role(hit, books)
         if plan["roles"] and role and role["role_id"] not in plan["roles"]:
             continue
         excerpt, score = best_excerpt(hit, focus, role_pairs)
-        if not excerpt or (not (plan["broad"] and role) and score < 2 and not names_term):
+        if not excerpt or (not lenient and not (plan["broad"] and role) and score < 2 and not names_term):
             continue
         rows.append({"hit": hit, "excerpt": excerpt, "role": role, "stages": stages, "off_stage": off_stage})
     return rows
