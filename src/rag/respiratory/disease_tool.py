@@ -361,6 +361,9 @@ def _direct_candidates(driver, database, allowed, disease_ids, names, terms, exc
     if not surfaces:
         return []
     focus_keys = list(dict.fromkeys(compare_key(term) for term in terms if compare_key(term)))
+    action_keys = set(focus_keys) & {
+        "등교", "등원", "중지", "격리", "휴교", "환기", "소독", "신고", "통보", "연락",
+    } if set(focus_keys) & {"진단", "기준"} else set()
     phrases = {
         "".join(focus_keys[start:end])
         for start in range(len(focus_keys))
@@ -369,9 +372,11 @@ def _direct_candidates(driver, database, allowed, disease_ids, names, terms, exc
 
     def relevance(text):
         key = compare_key(text)
+        action_match = int(any(term in key for term in action_keys))
         return (
-            sum(term in key for term in focus_keys),
+            sum(term in key for term in focus_keys) + action_match,
             sum(len(phrase) for phrase in phrases if phrase in key),
+            action_match,
         )
 
     def order(item):
@@ -436,7 +441,10 @@ def _direct_candidates(driver, database, allowed, disease_ids, names, terms, exc
             break
         offset += page_size
     hits.sort(key=order)
-    return [hit for _, hit in hits[:20]]
+    return [
+        {**hit, "_direct_action_match": True} if score[2] else hit
+        for score, hit in hits[:20]
+    ]
 
 
 # 한 질병만 다루는 질병관리청 2026 지침(문서 제목 기준). 이 문서의 청크는 본문에 병명이 없어도 그 질병의 근거다.
@@ -695,6 +703,10 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
     )
     if direct_hits:
         raw_hits = _merge_direct_candidates(raw_hits, direct_hits, request.get("preferred_document_ids", []))
+        action_hits = [hit for hit in direct_hits if hit.get("_direct_action_match")]
+        if action_hits:
+            # 일반 표현만 맞는 후보보다 질문의 행위까지 맞는 DIRECT 후보에 RRF 1위 가중치를 한 번 더 준다.
+            raw_hits = _merge_direct_candidates(raw_hits, action_hits, request.get("preferred_document_ids", []))
     # 질병 전용 지침·소제목 후보(2026-11-08, 주승우 팀장 승인 하에 Claude 추가). 2026 질병별 지침 청크는 본문에 병명이 없는
     # 경우가 많고(수족구 지침 '발열이 없고, 수포가 마른 후 복귀'), ABOUT 관계도 거의 없어(코로나19·홍역·수족구 0개)
     # 위 경로로는 찾지 못했다. 질문 질병의 전용 문서이거나 소제목에 병명이 있는 청크 중 핵심어가 든 것을 후보에 더한다.

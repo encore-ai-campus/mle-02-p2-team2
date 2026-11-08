@@ -796,3 +796,48 @@ def test_direct_candidates_rank_later_pages_before_top20_and_warn_only_above_cap
     if caught:
         assert issubclass(caught[0].category, RuntimeWarning)
         assert "200개를 초과" in str(caught[0].message)
+
+
+def test_action_focus_bonus_prefers_attendance_and_preserves_scoped_bonus(monkeypatch):
+    generic = {
+        **make_hit(document_id="kdca_respiratory_2026", chunk_id="kdca_respiratory_2026:p0001:b01",
+                   text="성홍열 진단 기준 안내"),
+        "section": "성홍열", "score": 1 / 61,
+    }
+    action = {
+        **make_hit(document_id="kdca_respiratory_2026", chunk_id="kdca_respiratory_2026:p0099:b01",
+                   text="성홍열 진단 시 항생제 치료 후 24시간까지 등교 중지"),
+        "section": "성홍열", "score": 1 / 61,
+    }
+    stub_search(monkeypatch, [generic, action])
+    merge = disease_tool._merge_direct_candidates
+    stages = []
+
+    def record_merge(*args):
+        hits = merge(*args)
+        stages.append({hit["chunk_id"]: hit["score"] for hit in hits})
+        return hits
+
+    monkeypatch.setattr(disease_tool, "_merge_direct_candidates", record_merge)
+    deps = make_deps()
+    deps["driver"] = FakeDriver(direct_rows=[generic, action], scoped_rows=[generic, action])
+    result = disease_search(make_tool_input(
+        "성홍열 진단 학생의 등교중지 기준은?", allowed=["kdca_respiratory_2026"],
+    ), deps=deps)
+
+    assert [citation["chunk_id"] for citation in result["citations"]] == [action["chunk_id"], generic["chunk_id"]]
+    assert len(stages) == 3
+    assert stages[1][action["chunk_id"]] - stages[0][action["chunk_id"]] == pytest.approx(1 / 61)
+    assert stages[1][generic["chunk_id"]] == stages[0][generic["chunk_id"]]
+    for hit in (generic, action):
+        assert stages[2][hit["chunk_id"]] - stages[1][hit["chunk_id"]] == pytest.approx(1 / 61)
+
+
+def test_action_focus_bonus_ignores_excluded_disease_line():
+    hit = make_hit(text="인플루엔자 진단 기준\n조류인플루엔자 등교 중지")
+    hits = disease_tool._direct_candidates(
+        FakeDriver(direct_rows=[hit]), "test", ["kdca_flu_facility_2026"], ["INFLUENZA"],
+        {"INFLUENZA": ["인플루엔자"]}, ["진단", "등교", "기준"], {"INFLUENZA": ["조류인플루엔자"]},
+    )
+    assert len(hits) == 1
+    assert not hits[0].get("_direct_action_match")
