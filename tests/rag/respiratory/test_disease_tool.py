@@ -61,10 +61,11 @@ class FakeRecord(dict):
 
 
 class FakeDriver:
-    def __init__(self, about_rows=None, direct_rows=None, scoped_rows=None):
+    def __init__(self, about_rows=None, direct_rows=None, scoped_rows=None, known_diseases=None):
         self.about_rows = about_rows or []
         self.direct_rows = direct_rows or []
         self.scoped_rows = scoped_rows or []   # 2026-11-08 질병 전용 문서·소제목 후보 조회(SCOPED_QUERY)
+        self.known_diseases = known_diseases
         self.last_params = None
 
     def execute_query(self, query, *, database_, **params):
@@ -72,6 +73,9 @@ class FakeDriver:
             return [FakeRecord(row) for row in self.direct_rows], None, None
         if query == disease_tool.SCOPED_QUERY:
             return [FakeRecord(row) for row in self.scoped_rows], None, None
+        if query == disease_tool.DISEASE_ID_QUERY:
+            known = params["disease_ids"] if self.known_diseases is None else self.known_diseases
+            return [FakeRecord({"disease_id": disease_id}) for disease_id in known], None, None
         self.last_params = params
         rows = [
             row
@@ -253,6 +257,28 @@ def test_focus_terms_remove_disease_name_and_particle():
     assert disease_tool.focus_terms("인플루엔자의 잠복기는?", books) == ["잠복기"]
 
 
+def test_focus_terms_keep_role_inside_brackets():
+    books = disease_tool.merge_books(load_dictionaries())
+    for brackets in ("(교직원)", "（교직원）", "[교직원]"):
+        question = f"인플루엔자 발생 시 학교{brackets}가 참고할 예방 조치는?"
+        assert "교직원" in disease_tool.focus_terms(question, books)
+    question = "인플루엔자 잠복기는?"
+    assert disease_tool.focus_terms(question, books) == disease_tool._focus_terms(
+        question, books, split_brackets=False
+    )
+
+
+def test_bracket_role_is_added_to_hybrid_search(monkeypatch):
+    calls = {}
+    stub_search(monkeypatch, [make_hit(text="인플루엔자 교직원 예방 조치")], calls=calls)
+    request = make_tool_input("인플루엔자 발생 시 학교(교직원)가 참고할 시설별 예방 조치는?")
+
+    result = disease_search(request, deps=make_deps())
+
+    validate_tool_result(result, request)
+    assert calls["extra_terms"] == ["교직원"]
+
+
 def test_focus_terms_remove_question_style_and_normalize_attendance():
     books = disease_tool.merge_books(load_dictionaries())
 
@@ -319,6 +345,43 @@ def test_korean_disease_name_boundary_rejects_parainfluenza(monkeypatch):
     assert disease_tool._name_position("계절 인플루엔자", ["인플루엔자"]) is not None
 
 
+def test_question_does_not_treat_animal_or_parainfluenza_as_seasonal(monkeypatch):
+    calls = {}
+    stub_search(monkeypatch, [make_hit()], calls=calls)
+    for question in (
+        "조류인플루엔자 잠복기는?", "조류 독감 잠복기는?",
+        "파라인플루엔자 잠복기는?", "파라 인플루엔자 잠복기는?",
+    ):
+        result = disease_search(make_tool_input(question), deps=make_deps())
+        assert result["status"] == "NO_EVIDENCE"
+        assert not result["citations"]
+    assert not calls
+
+
+def test_question_keeps_separately_mentioned_seasonal_flu():
+    books = disease_tool.merge_books(load_dictionaries())
+    question = "조류인플루엔자와 인플루엔자 잠복기를 비교해 주세요"
+    assert disease_tool._context_diseases(make_tool_input(question), books) == ["INFLUENZA"]
+
+
+def test_mixed_question_returns_partial_for_unresolved_other_disease(monkeypatch):
+    stub_search(monkeypatch, [make_hit()])
+    request = make_tool_input("조류인플루엔자와 인플루엔자 잠복기를 비교해 주세요")
+    result = disease_search(request, deps=make_deps())
+    validate_tool_result(result, request)
+    assert result["status"] == "PARTIAL"
+    assert any("전체 비교는 확인 필요" in warning for warning in result["warnings"])
+
+
+def test_excluded_question_is_not_overridden_by_flu_context():
+    books = disease_tool.merge_books(load_dictionaries())
+    request = make_tool_input("파라인플루엔자 잠복기는?")
+    request["context_entity_ids"] = ["Disease:INFLUENZA"]
+    assert disease_tool._context_diseases(request, books) == []
+    request["question"] = "그 질병의 잠복기는?"
+    assert disease_tool._context_diseases(request, books) == ["INFLUENZA"]
+
+
 def test_claim_uses_focus_line_and_excerpt_contains_focus_term(monkeypatch):
     hit = make_hit(text="가. 유행 시기\n…\n**1) 잠복기:** 1∼4일 (평균 2일)")
     stub_search(monkeypatch, [hit])
@@ -360,6 +423,51 @@ def test_meningococcal_question_returns_ok(monkeypatch):
 
     assert result["status"] == "OK"
     assert result["findings"][0]["disease_ids"] == ["MENINGOCOCCAL"]
+
+
+def test_missing_db_disease_node_preserves_citation_without_fabricating_id(monkeypatch):
+    hit = make_hit(
+        chunk_id="kdca_respiratory_2026:p0090:b01",
+        document_id="kdca_respiratory_2026",
+        text="수막구균 감염증의 잠복기는 2~10일이다.",
+    )
+    hit["pdf_page"] = 90
+    hit["printed_page"] = 70
+    stub_search(monkeypatch, [hit])
+    deps = make_deps()
+    deps["driver"] = FakeDriver(known_diseases=set())
+    request = make_tool_input("수막구균 감염증의 잠복기는?", allowed=["kdca_respiratory_2026"])
+
+    result = disease_search(request, deps=deps)
+
+    validate_tool_result(result, request)
+    assert result["status"] == "PARTIAL"
+    assert result["findings"][0]["disease_ids"] == []
+    assert result["citations"][0]["chunk_id"] == hit["chunk_id"]
+    assert result["graph_paths"][0]["edges"] == [{
+        "source_ref": "Document:kdca_respiratory_2026",
+        "relationship_type": "HAS_CHUNK",
+        "target_ref": "Chunk:kdca_respiratory_2026:p0090:b01",
+    }]
+    assert any("MENINGOCOCCAL" in warning for warning in result["warnings"])
+
+
+def test_disease_node_lookup_failure_returns_error_without_unverified_result(monkeypatch):
+    class FailedLookupDriver(FakeDriver):
+        def execute_query(self, query, *, database_, **params):
+            if query == disease_tool.DISEASE_ID_QUERY:
+                raise RuntimeError("private database detail")
+            return super().execute_query(query, database_=database_, **params)
+
+    stub_search(monkeypatch, [make_hit()])
+    deps = make_deps()
+    deps["driver"] = FailedLookupDriver()
+
+    result = disease_search(make_tool_input(), deps=deps)
+
+    assert result["status"] == "ERROR"
+    assert result["warnings"] == ["SearchError"]
+    assert result["findings"] == result["citations"] == []
 
 
 def test_scarlet_fever_section_heading_matches_without_about(monkeypatch):

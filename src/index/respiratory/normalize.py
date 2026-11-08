@@ -23,7 +23,7 @@ from index.respiratory.extractor import (
     ALLOWED_SCOPES,
     ALLOWED_STAGES,
     read_jsonl,
-    validate_action,
+    validate_block_action,
 )
 from index.school.ids_local import IdError, parse_id
 
@@ -132,7 +132,11 @@ def normalize_row(source, chunks):
     source_text = chunk.get("text", "") if isinstance(chunk, dict) else ""
     if not isinstance(source_text, str):
         source_text = ""
-    issues.extend(validate_action(row, row.get("chunk_diseases"), source_text))
+    issues.extend(validate_block_action(row, row.get("chunk_diseases"), {
+        **(chunk if isinstance(chunk, dict) else {}),
+        "chunk_id": chunk_id,
+        "text": source_text,
+    }))
 
     if action_parts and chunk_parts and (
         action_parts["document_id"], action_parts["page"]

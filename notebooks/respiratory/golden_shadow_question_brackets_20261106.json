@@ -1,0 +1,416 @@
+{
+  "mode": "read_only_shadow",
+  "cases": [
+    {
+      "id": "R-F1",
+      "before_focus": [
+        "잠복기"
+      ],
+      "after_focus": [
+        "잠복기"
+      ],
+      "before_status": "OK",
+      "after_status": "OK",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 6,
+          "ranks": [
+            1
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 6,
+          "ranks": [
+            1
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    },
+    {
+      "id": "R-F2",
+      "before_focus": [
+        "잠복기"
+      ],
+      "after_focus": [
+        "잠복기"
+      ],
+      "before_status": "OK",
+      "after_status": "OK",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 109,
+          "ranks": [
+            5
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 109,
+          "ranks": [
+            5
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    },
+    {
+      "id": "R-F3",
+      "before_focus": [
+        "잠복기"
+      ],
+      "after_focus": [
+        "잠복기"
+      ],
+      "before_status": "OK",
+      "after_status": "OK",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_covid19_2026",
+          "pdf_page": 39,
+          "ranks": [
+            1
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_covid19_2026",
+          "pdf_page": 39,
+          "ranks": [
+            1
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    },
+    {
+      "id": "R-F4",
+      "before_focus": [
+        "확진",
+        "격리",
+        "권고",
+        "기간"
+      ],
+      "after_focus": [
+        "확진",
+        "격리",
+        "권고",
+        "기간"
+      ],
+      "before_status": "OK",
+      "after_status": "OK",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_covid19_2026",
+          "pdf_page": 28,
+          "ranks": [
+            5
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_covid19_2026",
+          "pdf_page": 28,
+          "ranks": [
+            5
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    },
+    {
+      "id": "R-Q1",
+      "before_focus": [
+        "등교"
+      ],
+      "after_focus": [
+        "등교"
+      ],
+      "before_status": "OK",
+      "after_status": "OK",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 15,
+          "ranks": [
+            2
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 15,
+          "ranks": [
+            2
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    },
+    {
+      "id": "R-Q2",
+      "before_focus": [
+        "발생",
+        "참고할",
+        "시설별",
+        "예방",
+        "조치"
+      ],
+      "after_focus": [
+        "발생",
+        "교직원",
+        "참고할",
+        "시설별",
+        "예방",
+        "조치"
+      ],
+      "before_status": "OK",
+      "after_status": "OK",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 17,
+          "ranks": []
+        },
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 18,
+          "ranks": [
+            4
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 17,
+          "ranks": [
+            7
+          ]
+        },
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 18,
+          "ranks": [
+            2
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    },
+    {
+      "id": "R-Q3",
+      "before_focus": [
+        "진단",
+        "등교",
+        "기준"
+      ],
+      "after_focus": [
+        "진단",
+        "등교",
+        "기준"
+      ],
+      "before_status": "OK",
+      "after_status": "OK",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 118,
+          "ranks": []
+        },
+        {
+          "kind": "보조",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 116,
+          "ranks": [
+            6
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 118,
+          "ranks": []
+        },
+        {
+          "kind": "보조",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 116,
+          "ranks": [
+            6
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    },
+    {
+      "id": "R-Q4",
+      "before_focus": [
+        "집단발생",
+        "기준"
+      ],
+      "after_focus": [
+        "집단발생",
+        "기준"
+      ],
+      "before_status": "OK",
+      "after_status": "OK",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 116,
+          "ranks": [
+            2
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 116,
+          "ranks": [
+            2
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    },
+    {
+      "id": "R-T1",
+      "before_focus": [
+        "유행",
+        "휴교"
+      ],
+      "after_focus": [
+        "유행",
+        "휴교"
+      ],
+      "before_status": "OK",
+      "after_status": "OK",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 13,
+          "ranks": []
+        },
+        {
+          "kind": "보조",
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 236,
+          "ranks": [
+            4
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 13,
+          "ranks": []
+        },
+        {
+          "kind": "보조",
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 236,
+          "ranks": [
+            4
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    },
+    {
+      "id": "T01-MEN",
+      "before_focus": [
+        "잠복기"
+      ],
+      "after_focus": [
+        "잠복기"
+      ],
+      "before_status": "PARTIAL",
+      "after_status": "PARTIAL",
+      "before": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 90,
+          "ranks": [
+            1
+          ]
+        }
+      ],
+      "after": [
+        {
+          "kind": "주",
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 90,
+          "ranks": [
+            1
+          ]
+        }
+      ],
+      "before_bad_findings": {},
+      "after_bad_findings": {},
+      "before_bad_paths": {},
+      "after_bad_paths": {}
+    }
+  ]
+}

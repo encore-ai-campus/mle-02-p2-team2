@@ -56,3 +56,4 @@ mkdir data/raw          # Windows PowerShell: New-Item -ItemType Directory data/
 uv run python -m compileall -q src
 uv run ruff check src
 ```
+- 호흡기(송수림):[notebooks/respiratory/README_respiratory.md](notebooks/respiratory/README_respiratory.md)

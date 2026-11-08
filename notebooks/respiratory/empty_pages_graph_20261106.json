@@ -1,0 +1,68 @@
+{
+  "rows": [
+    {
+      "chunk_id": "kdca_covid19_2026:p0002:b01",
+      "relation": "HAS_CHUNK",
+      "other_labels": [
+        "Document"
+      ],
+      "count": 1
+    },
+    {
+      "chunk_id": "kdca_covid19_2026:p0010:b01",
+      "relation": "HAS_CHUNK",
+      "other_labels": [
+        "Document"
+      ],
+      "count": 1
+    },
+    {
+      "chunk_id": "kdca_covid19_2026:p0012:b01",
+      "relation": "HAS_CHUNK",
+      "other_labels": [
+        "Document"
+      ],
+      "count": 1
+    },
+    {
+      "chunk_id": "kdca_covid19_2026:p0014:b01",
+      "relation": "HAS_CHUNK",
+      "other_labels": [
+        "Document"
+      ],
+      "count": 1
+    },
+    {
+      "chunk_id": "kdca_covid19_2026:p0036:b01",
+      "relation": "HAS_CHUNK",
+      "other_labels": [
+        "Document"
+      ],
+      "count": 1
+    },
+    {
+      "chunk_id": "kdca_covid19_2026:p0038:b01",
+      "relation": "HAS_CHUNK",
+      "other_labels": [
+        "Document"
+      ],
+      "count": 1
+    },
+    {
+      "chunk_id": "kdca_covid19_2026:p0068:b01",
+      "relation": "HAS_CHUNK",
+      "other_labels": [
+        "Document"
+      ],
+      "count": 1
+    },
+    {
+      "chunk_id": "kdca_covid19_2026:p0070:b01",
+      "relation": "HAS_CHUNK",
+      "other_labels": [
+        "Document"
+      ],
+      "count": 1
+    }
+  ]
+}

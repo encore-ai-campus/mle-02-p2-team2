@@ -1,0 +1,399 @@
+{
+  "labels": [
+    {
+      "label": "ActionConcept",
+      "count": 28
+    },
+    {
+      "label": "Chunk",
+      "count": 1731
+    },
+    {
+      "label": "Disease",
+      "count": 11
+    },
+    {
+      "label": "Document",
+      "count": 10
+    },
+    {
+      "label": "SchoolAction",
+      "count": 458
+    },
+    {
+      "label": "SchoolRole",
+      "count": 12
+    }
+  ],
+  "properties": [
+    {
+      "label": "ActionConcept",
+      "properties": [
+        "concept_id",
+        "name"
+      ]
+    },
+    {
+      "label": "Chunk",
+      "properties": [
+        "pdf_page",
+        "section",
+        "text",
+        "chunk_id",
+        "embedding",
+        "printed_page"
+      ]
+    },
+    {
+      "label": "Disease",
+      "properties": [
+        "disease_id",
+        "name",
+        "aliases"
+      ]
+    },
+    {
+      "label": "Document",
+      "properties": [
+        "document_id",
+        "title",
+        "issuer",
+        "version",
+        "region"
+      ]
+    },
+    {
+      "label": "SchoolAction",
+      "properties": [
+        "action_id",
+        "stage",
+        "scope",
+        "action_text",
+        "step_order",
+        "modality",
+        "when_text",
+        "timing_text"
+      ]
+    },
+    {
+      "label": "SchoolRole",
+      "properties": [
+        "role_id",
+        "name",
+        "aliases"
+      ]
+    }
+  ],
+  "patterns": [
+    {
+      "start": [
+        "Chunk"
+      ],
+      "type": "ABOUT",
+      "end": [
+        "Disease"
+      ],
+      "count": 166
+    },
+    {
+      "start": [
+        "SchoolAction"
+      ],
+      "type": "DONE_BY",
+      "end": [
+        "SchoolRole"
+      ],
+      "count": 312
+    },
+    {
+      "start": [
+        "SchoolAction"
+      ],
+      "type": "FOR_DISEASE",
+      "end": [
+        "Disease"
+      ],
+      "count": 113
+    },
+    {
+      "start": [
+        "Document"
+      ],
+      "type": "HAS_CHUNK",
+      "end": [
+        "Chunk"
+      ],
+      "count": 1731
+    },
+    {
+      "start": [
+        "SchoolAction"
+      ],
+      "type": "INSTANCE_OF",
+      "end": [
+        "ActionConcept"
+      ],
+      "count": 289
+    },
+    {
+      "start": [
+        "SchoolAction"
+      ],
+      "type": "SUPPORTED_BY",
+      "end": [
+        "Chunk"
+      ],
+      "count": 458
+    }
+  ],
+  "documents": [
+    {
+      "document_id": "kdca_diagnosis_reporting_2026",
+      "chunks": 8
+    },
+    {
+      "document_id": "kdca_hfmd_2026",
+      "chunks": 4
+    },
+    {
+      "document_id": "kdca_measles_2026",
+      "chunks": 17
+    },
+    {
+      "document_id": "kdca_vaccine_preventable_2026",
+      "chunks": 7
+    },
+    {
+      "document_id": "moleg_infectious_disease_act_21521",
+      "chunks": 9
+    }
+  ],
+  "actions": [
+    {
+      "document_id": "kdca_measles_2026",
+      "chunk_id": "kdca_measles_2026:p0093:b01",
+      "action_id": "kdca_measles_2026:p0093:a01",
+      "roles": [
+        "SCHOOL_TEACHER_IN_CHARGE"
+      ],
+      "bases": [
+        "EXPLICIT"
+      ],
+      "diseases": [
+        "MEASLES"
+      ],
+      "concepts": [
+        "REQUEST_MEDICAL_VISIT"
+      ]
+    },
+    {
+      "document_id": "kdca_measles_2026",
+      "chunk_id": "kdca_measles_2026:p0093:b01",
+      "action_id": "kdca_measles_2026:p0093:a02",
+      "roles": [
+        "SCHOOL_TEACHER_IN_CHARGE"
+      ],
+      "bases": [
+        "EXPLICIT"
+      ],
+      "diseases": [
+        "MEASLES"
+      ],
+      "concepts": [
+        "REPORT_HEALTH_CENTER"
+      ]
+    },
+    {
+      "document_id": "kdca_measles_2026",
+      "chunk_id": "kdca_measles_2026:p0093:b03",
+      "action_id": "kdca_measles_2026:p0093:a03",
+      "roles": [
+        "SCHOOL_TEACHER_IN_CHARGE"
+      ],
+      "bases": [
+        "EXPLICIT"
+      ],
+      "diseases": [
+        "MEASLES"
+      ],
+      "concepts": [
+        "REPORT_HEALTH_CENTER"
+      ]
+    },
+    {
+      "document_id": "kdca_measles_2026",
+      "chunk_id": "kdca_measles_2026:p0093:b04",
+      "action_id": "kdca_measles_2026:p0093:a04",
+      "roles": [
+        "SCHOOL_TEACHER_IN_CHARGE"
+      ],
+      "bases": [
+        "EXPLICIT"
+      ],
+      "diseases": [
+        "MEASLES"
+      ],
+      "concepts": [
+        "HEALTH_EDUCATION"
+      ]
+    },
+    {
+      "document_id": "kdca_measles_2026",
+      "chunk_id": "kdca_measles_2026:p0093:b05",
+      "action_id": "kdca_measles_2026:p0093:a05",
+      "roles": [
+        "SCHOOL_TEACHER_IN_CHARGE"
+      ],
+      "bases": [
+        "EXPLICIT"
+      ],
+      "diseases": [
+        "MEASLES"
+      ],
+      "concepts": [
+        "EXCLUDE_FROM_SCHOOL"
+      ]
+    },
+    {
+      "document_id": "kdca_measles_2026",
+      "chunk_id": "kdca_measles_2026:p0093:b06",
+      "action_id": "kdca_measles_2026:p0093:a06",
+      "roles": [
+        "SCHOOL_TEACHER_IN_CHARGE"
+      ],
+      "bases": [
+        "EXPLICIT"
+      ],
+      "diseases": [
+        "MEASLES"
+      ],
+      "concepts": [
+        "END_EXCLUSION"
+      ]
+    }
+  ],
+  "indexes": [
+    {
+      "name": "action_id",
+      "type": "RANGE",
+      "state": "ONLINE"
+    },
+    {
+      "name": "action_scope",
+      "type": "RANGE",
+      "state": "ONLINE"
+    },
+    {
+      "name": "action_stage",
+      "type": "RANGE",
+      "state": "ONLINE"
+    },
+    {
+      "name": "chunk_embedding",
+      "type": "VECTOR",
+      "state": "ONLINE"
+    },
+    {
+      "name": "chunk_id",
+      "type": "RANGE",
+      "state": "ONLINE"
+    },
+    {
+      "name": "chunk_text",
+      "type": "FULLTEXT",
+      "state": "ONLINE"
+    },
+    {
+      "name": "concept_id",
+      "type": "RANGE",
+      "state": "ONLINE"
+    },
+    {
+      "name": "disease_id",
+      "type": "RANGE",
+      "state": "ONLINE"
+    },
+    {
+      "name": "document_id",
+      "type": "RANGE",
+      "state": "ONLINE"
+    },
+    {
+      "name": "index_1b9dcc97",
+      "type": "LOOKUP",
+      "state": "ONLINE"
+    },
+    {
+      "name": "index_460996c0",
+      "type": "LOOKUP",
+      "state": "ONLINE"
+    },
+    {
+      "name": "role_id",
+      "type": "RANGE",
+      "state": "ONLINE"
+    }
+  ],
+  "constraints": [
+    {
+      "name": "action_id",
+      "type": "NODE_PROPERTY_UNIQUENESS",
+      "labelsOrTypes": [
+        "SchoolAction"
+      ],
+      "properties": [
+        "action_id"
+      ]
+    },
+    {
+      "name": "chunk_id",
+      "type": "NODE_PROPERTY_UNIQUENESS",
+      "labelsOrTypes": [
+        "Chunk"
+      ],
+      "properties": [
+        "chunk_id"
+      ]
+    },
+    {
+      "name": "concept_id",
+      "type": "NODE_PROPERTY_UNIQUENESS",
+      "labelsOrTypes": [
+        "ActionConcept"
+      ],
+      "properties": [
+        "concept_id"
+      ]
+    },
+    {
+      "name": "disease_id",
+      "type": "NODE_PROPERTY_UNIQUENESS",
+      "labelsOrTypes": [
+        "Disease"
+      ],
+      "properties": [
+        "disease_id"
+      ]
+    },
+    {
+      "name": "document_id",
+      "type": "NODE_PROPERTY_UNIQUENESS",
+      "labelsOrTypes": [
+        "Document"
+      ],
+      "properties": [
+        "document_id"
+      ]
+    },
+    {
+      "name": "role_id",
+      "type": "NODE_PROPERTY_UNIQUENESS",
+      "labelsOrTypes": [
+        "SchoolRole"
+      ],
+      "properties": [
+        "role_id"
+      ]
+    }
+  ]
+}
