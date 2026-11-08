@@ -1,0 +1,46 @@
+# 11/8 최종 검증 실행 로그 (읽기 전용 실행, 접속 정보 없음)
+# 시각: 2026-11-08 10:11 KST, 브랜치 main, 커밋 5600728
+
+## 1) 전체 시험: pytest tests -q
+tests\rag\respiratory\test_backup_readonly.py:71: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/rag/respiratory/test_backup_readonly.py::test_readonly_backup_validates_and_does_not_overwrite
+1 failed, 409 passed, 9 skipped in 8.74s
+
+## 2) 예방·법령 / UI 시험
+38 passed in 1.28s
+17 passed in 2.02s
+
+## 3) ruff (예방·법령, UI)
+All checks passed!
+
+## 4) 공동 DB 읽기 전용 조회
+Chunk 1743 Document 10 HAS_CHUNK 1743
+penalty ids present: 12
+law/diag docs: 2
+
+## 5) 골든 15개 세트 재실행
+R1 | 회귀 | 질병 | exp ANSWERED -> ANSWERED | 일치 | 인용 1 | F-C OK | 원문 OK
+R2 | 회귀 | 문서 비교 | exp ANSWERED -> ANSWERED | 일치 | 인용 2 | F-C OK | 원문 OK
+R3 | 회귀 | 학교 행동 | exp ANSWERED -> ANSWERED | 일치 | 인용 3 | F-C OK | 원문 OK
+R4 | 회귀 | 학교 행동 | exp ANSWERED -> ANSWERED | 일치 | 인용 1 | F-C OK | 원문 OK
+R5 | 회귀 | 신고 | exp ANSWERED -> ANSWERED | 일치 | 인용 1 | F-C OK | 원문 OK
+R6 | 회귀 | 신고 | exp ANSWERED -> ANSWERED | 일치 | 인용 1 | F-C OK | 원문 OK
+R7 | 회귀 | 근거 부족 | exp INSUFFICIENT_EVIDENCE -> INSUFFICIENT_EVIDENCE | 일치 | 인용 0 | F-C OK | 원문 OK
+I1 | 독립 | 질병 | exp ANSWERED -> INSUFFICIENT_EVIDENCE | 불일치 | 인용 0 | F-C OK | 원문 OK
+I2 | 독립 | 질병 | exp ANSWERED -> INSUFFICIENT_EVIDENCE | 불일치 | 인용 0 | F-C OK | 원문 OK
+I3 | 독립 | 문서 비교 | exp PARTIAL -> INSUFFICIENT_EVIDENCE | 불일치 | 인용 0 | F-C OK | 원문 OK
+I4 | 독립 | 문서 비교 | exp ANSWERED -> INSUFFICIENT_EVIDENCE | 불일치 | 인용 0 | F-C OK | 원문 OK
+I5 | 독립 | 학교 행동 | exp ANSWERED -> INSUFFICIENT_EVIDENCE | 불일치 | 인용 0 | F-C OK | 원문 OK
+I6 | 독립 | 신고 | exp ANSWERED -> INSUFFICIENT_EVIDENCE | 불일치 | 인용 0 | F-C OK | 원문 OK
+I7 | 독립 | 근거 부족 | exp INSUFFICIENT_EVIDENCE -> INSUFFICIENT_EVIDENCE | 일치 | 인용 0 | F-C OK | 원문 OK
+I8 | 독립 | 근거 부족 | exp INSUFFICIENT_EVIDENCE -> INSUFFICIENT_EVIDENCE | 일치 | 인용 0 | F-C OK | 원문 OK
+{'회귀': [7, 7], '독립': [2, 8]}
+
+## 6) 22개 질문 중 불일치
+Q10 | exp ANSWERED -> PARTIAL | 불일치 | cites ['moleg_infectious_disease_act
+I-1 | exp ANSWERED -> INSUFFICIENT_EVIDENCE | 불일치 | cites [] | excerpt OK
+I-2 | exp ANSWERED -> INSUFFICIENT_EVIDENCE | 불일치 | cites [] | excerpt OK
+I-3 | exp ANSWERED -> INSUFFICIENT_EVIDENCE | 불일치 | cites [] | excerpt OK
+I-4 | exp ANSWERED -> INSUFFICIENT_EVIDENCE | 불일치 | cites [] | excerpt OK
+J-3 | exp PARTIAL -> INSUFFICIENT_EVIDENCE | 불일치 | cites [] | excerpt OK

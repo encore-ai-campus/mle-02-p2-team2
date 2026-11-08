@@ -357,18 +357,32 @@ Q15_CARDS: list[dict] = [
     _vacc_school_card("t01r03", "접종 미완료자 추가 접종 안내", "학교는 접종 미완료자에게 추가 접종을 안내합니다"),
 ]
 # 백일해 접촉자 (골든 Q23). 근거는 예방접종 지침 116쪽 표 32 행. 학교 역할은 원문에 없으므로 PARTIAL.
-def _pertussis_card(rid: str, quote: str, answer: str) -> dict:
+def _pertussis_card(rid: str, quote: str, answer: str, scope_extra: str = "") -> dict:
+    # scope_extra 가 있으면 기본 범위문 대신 그 문장을 쓴다(같은 묶음의 다른 카드가 기본 범위문을 낸다)
     return {
         "주체": "보건소·의료기관(접촉자 관리)", "행동": answer, "조건": "백일해 환자 접촉자", "역할근거": "", "basis": None, "단계": "UNSPECIFIED",
         "상태": "PARTIAL", "chunk_id": f"kdca_vaccine_preventable_2026:p0116:{rid}",
         "출처": ("vaccine", 116, quote), "블록": 0,
-        "주장": answer, "답문장": answer + "(예방접종 지침 116쪽 표 32). 학교가 할 역할은 이 근거에 없습니다.",
-        "범위문": "학교 역할은 원문에 없어 답하지 않았습니다. 접촉자 관리의 다른 행은 이 답의 범위가 아닙니다.",
+        "주장": answer, "답문장": answer + "(예방접종 지침 116쪽 표 32).",
+        "범위문": scope_extra or "학교 역할은 원문에 없어 답하지 않았습니다.",
         "필수어": ["백일해"], "질문어": ["접촉자", "안내", "발생"],
         "제외어": ["홍역", "수족구", "성홍열", "풍진"],
     }
 Q23_CARDS: list[dict] = [
-    _pertussis_card("t01r04", "(노출 후 예방요법) 연령, 예방접종력, 증상 발현 유무와 관계없이 예방적 항생제 복용", "접촉자는 나이·예방접종력·증상 유무와 관계없이 노출 후 예방적 항생제를 복용합니다(환자와 접촉 후 3주 이내)"),
+    # 11/8 원문 대조(체크리스트 25번): 노출 후 예방요법(r04)과 3주 각주(r05)는 표 32의 '고위험군 또는 전파위험 집단' 구분(r01) 칸에만 있고
+    # 동거인·기타 접촉자 칸에는 없다. 한 칸 인용문이 대상까지 뒷받침하지는 못하므로 각 주장은 자기 인용문 범위만 말하고,
+    # 세 카드는 PAIR_GROUPS 로 묶어 함께 검색될 때만 답한다. 어느 칸이 어느 구분 행인지는 표 구조라 범위문에 따로 밝힌다.
+    _pertussis_card(
+        "t01r01", "고위험군 또는 고위험군에게 전파위험이 있는 집단",
+        "백일해 접촉자 구분 표에 '고위험군 또는 고위험군에게 전파위험이 있는 집단' 구분이 있습니다",
+    ),
+    _pertussis_card(
+        "t01r04", "(노출 후 예방요법) 연령, 예방접종력, 증상 발현 유무와 관계없이 예방적 항생제 복용",
+        "노출 후 예방요법으로 연령·예방접종력·증상 발현 유무와 관계없이 예방적 항생제 복용이 적혀 있습니다",
+        scope_extra=("노출 후 예방요법과 접촉 후 3주 이내 항생제 복용은 표 32에서 '고위험군 또는 고위험군에게 전파위험이 있는 집단' 구분 행에만 적혀 있고 "
+                     "동거인·기타 접촉자 행에는 적혀 있지 않습니다. 고위험군의 동거인은 첫 구분에 포함됩니다(표 구조는 인용이 아니라 2026-11-08 원문 대조 결과입니다)."),
+    ),
+    _pertussis_card("t01r05", "환자와 접촉 후 3주 이내 항생제 복용", "항생제 복용 시기는 환자와 접촉 후 3주 이내로 적혀 있습니다"),
     _pertussis_card("t01r06", "(예방접종) 불완전한 예방접종력을 가진 사람의 경우 연령, 과거 접종력에 따라 예방접종", "접종력이 불완전한 접촉자는 연령과 과거 접종력에 따라 예방접종합니다"),
     _pertussis_card("t01r07", "(모니터링) 마지막 접촉 후 21일까지 증상발생 모니터링", "접촉자는 마지막 접촉 후 21일까지 증상 발생을 모니터링합니다"),
 ]
@@ -380,7 +394,10 @@ RETRIEVAL_CARDS: list[dict] = [
     PENALTY_REPORT_CARD, PENALTY_DOCTOR_A_CARD, PENALTY_DOCTOR_B_CARD,
 ] + Q15_CARDS + Q23_CARDS
 # 함께 있어야 답이 되는 카드 묶음: 한쪽만 검색되면 비교·급수별 답이 반쪽이 되므로 묶음 전체를 뺀다
-PAIR_GROUPS: list[list[dict]] = [[UNIV_ROLE_CARD, ELEM_ROLE_CARD], [PENALTY_DOCTOR_A_CARD, PENALTY_DOCTOR_B_CARD]]
+PAIR_GROUPS: list[list[dict]] = [
+    [UNIV_ROLE_CARD, ELEM_ROLE_CARD], [PENALTY_DOCTOR_A_CARD, PENALTY_DOCTOR_B_CARD],
+    [Q23_CARDS[0], Q23_CARDS[1], Q23_CARDS[2]],   # 백일해 예방요법: 대상(r01)·요법(r04)·시기(r05)는 함께일 때만 답한다
+]
 
 
 # ---------------------------------------------------------------------------
@@ -575,7 +592,7 @@ def run(request: QueryInput) -> QueryOutput:
                 "findings": build_findings(cards, citations),
                 "citations": citations,
                 "action_ids": [],
-                "warnings": [c["범위문"] for c in cards],
+                "warnings": list(dict.fromkeys(c["범위문"] for c in cards)),   # 같은 범위문이 카드마다 반복되지 않게 한다(완전히 같은 문장만)
                 "answer": " ".join(c["답문장"] for c in cards),
             }
             validate_query_output(result, request)
