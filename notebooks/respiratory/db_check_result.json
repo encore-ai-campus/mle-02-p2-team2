@@ -7,7 +7,7 @@
     },
     {
       "label": "Chunk",
-      "count": 1743
+      "count": 1735
     },
     {
       "label": "Disease",
@@ -19,7 +19,7 @@
     },
     {
       "label": "SchoolAction",
-      "count": 458
+      "count": 459
     },
     {
       "label": "SchoolRole",
@@ -36,7 +36,7 @@
     {
       "document_id": "kdca_covid19_2026",
       "title": "2026년도 코로나바이러스감염증-19 관리지침",
-      "chunk_count": 81,
+      "chunk_count": 73,
       "school_action_count": 0
     },
     {
@@ -67,7 +67,7 @@
       "document_id": "kdca_respiratory_2026",
       "title": "2026년도 호흡기감염병 관리지침",
       "chunk_count": 286,
-      "school_action_count": 1
+      "school_action_count": 2
     },
     {
       "document_id": "kdca_vaccine_preventable_2026",
@@ -103,19 +103,19 @@
     },
     {
       "type": "FOR_DISEASE",
-      "count": 113
+      "count": 114
     },
     {
       "type": "HAS_CHUNK",
-      "count": 1743
+      "count": 1735
     },
     {
       "type": "INSTANCE_OF",
-      "count": 289
+      "count": 290
     },
     {
       "type": "SUPPORTED_BY",
-      "count": 458
+      "count": 459
     }
   ],
   "relationship_patterns": [
@@ -149,7 +149,7 @@
       "end_labels": [
         "Disease"
       ],
-      "count": 113,
+      "count": 114,
       "allowed": true
     },
     {
@@ -160,7 +160,7 @@
       "end_labels": [
         "Chunk"
       ],
-      "count": 1743,
+      "count": 1735,
       "allowed": true
     },
     {
@@ -171,7 +171,7 @@
       "end_labels": [
         "ActionConcept"
       ],
-      "count": 289,
+      "count": 290,
       "allowed": true
     },
     {
@@ -182,7 +182,7 @@
       "end_labels": [
         "Chunk"
       ],
-      "count": 458,
+      "count": 459,
       "allowed": true
     }
   ],
@@ -413,7 +413,7 @@
         },
         "kdca_respiratory_2026": {
           "ABOUT": 1,
-          "FOR_DISEASE": 1
+          "FOR_DISEASE": 2
         },
         "moe_school_manual_v3": {
           "ABOUT": 3,
@@ -555,6 +555,7 @@
         "gyeonggi_school_guide_2025": 6,
         "kdca_flu_facility_2026": 1,
         "kdca_measles_2026": 1,
+        "kdca_respiratory_2026": 1,
         "moe_school_manual_v3": 2
       }
     },
@@ -783,9 +784,10 @@
         "gyeonggi_school_guide_2025",
         "kdca_flu_facility_2026",
         "kdca_measles_2026",
+        "kdca_respiratory_2026",
         "moe_school_manual_v3"
       ],
-      "document_count": 4
+      "document_count": 5
     },
     {
       "concept_id": "HEALTH_EDUCATION",
@@ -1006,7 +1008,7 @@
   },
   "duplicates": {
     "chunk_same_text": {
-      "count": 12,
+      "count": 9,
       "ids": [
         "gyeonggi_school_guide_2025:p0171:b02",
         "gyeonggi_school_guide_2025:p0174:b04",
