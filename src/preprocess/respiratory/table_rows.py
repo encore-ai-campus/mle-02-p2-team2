@@ -15,6 +15,11 @@ from preprocess.respiratory.md_to_blocks import (
 from preprocess.school.markdown_data import markdown_blocks
 
 SINGLE_COLUMN_SEPARATOR = re.compile(r"^\s*\|?\s*:?-{3,}:?\s*\|?\s*$")
+BODY_TABLE_HEADING = re.compile(
+    r"^##[ \t]+PDF[ \t]+(\d+)페이지[ \t]+"
+    r"(?:·[ \t]*표[ \t]+(\d+)(?:[ \t]*[（(][^\n]*[）)])?|[—–-][ \t]+([^\n]+))[ \t]*$",
+    re.MULTILINE,
+)
 
 
 def _cells(line: str) -> list[str]:
@@ -89,18 +94,60 @@ def page_table_rows(document_id: str, pdf_page: int, page_text: str) -> tuple[li
 
 def document_table_rows(document_id: str, markdown: str) -> tuple[list[dict], list[dict]]:
     """페이지 순서와 표 순서를 보존해 한 문서의 검수용 행 후보를 만든다."""
-    headings = list(PAGE_HEADING.finditer(markdown))
+    headings = sorted(
+        [*PAGE_HEADING.finditer(markdown), *BODY_TABLE_HEADING.finditer(markdown)],
+        key=lambda heading: heading.start(),
+    )
     if not headings:
         raise ValueError("PDF 페이지 제목을 찾지 못했습니다.")
     rows, warnings = [], []
     seen_pages = set()
+    plain_pages = set()
+    next_tables = {}
+    seen_chunk_ids = set()
+    seen_tables = set()
     for index, heading in enumerate(headings):
         page = int(heading.group(1))
-        if page in seen_pages:
+        is_body_table = heading.re is BODY_TABLE_HEADING
+        if page in plain_pages or (not is_body_table and page in seen_pages):
             raise ValueError(f"중복 PDF 페이지: {page}")
         seen_pages.add(page)
         end = headings[index + 1].start() if index + 1 < len(headings) else len(markdown)
-        page_rows, page_warnings = page_table_rows(document_id, page, markdown[heading.end():end])
+        page_text = markdown[heading.end():end]
+        if is_body_table:
+            source_table = int(heading.group(2)) if heading.group(2) else next_tables.get(page, 0) + 1
+            if not 1 <= source_table <= 99:
+                raise ValueError(f"본문표 번호는 1~99이어야 합니다: {source_table}")
+            first_table = source_table
+            # 원문 제목을 그대로 맥락에 넣고 행·열 머리글은 기존 파서에 맡긴다.
+            page_text = heading.group(0) + "\n" + page_text
+        else:
+            plain_pages.add(page)
+        page_rows, page_warnings = page_table_rows(document_id, page, page_text)
+        if is_body_table:
+            local_tables = {
+                int(re.search(r":t(\d+)r\d+$", row["chunk_id"]).group(1))
+                for row in page_rows
+            } | {warning["table"] for warning in page_warnings}
+            if not local_tables:
+                local_tables = {1}
+                page_warnings.append({"pdf_page": page, "table": 1, "reason": "본문표의 데이터 행을 찾지 못함"})
+            for table in local_tables:
+                table_index = first_table + table - 1
+                if table_index > 99 or (page, table_index) in seen_tables:
+                    raise ValueError(f"중복 또는 범위 밖 본문표 번호: PDF {page}, t{table_index:02d}")
+                seen_tables.add((page, table_index))
+            for row in page_rows:
+                match = re.search(r":t(\d+)r(\d+)$", row["chunk_id"])
+                table_index = first_table + int(match.group(1)) - 1
+                row["chunk_id"] = chunk_row_id(document_id, page, table_index, int(match.group(2)))
+            for warning in page_warnings:
+                warning["table"] += first_table - 1
+            next_tables[page] = first_table + max(local_tables) - 1
+        for row in page_rows:
+            if row["chunk_id"] in seen_chunk_ids:
+                raise ValueError(f"중복 표 행 ID: {row['chunk_id']}")
+            seen_chunk_ids.add(row["chunk_id"])
         rows.extend(page_rows)
         warnings.extend(page_warnings)
     return rows, warnings

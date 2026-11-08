@@ -58,6 +58,8 @@
 }
 ```
 
+표 행 청크(11/8):[table_rows.py](../../src/preprocess/respiratory/table_rows.py)로 본문표 작업본·코로나19 변환본을 행 단위 청크 `{doc}:p0000:t01r01` 1,116개로 나눴다(호흡기 983·인플루엔자 9·코로나19 124,파싱 경고 0). 선정 쪽 19행(호흡기 p113·p117 6행,코로나19 p39 13행)은 원본 작업본과 행 원문이 일치함을 확인했다([검수표](table_rows_검수표_20261108.md),[요약](table_rows_summary_20261108.json)). 인플루엔자 표는 p9~11에만 있어 선정 쪽 행은 0이다. 행 청크의 DB 적재·임베딩은 하지 않았으며 기존 페이지 청크와 골든 인용은 그대로다.
+
 ### M3. 실제 사용 프롬프트와 실행 코드
 
 - [v0 전체 프롬프트](../../src/index/respiratory/prompts/v0_school_action.md): 기존 행동 추출에 사용했다. 아래 p17:a04의 저장된 `review.prompt_version`도 `v0`이다. (출처: [추출 원본 — 로컬 자료](../../data/interim/respiratory/steps_raw.jsonl))
