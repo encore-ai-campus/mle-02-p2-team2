@@ -7,7 +7,7 @@
     },
     {
       "label": "Chunk",
-      "count": 1743
+      "count": 1735
     },
     {
       "label": "Disease",
@@ -36,7 +36,7 @@
     {
       "document_id": "kdca_covid19_2026",
       "title": "2026년도 코로나바이러스감염증-19 관리지침",
-      "chunk_count": 81,
+      "chunk_count": 73,
       "school_action_count": 0
     },
     {
@@ -107,7 +107,7 @@
     },
     {
       "type": "HAS_CHUNK",
-      "count": 1743
+      "count": 1735
     },
     {
       "type": "INSTANCE_OF",
@@ -160,7 +160,7 @@
       "end_labels": [
         "Chunk"
       ],
-      "count": 1743,
+      "count": 1735,
       "allowed": true
     },
     {
@@ -1006,7 +1006,7 @@
   },
   "duplicates": {
     "chunk_same_text": {
-      "count": 12,
+      "count": 9,
       "ids": [
         "gyeonggi_school_guide_2025:p0171:b02",
         "gyeonggi_school_guide_2025:p0174:b04",
