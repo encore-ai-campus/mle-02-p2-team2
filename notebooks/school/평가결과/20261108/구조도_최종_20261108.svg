@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="2440" viewBox="0 0 2200 2440" font-family="'Malgun Gothic','Noto Sans KR','Apple SD Gothic Neo',sans-serif">
+<defs><marker id="ar" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M2,1 L10,6 L2,11" fill="none" stroke="#8a8a8a" stroke-width="2"/></marker><marker id="ars" viewBox="0 0 12 12" refX="2" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M10,1 L2,6 L10,11" fill="none" stroke="#8a8a8a" stroke-width="2"/></marker></defs>
+<rect width="2200" height="2440" fill="#fcfcfc"/>
+<rect x="40" y="30" width="600" height="150" rx="14" fill="#ffffff" stroke="#e0e0e0" stroke-width="1.5"/>
+<text x="60" y="64" font-size="21" font-weight="700" fill="#333">LLM 호출 위치 (질문당 3회)</text>
+<text x="60" y="96" font-size="19" fill="#444">① 질문 이해(라우터)  ② 근거 선별  ③ 답변 작성</text>
+<text x="60" y="124" font-size="19" fill="#444">· 답변 첫 줄이 검사에 걸리면 1회만 재작성</text>
+<text x="60" y="152" font-size="19" fill="#444">· 점선 박스 = 분기 판단, 점선 화살표 = 동시 실행</text>
+<rect x="1000" y="20" width="200" height="60" rx="30" fill="#e3f2fd" stroke="#bcd8ee" stroke-width="2"/>
+<text x="1100" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#0b4a8f">START</text>
+<path d="M1100,80 V130" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="780" y="130" width="640" height="150" rx="22" fill="#e3f2fd" stroke="#bcd8ee" stroke-width="2" />
+<text x="1100.0" y="169" text-anchor="middle" font-size="25" font-weight="700" fill="#0b4a8f">질문 이해 (LLM 라우터)</text>
+<text x="1100.0" y="199" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">질병명·별칭 · 주 의도 + 보조 의도</text>
+<text x="1100.0" y="229" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">하위 질문 · 상황(질병·인원·역할)</text>
+<text x="1100.0" y="259" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">확인 항목 추출</text>
+<path d="M1100,280 V340" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="780" y="340" width="640" height="110" rx="22" fill="#fff1db" stroke="#c8a05a" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="1100.0" y="389" text-anchor="middle" font-size="25" font-weight="700" fill="#6b4a10">지원하는 업무·질병(11개)에</text>
+<text x="1100.0" y="419" text-anchor="middle" font-size="19" font-weight="400" fill="#6b4a10">관한 질문인가?</text>
+<path d="M780,395 H195 V1500" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="139" y="680" width="112" height="40" rx="20" fill="#eaf4fd" stroke="#c4dcf0" stroke-width="1.5"/>
+<text x="195" y="704" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">범위 밖</text>
+<rect x="1006" y="470" width="188" height="40" rx="20" fill="#eaf4fd" stroke="#c4dcf0" stroke-width="1.5"/>
+<text x="1100" y="494" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">지원 대상 질문</text>
+<path d="M1100,450 V520" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="1790" y="440" width="360" height="160" rx="22" fill="#fff8e8" stroke="#c8a05a" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="1970.0" y="484" text-anchor="middle" font-size="25" font-weight="700" fill="#6b4a10">판단 기준 원문 조회</text>
+<text x="1970.0" y="514" text-anchor="middle" font-size="19" font-weight="400" fill="#6b4a10">(Tool과 동시 실행)</text>
+<text x="1970.0" y="544" text-anchor="middle" font-size="19" font-weight="400" fill="#6b4a10">신고 대상·급수·유행의심 기준</text>
+<text x="1970.0" y="574" text-anchor="middle" font-size="19" font-weight="400" fill="#6b4a10">조문·벌칙·역할 표</text>
+<path d="M1420,205 H1970 V440" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#ar)"/>
+<rect x="1535" y="185" width="330" height="40" rx="20" fill="#eaf4fd" stroke="#c4dcf0" stroke-width="1.5"/>
+<text x="1700" y="209" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">질문 이해 직후 동시 시작</text>
+<rect x="780" y="520" width="640" height="110" rx="22" fill="#e3f2fd" stroke="#bcd8ee" stroke-width="2" />
+<text x="1100.0" y="569" text-anchor="middle" font-size="25" font-weight="700" fill="#0b4a8f">Tool 선택</text>
+<text x="1100.0" y="599" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">주 의도 Tool 지정 · 호출 최대 3회</text>
+<rect x="240" y="740" width="1450" height="250" fill="#f4f4f4" stroke="#dcdcdc" stroke-width="1.5"/>
+<text x="622" y="776" text-anchor="middle" font-size="22" fill="#222">Neo4j 검색 Tools</text>
+<text x="1340" y="776" text-anchor="middle" font-size="19" fill="#555">주 Tool + 동반 호출 병렬 실행</text>
+<rect x="270" y="810" width="330" height="100" rx="22" fill="#e0f0e8" stroke="#3b8f6b" stroke-width="2" />
+<text x="435.0" y="869" text-anchor="middle" font-size="25" font-weight="700" fill="#1f5c42">Disease 검색</text>
+<path d="M1100,630 V692 H435 V810" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<text x="435" y="944" text-anchor="middle" font-size="17" fill="#3a6a55">질문에 11개 질병명이 있으면</text>
+<text x="435" y="968" text-anchor="middle" font-size="17" fill="#3a6a55">주 Tool과 함께 동반 호출(절차 질문 제외)</text>
+<rect x="640" y="810" width="340" height="100" rx="22" fill="#e0f0e8" stroke="#3b8f6b" stroke-width="2" />
+<text x="810.0" y="869" text-anchor="middle" font-size="25" font-weight="700" fill="#1f5c42">SchoolAction 검색</text>
+<path d="M1100,630 V692 H810 V810" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<text x="810" y="944" text-anchor="middle" font-size="17" fill="#3a6a55">주 Tool이 근거 없음이면</text>
+<text x="810" y="968" text-anchor="middle" font-size="17" fill="#3a6a55">여기로 넘겨받음(거부 카드 제외)</text>
+<rect x="1020" y="810" width="300" height="100" rx="22" fill="#e0f0e8" stroke="#3b8f6b" stroke-width="2" />
+<text x="1170.0" y="869" text-anchor="middle" font-size="25" font-weight="700" fill="#1f5c42">법령·신고 근거 검색</text>
+<path d="M1100,630 V692 H1170 V810" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="1360" y="810" width="300" height="100" rx="22" fill="#e0f0e8" stroke="#3b8f6b" stroke-width="2" />
+<text x="1510.0" y="869" text-anchor="middle" font-size="25" font-weight="700" fill="#1f5c42">복합 관계 검색</text>
+<path d="M1100,630 V692 H1510 V810" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<text x="1510" y="944" text-anchor="middle" font-size="17" fill="#3a6a55">(CrossDoc 문서 비교)</text>
+<path d="M380,1084 V1170 A120,24 0 0 0 620,1170 V1084" fill="#e6e3f7" stroke="#7a6fb5" stroke-width="2"/>
+<ellipse cx="500" cy="1084" rx="120" ry="24" fill="#e6e3f7" stroke="#7a6fb5" stroke-width="2"/>
+<text x="500" y="1140" text-anchor="middle" font-size="22" font-weight="700" fill="#3a2f78">공통 Neo4j</text>
+<text x="500" y="1168" text-anchor="middle" font-size="22" font-weight="700" fill="#3a2f78">지식그래프</text>
+<path d="M500,990 V1060" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)" marker-start="url(#ars)"/>
+<text x="640" y="1030" font-size="18" fill="#555">읽기 전용 · 허용 문서 안에서만 조회</text>
+<text x="1790" y="625" font-size="17" fill="#8a6a2a">DB 읽기 전용</text>
+<path d="M1100,990 V1200" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="780" y="1200" width="640" height="110" rx="22" fill="#e3f2fd" stroke="#bcd8ee" stroke-width="2" />
+<text x="1100.0" y="1249" text-anchor="middle" font-size="25" font-weight="700" fill="#0b4a8f">근거 검증·합치기</text>
+<text x="1100.0" y="1279" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">Finding·Citation 원문 대조 · 허용 문서 재확인</text>
+<path d="M1100,1310 V1380" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="780" y="1380" width="640" height="110" rx="22" fill="#fff1db" stroke="#c8a05a" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="1100.0" y="1429" text-anchor="middle" font-size="25" font-weight="700" fill="#6b4a10">추가 탐색이 필요한가?</text>
+<text x="1100.0" y="1459" text-anchor="middle" font-size="19" font-weight="400" fill="#6b4a10">(보조 의도 Tool 남음 · 주 Tool 근거 없음)</text>
+<path d="M1420,1435 H1730 V575 H1420" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="1575" y="1218" width="310" height="144" rx="24" fill="#eaf4fd" stroke="#c4dcf0" stroke-width="1.5"/>
+<text x="1730" y="1242" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">필요</text>
+<text x="1730" y="1268" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">보조 의도 Tool 호출</text>
+<text x="1730" y="1294" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">주 Tool 근거 없음 →</text>
+<text x="1730" y="1320" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">학교 행동 Tool로 넘기기</text>
+<text x="1730" y="1346" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">(전체 한도 3회)</text>
+<rect x="965" y="1515" width="270" height="40" rx="20" fill="#eaf4fd" stroke="#c4dcf0" stroke-width="1.5"/>
+<text x="1100" y="1539" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">충분 · 추가 근거 없음</text>
+<path d="M1100,1490 V1580" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="780" y="1580" width="640" height="190" rx="22" fill="#e3f2fd" stroke="#bcd8ee" stroke-width="2" />
+<text x="1100.0" y="1639" text-anchor="middle" font-size="25" font-weight="700" fill="#0b4a8f">근거 선별 (LLM 재순위·충분성 판정)</text>
+<text x="1100.0" y="1669" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">카드 최대 36장 → 최대 10개 선택</text>
+<text x="1100.0" y="1699" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">핵심 구절 원문 대조 · 본문 일치 구간</text>
+<text x="1100.0" y="1729" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">판본 표시 · 지침 충돌 시 2026 지침 우선</text>
+<path d="M1970,600 V1675 H1420" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="1580" y="1655" width="240" height="40" rx="20" fill="#eaf4fd" stroke="#c4dcf0" stroke-width="1.5"/>
+<text x="1700" y="1679" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">판단 기준 원문 합류</text>
+<path d="M1100,1770 V1850" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="780" y="1850" width="640" height="110" rx="22" fill="#fff1db" stroke="#c8a05a" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="1100.0" y="1899" text-anchor="middle" font-size="25" font-weight="700" fill="#6b4a10">질문에 답할 근거가 충분한가?</text>
+<text x="1100.0" y="1929" text-anchor="middle" font-size="19" font-weight="400" fill="#6b4a10">(모든 하위 질문의 답함 여부)</text>
+<path d="M880,1960 V2010 H690 V2060" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="740" y="1990" width="100" height="40" rx="20" fill="#eaf4fd" stroke="#c4dcf0" stroke-width="1.5"/>
+<text x="790" y="2014" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">충분</text>
+<path d="M1320,1960 V2010 H1600 V2060" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<rect x="1390" y="1990" width="140" height="40" rx="20" fill="#eaf4fd" stroke="#c4dcf0" stroke-width="1.5"/>
+<text x="1460" y="2014" text-anchor="middle" font-size="19" font-weight="700" fill="#0b4a8f">일부·부족</text>
+<rect x="420" y="2060" width="540" height="190" rx="22" fill="#e3f2fd" stroke="#bcd8ee" stroke-width="2" />
+<text x="690.0" y="2119" text-anchor="middle" font-size="25" font-weight="700" fill="#0b4a8f">근거 기반 답변 생성 (LLM)</text>
+<text x="690.0" y="2149" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">결론 → 상황 판단 → 할 일 → 신고·법적</text>
+<text x="690.0" y="2179" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">줄 단위 검사: 번호·숫자·주체·표현</text>
+<text x="690.0" y="2209" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">첫 줄 실패 시 1회 재작성 → 템플릿</text>
+<rect x="1240" y="2060" width="720" height="190" rx="22" fill="#e3f2fd" stroke="#bcd8ee" stroke-width="2" />
+<text x="1600.0" y="2119" text-anchor="middle" font-size="25" font-weight="700" fill="#0b4a8f">일부 확인 · 근거 부족 안내</text>
+<text x="1600.0" y="2149" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">확인하지 못한 부분을 명시</text>
+<text x="1600.0" y="2179" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">근거가 일부 있으면 같은 검사를 거친 답변</text>
+<text x="1600.0" y="2209" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">근거에 없는 내용은 만들지 않음</text>
+<rect x="30" y="1500" width="330" height="120" rx="22" fill="#e3f2fd" stroke="#bcd8ee" stroke-width="2" />
+<text x="195.0" y="1539" text-anchor="middle" font-size="25" font-weight="700" fill="#0b4a8f">일반 LLM</text>
+<text x="195.0" y="1569" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">일반 대화·범위 안내</text>
+<text x="195.0" y="1599" text-anchor="middle" font-size="19" font-weight="400" fill="#0b4a8f">(DB·Tool 미사용)</text>
+<rect x="1010" y="2340" width="180" height="60" rx="30" fill="#e3f2fd" stroke="#bcd8ee" stroke-width="2"/>
+<text x="1100" y="2380" text-anchor="middle" font-size="26" font-weight="700" fill="#0b4a8f">END</text>
+<path d="M690,2250 V2300 H1100 V2340" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+<path d="M1600,2250 V2300 H1100" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round"/>
+<path d="M195,1620 V2370 H1010" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linejoin="round" marker-end="url(#ar)"/>
+</svg>
