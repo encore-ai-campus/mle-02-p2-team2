@@ -1,0 +1,3811 @@
+{
+  "question_id": "R-Q3",
+  "question": "성홍열 진단 학생의 등교중지 기준은?",
+  "executed_at_kst": "2026-11-08T11:47:46.286889+09:00",
+  "status": "TRACE_COMPLETED",
+  "table_columns": [
+    "chunk_id",
+    "① DIRECT",
+    "② SCOPED",
+    "③ FULLTEXT(순위·점수)",
+    "④ VECTOR(순위·점수)",
+    "⑤ 질병 필터",
+    "⑥ 최종 순위",
+    "상위 청크 ID"
+  ],
+  "table_markdown": "| chunk_id | ① DIRECT | ② SCOPED | ③ FULLTEXT(순위·점수) | ④ VECTOR(순위·점수) | ⑤ 질병 필터 | ⑥ 최종 순위 | 상위 청크 ID |\n|---|---|---|---|---|---|---|---|\n| kdca_respiratory_2026:p0115:b01 | 포함 20번째 | 미포함: 전용문서 아님·section 병명 없음 | 실제64개 후보 밖(정확 순위·점수 미조회) | 35위 · 0.696704149246 | 실검색 top8에서 도달 전 종료; 제한 해제 진단은 통과 | 24위 · 최종8개 밖 | kdca_diagnosis_reporting_2026:p0104:t01r02, gyeonggi_school_guide_2025:p0181:b01, gyeonggi_school_guide_2025:p0180:t01r09, kdca_respiratory_2026:p0114:b01, kdca_respiratory_2026:p0113:b01, kdca_respiratory_2026:p0078:b01, moe_school_manual_v3:p0208:b01, kdca_respiratory_2026:p0116:b01 |\n| kdca_respiratory_2026:p0116:b01 | 조건을 만족하나 chunk_id 순 최대20개 제한 밖 | 미포함: 전용문서 아님·section 병명 없음 | 16위 · 6.48914241791 | 20위 · 0.70898103714 | 통과 | 8위 | kdca_diagnosis_reporting_2026:p0104:t01r02, gyeonggi_school_guide_2025:p0181:b01, gyeonggi_school_guide_2025:p0180:t01r09, kdca_respiratory_2026:p0114:b01, kdca_respiratory_2026:p0113:b01, kdca_respiratory_2026:p0078:b01, moe_school_manual_v3:p0208:b01 |\n| kdca_respiratory_2026:p0118:b01 | 머리말·제외 문구를 가린 본문에 성홍열/별칭 없음; DIRECT는 ABOUT을 읽지 않음 | 미포함: 전용문서 아님·section 병명 없음 | 실제64개 후보 밖(정확 순위·점수 미조회) | 실제64개 후보 밖(정확 순위·점수 미조회) | 미실행(후보 미진입); 현재 조건 불충족 | 순위 없음(후보 미진입) | 없음(순위 비교 단계 미진입) |\n| kdca_respiratory_2026:p0121:b01 | 조건을 만족하나 chunk_id 순 최대20개 제한 밖 | 미포함: 전용문서 아님·section 병명 없음 | 실제64개 후보 밖(정확 순위·점수 미조회) | 15위 · 0.710645854473 | 미실행(후보 미진입); 현재 조건 충족 | 순위 없음(후보 미진입) | 없음(순위 비교 단계 미진입) |",
+  "targets": [
+    {
+      "chunk_id": "kdca_respiratory_2026:p0115:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 115,
+      "DIRECT": {
+        "included": true,
+        "rank": 20,
+        "score": null,
+        "raw_cypher_match": true,
+        "eligible_rank_before_limit20": 20,
+        "masked_text_disease_match": true,
+        "masked_text_focus_match": true,
+        "reason": "머리말·제외 문구를 가린 본문 질병명 및 핵심어 일치; 최대20개 안"
+      },
+      "SCOPED": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "raw_cypher_match": false,
+        "section": "라 방법",
+        "dedicated_document": false,
+        "reason": "호흡기 종합지침은 성홍열 전용 문서가 아니며 section에 성홍열/별칭이 없어 SCOPED_QUERY의 범위 조건 불충족"
+      },
+      "FULLTEXT": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "limit": 64
+      },
+      "VECTOR": {
+        "included": true,
+        "rank": 35,
+        "score": 0.6967041492462158,
+        "limit": 64
+      },
+      "RRF": {
+        "rank_before_limit32": 68,
+        "rank_in_base32": null,
+        "score_before_direct_scoped": 0.010526315789473684,
+        "rank_after_direct_merge": 32,
+        "rank_after_scoped_merge": 34,
+        "score_after_merges": 0.01639344262295082
+      },
+      "disease_filter": {
+        "reached_in_fixed_candidate_pool": true,
+        "reason": "본문/section 질병명 또는 실제 ABOUT 중 하나 일치",
+        "masked_text_disease_ids": [
+          "SCARLET_FEVER"
+        ],
+        "scope_disease_ids": [],
+        "actual_about_ids": [],
+        "requested_about_ids": [],
+        "eligibility_if_evaluated": true,
+        "passed_in_fixed_pool_diagnostic": true,
+        "executed_in_production_top8_run": false,
+        "passed_in_production_top8_run": null
+      },
+      "focus_filter": {
+        "matched": true,
+        "terms_present": [
+          "진단"
+        ],
+        "section_terms_present": []
+      },
+      "final": {
+        "top8_rank": null,
+        "rank_with_only_final_cutoff_removed": 24,
+        "candidate_pool_kept_fixed": true,
+        "higher_accepted_chunk_ids": [
+          "kdca_diagnosis_reporting_2026:p0104:t01r02",
+          "gyeonggi_school_guide_2025:p0181:b01",
+          "gyeonggi_school_guide_2025:p0180:t01r09",
+          "kdca_respiratory_2026:p0114:b01",
+          "kdca_respiratory_2026:p0113:b01",
+          "kdca_respiratory_2026:p0078:b01",
+          "moe_school_manual_v3:p0208:b01",
+          "kdca_respiratory_2026:p0116:b01",
+          "kdca_respiratory_2026:p0294:b01",
+          "gyeonggi_school_guide_2025:p0160:t01r03",
+          "gyeonggi_school_guide_2025:p0181:b03",
+          "kdca_respiratory_2026:p0004:b01",
+          "kdca_respiratory_2026:p0028:b01",
+          "kdca_respiratory_2026:p0041:b01",
+          "kdca_respiratory_2026:p0045:b01",
+          "kdca_respiratory_2026:p0047:b01",
+          "kdca_respiratory_2026:p0048:b01",
+          "kdca_respiratory_2026:p0049:b01",
+          "kdca_respiratory_2026:p0068:b01",
+          "kdca_respiratory_2026:p0075:b01",
+          "kdca_respiratory_2026:p0107:b01",
+          "kdca_respiratory_2026:p0111:b01",
+          "kdca_respiratory_2026:p0112:b01"
+        ],
+        "top8_displacing_chunk_ids": [
+          "kdca_diagnosis_reporting_2026:p0104:t01r02",
+          "gyeonggi_school_guide_2025:p0181:b01",
+          "gyeonggi_school_guide_2025:p0180:t01r09",
+          "kdca_respiratory_2026:p0114:b01",
+          "kdca_respiratory_2026:p0113:b01",
+          "kdca_respiratory_2026:p0078:b01",
+          "moe_school_manual_v3:p0208:b01",
+          "kdca_respiratory_2026:p0116:b01"
+        ],
+        "rank_note": "최종8개 절단만 해제한 실제 통과 후보 순위"
+      },
+      "dropped_stage": "p115: DIRECT 20번째로 진입·질병 조건 충족, 최종 제한 해제 시 24위 → ⑥ top_k=8에서 제외(참고 근거).",
+      "suggested_fix_ids": [
+        "F1"
+      ],
+      "suggested_fix_note": "참고 근거이므로 p115를 정답 상위에 올리기 위한 별도 수정은 제안하지 않음."
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0116:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 116,
+      "DIRECT": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "raw_cypher_match": true,
+        "eligible_rank_before_limit20": 21,
+        "masked_text_disease_match": true,
+        "masked_text_focus_match": true,
+        "reason": "조건을 만족하나 chunk_id 순 최대20개 제한 밖"
+      },
+      "SCOPED": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "raw_cypher_match": false,
+        "section": "마 결과보고",
+        "dedicated_document": false,
+        "reason": "호흡기 종합지침은 성홍열 전용 문서가 아니며 section에 성홍열/별칭이 없어 SCOPED_QUERY의 범위 조건 불충족"
+      },
+      "FULLTEXT": {
+        "included": true,
+        "rank": 16,
+        "score": 6.489142417907715,
+        "limit": 64
+      },
+      "VECTOR": {
+        "included": true,
+        "rank": 20,
+        "score": 0.7089810371398926,
+        "limit": 64
+      },
+      "RRF": {
+        "rank_before_limit32": 4,
+        "rank_in_base32": 4,
+        "score_before_direct_scoped": 0.025657894736842105,
+        "rank_after_direct_merge": 7,
+        "rank_after_scoped_merge": 9,
+        "score_after_merges": 0.025657894736842105
+      },
+      "disease_filter": {
+        "reached_in_fixed_candidate_pool": true,
+        "reason": "본문/section 질병명 또는 실제 ABOUT 중 하나 일치",
+        "masked_text_disease_ids": [
+          "SCARLET_FEVER"
+        ],
+        "scope_disease_ids": [],
+        "actual_about_ids": [
+          "SCARLET_FEVER"
+        ],
+        "requested_about_ids": [
+          "SCARLET_FEVER"
+        ],
+        "eligibility_if_evaluated": true,
+        "passed_in_fixed_pool_diagnostic": true,
+        "executed_in_production_top8_run": true,
+        "passed_in_production_top8_run": true
+      },
+      "focus_filter": {
+        "matched": true,
+        "terms_present": [
+          "진단",
+          "등교"
+        ],
+        "section_terms_present": []
+      },
+      "final": {
+        "top8_rank": 8,
+        "rank_with_only_final_cutoff_removed": 8,
+        "candidate_pool_kept_fixed": true,
+        "higher_accepted_chunk_ids": [
+          "kdca_diagnosis_reporting_2026:p0104:t01r02",
+          "gyeonggi_school_guide_2025:p0181:b01",
+          "gyeonggi_school_guide_2025:p0180:t01r09",
+          "kdca_respiratory_2026:p0114:b01",
+          "kdca_respiratory_2026:p0113:b01",
+          "kdca_respiratory_2026:p0078:b01",
+          "moe_school_manual_v3:p0208:b01"
+        ],
+        "top8_displacing_chunk_ids": [],
+        "rank_note": "최종8개 절단만 해제한 실제 통과 후보 순위"
+      },
+      "dropped_stage": "p116: 최종 8위 포함. ① DIRECT 조건 충족 순 21번째라 가산점 없음; RRF 4위→DIRECT 병합 7위→SCOPED 병합 9위→필터 후 8위.",
+      "suggested_fix_ids": [
+        "F1"
+      ]
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0118:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 118,
+      "DIRECT": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "raw_cypher_match": true,
+        "eligible_rank_before_limit20": null,
+        "masked_text_disease_match": false,
+        "masked_text_focus_match": true,
+        "reason": "머리말·제외 문구를 가린 본문에 성홍열/별칭 없음; DIRECT는 ABOUT을 읽지 않음"
+      },
+      "SCOPED": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "raw_cypher_match": false,
+        "section": "6 치료",
+        "dedicated_document": false,
+        "reason": "호흡기 종합지침은 성홍열 전용 문서가 아니며 section에 성홍열/별칭이 없어 SCOPED_QUERY의 범위 조건 불충족"
+      },
+      "FULLTEXT": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "limit": 64
+      },
+      "VECTOR": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "limit": 64
+      },
+      "RRF": {
+        "rank_before_limit32": null,
+        "rank_in_base32": null,
+        "score_before_direct_scoped": null,
+        "rank_after_direct_merge": null,
+        "rank_after_scoped_merge": null,
+        "score_after_merges": null
+      },
+      "disease_filter": {
+        "reached_in_fixed_candidate_pool": false,
+        "reason": "최종 후보군 미진입으로 실제 질병 필터 미실행",
+        "masked_text_disease_ids": [],
+        "scope_disease_ids": [],
+        "actual_about_ids": [],
+        "requested_about_ids": [],
+        "eligibility_if_evaluated": false,
+        "passed_in_fixed_pool_diagnostic": null,
+        "executed_in_production_top8_run": false,
+        "passed_in_production_top8_run": null
+      },
+      "focus_filter": {
+        "matched": true,
+        "terms_present": [
+          "진단",
+          "등교"
+        ],
+        "section_terms_present": []
+      },
+      "final": {
+        "top8_rank": null,
+        "rank_with_only_final_cutoff_removed": null,
+        "candidate_pool_kept_fixed": true,
+        "higher_accepted_chunk_ids": [],
+        "top8_displacing_chunk_ids": [],
+        "rank_note": "후보 미진입 또는 필터 탈락이면 최종 순위 자체가 정의되지 않음"
+      },
+      "dropped_stage": "p118: ① DIRECT에서 머리말 제거 후 병명 없어 제외, ② SCOPED 범위 불일치, ③·④ 실제64개 후보 밖 → 후보군 미진입. ⑤ 실제 질병 필터는 미실행이며 현재 조건상 통과 불가.",
+      "suggested_fix_ids": [
+        "F2"
+      ]
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0121:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 121,
+      "DIRECT": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "raw_cypher_match": true,
+        "eligible_rank_before_limit20": 23,
+        "masked_text_disease_match": true,
+        "masked_text_focus_match": true,
+        "reason": "조건을 만족하나 chunk_id 순 최대20개 제한 밖"
+      },
+      "SCOPED": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "raw_cypher_match": false,
+        "section": "",
+        "dedicated_document": false,
+        "reason": "호흡기 종합지침은 성홍열 전용 문서가 아니며 section에 성홍열/별칭이 없어 SCOPED_QUERY의 범위 조건 불충족"
+      },
+      "FULLTEXT": {
+        "included": false,
+        "rank": null,
+        "score": null,
+        "limit": 64
+      },
+      "VECTOR": {
+        "included": true,
+        "rank": 15,
+        "score": 0.710645854473114,
+        "limit": 64
+      },
+      "RRF": {
+        "rank_before_limit32": 36,
+        "rank_in_base32": null,
+        "score_before_direct_scoped": 0.013333333333333334,
+        "rank_after_direct_merge": null,
+        "rank_after_scoped_merge": null,
+        "score_after_merges": null
+      },
+      "disease_filter": {
+        "reached_in_fixed_candidate_pool": false,
+        "reason": "최종 후보군 미진입으로 실제 질병 필터 미실행",
+        "masked_text_disease_ids": [
+          "SCARLET_FEVER"
+        ],
+        "scope_disease_ids": [],
+        "actual_about_ids": [],
+        "requested_about_ids": [],
+        "eligibility_if_evaluated": true,
+        "passed_in_fixed_pool_diagnostic": null,
+        "executed_in_production_top8_run": false,
+        "passed_in_production_top8_run": null
+      },
+      "focus_filter": {
+        "matched": true,
+        "terms_present": [
+          "등교"
+        ],
+        "section_terms_present": []
+      },
+      "final": {
+        "top8_rank": null,
+        "rank_with_only_final_cutoff_removed": null,
+        "candidate_pool_kept_fixed": true,
+        "higher_accepted_chunk_ids": [],
+        "top8_displacing_chunk_ids": [],
+        "rank_note": "후보 미진입 또는 필터 탈락이면 최종 순위 자체가 정의되지 않음"
+      },
+      "dropped_stage": "p121: ① DIRECT 조건 충족 순 23번째라 제한20개 밖, ② SCOPED 범위 불일치, ④ VECTOR 15위지만 RRF 36위라 기본32개 밖 → 후보군 미진입. 질병 조건은 충족.",
+      "suggested_fix_ids": [
+        "F1"
+      ]
+    }
+  ],
+  "dropped_stage_by_target": [
+    {
+      "chunk_id": "kdca_respiratory_2026:p0115:b01",
+      "summary": "p115: DIRECT 20번째로 진입·질병 조건 충족, 최종 제한 해제 시 24위 → ⑥ top_k=8에서 제외(참고 근거)."
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0116:b01",
+      "summary": "p116: 최종 8위 포함. ① DIRECT 조건 충족 순 21번째라 가산점 없음; RRF 4위→DIRECT 병합 7위→SCOPED 병합 9위→필터 후 8위."
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0118:b01",
+      "summary": "p118: ① DIRECT에서 머리말 제거 후 병명 없어 제외, ② SCOPED 범위 불일치, ③·④ 실제64개 후보 밖 → 후보군 미진입. ⑤ 실제 질병 필터는 미실행이며 현재 조건상 통과 불가."
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0121:b01",
+      "summary": "p121: ① DIRECT 조건 충족 순 23번째라 제한20개 밖, ② SCOPED 범위 불일치, ④ VECTOR 15위지만 RRF 36위라 기본32개 밖 → 후보군 미진입. 질병 조건은 충족."
+    }
+  ],
+  "minimal_fix_candidates": [
+    {
+      "id": "F1",
+      "functions": [
+        "_direct_candidates"
+      ],
+      "what": "조건을 만족하는 후보를 chunk_id 순으로 선착순20개 자르는 대신, 질문 핵심 구문·핵심어 일치도를 기준으로 정렬한 뒤20개 선택한다. chunk_id는 동점 처리에만 사용한다.",
+      "basis": "p116·p121은 DIRECT 조건을 만족하지만 각각21·23번째여서 1/61 가산점을 잃음. p116은 ABOUT이 이미 있고 최종 질병 필터도 통과함.",
+      "not_implemented": true,
+      "limit": "후보 선택·가산점 문제에 대한 수정 후보이며 수정 후 정답 순위 상승은 별도 확인 필요."
+    },
+    {
+      "id": "F2",
+      "functions": [
+        "SCOPED_QUERY",
+        "_scoped_candidates",
+        "_scope_disease_ids"
+      ],
+      "what": "종합지침 청크에서 확인된 상위 질병 각론 문맥도 scope로 인정하도록 범위 판정을 확장하고, 그 판정을 SCOPED 후보 조회와 최종 질병 필터에 함께 적용한다.",
+      "basis": "p118의 section은 6 치료이고 본문 병명·ABOUT이 없어 현재 두 경로에서 질병 문맥을 인식하지 못함. 최종 ABOUT만 추가해도 실제 후보군 미진입은 해결되지 않음.",
+      "not_implemented": true,
+      "limit": "현재 section만으로는 상위 각론을 복원할 수 없어 원문 구조에서 검증한 범위 근거가 필요. 종합지침 전체를 성홍열 전용 문서로 지정하는 방식은 제외."
+    }
+  ],
+  "diagnosis_summary": [
+    "p116은 실제 ABOUT→SCARLET_FEVER가 있고 질병 필터 통과. ABOUT 추가 대상이 아님.",
+    "p121은 머리말 제거 후 본문 병명으로 질병 조건 충족. 실제 병목은 DIRECT20개·RRF32개 후보 제한.",
+    "p118은 최종 후보군에 없으므로 현재 실행에서 질병 필터가 떨어뜨렸다고 말할 수 없음. 후보 진입과 질병 문맥 인정 두 조건 모두 필요.",
+    "최종8개 순서는 R-Q3_1108_tool_result.json과 동일. 현재 추적만으로 과거 병합·적재의 인과관계는 판정하지 않음."
+  ],
+  "method": {
+    "input_file": "tests/fixtures/respiratory/R-Q3_1108_tool_input.json",
+    "allowed_document_ids": [
+      "gyeonggi_school_guide_2025",
+      "kdca_covid19_2026",
+      "kdca_diagnosis_reporting_2026",
+      "kdca_flu_facility_2026",
+      "kdca_hfmd_2026",
+      "kdca_measles_2026",
+      "kdca_respiratory_2026",
+      "kdca_vaccine_preventable_2026",
+      "moe_school_manual_v3",
+      "moleg_infectious_disease_act_21521"
+    ],
+    "allowed_document_count": 10,
+    "region": "NATIONAL",
+    "preferred_document_ids": [],
+    "disease_ids": [
+      "SCARLET_FEVER"
+    ],
+    "disease_names": {
+      "SCARLET_FEVER": [
+        "성홍열",
+        "Scarlet fever"
+      ]
+    },
+    "focus_terms": [
+      "진단",
+      "등교",
+      "기준"
+    ],
+    "fulltext_terms": [
+      "성홍열",
+      "진단",
+      "학생의",
+      "등교중지",
+      "기준은",
+      "Scarlet fever"
+    ],
+    "top_k": 8,
+    "base_rrf_limit": 32,
+    "fulltext_limit": 64,
+    "vector_limit": 64,
+    "direct_limit": 20,
+    "scoped_limit": 10,
+    "scoped_raw_query_limit": 200,
+    "external_transmission": {
+      "request_count": 1,
+      "service": "OpenAI embeddings",
+      "model": "text-embedding-3-small",
+      "dimensions": 1536,
+      "input": "성홍열 진단 학생의 등교중지 기준은?",
+      "other_documents_or_prompts_sent": false,
+      "local_embedding_reuses": 2
+    },
+    "rank_beyond_top8": "입력 top_k=8과 후보 검색 조건 고정; 메모리에서 _search의 최종 len(findings)>=top_k break 1개만 제거. DB 읽기 결과 및 질문 벡터를 재사용.",
+    "extra_reads": "DIRECT 전체 조건 충족 순위와 대상 속성 조회는 진단용이며 실검색 후보군에 합치지 않음",
+    "candidate_counts": {
+      "fulltext": 64,
+      "vector": 64,
+      "rrf_union": 113,
+      "base_rrf": 32,
+      "direct": 20,
+      "direct_raw_diagnostic": 56,
+      "direct_eligible_diagnostic": 32,
+      "scoped_raw": 7,
+      "scoped": 7,
+      "merged": 49,
+      "accepted_without_final_cutoff": 25
+    },
+    "production_read_queries": [
+      {
+        "query_sha256": "6be57df64d9cb4454655bc6bb8d644e697c9e4453d2cdb0ecdb9f1ac03abf3d8",
+        "rows": 10,
+        "kind": "MATCH",
+        "limits": {}
+      },
+      {
+        "query_sha256": "ad5d502baa242b29a5f211621b676c1450ac52a76ddf41c7180b267665ea51f5",
+        "rows": 64,
+        "kind": "FULLTEXT",
+        "limits": {
+          "k": 64
+        }
+      },
+      {
+        "query_sha256": "b0f79b9a4e1e0dfa330c32976ee2f060769a0489677edeb971543bf28e545a6d",
+        "rows": 64,
+        "kind": "VECTOR",
+        "limits": {
+          "n": 320,
+          "k": 64
+        }
+      },
+      {
+        "query_sha256": "9c687c962e82246aef3e70039731427c9aacbc60361e54c550222a958c488819",
+        "rows": 1,
+        "kind": "MATCH",
+        "limits": {}
+      },
+      {
+        "query_sha256": "c39e95071f94a3dedeced0334823483aa550a3476eaf8207284a7862f02b2083",
+        "rows": 56,
+        "kind": "DIRECT",
+        "limits": {
+          "offset": 0,
+          "page_size": 100
+        }
+      },
+      {
+        "query_sha256": "819048d3e4d06566321f1f5e06a90116a6992ababbb9d1da4ee70d5d7f483d04",
+        "rows": 7,
+        "kind": "SCOPED",
+        "limits": {}
+      },
+      {
+        "query_sha256": "387c95ca02251d508134f9e432b7421ccf249dc4dc5eabc6f2d412f92b732444",
+        "rows": 9,
+        "kind": "MATCH",
+        "limits": {}
+      },
+      {
+        "query_sha256": "6146cb7471164207a35780089e54d740e5d1cda17554ae303fbe82c95c15b4dd",
+        "rows": 1,
+        "kind": "MATCH",
+        "limits": {}
+      }
+    ],
+    "all_read_queries": [
+      {
+        "query_sha256": "6be57df64d9cb4454655bc6bb8d644e697c9e4453d2cdb0ecdb9f1ac03abf3d8",
+        "rows": 10,
+        "kind": "MATCH",
+        "limits": {}
+      },
+      {
+        "query_sha256": "ad5d502baa242b29a5f211621b676c1450ac52a76ddf41c7180b267665ea51f5",
+        "rows": 64,
+        "kind": "FULLTEXT",
+        "limits": {
+          "k": 64
+        }
+      },
+      {
+        "query_sha256": "b0f79b9a4e1e0dfa330c32976ee2f060769a0489677edeb971543bf28e545a6d",
+        "rows": 64,
+        "kind": "VECTOR",
+        "limits": {
+          "n": 320,
+          "k": 64
+        }
+      },
+      {
+        "query_sha256": "9c687c962e82246aef3e70039731427c9aacbc60361e54c550222a958c488819",
+        "rows": 1,
+        "kind": "MATCH",
+        "limits": {}
+      },
+      {
+        "query_sha256": "c39e95071f94a3dedeced0334823483aa550a3476eaf8207284a7862f02b2083",
+        "rows": 56,
+        "kind": "DIRECT",
+        "limits": {
+          "offset": 0,
+          "page_size": 100
+        }
+      },
+      {
+        "query_sha256": "819048d3e4d06566321f1f5e06a90116a6992ababbb9d1da4ee70d5d7f483d04",
+        "rows": 7,
+        "kind": "SCOPED",
+        "limits": {}
+      },
+      {
+        "query_sha256": "387c95ca02251d508134f9e432b7421ccf249dc4dc5eabc6f2d412f92b732444",
+        "rows": 9,
+        "kind": "MATCH",
+        "limits": {}
+      },
+      {
+        "query_sha256": "6146cb7471164207a35780089e54d740e5d1cda17554ae303fbe82c95c15b4dd",
+        "rows": 1,
+        "kind": "MATCH",
+        "limits": {}
+      },
+      {
+        "query_sha256": "95724ff08cedec4fe1ea3e0077400da2377e726e01caaeec88ce0d3e60926cbe",
+        "rows": 4,
+        "kind": "MATCH",
+        "limits": {}
+      },
+      {
+        "query_sha256": "c39e95071f94a3dedeced0334823483aa550a3476eaf8207284a7862f02b2083",
+        "rows": 56,
+        "kind": "DIRECT",
+        "limits": {
+          "offset": 0,
+          "page_size": 10000
+        }
+      }
+    ],
+    "file_hashes_sha256": {
+      "src/rag/respiratory/disease_tool.py": "591d15bce6117143c559b73245069c1847a09d00df9e5d2afd3a241f2ce081f9",
+      "src/rag/respiratory/exclude_phrases.json": "5a8f35fa3f6c1eeb61afa0a057f8c516258bddcb30caf7755dde0b833ea50dc6",
+      "src/rag/school/search.py": "0ad15a54120bf4ce8b549de0165991d84f23167fb0b5c2809d5fa58854d9a2f9",
+      "data/interim/respiratory/bundle.json": "eb9b18eba3fedbb6c1d3bbde80096963f32d20ff8e105f22256b50497467b914"
+    },
+    "source_and_bundle_hashes_unchanged": true,
+    "db_writes": 0,
+    "source_code_writes": 0,
+    "function_lines": {
+      "_search": 610,
+      "_direct_candidates": 356,
+      "_scoped_candidates": 453,
+      "_scope_disease_ids": 432,
+      "_merge_direct_candidates": 477
+    }
+  },
+  "production_result": {
+    "status": "OK",
+    "warnings": [],
+    "top8": [
+      {
+        "rank": 1,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 2,
+        "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 181,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 3,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 4,
+        "chunk_id": "kdca_respiratory_2026:p0114:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 114,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 5,
+        "chunk_id": "kdca_respiratory_2026:p0113:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 113,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 6,
+        "chunk_id": "kdca_respiratory_2026:p0078:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 78,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 7,
+        "chunk_id": "moe_school_manual_v3:p0208:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 208,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 8,
+        "chunk_id": "kdca_respiratory_2026:p0116:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 116,
+        "score": null,
+        "ranks": null
+      }
+    ]
+  },
+  "fixed_pool_accepted_ranking": [
+    {
+      "rank": 1,
+      "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+      "document_id": "kdca_diagnosis_reporting_2026",
+      "pdf_page": 104,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 2,
+      "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+      "document_id": "gyeonggi_school_guide_2025",
+      "pdf_page": 181,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 3,
+      "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+      "document_id": "gyeonggi_school_guide_2025",
+      "pdf_page": 180,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 4,
+      "chunk_id": "kdca_respiratory_2026:p0114:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 114,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 5,
+      "chunk_id": "kdca_respiratory_2026:p0113:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 113,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 6,
+      "chunk_id": "kdca_respiratory_2026:p0078:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 78,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 7,
+      "chunk_id": "moe_school_manual_v3:p0208:b01",
+      "document_id": "moe_school_manual_v3",
+      "pdf_page": 208,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 8,
+      "chunk_id": "kdca_respiratory_2026:p0116:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 116,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 9,
+      "chunk_id": "kdca_respiratory_2026:p0294:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 294,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 10,
+      "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+      "document_id": "gyeonggi_school_guide_2025",
+      "pdf_page": 160,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 11,
+      "chunk_id": "gyeonggi_school_guide_2025:p0181:b03",
+      "document_id": "gyeonggi_school_guide_2025",
+      "pdf_page": 181,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 12,
+      "chunk_id": "kdca_respiratory_2026:p0004:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 4,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 13,
+      "chunk_id": "kdca_respiratory_2026:p0028:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 28,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 14,
+      "chunk_id": "kdca_respiratory_2026:p0041:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 41,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 15,
+      "chunk_id": "kdca_respiratory_2026:p0045:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 45,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 16,
+      "chunk_id": "kdca_respiratory_2026:p0047:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 47,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 17,
+      "chunk_id": "kdca_respiratory_2026:p0048:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 48,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 18,
+      "chunk_id": "kdca_respiratory_2026:p0049:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 49,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 19,
+      "chunk_id": "kdca_respiratory_2026:p0068:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 68,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 20,
+      "chunk_id": "kdca_respiratory_2026:p0075:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 75,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 21,
+      "chunk_id": "kdca_respiratory_2026:p0107:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 107,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 22,
+      "chunk_id": "kdca_respiratory_2026:p0111:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 111,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 23,
+      "chunk_id": "kdca_respiratory_2026:p0112:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 112,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 24,
+      "chunk_id": "kdca_respiratory_2026:p0115:b01",
+      "document_id": "kdca_respiratory_2026",
+      "pdf_page": 115,
+      "score": null,
+      "ranks": null
+    },
+    {
+      "rank": 25,
+      "chunk_id": "moe_school_manual_v3:p0207:b01",
+      "document_id": "moe_school_manual_v3",
+      "pdf_page": 207,
+      "score": null,
+      "ranks": null
+    }
+  ],
+  "candidate_lists": {
+    "FULLTEXT": [
+      {
+        "rank": 1,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 12.022497177124023,
+        "ranks": null
+      },
+      {
+        "rank": 2,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 11.687423706054688,
+        "ranks": null
+      },
+      {
+        "rank": 3,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r03",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 10.654085159301758,
+        "ranks": null
+      },
+      {
+        "rank": 4,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r01",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 10.595416069030762,
+        "ranks": null
+      },
+      {
+        "rank": 5,
+        "chunk_id": "gyeonggi_school_guide_2025:p0205:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 205,
+        "score": 9.69112777709961,
+        "ranks": null
+      },
+      {
+        "rank": 6,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r04",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 8.566866874694824,
+        "ranks": null
+      },
+      {
+        "rank": 7,
+        "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 181,
+        "score": 8.428993225097656,
+        "ranks": null
+      },
+      {
+        "rank": 8,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 8.423412322998047,
+        "ranks": null
+      },
+      {
+        "rank": 9,
+        "chunk_id": "gyeonggi_school_guide_2025:p0205:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 205,
+        "score": 7.587141036987305,
+        "ranks": null
+      },
+      {
+        "rank": 10,
+        "chunk_id": "moe_school_manual_v3:p0072:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 72,
+        "score": 7.5695953369140625,
+        "ranks": null
+      },
+      {
+        "rank": 11,
+        "chunk_id": "moe_school_manual_v3:p0208:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 208,
+        "score": 7.159510612487793,
+        "ranks": null
+      },
+      {
+        "rank": 12,
+        "chunk_id": "gyeonggi_school_guide_2025:p0350:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 350,
+        "score": 6.870174884796143,
+        "ranks": null
+      },
+      {
+        "rank": 13,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 6.624548435211182,
+        "ranks": null
+      },
+      {
+        "rank": 14,
+        "chunk_id": "gyeonggi_school_guide_2025:p0247:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 247,
+        "score": 6.530948638916016,
+        "ranks": null
+      },
+      {
+        "rank": 15,
+        "chunk_id": "gyeonggi_school_guide_2025:p0245:t02r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 245,
+        "score": 6.498902320861816,
+        "ranks": null
+      },
+      {
+        "rank": 16,
+        "chunk_id": "kdca_respiratory_2026:p0116:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 116,
+        "score": 6.489142417907715,
+        "ranks": null
+      },
+      {
+        "rank": 17,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r08",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.432370185852051,
+        "ranks": null
+      },
+      {
+        "rank": 18,
+        "chunk_id": "gyeonggi_school_guide_2025:p0237:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 237,
+        "score": 6.373225212097168,
+        "ranks": null
+      },
+      {
+        "rank": 19,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.369521141052246,
+        "ranks": null
+      },
+      {
+        "rank": 20,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.369521141052246,
+        "ranks": null
+      },
+      {
+        "rank": 21,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r10",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.369521141052246,
+        "ranks": null
+      },
+      {
+        "rank": 22,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 6.369521141052246,
+        "ranks": null
+      },
+      {
+        "rank": 23,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.30803108215332,
+        "ranks": null
+      },
+      {
+        "rank": 24,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r09",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.30803108215332,
+        "ranks": null
+      },
+      {
+        "rank": 25,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r11",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.30803108215332,
+        "ranks": null
+      },
+      {
+        "rank": 26,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r12",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.30803108215332,
+        "ranks": null
+      },
+      {
+        "rank": 27,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.247848987579346,
+        "ranks": null
+      },
+      {
+        "rank": 28,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.188930511474609,
+        "ranks": null
+      },
+      {
+        "rank": 29,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 6.188930511474609,
+        "ranks": null
+      },
+      {
+        "rank": 30,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 6.188930511474609,
+        "ranks": null
+      },
+      {
+        "rank": 31,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 6.105093479156494,
+        "ranks": null
+      },
+      {
+        "rank": 32,
+        "chunk_id": "gyeonggi_school_guide_2025:p0184:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 184,
+        "score": 6.025754451751709,
+        "ranks": null
+      },
+      {
+        "rank": 33,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 5.9158830642700195,
+        "ranks": null
+      },
+      {
+        "rank": 34,
+        "chunk_id": "kdca_respiratory_2026:p0113:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 113,
+        "score": 5.884883403778076,
+        "ranks": null
+      },
+      {
+        "rank": 35,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 5.883392810821533,
+        "ranks": null
+      },
+      {
+        "rank": 36,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 5.8437724113464355,
+        "ranks": null
+      },
+      {
+        "rank": 37,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 5.8437724113464355,
+        "ranks": null
+      },
+      {
+        "rank": 38,
+        "chunk_id": "gyeonggi_school_guide_2025:p0165:t02r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 165,
+        "score": 5.843743324279785,
+        "ranks": null
+      },
+      {
+        "rank": 39,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 5.84224796295166,
+        "ranks": null
+      },
+      {
+        "rank": 40,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 5.77346134185791,
+        "ranks": null
+      },
+      {
+        "rank": 41,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 5.572653293609619,
+        "ranks": null
+      },
+      {
+        "rank": 42,
+        "chunk_id": "gyeonggi_school_guide_2025:p0247:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 247,
+        "score": 5.56719446182251,
+        "ranks": null
+      },
+      {
+        "rank": 43,
+        "chunk_id": "gyeonggi_school_guide_2025:p0193:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 193,
+        "score": 5.548938274383545,
+        "ranks": null
+      },
+      {
+        "rank": 44,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 5.50913143157959,
+        "ranks": null
+      },
+      {
+        "rank": 45,
+        "chunk_id": "gyeonggi_school_guide_2025:p0388:b05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 388,
+        "score": 5.493408203125,
+        "ranks": null
+      },
+      {
+        "rank": 46,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 5.486371994018555,
+        "ranks": null
+      },
+      {
+        "rank": 47,
+        "chunk_id": "moe_school_manual_v3:p0071:b02",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 71,
+        "score": 5.394162654876709,
+        "ranks": null
+      },
+      {
+        "rank": 48,
+        "chunk_id": "gyeonggi_school_guide_2025:p0390:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 390,
+        "score": 5.384736061096191,
+        "ranks": null
+      },
+      {
+        "rank": 49,
+        "chunk_id": "gyeonggi_school_guide_2025:p0208:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 208,
+        "score": 5.306543350219727,
+        "ranks": null
+      },
+      {
+        "rank": 50,
+        "chunk_id": "kdca_respiratory_2026:p0114:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 114,
+        "score": 5.293953895568848,
+        "ranks": null
+      },
+      {
+        "rank": 51,
+        "chunk_id": "gyeonggi_school_guide_2025:p0242:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 242,
+        "score": 5.158294200897217,
+        "ranks": null
+      },
+      {
+        "rank": 52,
+        "chunk_id": "kdca_respiratory_2026:p0294:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 294,
+        "score": 5.097396373748779,
+        "ranks": null
+      },
+      {
+        "rank": 53,
+        "chunk_id": "moe_school_manual_v3:p0050:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 50,
+        "score": 5.039596080780029,
+        "ranks": null
+      },
+      {
+        "rank": 54,
+        "chunk_id": "gyeonggi_school_guide_2025:p0239:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 239,
+        "score": 5.01523494720459,
+        "ranks": null
+      },
+      {
+        "rank": 55,
+        "chunk_id": "gyeonggi_school_guide_2025:p0189:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 189,
+        "score": 4.958253383636475,
+        "ranks": null
+      },
+      {
+        "rank": 56,
+        "chunk_id": "gyeonggi_school_guide_2025:p0157:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 157,
+        "score": 4.886084079742432,
+        "ranks": null
+      },
+      {
+        "rank": 57,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 4.837639808654785,
+        "ranks": null
+      },
+      {
+        "rank": 58,
+        "chunk_id": "moe_school_manual_v3:p0207:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 207,
+        "score": 4.778782844543457,
+        "ranks": null
+      },
+      {
+        "rank": 59,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 4.7617950439453125,
+        "ranks": null
+      },
+      {
+        "rank": 60,
+        "chunk_id": "kdca_respiratory_2026:p0122:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 122,
+        "score": 4.738300800323486,
+        "ranks": null
+      },
+      {
+        "rank": 61,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 4.7350640296936035,
+        "ranks": null
+      },
+      {
+        "rank": 62,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r11",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 4.7350640296936035,
+        "ranks": null
+      },
+      {
+        "rank": 63,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r12",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 4.7350640296936035,
+        "ranks": null
+      },
+      {
+        "rank": 64,
+        "chunk_id": "gyeonggi_school_guide_2025:p0196:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 196,
+        "score": 4.723984718322754,
+        "ranks": null
+      }
+    ],
+    "VECTOR": [
+      {
+        "rank": 1,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.7548641562461853,
+        "ranks": null
+      },
+      {
+        "rank": 2,
+        "chunk_id": "kdca_respiratory_2026:p0281:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 281,
+        "score": 0.7436228394508362,
+        "ranks": null
+      },
+      {
+        "rank": 3,
+        "chunk_id": "kdca_respiratory_2026:p0283:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 283,
+        "score": 0.7388263940811157,
+        "ranks": null
+      },
+      {
+        "rank": 4,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.7349839210510254,
+        "ranks": null
+      },
+      {
+        "rank": 5,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r08",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.7314435243606567,
+        "ranks": null
+      },
+      {
+        "rank": 6,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r12",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.7303001284599304,
+        "ranks": null
+      },
+      {
+        "rank": 7,
+        "chunk_id": "kdca_respiratory_2026:p0291:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 291,
+        "score": 0.7272769808769226,
+        "ranks": null
+      },
+      {
+        "rank": 8,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 0.7236158847808838,
+        "ranks": null
+      },
+      {
+        "rank": 9,
+        "chunk_id": "kdca_respiratory_2026:p0280:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 280,
+        "score": 0.7221548557281494,
+        "ranks": null
+      },
+      {
+        "rank": 10,
+        "chunk_id": "kdca_respiratory_2026:p0105:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 105,
+        "score": 0.7202063798904419,
+        "ranks": null
+      },
+      {
+        "rank": 11,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.719289243221283,
+        "ranks": null
+      },
+      {
+        "rank": 12,
+        "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 181,
+        "score": 0.716215968132019,
+        "ranks": null
+      },
+      {
+        "rank": 13,
+        "chunk_id": "gyeonggi_school_guide_2025:p0196:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 196,
+        "score": 0.7144549489021301,
+        "ranks": null
+      },
+      {
+        "rank": 14,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.7118539214134216,
+        "ranks": null
+      },
+      {
+        "rank": 15,
+        "chunk_id": "kdca_respiratory_2026:p0121:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 121,
+        "score": 0.710645854473114,
+        "ranks": null
+      },
+      {
+        "rank": 16,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 0.710418701171875,
+        "ranks": null
+      },
+      {
+        "rank": 17,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 0.7103842496871948,
+        "ranks": null
+      },
+      {
+        "rank": 18,
+        "chunk_id": "kdca_respiratory_2026:p0112:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 112,
+        "score": 0.7094306349754333,
+        "ranks": null
+      },
+      {
+        "rank": 19,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.7090431451797485,
+        "ranks": null
+      },
+      {
+        "rank": 20,
+        "chunk_id": "kdca_respiratory_2026:p0116:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 116,
+        "score": 0.7089810371398926,
+        "ranks": null
+      },
+      {
+        "rank": 21,
+        "chunk_id": "moe_school_manual_v3:p0213:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 213,
+        "score": 0.7086507081985474,
+        "ranks": null
+      },
+      {
+        "rank": 22,
+        "chunk_id": "gyeonggi_school_guide_2025:p0185:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 185,
+        "score": 0.705041766166687,
+        "ranks": null
+      },
+      {
+        "rank": 23,
+        "chunk_id": "kdca_respiratory_2026:p0114:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 114,
+        "score": 0.704561710357666,
+        "ranks": null
+      },
+      {
+        "rank": 24,
+        "chunk_id": "gyeonggi_school_guide_2025:p0194:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 194,
+        "score": 0.7037265300750732,
+        "ranks": null
+      },
+      {
+        "rank": 25,
+        "chunk_id": "gyeonggi_school_guide_2025:p0203:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 203,
+        "score": 0.7035771608352661,
+        "ranks": null
+      },
+      {
+        "rank": 26,
+        "chunk_id": "gyeonggi_school_guide_2025:p0205:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 205,
+        "score": 0.7034313678741455,
+        "ranks": null
+      },
+      {
+        "rank": 27,
+        "chunk_id": "gyeonggi_school_guide_2025:p0390:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 390,
+        "score": 0.702772855758667,
+        "ranks": null
+      },
+      {
+        "rank": 28,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r11",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.7023608088493347,
+        "ranks": null
+      },
+      {
+        "rank": 29,
+        "chunk_id": "gyeonggi_school_guide_2025:p0170:t01r01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 170,
+        "score": 0.7011381387710571,
+        "ranks": null
+      },
+      {
+        "rank": 30,
+        "chunk_id": "kdca_measles_2026:p0023:t01r01",
+        "document_id": "kdca_measles_2026",
+        "pdf_page": 23,
+        "score": 0.7000926733016968,
+        "ranks": null
+      },
+      {
+        "rank": 31,
+        "chunk_id": "kdca_respiratory_2026:p0020:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 20,
+        "score": 0.6994746923446655,
+        "ranks": null
+      },
+      {
+        "rank": 32,
+        "chunk_id": "gyeonggi_school_guide_2025:p0171:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 171,
+        "score": 0.6984230279922485,
+        "ranks": null
+      },
+      {
+        "rank": 33,
+        "chunk_id": "gyeonggi_school_guide_2025:p0171:t01r08",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 171,
+        "score": 0.6976843476295471,
+        "ranks": null
+      },
+      {
+        "rank": 34,
+        "chunk_id": "kdca_respiratory_2026:p0109:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 109,
+        "score": 0.6969099640846252,
+        "ranks": null
+      },
+      {
+        "rank": 35,
+        "chunk_id": "kdca_respiratory_2026:p0115:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 115,
+        "score": 0.6967041492462158,
+        "ranks": null
+      },
+      {
+        "rank": 36,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0089:t01r02",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 89,
+        "score": 0.6952512860298157,
+        "ranks": null
+      },
+      {
+        "rank": 37,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r10",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.693991482257843,
+        "ranks": null
+      },
+      {
+        "rank": 38,
+        "chunk_id": "kdca_respiratory_2026:p0111:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 111,
+        "score": 0.6929837465286255,
+        "ranks": null
+      },
+      {
+        "rank": 39,
+        "chunk_id": "gyeonggi_school_guide_2025:p0388:b05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 388,
+        "score": 0.692775547504425,
+        "ranks": null
+      },
+      {
+        "rank": 40,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.6923552751541138,
+        "ranks": null
+      },
+      {
+        "rank": 41,
+        "chunk_id": "kdca_respiratory_2026:p0294:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 294,
+        "score": 0.6911658048629761,
+        "ranks": null
+      },
+      {
+        "rank": 42,
+        "chunk_id": "moe_school_manual_v3:p0205:b03",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 205,
+        "score": 0.690991997718811,
+        "ranks": null
+      },
+      {
+        "rank": 43,
+        "chunk_id": "gyeonggi_school_guide_2025:p0199:t01r12",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 199,
+        "score": 0.6906536221504211,
+        "ranks": null
+      },
+      {
+        "rank": 44,
+        "chunk_id": "moe_school_manual_v3:p0062:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 62,
+        "score": 0.6906334161758423,
+        "ranks": null
+      },
+      {
+        "rank": 45,
+        "chunk_id": "gyeonggi_school_guide_2025:p0170:t01r02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 170,
+        "score": 0.690396785736084,
+        "ranks": null
+      },
+      {
+        "rank": 46,
+        "chunk_id": "gyeonggi_school_guide_2025:p0179:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 179,
+        "score": 0.6901265382766724,
+        "ranks": null
+      },
+      {
+        "rank": 47,
+        "chunk_id": "moe_school_manual_v3:p0070:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 70,
+        "score": 0.6887930631637573,
+        "ranks": null
+      },
+      {
+        "rank": 48,
+        "chunk_id": "gyeonggi_school_guide_2025:p0179:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 179,
+        "score": 0.6886481046676636,
+        "ranks": null
+      },
+      {
+        "rank": 49,
+        "chunk_id": "moe_school_manual_v3:p0072:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 72,
+        "score": 0.6885167360305786,
+        "ranks": null
+      },
+      {
+        "rank": 50,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.6879333853721619,
+        "ranks": null
+      },
+      {
+        "rank": 51,
+        "chunk_id": "kdca_respiratory_2026:p0113:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 113,
+        "score": 0.6877978444099426,
+        "ranks": null
+      },
+      {
+        "rank": 52,
+        "chunk_id": "kdca_respiratory_2026:p0047:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 47,
+        "score": 0.6868054270744324,
+        "ranks": null
+      },
+      {
+        "rank": 53,
+        "chunk_id": "moe_school_manual_v3:p0043:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 43,
+        "score": 0.6867349743843079,
+        "ranks": null
+      },
+      {
+        "rank": 54,
+        "chunk_id": "kdca_measles_2026:p0023:t01r02",
+        "document_id": "kdca_measles_2026",
+        "pdf_page": 23,
+        "score": 0.6853712797164917,
+        "ranks": null
+      },
+      {
+        "rank": 55,
+        "chunk_id": "gyeonggi_school_guide_2025:p0199:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 199,
+        "score": 0.6842026710510254,
+        "ranks": null
+      },
+      {
+        "rank": 56,
+        "chunk_id": "gyeonggi_school_guide_2025:p0171:t01r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 171,
+        "score": 0.6833811402320862,
+        "ranks": null
+      },
+      {
+        "rank": 57,
+        "chunk_id": "gyeonggi_school_guide_2025:p0185:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 185,
+        "score": 0.6823326349258423,
+        "ranks": null
+      },
+      {
+        "rank": 58,
+        "chunk_id": "gyeonggi_school_guide_2025:p0307:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 307,
+        "score": 0.6821165084838867,
+        "ranks": null
+      },
+      {
+        "rank": 59,
+        "chunk_id": "moe_school_manual_v3:p0213:t01r02",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 213,
+        "score": 0.6819992065429688,
+        "ranks": null
+      },
+      {
+        "rank": 60,
+        "chunk_id": "gyeonggi_school_guide_2025:p0194:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 194,
+        "score": 0.6815618276596069,
+        "ranks": null
+      },
+      {
+        "rank": 61,
+        "chunk_id": "gyeonggi_school_guide_2025:p0350:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 350,
+        "score": 0.6812437772750854,
+        "ranks": null
+      },
+      {
+        "rank": 62,
+        "chunk_id": "gyeonggi_school_guide_2025:p0203:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 203,
+        "score": 0.6805315613746643,
+        "ranks": null
+      },
+      {
+        "rank": 63,
+        "chunk_id": "gyeonggi_school_guide_2025:p0392:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 392,
+        "score": 0.6803591251373291,
+        "ranks": null
+      },
+      {
+        "rank": 64,
+        "chunk_id": "moe_school_manual_v3:p0060:t01r03",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 60,
+        "score": 0.6801589131355286,
+        "ranks": null
+      }
+    ],
+    "RRF_all_before_limit32": [
+      {
+        "rank": 1,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 0.030834914611005692,
+        "ranks": {
+          "fulltext": 2,
+          "vector": 8
+        }
+      },
+      {
+        "rank": 2,
+        "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 181,
+        "score": 0.028814262023217248,
+        "ranks": {
+          "fulltext": 7,
+          "vector": 12
+        }
+      },
+      {
+        "rank": 3,
+        "chunk_id": "gyeonggi_school_guide_2025:p0205:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 205,
+        "score": 0.02701252236135957,
+        "ranks": {
+          "fulltext": 5,
+          "vector": 26
+        }
+      },
+      {
+        "rank": 4,
+        "chunk_id": "kdca_respiratory_2026:p0116:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 116,
+        "score": 0.025657894736842105,
+        "ranks": {
+          "fulltext": 16,
+          "vector": 20
+        }
+      },
+      {
+        "rank": 5,
+        "chunk_id": "moe_school_manual_v3:p0072:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 72,
+        "score": 0.02346002621231979,
+        "ranks": {
+          "fulltext": 10,
+          "vector": 49
+        }
+      },
+      {
+        "rank": 6,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 0.022602397602397604,
+        "ranks": {
+          "fulltext": 44,
+          "vector": 17
+        }
+      },
+      {
+        "rank": 7,
+        "chunk_id": "gyeonggi_school_guide_2025:p0350:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 350,
+        "score": 0.022153351698806244,
+        "ranks": {
+          "fulltext": 12,
+          "vector": 61
+        }
+      },
+      {
+        "rank": 8,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.022060522060522062,
+        "ranks": {
+          "fulltext": 57,
+          "vector": 14
+        }
+      },
+      {
+        "rank": 9,
+        "chunk_id": "gyeonggi_school_guide_2025:p0196:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 196,
+        "score": 0.02176314626601856,
+        "ranks": {
+          "fulltext": 64,
+          "vector": 13
+        }
+      },
+      {
+        "rank": 10,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 0.021561256081379918,
+        "ranks": {
+          "fulltext": 59,
+          "vector": 16
+        }
+      },
+      {
+        "rank": 11,
+        "chunk_id": "kdca_respiratory_2026:p0114:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 114,
+        "score": 0.02113910186199343,
+        "ranks": {
+          "fulltext": 50,
+          "vector": 23
+        }
+      },
+      {
+        "rank": 12,
+        "chunk_id": "gyeonggi_school_guide_2025:p0390:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 390,
+        "score": 0.020753512132822477,
+        "ranks": {
+          "fulltext": 48,
+          "vector": 27
+        }
+      },
+      {
+        "rank": 13,
+        "chunk_id": "kdca_respiratory_2026:p0113:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 113,
+        "score": 0.019647306881349434,
+        "ranks": {
+          "fulltext": 34,
+          "vector": 51
+        }
+      },
+      {
+        "rank": 14,
+        "chunk_id": "gyeonggi_school_guide_2025:p0388:b05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 388,
+        "score": 0.01962481962481963,
+        "ranks": {
+          "fulltext": 45,
+          "vector": 39
+        }
+      },
+      {
+        "rank": 15,
+        "chunk_id": "kdca_respiratory_2026:p0294:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 294,
+        "score": 0.018829561527581327,
+        "ranks": {
+          "fulltext": 52,
+          "vector": 41
+        }
+      },
+      {
+        "rank": 16,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.01639344262295082,
+        "ranks": {
+          "fulltext": 1
+        }
+      },
+      {
+        "rank": 17,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.01639344262295082,
+        "ranks": {
+          "vector": 1
+        }
+      },
+      {
+        "rank": 18,
+        "chunk_id": "kdca_respiratory_2026:p0281:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 281,
+        "score": 0.016129032258064516,
+        "ranks": {
+          "vector": 2
+        }
+      },
+      {
+        "rank": 19,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r03",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 0.015873015873015872,
+        "ranks": {
+          "fulltext": 3
+        }
+      },
+      {
+        "rank": 20,
+        "chunk_id": "kdca_respiratory_2026:p0283:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 283,
+        "score": 0.015873015873015872,
+        "ranks": {
+          "vector": 3
+        }
+      },
+      {
+        "rank": 21,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.015625,
+        "ranks": {
+          "vector": 4
+        }
+      },
+      {
+        "rank": 22,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r01",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 0.015625,
+        "ranks": {
+          "fulltext": 4
+        }
+      },
+      {
+        "rank": 23,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r08",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.015384615384615385,
+        "ranks": {
+          "vector": 5
+        }
+      },
+      {
+        "rank": 24,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r12",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.015151515151515152,
+        "ranks": {
+          "vector": 6
+        }
+      },
+      {
+        "rank": 25,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r04",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 0.015151515151515152,
+        "ranks": {
+          "fulltext": 6
+        }
+      },
+      {
+        "rank": 26,
+        "chunk_id": "kdca_respiratory_2026:p0291:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 291,
+        "score": 0.014925373134328358,
+        "ranks": {
+          "vector": 7
+        }
+      },
+      {
+        "rank": 27,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.014705882352941176,
+        "ranks": {
+          "fulltext": 8
+        }
+      },
+      {
+        "rank": 28,
+        "chunk_id": "gyeonggi_school_guide_2025:p0205:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 205,
+        "score": 0.014492753623188406,
+        "ranks": {
+          "fulltext": 9
+        }
+      },
+      {
+        "rank": 29,
+        "chunk_id": "kdca_respiratory_2026:p0280:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 280,
+        "score": 0.014492753623188406,
+        "ranks": {
+          "vector": 9
+        }
+      },
+      {
+        "rank": 30,
+        "chunk_id": "kdca_respiratory_2026:p0105:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 105,
+        "score": 0.014285714285714285,
+        "ranks": {
+          "vector": 10
+        }
+      },
+      {
+        "rank": 31,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.014084507042253521,
+        "ranks": {
+          "vector": 11
+        }
+      },
+      {
+        "rank": 32,
+        "chunk_id": "moe_school_manual_v3:p0208:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 208,
+        "score": 0.014084507042253521,
+        "ranks": {
+          "fulltext": 11
+        }
+      },
+      {
+        "rank": 33,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 0.0136986301369863,
+        "ranks": {
+          "fulltext": 13
+        }
+      },
+      {
+        "rank": 34,
+        "chunk_id": "gyeonggi_school_guide_2025:p0247:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 247,
+        "score": 0.013513513513513514,
+        "ranks": {
+          "fulltext": 14
+        }
+      },
+      {
+        "rank": 35,
+        "chunk_id": "gyeonggi_school_guide_2025:p0245:t02r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 245,
+        "score": 0.013333333333333334,
+        "ranks": {
+          "fulltext": 15
+        }
+      },
+      {
+        "rank": 36,
+        "chunk_id": "kdca_respiratory_2026:p0121:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 121,
+        "score": 0.013333333333333334,
+        "ranks": {
+          "vector": 15
+        }
+      },
+      {
+        "rank": 37,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r08",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.012987012987012988,
+        "ranks": {
+          "fulltext": 17
+        }
+      },
+      {
+        "rank": 38,
+        "chunk_id": "gyeonggi_school_guide_2025:p0237:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 237,
+        "score": 0.01282051282051282,
+        "ranks": {
+          "fulltext": 18
+        }
+      },
+      {
+        "rank": 39,
+        "chunk_id": "kdca_respiratory_2026:p0112:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 112,
+        "score": 0.01282051282051282,
+        "ranks": {
+          "vector": 18
+        }
+      },
+      {
+        "rank": 40,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.012658227848101266,
+        "ranks": {
+          "fulltext": 19
+        }
+      },
+      {
+        "rank": 41,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.012658227848101266,
+        "ranks": {
+          "vector": 19
+        }
+      },
+      {
+        "rank": 42,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.0125,
+        "ranks": {
+          "fulltext": 20
+        }
+      },
+      {
+        "rank": 43,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r10",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.012345679012345678,
+        "ranks": {
+          "fulltext": 21
+        }
+      },
+      {
+        "rank": 44,
+        "chunk_id": "moe_school_manual_v3:p0213:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 213,
+        "score": 0.012345679012345678,
+        "ranks": {
+          "vector": 21
+        }
+      },
+      {
+        "rank": 45,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 0.012195121951219513,
+        "ranks": {
+          "fulltext": 22
+        }
+      },
+      {
+        "rank": 46,
+        "chunk_id": "gyeonggi_school_guide_2025:p0185:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 185,
+        "score": 0.012195121951219513,
+        "ranks": {
+          "vector": 22
+        }
+      },
+      {
+        "rank": 47,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.012048192771084338,
+        "ranks": {
+          "fulltext": 23
+        }
+      },
+      {
+        "rank": 48,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r09",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.011904761904761904,
+        "ranks": {
+          "fulltext": 24
+        }
+      },
+      {
+        "rank": 49,
+        "chunk_id": "gyeonggi_school_guide_2025:p0194:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 194,
+        "score": 0.011904761904761904,
+        "ranks": {
+          "vector": 24
+        }
+      },
+      {
+        "rank": 50,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r11",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.011764705882352941,
+        "ranks": {
+          "fulltext": 25
+        }
+      },
+      {
+        "rank": 51,
+        "chunk_id": "gyeonggi_school_guide_2025:p0203:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 203,
+        "score": 0.011764705882352941,
+        "ranks": {
+          "vector": 25
+        }
+      },
+      {
+        "rank": 52,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r12",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.011627906976744186,
+        "ranks": {
+          "fulltext": 26
+        }
+      },
+      {
+        "rank": 53,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.011494252873563218,
+        "ranks": {
+          "fulltext": 27
+        }
+      },
+      {
+        "rank": 54,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.011363636363636364,
+        "ranks": {
+          "fulltext": 28
+        }
+      },
+      {
+        "rank": 55,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r11",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.011363636363636364,
+        "ranks": {
+          "vector": 28
+        }
+      },
+      {
+        "rank": 56,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.011235955056179775,
+        "ranks": {
+          "fulltext": 29
+        }
+      },
+      {
+        "rank": 57,
+        "chunk_id": "gyeonggi_school_guide_2025:p0170:t01r01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 170,
+        "score": 0.011235955056179775,
+        "ranks": {
+          "vector": 29
+        }
+      },
+      {
+        "rank": 58,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 0.011111111111111112,
+        "ranks": {
+          "fulltext": 30
+        }
+      },
+      {
+        "rank": 59,
+        "chunk_id": "kdca_measles_2026:p0023:t01r01",
+        "document_id": "kdca_measles_2026",
+        "pdf_page": 23,
+        "score": 0.011111111111111112,
+        "ranks": {
+          "vector": 30
+        }
+      },
+      {
+        "rank": 60,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 0.01098901098901099,
+        "ranks": {
+          "fulltext": 31
+        }
+      },
+      {
+        "rank": 61,
+        "chunk_id": "kdca_respiratory_2026:p0020:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 20,
+        "score": 0.01098901098901099,
+        "ranks": {
+          "vector": 31
+        }
+      },
+      {
+        "rank": 62,
+        "chunk_id": "gyeonggi_school_guide_2025:p0171:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 171,
+        "score": 0.010869565217391304,
+        "ranks": {
+          "vector": 32
+        }
+      },
+      {
+        "rank": 63,
+        "chunk_id": "gyeonggi_school_guide_2025:p0184:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 184,
+        "score": 0.010869565217391304,
+        "ranks": {
+          "fulltext": 32
+        }
+      },
+      {
+        "rank": 64,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 0.010752688172043012,
+        "ranks": {
+          "fulltext": 33
+        }
+      },
+      {
+        "rank": 65,
+        "chunk_id": "gyeonggi_school_guide_2025:p0171:t01r08",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 171,
+        "score": 0.010752688172043012,
+        "ranks": {
+          "vector": 33
+        }
+      },
+      {
+        "rank": 66,
+        "chunk_id": "kdca_respiratory_2026:p0109:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 109,
+        "score": 0.010638297872340425,
+        "ranks": {
+          "vector": 34
+        }
+      },
+      {
+        "rank": 67,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 0.010526315789473684,
+        "ranks": {
+          "fulltext": 35
+        }
+      },
+      {
+        "rank": 68,
+        "chunk_id": "kdca_respiratory_2026:p0115:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 115,
+        "score": 0.010526315789473684,
+        "ranks": {
+          "vector": 35
+        }
+      },
+      {
+        "rank": 69,
+        "chunk_id": "gyeonggi_school_guide_2025:p0161:t01r02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 161,
+        "score": 0.010416666666666666,
+        "ranks": {
+          "fulltext": 36
+        }
+      },
+      {
+        "rank": 70,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0089:t01r02",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 89,
+        "score": 0.010416666666666666,
+        "ranks": {
+          "vector": 36
+        }
+      },
+      {
+        "rank": 71,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 0.010309278350515464,
+        "ranks": {
+          "fulltext": 37
+        }
+      },
+      {
+        "rank": 72,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r10",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.010309278350515464,
+        "ranks": {
+          "vector": 37
+        }
+      },
+      {
+        "rank": 73,
+        "chunk_id": "gyeonggi_school_guide_2025:p0165:t02r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 165,
+        "score": 0.01020408163265306,
+        "ranks": {
+          "fulltext": 38
+        }
+      },
+      {
+        "rank": 74,
+        "chunk_id": "kdca_respiratory_2026:p0111:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 111,
+        "score": 0.01020408163265306,
+        "ranks": {
+          "vector": 38
+        }
+      },
+      {
+        "rank": 75,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 0.010101010101010102,
+        "ranks": {
+          "fulltext": 39
+        }
+      },
+      {
+        "rank": 76,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 0.01,
+        "ranks": {
+          "fulltext": 40
+        }
+      },
+      {
+        "rank": 77,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.01,
+        "ranks": {
+          "vector": 40
+        }
+      },
+      {
+        "rank": 78,
+        "chunk_id": "gyeonggi_school_guide_2025:p0162:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 162,
+        "score": 0.009900990099009901,
+        "ranks": {
+          "fulltext": 41
+        }
+      },
+      {
+        "rank": 79,
+        "chunk_id": "gyeonggi_school_guide_2025:p0247:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 247,
+        "score": 0.00980392156862745,
+        "ranks": {
+          "fulltext": 42
+        }
+      },
+      {
+        "rank": 80,
+        "chunk_id": "moe_school_manual_v3:p0205:b03",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 205,
+        "score": 0.00980392156862745,
+        "ranks": {
+          "vector": 42
+        }
+      },
+      {
+        "rank": 81,
+        "chunk_id": "gyeonggi_school_guide_2025:p0193:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 193,
+        "score": 0.009708737864077669,
+        "ranks": {
+          "fulltext": 43
+        }
+      },
+      {
+        "rank": 82,
+        "chunk_id": "gyeonggi_school_guide_2025:p0199:t01r12",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 199,
+        "score": 0.009708737864077669,
+        "ranks": {
+          "vector": 43
+        }
+      },
+      {
+        "rank": 83,
+        "chunk_id": "moe_school_manual_v3:p0062:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 62,
+        "score": 0.009615384615384616,
+        "ranks": {
+          "vector": 44
+        }
+      },
+      {
+        "rank": 84,
+        "chunk_id": "gyeonggi_school_guide_2025:p0170:t01r02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 170,
+        "score": 0.009523809523809525,
+        "ranks": {
+          "vector": 45
+        }
+      },
+      {
+        "rank": 85,
+        "chunk_id": "gyeonggi_school_guide_2025:p0179:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 179,
+        "score": 0.009433962264150943,
+        "ranks": {
+          "vector": 46
+        }
+      },
+      {
+        "rank": 86,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 0.009433962264150943,
+        "ranks": {
+          "fulltext": 46
+        }
+      },
+      {
+        "rank": 87,
+        "chunk_id": "moe_school_manual_v3:p0070:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 70,
+        "score": 0.009345794392523364,
+        "ranks": {
+          "vector": 47
+        }
+      },
+      {
+        "rank": 88,
+        "chunk_id": "moe_school_manual_v3:p0071:b02",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 71,
+        "score": 0.009345794392523364,
+        "ranks": {
+          "fulltext": 47
+        }
+      },
+      {
+        "rank": 89,
+        "chunk_id": "gyeonggi_school_guide_2025:p0179:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 179,
+        "score": 0.009259259259259259,
+        "ranks": {
+          "vector": 48
+        }
+      },
+      {
+        "rank": 90,
+        "chunk_id": "gyeonggi_school_guide_2025:p0208:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 208,
+        "score": 0.009174311926605505,
+        "ranks": {
+          "fulltext": 49
+        }
+      },
+      {
+        "rank": 91,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.00909090909090909,
+        "ranks": {
+          "vector": 50
+        }
+      },
+      {
+        "rank": 92,
+        "chunk_id": "gyeonggi_school_guide_2025:p0242:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 242,
+        "score": 0.009009009009009009,
+        "ranks": {
+          "fulltext": 51
+        }
+      },
+      {
+        "rank": 93,
+        "chunk_id": "kdca_respiratory_2026:p0047:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 47,
+        "score": 0.008928571428571428,
+        "ranks": {
+          "vector": 52
+        }
+      },
+      {
+        "rank": 94,
+        "chunk_id": "moe_school_manual_v3:p0043:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 43,
+        "score": 0.008849557522123894,
+        "ranks": {
+          "vector": 53
+        }
+      },
+      {
+        "rank": 95,
+        "chunk_id": "moe_school_manual_v3:p0050:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 50,
+        "score": 0.008849557522123894,
+        "ranks": {
+          "fulltext": 53
+        }
+      },
+      {
+        "rank": 96,
+        "chunk_id": "gyeonggi_school_guide_2025:p0239:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 239,
+        "score": 0.008771929824561403,
+        "ranks": {
+          "fulltext": 54
+        }
+      },
+      {
+        "rank": 97,
+        "chunk_id": "kdca_measles_2026:p0023:t01r02",
+        "document_id": "kdca_measles_2026",
+        "pdf_page": 23,
+        "score": 0.008771929824561403,
+        "ranks": {
+          "vector": 54
+        }
+      },
+      {
+        "rank": 98,
+        "chunk_id": "gyeonggi_school_guide_2025:p0189:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 189,
+        "score": 0.008695652173913044,
+        "ranks": {
+          "fulltext": 55
+        }
+      },
+      {
+        "rank": 99,
+        "chunk_id": "gyeonggi_school_guide_2025:p0199:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 199,
+        "score": 0.008695652173913044,
+        "ranks": {
+          "vector": 55
+        }
+      },
+      {
+        "rank": 100,
+        "chunk_id": "gyeonggi_school_guide_2025:p0157:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 157,
+        "score": 0.008620689655172414,
+        "ranks": {
+          "fulltext": 56
+        }
+      },
+      {
+        "rank": 101,
+        "chunk_id": "gyeonggi_school_guide_2025:p0171:t01r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 171,
+        "score": 0.008620689655172414,
+        "ranks": {
+          "vector": 56
+        }
+      },
+      {
+        "rank": 102,
+        "chunk_id": "gyeonggi_school_guide_2025:p0185:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 185,
+        "score": 0.008547008547008548,
+        "ranks": {
+          "vector": 57
+        }
+      },
+      {
+        "rank": 103,
+        "chunk_id": "gyeonggi_school_guide_2025:p0307:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 307,
+        "score": 0.00847457627118644,
+        "ranks": {
+          "vector": 58
+        }
+      },
+      {
+        "rank": 104,
+        "chunk_id": "moe_school_manual_v3:p0207:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 207,
+        "score": 0.00847457627118644,
+        "ranks": {
+          "fulltext": 58
+        }
+      },
+      {
+        "rank": 105,
+        "chunk_id": "moe_school_manual_v3:p0213:t01r02",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 213,
+        "score": 0.008403361344537815,
+        "ranks": {
+          "vector": 59
+        }
+      },
+      {
+        "rank": 106,
+        "chunk_id": "gyeonggi_school_guide_2025:p0194:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 194,
+        "score": 0.008333333333333333,
+        "ranks": {
+          "vector": 60
+        }
+      },
+      {
+        "rank": 107,
+        "chunk_id": "kdca_respiratory_2026:p0122:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 122,
+        "score": 0.008333333333333333,
+        "ranks": {
+          "fulltext": 60
+        }
+      },
+      {
+        "rank": 108,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r06",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 0.008264462809917356,
+        "ranks": {
+          "fulltext": 61
+        }
+      },
+      {
+        "rank": 109,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r11",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 0.00819672131147541,
+        "ranks": {
+          "fulltext": 62
+        }
+      },
+      {
+        "rank": 110,
+        "chunk_id": "gyeonggi_school_guide_2025:p0203:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 203,
+        "score": 0.00819672131147541,
+        "ranks": {
+          "vector": 62
+        }
+      },
+      {
+        "rank": 111,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r12",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 0.008130081300813009,
+        "ranks": {
+          "fulltext": 63
+        }
+      },
+      {
+        "rank": 112,
+        "chunk_id": "gyeonggi_school_guide_2025:p0392:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 392,
+        "score": 0.008130081300813009,
+        "ranks": {
+          "vector": 63
+        }
+      },
+      {
+        "rank": 113,
+        "chunk_id": "moe_school_manual_v3:p0060:t01r03",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 60,
+        "score": 0.008064516129032258,
+        "ranks": {
+          "vector": 64
+        }
+      }
+    ],
+    "DIRECT": [
+      {
+        "rank": 1,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 2,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 3,
+        "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 181,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 4,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 5,
+        "chunk_id": "kdca_respiratory_2026:p0004:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 4,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 6,
+        "chunk_id": "kdca_respiratory_2026:p0028:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 28,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 7,
+        "chunk_id": "kdca_respiratory_2026:p0041:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 41,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 8,
+        "chunk_id": "kdca_respiratory_2026:p0045:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 45,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 9,
+        "chunk_id": "kdca_respiratory_2026:p0047:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 47,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 10,
+        "chunk_id": "kdca_respiratory_2026:p0048:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 48,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 11,
+        "chunk_id": "kdca_respiratory_2026:p0049:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 49,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 12,
+        "chunk_id": "kdca_respiratory_2026:p0068:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 68,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 13,
+        "chunk_id": "kdca_respiratory_2026:p0075:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 75,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 14,
+        "chunk_id": "kdca_respiratory_2026:p0078:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 78,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 15,
+        "chunk_id": "kdca_respiratory_2026:p0107:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 107,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 16,
+        "chunk_id": "kdca_respiratory_2026:p0111:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 111,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 17,
+        "chunk_id": "kdca_respiratory_2026:p0112:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 112,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 18,
+        "chunk_id": "kdca_respiratory_2026:p0113:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 113,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 19,
+        "chunk_id": "kdca_respiratory_2026:p0114:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 114,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 20,
+        "chunk_id": "kdca_respiratory_2026:p0115:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 115,
+        "score": null,
+        "ranks": null
+      }
+    ],
+    "SCOPED": [
+      {
+        "rank": 1,
+        "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 181,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 2,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 3,
+        "chunk_id": "moe_school_manual_v3:p0207:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 207,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 4,
+        "chunk_id": "moe_school_manual_v3:p0208:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 208,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 5,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 6,
+        "chunk_id": "gyeonggi_school_guide_2025:p0181:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 181,
+        "score": null,
+        "ranks": null
+      },
+      {
+        "rank": 7,
+        "chunk_id": "kdca_respiratory_2026:p0078:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 78,
+        "score": null,
+        "ranks": null
+      }
+    ],
+    "merged_before_disease_filter": [
+      {
+        "rank": 1,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 0.06362179985690733,
+        "ranks": {
+          "fulltext": 2,
+          "vector": 8
+        }
+      },
+      {
+        "rank": 2,
+        "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 181,
+        "score": 0.06160114726911889,
+        "ranks": {
+          "fulltext": 7,
+          "vector": 12
+        }
+      },
+      {
+        "rank": 3,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.05484740730642371,
+        "ranks": {
+          "fulltext": 57,
+          "vector": 14
+        }
+      },
+      {
+        "rank": 4,
+        "chunk_id": "kdca_respiratory_2026:p0114:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 114,
+        "score": 0.03753254448494425,
+        "ranks": {
+          "fulltext": 50,
+          "vector": 23
+        }
+      },
+      {
+        "rank": 5,
+        "chunk_id": "kdca_respiratory_2026:p0113:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 113,
+        "score": 0.03604074950430025,
+        "ranks": {
+          "fulltext": 34,
+          "vector": 51
+        }
+      },
+      {
+        "rank": 6,
+        "chunk_id": "kdca_respiratory_2026:p0078:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 78,
+        "score": 0.03278688524590164,
+        "ranks": null
+      },
+      {
+        "rank": 7,
+        "chunk_id": "moe_school_manual_v3:p0208:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 208,
+        "score": 0.03047794966520434,
+        "ranks": {
+          "fulltext": 11
+        }
+      },
+      {
+        "rank": 8,
+        "chunk_id": "gyeonggi_school_guide_2025:p0205:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 205,
+        "score": 0.02701252236135957,
+        "ranks": {
+          "fulltext": 5,
+          "vector": 26
+        }
+      },
+      {
+        "rank": 9,
+        "chunk_id": "kdca_respiratory_2026:p0116:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 116,
+        "score": 0.025657894736842105,
+        "ranks": {
+          "fulltext": 16,
+          "vector": 20
+        }
+      },
+      {
+        "rank": 10,
+        "chunk_id": "moe_school_manual_v3:p0072:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 72,
+        "score": 0.02346002621231979,
+        "ranks": {
+          "fulltext": 10,
+          "vector": 49
+        }
+      },
+      {
+        "rank": 11,
+        "chunk_id": "gyeonggi_school_guide_2025:p0204:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 204,
+        "score": 0.022602397602397604,
+        "ranks": {
+          "fulltext": 44,
+          "vector": 17
+        }
+      },
+      {
+        "rank": 12,
+        "chunk_id": "gyeonggi_school_guide_2025:p0350:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 350,
+        "score": 0.022153351698806244,
+        "ranks": {
+          "fulltext": 12,
+          "vector": 61
+        }
+      },
+      {
+        "rank": 13,
+        "chunk_id": "gyeonggi_school_guide_2025:p0196:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 196,
+        "score": 0.02176314626601856,
+        "ranks": {
+          "fulltext": 64,
+          "vector": 13
+        }
+      },
+      {
+        "rank": 14,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 0.021561256081379918,
+        "ranks": {
+          "fulltext": 59,
+          "vector": 16
+        }
+      },
+      {
+        "rank": 15,
+        "chunk_id": "gyeonggi_school_guide_2025:p0390:b02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 390,
+        "score": 0.020753512132822477,
+        "ranks": {
+          "fulltext": 48,
+          "vector": 27
+        }
+      },
+      {
+        "rank": 16,
+        "chunk_id": "gyeonggi_school_guide_2025:p0388:b05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 388,
+        "score": 0.01962481962481963,
+        "ranks": {
+          "fulltext": 45,
+          "vector": 39
+        }
+      },
+      {
+        "rank": 17,
+        "chunk_id": "kdca_respiratory_2026:p0294:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 294,
+        "score": 0.018829561527581327,
+        "ranks": {
+          "fulltext": 52,
+          "vector": 41
+        }
+      },
+      {
+        "rank": 18,
+        "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 160,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 19,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.01639344262295082,
+        "ranks": {
+          "fulltext": 1
+        }
+      },
+      {
+        "rank": 20,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r04",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.01639344262295082,
+        "ranks": {
+          "vector": 1
+        }
+      },
+      {
+        "rank": 21,
+        "chunk_id": "gyeonggi_school_guide_2025:p0181:b03",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 181,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 22,
+        "chunk_id": "kdca_respiratory_2026:p0004:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 4,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 23,
+        "chunk_id": "kdca_respiratory_2026:p0028:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 28,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 24,
+        "chunk_id": "kdca_respiratory_2026:p0041:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 41,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 25,
+        "chunk_id": "kdca_respiratory_2026:p0045:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 45,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 26,
+        "chunk_id": "kdca_respiratory_2026:p0047:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 47,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 27,
+        "chunk_id": "kdca_respiratory_2026:p0048:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 48,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 28,
+        "chunk_id": "kdca_respiratory_2026:p0049:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 49,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 29,
+        "chunk_id": "kdca_respiratory_2026:p0068:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 68,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 30,
+        "chunk_id": "kdca_respiratory_2026:p0075:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 75,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 31,
+        "chunk_id": "kdca_respiratory_2026:p0107:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 107,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 32,
+        "chunk_id": "kdca_respiratory_2026:p0111:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 111,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 33,
+        "chunk_id": "kdca_respiratory_2026:p0112:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 112,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 34,
+        "chunk_id": "kdca_respiratory_2026:p0115:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 115,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 35,
+        "chunk_id": "moe_school_manual_v3:p0207:b01",
+        "document_id": "moe_school_manual_v3",
+        "pdf_page": 207,
+        "score": 0.01639344262295082,
+        "ranks": null
+      },
+      {
+        "rank": 36,
+        "chunk_id": "kdca_respiratory_2026:p0281:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 281,
+        "score": 0.016129032258064516,
+        "ranks": {
+          "vector": 2
+        }
+      },
+      {
+        "rank": 37,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r03",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 0.015873015873015872,
+        "ranks": {
+          "fulltext": 3
+        }
+      },
+      {
+        "rank": 38,
+        "chunk_id": "kdca_respiratory_2026:p0283:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 283,
+        "score": 0.015873015873015872,
+        "ranks": {
+          "vector": 3
+        }
+      },
+      {
+        "rank": 39,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r02",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.015625,
+        "ranks": {
+          "vector": 4
+        }
+      },
+      {
+        "rank": 40,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r01",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 0.015625,
+        "ranks": {
+          "fulltext": 4
+        }
+      },
+      {
+        "rank": 41,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r08",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.015384615384615385,
+        "ranks": {
+          "vector": 5
+        }
+      },
+      {
+        "rank": 42,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r12",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.015151515151515152,
+        "ranks": {
+          "vector": 6
+        }
+      },
+      {
+        "rank": 43,
+        "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r04",
+        "document_id": "kdca_diagnosis_reporting_2026",
+        "pdf_page": 104,
+        "score": 0.015151515151515152,
+        "ranks": {
+          "fulltext": 6
+        }
+      },
+      {
+        "rank": 44,
+        "chunk_id": "kdca_respiratory_2026:p0291:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 291,
+        "score": 0.014925373134328358,
+        "ranks": {
+          "vector": 7
+        }
+      },
+      {
+        "rank": 45,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r07",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.014705882352941176,
+        "ranks": {
+          "fulltext": 8
+        }
+      },
+      {
+        "rank": 46,
+        "chunk_id": "gyeonggi_school_guide_2025:p0205:b01",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 205,
+        "score": 0.014492753623188406,
+        "ranks": {
+          "fulltext": 9
+        }
+      },
+      {
+        "rank": 47,
+        "chunk_id": "kdca_respiratory_2026:p0280:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 280,
+        "score": 0.014492753623188406,
+        "ranks": {
+          "vector": 9
+        }
+      },
+      {
+        "rank": 48,
+        "chunk_id": "kdca_respiratory_2026:p0105:b01",
+        "document_id": "kdca_respiratory_2026",
+        "pdf_page": 105,
+        "score": 0.014285714285714285,
+        "ranks": {
+          "vector": 10
+        }
+      },
+      {
+        "rank": 49,
+        "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r05",
+        "document_id": "gyeonggi_school_guide_2025",
+        "pdf_page": 180,
+        "score": 0.014084507042253521,
+        "ranks": {
+          "vector": 11
+        }
+      }
+    ]
+  },
+  "fixture_comparison": {
+    "file": "tests/fixtures/respiratory/R-Q3_1108_tool_result.json",
+    "same_top8_order": true,
+    "fixture_chunk_ids": [
+      "kdca_diagnosis_reporting_2026:p0104:t01r02",
+      "gyeonggi_school_guide_2025:p0181:b01",
+      "gyeonggi_school_guide_2025:p0180:t01r09",
+      "kdca_respiratory_2026:p0114:b01",
+      "kdca_respiratory_2026:p0113:b01",
+      "kdca_respiratory_2026:p0078:b01",
+      "moe_school_manual_v3:p0208:b01",
+      "kdca_respiratory_2026:p0116:b01"
+    ],
+    "trace_chunk_ids": [
+      "kdca_diagnosis_reporting_2026:p0104:t01r02",
+      "gyeonggi_school_guide_2025:p0181:b01",
+      "gyeonggi_school_guide_2025:p0180:t01r09",
+      "kdca_respiratory_2026:p0114:b01",
+      "kdca_respiratory_2026:p0113:b01",
+      "kdca_respiratory_2026:p0078:b01",
+      "moe_school_manual_v3:p0208:b01",
+      "kdca_respiratory_2026:p0116:b01"
+    ],
+    "note": "현재 DB/인덱스·임베딩 재실행의 재현 결과이며 과거 시점과 코드/DB 상태가 모두 동일하다고 가정하지 않음"
+  },
+  "limitations": [
+    "DB 여러 읽기는 단일 트랜잭션 스냅샷이 아님. 최초 검색 조회값을 메모리에 고정해 진단 재실행.",
+    "FULLTEXT/VECTOR가 실제64개 밖인 대상은 정확한 검색 순위를 추정하지 않음.",
+    "골든 정답 ID를 검색 점수나 질병 판정에 주입하지 않았음."
+  ]
+}

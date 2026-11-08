@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import warnings
+
+import pytest
+
 from index.school.dictionaries import load_dictionaries
 from rag.respiratory import disease_tool
 from rag.respiratory.disease_tool import ToolInput, disease_search
@@ -740,3 +744,55 @@ def test_dedicated_document_does_not_override_exclusion_phrase():
     assert disease_tool._scope_disease_ids(hit, ["INFLUENZA"], names, exclusions) == set()
     hit = {"document_id": "kdca_flu_facility_2026", "text": "해열제 없이 24시간", "section": ""}
     assert disease_tool._scope_disease_ids(hit, ["INFLUENZA"], names, exclusions) == {"INFLUENZA"}
+
+
+@pytest.mark.parametrize("low_count", [101, 201])
+def test_direct_candidates_rank_later_pages_before_top20_and_warn_only_above_cap(low_count):
+    rows = [
+        make_hit(
+            document_id="kdca_respiratory_2026",
+            chunk_id=f"kdca_respiratory_2026:p{page:04d}:b01",
+            text="성홍열 진단 안내",
+        )
+        for page in range(1, low_count + 1)
+    ]
+    same_terms = make_hit(
+        document_id="kdca_respiratory_2026",
+        chunk_id=f"kdca_respiratory_2026:p{low_count + 1:04d}:b01",
+        text="성홍열 기준 등교 진단",
+    )
+    matching_phrase = make_hit(
+        document_id="kdca_respiratory_2026",
+        chunk_id=f"kdca_respiratory_2026:p{low_count + 2:04d}:b01",
+        text="성홍열 진단 등교 기준",
+    )
+    rows.extend([same_terms, matching_phrase])
+
+    class PagedDriver:
+        def __init__(self):
+            self.offsets = []
+
+        def execute_query(self, query, *, database_, **params):
+            assert query == disease_tool.DIRECT_QUERY
+            self.offsets.append(params["offset"])
+            start = params["offset"]
+            return [FakeRecord(row) for row in rows[start:start + params["page_size"]]], None, None
+
+    driver = PagedDriver()
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        hits = disease_tool._direct_candidates(
+            driver, "test", ["kdca_respiratory_2026"], ["SCARLET_FEVER"],
+            {"SCARLET_FEVER": ["성홍열"]}, ["진단", "등교", "기준"], {},
+        )
+
+    assert len(hits) == 20
+    assert [hit["chunk_id"] for hit in hits[:2]] == [
+        matching_phrase["chunk_id"], same_terms["chunk_id"],
+    ]
+    assert driver.offsets == list(range(0, len(rows), 100))
+    assert [hit["chunk_id"] for hit in hits[2:]] == [row["chunk_id"] for row in rows[:18]]
+    assert len(caught) == (1 if low_count > 200 else 0)
+    if caught:
+        assert issubclass(caught[0].category, RuntimeWarning)
+        assert "200개를 초과" in str(caught[0].message)

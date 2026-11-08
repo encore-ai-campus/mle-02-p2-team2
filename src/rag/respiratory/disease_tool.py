@@ -354,17 +354,36 @@ def _focus_position(text: str, terms: list[str]) -> int | None:
 
 
 def _direct_candidates(driver, database, allowed, disease_ids, names, terms, exclusions):
-    """허용 문서의 직접 일치 후보를 필터 적용 후 최대 20개 반환한다."""
+    """전체 페이지의 유효 후보를 비교해 핵심어·핵심 구문 일치도 상위 20개를 반환한다."""
     if not allowed or not disease_ids or not terms:
         return []
     surfaces = list(dict.fromkeys(name for values in names.values() for name in values if name))
     if not surfaces:
         return []
+    focus_keys = list(dict.fromkeys(compare_key(term) for term in terms if compare_key(term)))
+    phrases = {
+        "".join(focus_keys[start:end])
+        for start in range(len(focus_keys))
+        for end in range(start + 2, len(focus_keys) + 1)
+    }
+
+    def relevance(text):
+        key = compare_key(text)
+        return (
+            sum(term in key for term in focus_keys),
+            sum(len(phrase) for phrase in phrases if phrase in key),
+        )
+
+    def order(item):
+        score, hit = item
+        return (-score[0], -score[1], hit["chunk_id"])
+
     hits = []
     seen = set()
     offset = 0
     page_size = 100
-    while len(hits) < 20:
+    candidate_limit = 200
+    while True:
         try:
             records, _, _ = driver.execute_query(
                 DIRECT_QUERY,
@@ -390,25 +409,34 @@ def _direct_candidates(driver, database, allowed, disease_ids, names, terms, exc
             ):
                 continue
             searchable = _mask_header_lines(text)
-            if _focus_position(searchable, terms) is None:
-                continue
-            if not any(
-                _text_disease_ids(
-                    _mask_excluded_lines(searchable, exclusions.get(disease_id, [])),
-                    [disease_id],
-                    names,
-                )
+            scores = [
+                relevance(visible)
                 for disease_id in disease_ids
-            ):
+                for visible in [_mask_excluded_lines(searchable, exclusions.get(disease_id, []))]
+                if _text_disease_ids(visible, [disease_id], names)
+                and _focus_position(visible, terms) is not None
+            ]
+            if not scores:
                 continue
             seen.add(chunk_id)
-            hits.append(hit)
-            if len(hits) == 20:
-                break
+            hits.append((max(scores), hit))
+            if len(seen) == candidate_limit + 1:
+                import warnings
+
+                warnings.warn(
+                    f"직접 후보가 {candidate_limit}개를 초과하여 일치도 상위 "
+                    f"{candidate_limit}개만 보관합니다. 전체 페이지 조회는 계속합니다.",
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
+            if len(hits) > candidate_limit:
+                hits.sort(key=order)
+                del hits[candidate_limit:]
         if len(records) < page_size:
             break
         offset += page_size
-    return hits
+    hits.sort(key=order)
+    return [hit for _, hit in hits[:20]]
 
 
 # 한 질병만 다루는 질병관리청 2026 지침(문서 제목 기준). 이 문서의 청크는 본문에 병명이 없어도 그 질병의 근거다.
