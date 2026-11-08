@@ -14,6 +14,112 @@
 - 공동 DB 읽기 전용 점검 및 결과 저장: [`db_check.py`](db_check.py).
 - 문서 간 경로 시각화 질의: [`visual_queries.cypher`](visual_queries.cypher).
 
+## 제출 증빙: 전처리·추출·정규화
+
+### M1. 실제 전처리 전후 예시
+
+시설별 인플루엔자 PDF 17쪽(인쇄 13쪽)의 변환 Markdown을 사용했다. `clean_page()` 재계산 결과가 저장된 청크의 `text`와 같은 것을 읽기 전용으로 확인했다. 이 쪽의 이미지 표시 1개와 불필요한 연속 빈 줄을 정리하고, 원문·문서 ID·청크 ID·두 종류의 쪽수를 보존한다. 본문 머리말을 검색에서 가리는 처리는 전처리의 표시 정리와 별개다. (출처: [전처리 코드](../../src/preprocess/respiratory/md_to_blocks.py), [변환 원문 — 로컬 자료](<../../data/raw/respiratory/2026 시설별 인플루엔자 관리 지침(어린이집 유치원 학교용) 복사본.md>), [저장 청크 — 로컬 자료](../../data/interim/respiratory/blocks.jsonl))
+
+전처리 전: 해당 쪽 서두의 연속 원문 일부.
+
+```text
+
+
+2. 시설에서의 인플루엔자 예방 및 관리
+
+#### **바. 대상별 역할**
+
+
+**1** **학부모**
+
+
+① 유행 전까지 자녀의 예방접종 실시
+
+
+② 자녀의 개인위생 관련 지도
+
+
+③ 유행 시기에 자녀의 외출 시 사람이 많이 모이는 장소의 방문을 삼가며, 특히 발열 및 기침
+
+
+
+```
+
+전처리 후: 실제 저장 JSON의 선택 필드이며, `text`는 앞부분만 발췌했다. 전체 청크를 줄인 새 데이터가 아니라 설명용 표시다.
+
+```json
+{
+  "document_id": "kdca_flu_facility_2026",
+  "chunk_id": "kdca_flu_facility_2026:p0017:b01",
+  "pdf_page": 17,
+  "printed_page": 13,
+  "section": "바. 대상별 역할",
+  "text": "2. 시설에서의 인플루엔자 예방 및 관리\n\n#### **바. 대상별 역할**\n\n**1** **학부모**\n\n① 유행 전까지 자녀의 예방접종 실시\n\n② 자녀의 개인위생 관련 지도\n\n③ 유행 시기에 자녀의 "
+}
+```
+
+### M3. 실제 사용 프롬프트와 실행 코드
+
+- [v0 전체 프롬프트](../../src/index/respiratory/prompts/v0_school_action.md): 기존 행동 추출에 사용했다. 아래 p17:a04의 저장된 `review.prompt_version`도 `v0`이다. (출처: [추출 원본 — 로컬 자료](../../data/interim/respiratory/steps_raw.jsonl))
+- [v1 전체 프롬프트](../../src/index/respiratory/prompts/v1_school_action.md): 표 행·머리글·근거 인용 규칙을 보강한 버전이다. 코로나19 p28에서는 실제 실행해 학교 행동 후보 0건을 확인했으며, 표 행 전체의 실제 재추출·DB 전환 완료를 뜻하지 않는다. (출처: [p28 실행 결과](covid_p0028_v1_extract_20261108.json), [표 행 후보·검증 기록](표_행_후보_20261106.md))
+- [추출 실행 코드](../../src/index/respiratory/extractor.py): 문서·쪽수로 입력 선택 → LLM 호출 → JSON 파싱·허용값·원문 인용 검증 → 검수 전 후보 저장으로 연결한다. (출처: [전처리부터 검색까지 코드 설명](호흡기_코드_흐름_설명.md))
+
+### M5. 대표 ID 연결과 실제 정규화 전후 사례
+
+질병 표기에는 사전의 대표명·별칭을 사용한다. 동일 ID로 연결되는 이름과 다른 질병의 오병합 방지를 로컬 코드로 확인했다. 아래 표는 사전·질병명 인식 결과이며, `normalize.py`가 원문 이름을 직접 바꾼 저장 행이라고 주장하지 않는다. (출처: [질병 사전](../../src/index/respiratory/dictionaries/diseases.json), [공통 사전·별칭 매핑 코드](../../src/index/school/dictionaries/__init__.py), [질병명 인식·제외 코드](../../src/rag/respiratory/disease_tool.py))
+
+| 입력 표기 | 대표 ID 또는 처리 | 의미 |
+|---|---|---|
+| 인플루엔자 | INFLUENZA | 대표 질병 ID |
+| 독감 | INFLUENZA | 같은 질병의 별칭을 같은 ID로 연결 |
+| 조류인플루엔자·파라인플루엔자 | 일반 INFLUENZA로 연결하지 않음 | 별도 질환을 일반 인플루엔자로 오병합하지 않음 |
+
+저장된 행동 `kdca_flu_facility_2026:p0017:a04`는 사람의 원문 검토 결정에 따라 미확정 행동 개념을 기존 `CONTACT_GUARDIAN`에 연결했다. 행동 문장과 `evidence_quote`는 전후 동일하며, 역할이 특정되지 않아 `done_by=[]`도 유지했다. 현재 구현은 폐쇄형 사전·허용 ID와 명시적 검수 결정을 사용하며, 자유형 표기를 자동으로 모두 통합하는 Entity Resolution을 구현한 것은 아니다. (출처: [정규화 코드·검토 결정](../../src/index/respiratory/normalize.py), [추출 전 행 — 로컬 자료](../../data/interim/respiratory/steps_raw.jsonl), [정규화 후 행 — 로컬 자료](../../data/interim/respiratory/steps_normalized.jsonl))
+
+정규화 전·후의 선택 필드:
+
+```json
+{
+  "before": {
+    "action_id": "kdca_flu_facility_2026:p0017:a04",
+    "instance_of": "NEW_CONCEPT_CANDIDATE",
+    "for_disease": [
+      "INFLUENZA"
+    ],
+    "supported_by": [
+      "kdca_flu_facility_2026:p0017:b01"
+    ],
+    "review": {
+      "status": "PENDING"
+    }
+  },
+  "after": {
+    "action_id": "kdca_flu_facility_2026:p0017:a04",
+    "instance_of": "CONTACT_GUARDIAN",
+    "for_disease": [
+      "INFLUENZA"
+    ],
+    "supported_by": [
+      "kdca_flu_facility_2026:p0017:b01"
+    ],
+    "review": {
+      "status": "APPROVED"
+    }
+  }
+}
+```
+
+정규화된 ID가 관계의 끝점에도 사용되는 것을 저장된 번들에서 확인했다. 아래는 실제 관계를 표시한 것이다. (출처: [번들 — 로컬 자료](../../data/interim/respiratory/bundle.json), [매핑·적재 코드](../../src/index/respiratory/load.py))
+
+```text
+SchoolAction:kdca_flu_facility_2026:p0017:a04 -[:INSTANCE_OF]-> ActionConcept:CONTACT_GUARDIAN
+SchoolAction:kdca_flu_facility_2026:p0017:a04 -[:FOR_DISEASE]-> Disease:INFLUENZA
+SchoolAction:kdca_flu_facility_2026:p0017:a04 -[:SUPPORTED_BY]-> Chunk:kdca_flu_facility_2026:p0017:b01
+```
+
+스키마·그래프 제출 증빙: [ERD·관계 방향 설명](Neo4j_ERD_v0.2.md), [Cypher 질의](visual_queries.cypher), [기존 성홍열 그래프 캡처](captures/scarlet_fever.png), [기존 문서 횡단 그래프 캡처](captures/crossdoc.png). 캡처는 이전 실행 기록이며 최신 전체 수치는 [DB 점검 결과](db_check_result.json)를 따른다.
+
+
 ## 실행 명령
 
 저장소 루트에서 실행한다. 검색과 점검은 DB를 읽으며, `db_check.py`는 로컬 `db_check_result.json`을 덮어쓴다.
