@@ -1,0 +1,290 @@
+[
+ {
+  "id": "K17",
+  "question": "코로나19 잠복기는?",
+  "gold": [
+   [
+    "kdca_covid19_2026",
+    43
+   ],
+   [
+    "kdca_covid19_2026",
+    48
+   ]
+  ],
+  "key": "1\\s*[~∼-]\\s*14\\s*일",
+  "status": "ANSWERED",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": true,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 2,
+  "school_cited": 0,
+  "rerank_cards": 7,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "코로나19 잠복기는?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "kdca_covid19_2026",
+    39
+   ],
+   [
+    "kdca_covid19_2026",
+    43
+   ]
+  ],
+  "seconds": 7.63,
+  "answer": "**코로나19 잠복기는 1~14일이며, 평균 5~7일입니다.**[1][2]"
+ },
+ {
+  "id": "K18",
+  "question": "백일해 환자와 접촉한 학생은 예방적 항생제를 먹어야 하나요?",
+  "gold": [
+   [
+    "kdca_vaccine_preventable_2026",
+    116
+   ]
+  ],
+  "key": "3\\s*주",
+  "status": "INSUFFICIENT_EVIDENCE",
+  "intent": null,
+  "secondary": null,
+  "tools": [],
+  "gold_in_tools": false,
+  "gold_hit": false,
+  "key_hit": false,
+  "first_key": false,
+  "kdca_cited": 0,
+  "school_cited": 0,
+  "rerank_cards": null,
+  "coverage": null,
+  "cited": [],
+  "seconds": 1.64,
+  "answer": "이 서비스가 답할 수 있는 범위가 아닙니다. 특정 학생의 예방적 항생제 복용 여부를 묻는 개인 의료 상담이므로 안내 범위에 해당하지 않습니다."
+ },
+ {
+  "id": "K19",
+  "question": "수족구병은 다 나은 뒤에도 바이러스가 나오나요?",
+  "gold": [
+   [
+    "kdca_hfmd_2026",
+    30
+   ]
+  ],
+  "key": "8\\s*주",
+  "status": "INSUFFICIENT_EVIDENCE",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": false,
+  "gold_hit": false,
+  "key_hit": false,
+  "first_key": false,
+  "kdca_cited": 0,
+  "school_cited": 0,
+  "rerank_cards": 8,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "수족구병은 다 나은 뒤에도 바이러스가 나오나요?",
+    "status": "NONE",
+    "missing": "회복 후에도 수족구병 바이러스가 배출되는지와 배출 기간을 확인할 근거가 없습니다."
+   }
+  ],
+  "cited": [],
+  "seconds": 6.08,
+  "answer": "허용된 자료에서 질문에 답할 근거를 찾지 못했습니다.\n\n※ 확인하지 못한 부분:\n- 검색한 자료 중 이 질문에 직접 답하는 근거를 찾지 못했다."
+ },
+ {
+  "id": "K20",
+  "question": "홍역 환자와 같은 반 학생(접촉자)은 어떻게 관리하나요?",
+  "gold": [
+   [
+    "kdca_measles_2026",
+    30
+   ]
+  ],
+  "key": "예방접종",
+  "status": "ANSWERED",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": false,
+  "gold_hit": false,
+  "key_hit": true,
+  "first_key": true,
+  "kdca_cited": 0,
+  "school_cited": 10,
+  "rerank_cards": 23,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "홍역 환자와 같은 반 학생(접촉자)은 어떻게 관리하나요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "gyeonggi_school_guide_2025",
+    199
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    202
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    202
+   ],
+   [
+    "moe_school_manual_v3",
+    213
+   ],
+   [
+    "moe_school_manual_v3",
+    213
+   ],
+   [
+    "moe_school_manual_v3",
+    213
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    201
+   ],
+   [
+    "moe_school_manual_v3",
+    59
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    199
+   ],
+   [
+    "gyeonggi_school_guide_2025",
+    164
+   ]
+  ],
+  "seconds": 14.8,
+  "answer": "**같은 반 접촉자는 면역 여부를 확인해 관리하세요. 감수성자는 노출 후 72시간 이내 예방접종, 접종 금기자는 노출 후 6일 이내 면역글로불린 투여를 검토하고 증상을 모니터링합니다.**[2][3][5][6]\n\n**상황 판단**\n- 홍역은 제2급 법정감염병이며, 학교장 신고 대상 목록에 포함됩니다.[8][9]\n\n**지금 바로 할 일**\n1. 접촉자별 홍역 면역 여부를 확인하고, 면역력이 없는 학생은 감수성자로 관리합니다.[2][5]\n2. 감수성자 중 백신 접종이 금기가 아닌 학생은 노출 후 72시간 이내 MMR 백신 접종을 안내합니다.[2]\n3. 접종 금기자(6개월 미만 영아, 임신부, 면역저하자 등)는 노출 후 6일 이내 면역글로불린 투여를 검토하도록 안내합니다.[3]\n4. 접촉자 중 홍역과 유사한 증상이 나타나면 사람과의 접촉을 최소화하고, 마스크를 착용한 상태로 병·의원에 방문하도록 안내합니다.[7]\n\n**이후에 할 일**\n- 감수성자는 예방접종 후 잠복기 동안 증상 발생을 모니터링합니다(가이드북 기준 21일, 접종 금기자는 28일).[2][3]\n- 면역력이 있는 학생은 교육부 매뉴얼상 접촉자 관리대상에서 제외하되, 노출 후 21일 동안 발열과 발진이 나타나면 보건소에 연락하도록 안내합니다.[4]\n\n**학교 내 다른 담당의 역할**\n- 학교장은 홍역을 관할 보건소장에게 신고합니다.[8][10]\n- 학교는 나이스(NEIS)를 통해 교육(지원)청에 보고하고, 학교 내 능동감시체계 운영 방안에 따라 감시범위와 방법을 결정해 실시합니다.[10]"
+ },
+ {
+  "id": "K21",
+  "question": "마이코플라스마 폐렴 걸린 학생은 언제부터 등교할 수 있나요?",
+  "gold": [
+   [
+    "kdca_respiratory_2026",
+    201
+   ]
+  ],
+  "key": "급성기",
+  "status": "PARTIAL",
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": false,
+  "gold_hit": false,
+  "key_hit": false,
+  "first_key": false,
+  "kdca_cited": 0,
+  "school_cited": 1,
+  "rerank_cards": 13,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "마이코플라스마 폐렴 걸린 학생은 언제부터 등교할 수 있나요?",
+    "status": "PARTIAL",
+    "missing": "마이코플라스마 폐렴 확진 학생에게 적용되는 구체적인 등교 가능 시점이나 격리 기간은 확인되지 않습니다."
+   }
+  ],
+  "cited": [
+   [
+    "gyeonggi_school_guide_2025",
+    166
+   ]
+  ],
+  "seconds": 8.34,
+  "answer": "**마이코플라스마 폐렴 확진 학생의 등교 가능 시점은 의사의 소견에 따른 격리 기간이 끝난 뒤입니다.**[1]\n\n**이후에 할 일**\n- 격리 기간은 원칙적으로 의사의 소견에 따릅니다.[1]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+ },
+ {
+  "id": "C04",
+  "question": "성홍열 잠복기는 며칠인가요?",
+  "gold": [
+   [
+    "kdca_respiratory_2026",
+    109
+   ]
+  ],
+  "key": "1\\s*[~∼-]\\s*7\\s*일",
+  "status": "ANSWERED",
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "gold_in_tools": true,
+  "gold_hit": false,
+  "key_hit": false,
+  "first_key": false,
+  "kdca_cited": 0,
+  "school_cited": 3,
+  "rerank_cards": 8,
+  "coverage": [
+   {
+    "part": 1,
+    "question": "성홍열 잠복기는 며칠인가요?",
+    "status": "ANSWERED",
+    "missing": ""
+   }
+  ],
+  "cited": [
+   [
+    "gyeonggi_school_guide_2025",
+    160
+   ],
+   [
+    "moe_school_manual_v3",
+    50
+   ],
+   [
+    "moe_school_manual_v3",
+    223
+   ]
+  ],
+  "seconds": 7.02,
+  "answer": "**성홍열의 잠복기는 1~3일입니다.**[1][2]"
+ }
+]

@@ -435,7 +435,7 @@ def print_table(title: str, headers: list[str], rows: list[list[Any]]) -> None:
     print(f"\n{title}")
     values = [[display_value(value) for value in row] for row in rows]
     widths = [
-        max(len(header), *(len(row[index]) for row in values))
+        max([len(header), *(len(row[index]) for row in values)])
         for index, header in enumerate(headers)
     ]
     print("| " + " | ".join(header.ljust(widths[index]) for index, header in enumerate(headers)) + " |")

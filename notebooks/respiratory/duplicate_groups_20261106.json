@@ -1,0 +1,89 @@
+{
+  "groups": [
+    {
+      "ids": [
+        "gyeonggi_school_guide_2025:p0171:b02",
+        "gyeonggi_school_guide_2025:p0174:b05",
+        "gyeonggi_school_guide_2025:p0176:b06",
+        "gyeonggi_school_guide_2025:p0179:b03",
+        "gyeonggi_school_guide_2025:p0182:b02",
+        "gyeonggi_school_guide_2025:p0185:b03",
+        "gyeonggi_school_guide_2025:p0187:b04",
+        "gyeonggi_school_guide_2025:p0189:b04",
+        "gyeonggi_school_guide_2025:p0194:b02",
+        "gyeonggi_school_guide_2025:p0196:b04",
+        "gyeonggi_school_guide_2025:p0203:b02"
+      ]
+    },
+    {
+      "ids": [
+        "gyeonggi_school_guide_2025:p0174:b04",
+        "gyeonggi_school_guide_2025:p0176:b05",
+        "gyeonggi_school_guide_2025:p0185:b02"
+      ]
+    },
+    {
+      "ids": [
+        "gyeonggi_school_guide_2025:p0178:b02",
+        "gyeonggi_school_guide_2025:p0184:b02"
+      ]
+    },
+    {
+      "ids": [
+        "gyeonggi_school_guide_2025:p0187:b05",
+        "gyeonggi_school_guide_2025:p0189:b05"
+      ]
+    },
+    {
+      "ids": [
+        "gyeonggi_school_guide_2025:p0268:t01r02",
+        "gyeonggi_school_guide_2025:p0269:t01r02",
+        "gyeonggi_school_guide_2025:p0270:t01r02"
+      ]
+    },
+    {
+      "ids": [
+        "gyeonggi_school_guide_2025:p0269:t01r05",
+        "gyeonggi_school_guide_2025:p0270:t01r05"
+      ]
+    },
+    {
+      "ids": [
+        "gyeonggi_school_guide_2025:p0269:t01r09",
+        "gyeonggi_school_guide_2025:p0270:t01r09"
+      ]
+    },
+    {
+      "ids": [
+        "gyeonggi_school_guide_2025:p0309:t04r03",
+        "gyeonggi_school_guide_2025:p0309:t04r04"
+      ]
+    },
+    {
+      "ids": [
+        "gyeonggi_school_guide_2025:p0350:b03",
+        "gyeonggi_school_guide_2025:p0352:b03"
+      ]
+    },
+    {
+      "ids": [
+        "kdca_covid19_2026:p0002:b01",
+        "kdca_covid19_2026:p0010:b01",
+        "kdca_covid19_2026:p0012:b01",
+        "kdca_covid19_2026:p0014:b01"
+      ]
+    },
+    {
+      "ids": [
+        "kdca_covid19_2026:p0036:b01",
+        "kdca_covid19_2026:p0038:b01"
+      ]
+    },
+    {
+      "ids": [
+        "kdca_covid19_2026:p0068:b01",
+        "kdca_covid19_2026:p0070:b01"
+      ]
+    }
+  ]
+}

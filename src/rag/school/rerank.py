@@ -28,6 +28,15 @@ MAX_PICKS = 10                 # 문서별 근거를 따로 고르므로 6 → 8
 EXCERPT_CHARS = 420
 CLAIM_CHARS = 220
 MIN_QUOTE = 4
+# 본문 일치 구간(11/08): Tool 발췌는 Tool이 고른 위치라서 청크 본문의 답 줄을 빗나갈 수 있다(마이코플라스마 '전염기간':
+# 질병 Tool 발췌는 청크 앞 '전파경로' 부분, 답은 같은 청크 960번째 글자). 그래서 청크 본문에서 질문 핵심어가 몰린 구간을
+# 원문 그대로 잘라 카드에 더 보여 주고, 원문 대조(quotes 검증)의 원문에도 넣는다. 구간은 원문 글자 그대로라 새 근거가 아니다.
+WINDOW_BEFORE, WINDOW_AFTER = 60, 200
+MAX_WINDOWS = 2
+TERM_ENDINGS = ("이에요", "인가요", "하나요", "되나요", "나요", "까요", "에서", "으로", "에게", "이란", "은", "는", "이", "가",
+                "을", "를", "의", "에", "와", "과", "도", "로", "란", "요")
+GENERIC_TERMS = {"학교", "학생", "어떻게", "무엇", "무엇을", "어떤", "언제", "해야", "하나요", "있나요", "되나요", "인가요",
+                 "얼마", "얼마나", "경우", "관련", "내용", "알려", "주세요", "그리고", "우리", "지금"}
 
 RERANK_PROMPT = """너는 학교 감염병 대응 안내 서비스의 근거 선별자다. 답변을 쓰지 말고, 아래 [근거 카드] 중에서
 [하위 질문]에 답하는 데 **꼭 필요한** 근거만 고른다.
@@ -45,12 +54,19 @@ RERANK_PROMPT = """너는 학교 감염병 대응 안내 서비스의 근거 선
   그 상황에서 학교가 할 일(보고·신고 등)을 함께 고른다. 환자가 여러 명이면 그 단계(유행의심·대응 제3단계)의 행동을 우선한다.
 - '[판단 기준]' 표시 카드는 신고 대상 목록·유행의심 기준·조문·벌칙처럼 상황을 판단하는 규칙이다. 따로 고르지 않아도 답변에
   들어간다. coverage를 판정할 때는 이 카드도 근거로 친다.
+- '본문 일치'는 같은 청크 본문에서 질문 핵심어가 든 부분을 원문 그대로 더 보여 준 것이다. '원문'에 답이 없어도
+  '본문 일치'에 있으면 그 카드가 답하는 것으로 본다.
+- 문서 이름 뒤 괄호는 판본이다. 질병관리청 2026 질병별 지침은 매년 개정되는 최신 기준이고, 학교 문서(교육부 매뉴얼
+  제3차 개정판·경기도 가이드북 2024)는 그보다 오래된 판본이다. 같은 항목(등교중지·복귀 기준, 전염기간, 잠복기,
+  접촉자 관리 등)을 질병관리청 지침 카드가 답하면 그 카드를 반드시 DIRECT로 고른다. 학교 문서 카드가 같은 항목을
+  다르게 말하면 그 카드도 함께 고른다(답변이 두 기준의 차이를 보여 준다).
 - 질문과 주제만 비슷하고 답에 쓰이지 않는 카드는 고르지 않는다. 최대 {max_picks}개.
 - 답할 근거가 하나도 없으면 picks를 비운다.
 
 각 pick
 - id: 카드 ID(예: E3). part: 이 근거가 답하는 하위 질문 번호.
-- quotes: 그 카드의 '원문' 또는 '정리'에서 **글자 그대로 복사한** 핵심 구절 1~2개(각 10~80자). 고쳐 쓰거나 요약하지 않는다.
+- quotes: 그 카드의 '원문'·'본문 일치'·'정리'에서 **글자 그대로 복사한** 핵심 구절 1~2개(각 10~80자). 고쳐 쓰거나
+  요약하지 않는다. 답이 '본문 일치'에 있으면 그 줄을 quotes로 복사한다(답변 작성에는 이 구절이 근거로 넘어간다).
 
 coverage: 하위 질문마다 고른 근거로 답할 수 있는지 ANSWERED(충분)·PARTIAL(일부만)·NONE(근거 없음)과,
 ANSWERED가 아니면 missing에 확인하지 못한 부분을 한 문장으로 쓴다."""
@@ -87,15 +103,55 @@ def compact(text: str) -> str:
     return re.sub(r"[\s|·•∙\-–—\"'“”‘’()\[\]{}<>.,:;!?~※■□○●▶→「」『』]", "", text)
 
 
-def evidence_cards(findings: list[dict], citations: list[dict], titles: dict[str, str]) -> list[dict]:
+def key_terms(texts: list[str], weak: set[str] | None = None) -> list[str]:
+    """질문·하위 질문의 핵심어(조사·어미를 하나 떼고 2글자 이상, 일반어 제외). weak(질병명 등)는 뺀다."""
+    weak_keys = {compact(part) for w in (weak or set()) for part in (w, *w.split()) if len(compact(part)) >= 2}
+    terms = []
+    for word in re.findall(r"[0-9A-Za-z가-힣]+", " ".join(texts)):
+        for ending in TERM_ENDINGS:
+            if word.endswith(ending) and len(word) - len(ending) >= 2:
+                word = word[: -len(ending)]
+                break
+        if len(word) >= 2 and word not in GENERIC_TERMS and compact(word) not in weak_keys:
+            terms.append(word)
+    return list(dict.fromkeys(terms))
+
+
+def text_windows(text: str, terms: list[str], excerpt: str = "") -> list[str]:
+    """본문에서 핵심어가 가장 많이 든 구간 최대 MAX_WINDOWS개(원문 글자 그대로). 발췌에 이미 있는 구간은 뺀다."""
+    if not text or not terms:
+        return []
+    hits = [(m.start(), term) for term in terms for m in re.finditer(re.escape(term), text)]
+    scored = []
+    for start, _ in hits:
+        lo, hi = max(0, start - WINDOW_BEFORE), min(len(text), start + WINDOW_AFTER)
+        found = {term for pos, term in hits if lo <= pos < hi}
+        scored.append((len(found), -lo, lo, hi))
+    have = compact(excerpt)
+    windows: list[tuple[int, int]] = []
+    for _, _, lo, hi in sorted(scored, reverse=True):
+        if len(windows) >= MAX_WINDOWS:
+            break
+        if any(lo < b and a < hi for a, b in windows):
+            continue
+        key = compact(text[lo:hi])
+        if key and key not in have:
+            windows.append((lo, hi))
+    return [re.sub(r"\s+", " ", text[lo:hi]).strip() for lo, hi in sorted(windows)]
+
+
+def evidence_cards(findings: list[dict], citations: list[dict], titles: dict[str, str],
+                   texts: dict[str, str] | None = None, terms: list[str] | None = None) -> list[dict]:
     cards = []
     for number, citation in enumerate(citations[:MAX_CARDS], 1):
         claims = [f["claim"] for f in findings if citation["chunk_id"] in f["chunk_ids"]]
         excerpt = _clean(citation["excerpt"])
+        windows = text_windows((texts or {}).get(citation["chunk_id"], ""), terms or [], excerpt)
         cards.append({"id": f"E{number}", "chunk_id": citation["chunk_id"],
                       "document": titles.get(citation["document_id"], citation["document_id"]),
                       "page": citation.get("pdf_page"), "claims": [_clean(c)[:CLAIM_CHARS] for c in claims[:4]],
-                      "excerpt": excerpt[:EXCERPT_CHARS], "source": " ".join([excerpt, *claims])})
+                      "excerpt": excerpt[:EXCERPT_CHARS], "windows": windows,
+                      "source": " ".join([excerpt, *claims, *windows])})
     return cards
 
 
@@ -113,7 +169,9 @@ def rerank_prompt(question: str, parts: list[str], cards: list[dict], situation:
     for card in cards:
         claims = "\n".join(f"  정리: {c}" for c in card["claims"])
         tag = " [판단 기준]" if card["chunk_id"] in (pinned or set()) else ""
-        lines.append(f"[{card['id']}]{tag} {card['document']} PDF {card['page']}쪽\n{claims}\n  원문: {card['excerpt']}")
+        windows = "".join(f"\n  본문 일치: …{w}…" for w in card.get("windows", []))
+        lines.append(f"[{card['id']}]{tag} {card['document']} PDF {card['page']}쪽\n{claims}\n  원문: {card['excerpt']}"
+                     f"{windows}")
     return "\n".join(lines)
 
 
@@ -183,8 +241,9 @@ def make_reranker(llm=None) -> Callable[[str, list[str], list[dict], list[dict],
 
     def reranker(question: str, parts: list[str], findings: list[dict], citations: list[dict],
                  titles: dict[str, str], situation: dict | None = None, pinned: list[str] | None = None,
-                 facts: list[dict] | None = None) -> dict:
-        cards = evidence_cards(findings, citations, titles)
+                 facts: list[dict] | None = None, texts: dict[str, str] | None = None,
+                 terms: list[str] | None = None) -> dict:
+        cards = evidence_cards(findings, citations, titles, texts, terms)
         if not cards:
             return {"picks": {}, "order": [], "coverage": [], "invalid": [], "cards": 0}
         raw = structured.invoke([("system", RERANK_PROMPT.format(max_picks=MAX_PICKS)),

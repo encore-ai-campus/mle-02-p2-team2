@@ -1,0 +1,36 @@
+{
+  "action_id": "kdca_respiratory_2026:p0116:a02",
+  "action_text": "성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교·등원 중지",
+  "evidence_quote": "등교(등원) 중지: 성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지",
+  "scope": "NAMED_DISEASES",
+  "stage": "UNSPECIFIED",
+  "step_order": null,
+  "when_text": "성홍열 진단 시",
+  "timing_text": "항생제 치료 시작 후 적어도 24시간까지",
+  "modality": "UNSPECIFIED",
+  "for_disease": [
+    "SCARLET_FEVER"
+  ],
+  "done_by": [],
+  "instance_of": "EXCLUDE_FROM_SCHOOL",
+  "supported_by": [
+    "kdca_respiratory_2026:p0116:b01"
+  ],
+  "chunk_diseases": [
+    "SCARLET_FEVER"
+  ],
+  "review": {
+    "status": "PENDING",
+    "issues": [
+      "검토 결정이 없어 승인할 수 없습니다.",
+      "집단발생 관리 문맥·학교 행동 해석 및 담당 검토 필요",
+      "임시 action_id 및 PDF 원문 확인 필요"
+    ],
+    "model": "수동 초안",
+    "prompt_version": "미사용",
+    "source_chunk_id": "kdca_respiratory_2026:p0116:b01",
+    "decision": null,
+    "decision_note": "",
+    "normalize_version": "n1"
+  }
+}

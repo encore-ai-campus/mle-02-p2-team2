@@ -10,6 +10,8 @@ GENERAL·OUT_OF_SCOPE는 Tool 없이 compose_answer로 간다.
 - 재검색(11/06): 근거가 충분하면(ANSWERED) 추가 호출 없이 끝낸다. 부족할 때만, 명시적 신호가 가리키는 아직 부르지 않은
   Tool을 다음으로 부른다. 신호는 (1) 질문 분류의 보조 의도, (2) Tool 경고의 `[미해결] … <tool 이름> …` 두 가지뿐이다.
   신호 없이 '혹시 몰라' 다른 Tool을 부르지 않는다. 총 호출은 MAX_TOOL_CALLS(3)회, 같은 Tool은 한 번만 부른다.
+  넘기기(11/08): 주 의도 Tool이 NO_EVIDENCE(거절 카드 제외)이고 남은 신호가 없으면 학교 행동 Tool(허용 문서 전체 검색)을
+  한 번 부른다(FALLBACK_TOOL). 근거 부족 시 추가 호출이라 계약 v2.0 범위 안이고, 막다른 길에서만 시간이 든다.
   두 번째 호출부터는 앞선 Finding의 질병·개념 ID를 context_entity_ids로 넘긴다. recursion_limit은 이 한도가 아니다.
 - Tool registry: 승인된 이름 → 실제 callable(ToolInput → ToolResult). 이 모듈은 다른 담당자 폴더를 import하지 않는다
   (팀 규칙). 기본 registry는 action_search만 등록하고, 다른 Tool은 호출자가 `registry=`로 넣는다.
@@ -47,7 +49,7 @@ from rag.school.contract_v2_local import (
     validate_tool_result,
 )
 from rag.school.graph import COMPARE_HINTS, OUT_OF_SCOPE
-from rag.school.rerank import filter_evidence
+from rag.school.rerank import MAX_CARDS, filter_evidence, key_terms
 from rag.school.validation_local import verify_against_db
 
 ToolCallable = Callable[[ToolInput], ToolResult]
@@ -85,6 +87,23 @@ MAX_TOOL_CALLS = 3
 # 개념 수준 문서 용어 검색 문장을 task로 넘기는 Tool(11/07 ②). 다른 담당자 Tool은 task를 검색어로 쓸 수 있어
 # (crossdoc은 질문+task 글자를 읽는다) 넘기지 않는다.
 DOC_QUERY_TOOLS = frozenset({"action_search"})
+# 주 의도 Tool이 근거 없음(NO_EVIDENCE)으로 끝났을 때 한 번 넘기는 Tool(11/08). 학교 행동 Tool은 허용 문서 전체를
+# hybrid로 찾으므로, 답 카드가 없는 법령 질문 등이 막다른 길(근거 없음)로 끝나지 않게 한다. 근거: 법령 골든 Q21
+# '수족구병 등교중지의 법적 근거' — 법령 Tool NO_EVIDENCE로 끝났지만 학교 행동 Tool 단독은 학교보건법 제8조 원문을 찾았다
+# ([교차 측정](notebooks/school/평가결과/20261108/타담당Tool_교차측정_개선제안_20261108.md)).
+FALLBACK_TOOL = "action_search"
+# Tool이 일부러 답을 거절한 경우(근거가 없어서가 아니라 확정할 수 없어서)는 넘기지 않는다. 법령 Tool 거부 카드 문구.
+DECLINE_MARKERS = ("확정하지 않았습니다",)
+# 질병 동반 호출(11/08): 질문이 승인 질병을 말하면 첫 호출에 함께 부르는 Tool. 상태 판정에서는 보조 근거로 본다.
+COMPANION_TOOL = "disease_search"
+COMPANION_POOL = ThreadPoolExecutor(max_workers=4, thread_name_prefix="companion_tool")
+
+
+def named_diseases(question: str, books: dict) -> list[str]:
+    """질문에 나온 승인 질병 ID(사전의 이름·별칭, 2글자 이상, compare_key로 비교)."""
+    key = compare_key(question)
+    return [entry["disease_id"] for entry in books["disease"]["entries"]
+            if any(len(compare_key(n)) >= 2 and compare_key(n) in key for n in (entry["name"], *entry.get("aliases", [])))]
 
 
 # 확인 항목 조회를 Tool 실행과 동시에 돌리는 공용 실행기(요청마다 만들지 않는다).
@@ -136,6 +155,39 @@ def scenario_chunks(deps: dict, chunk_ids: list[str]) -> set[str]:
     except Exception:  # noqa: BLE001 - 표시를 못 붙여도 답변은 낸다(claim 표기로만 판단)
         return set()
     return {r["chunk_id"] for r in records}
+
+
+def chunk_texts(deps: dict, chunk_ids: list[str]) -> dict[str, str]:
+    """청크 본문 전체(읽기 전용 조회 1회, 11/08 본문 일치 구간). DB가 없거나 실패하면 빈 사전(발췌만 쓴다)."""
+    driver = deps.get("driver")
+    if not driver or not chunk_ids:
+        return {}
+    try:
+        records, _, _ = driver.execute_query(
+            "MATCH (c:Chunk) WHERE c.chunk_id IN $ids RETURN c.chunk_id AS chunk_id, c.text AS text",
+            ids=list(dict.fromkeys(chunk_ids)), database_=deps.get("database"), routing_="r")
+    except Exception:  # noqa: BLE001 - 본문 구간 없이도 선별은 한다
+        return {}
+    return {r["chunk_id"]: r["text"] or "" for r in records}
+
+
+def disease_surfaces(books: dict) -> set[str]:
+    """승인 사전의 질병 이름·별칭(핵심어에서 뺀다: 질병명은 청크 어디에나 있어 구간을 고르는 데 쓸모가 없다)."""
+    return {name for entry in books["disease"]["entries"] for name in (entry["name"], *entry.get("aliases", []))}
+
+
+def priority_evidence(deps: dict) -> tuple[dict, dict] | None:
+    """교육부 매뉴얼 50쪽의 '방역당국 지침 우선 적용' 원문을 (Finding, Citation)으로. 원문을 DB에서 읽어 글자 대조한다."""
+    text = chunk_texts(deps, [PRIORITY_CHUNK]).get(PRIORITY_CHUNK, "")
+    match = re.search(r"\s*".join(map(re.escape, PRIORITY_PHRASE.replace(" ", ""))), text)
+    if not match:
+        return None
+    excerpt = match.group(0)
+    finding = {"claim": f"[교육부 매뉴얼 PDF 50쪽 · 판단 기준: 지침 우선 적용] 원문: “{excerpt}”",
+               "chunk_ids": [PRIORITY_CHUNK], "action_ids": [], "disease_ids": [], "concept_ids": []}
+    citation = {"document_id": PRIORITY_CHUNK.split(":", 1)[0], "chunk_id": PRIORITY_CHUNK, "pdf_page": 50,
+                "printed_page": None, "excerpt": excerpt}
+    return finding, citation
 
 
 # ---------------------------------------------------------------- 분류
@@ -283,26 +335,58 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
             context += [f"ActionConcept:{c}" for c in finding["concept_ids"]]
         if context:
             tool_input["context_entity_ids"] = list(dict.fromkeys(context))
-        started = time.perf_counter()
-        error = None
-        try:
-            result = registry[tool](tool_input)
-            validate_tool_result(result, tool_input, expected_tool=tool)
-        except ContractError as exc:
-            error = f"ToolResult 계약 위반: {exc}"
-        except Exception as exc:  # noqa: BLE001 - Tool 내부 예외도 호출 실패로 기록한다
-            error = f"Tool 실행 실패: {type(exc).__name__}: {exc}"
-        if error:
-            result = {"tool_name": tool, "status": "ERROR", "findings": [], "citations": [], "graph_paths": [],
-                      "warnings": [error]}
-        call = {"request_id": request.get("request_id"), "tool": tool, "status": result["status"],
-                "findings": len(result["findings"]), "citations": len(result["citations"]),
-                "graph_paths": len(result["graph_paths"]), "seconds": round(time.perf_counter() - started, 2),
-                "error": error, "sub_question": question if question != request["question"] else None}
+
+        def invoke(name: str, payload: ToolInput, asked: str, companion: bool = False) -> tuple[ToolResult, dict]:
+            started = time.perf_counter()
+            error = None
+            try:
+                result = registry[name](payload)
+                validate_tool_result(result, payload, expected_tool=name)
+            except ContractError as exc:
+                error = f"ToolResult 계약 위반: {exc}"
+            except Exception as exc:  # noqa: BLE001 - Tool 내부 예외도 호출 실패로 기록한다
+                error = f"Tool 실행 실패: {type(exc).__name__}: {exc}"
+            if error:
+                result = {"tool_name": name, "status": "ERROR", "findings": [], "citations": [], "graph_paths": [],
+                          "warnings": [error]}
+            call = {"request_id": request.get("request_id"), "tool": name, "status": result["status"],
+                    "findings": len(result["findings"]), "citations": len(result["citations"]),
+                    "graph_paths": len(result["graph_paths"]), "seconds": round(time.perf_counter() - started, 2),
+                    "error": error, "sub_question": asked if asked != request["question"] else None,
+                    "companion": companion}
+            return result, call
+
+        # 질병 동반 호출(11/08): 첫 호출에서 질문이 승인 질병(11개)을 말하면, 주 의도 Tool이 질병 Tool이 아니어도 질병 Tool을
+        # 동시에 부른다. 학교 행동 Tool은 학교 문서(2023·2024) 행동 그래프 중심이라 2026 질병별 지침 근거(전염기간·복귀 기준 등)가
+        # 후보에 들지 않았다(지침 전용 질문 측정, notebooks/school/평가결과/20261108). 동시 실행이라 대기 시간은 거의 늘지 않고,
+        # 실제 호출이므로 tools_used·search_rounds에 센다. 결과는 같은 DB 대조·근거 선별을 거친다.
+        companion = None
+        # 공문·절차·메뉴 입력처럼 절차만 묻는 질문은 질병 정보가 필요 없다(라우팅 규칙과 같다). 골든 S-A04 '홍역 … 신고 공문을
+        # 어떻게 보내나요?'에서 동반 근거가 섞여 정답(경기도 211·212쪽)이 빠졌다(11/08 골든 비교).
+        if (not state["tool_results"] and tool != COMPANION_TOOL and COMPANION_TOOL in registry
+                and named_diseases(request["question"], books)
+                and not PROCEDURE_RE.search(compare_key(request["question"]))):
+            companion = COMPANION_TOOL
+        if companion:
+            companion_question = (subs.get(companion) if len(subs) > 1 else None) or request["question"]
+            companion_input: ToolInput = {**tool_input, "question": companion_question,
+                                          "task": TOOL_TASKS[companion] + " (질문 속 질병의 최신 지침 근거, 동반 호출)"
+                                          + (f" (원 질문: {request['question']})"
+                                             if companion_question != request["question"] else "")}
+            companion_input.pop("context_entity_ids", None)
+            if context:
+                companion_input["context_entity_ids"] = list(dict.fromkeys(context))
+            side = COMPANION_POOL.submit(invoke, companion, companion_input, companion_question, True)
+        result, call = invoke(tool, tool_input, question)
         log("execute_tool", **call)
-        return {"tool_input": tool_input, "tool_results": state["tool_results"] + [result],
-                "tool_calls": state["tool_calls"] + [call], "tools_used": state["tools_used"] + [tool],
-                "search_rounds": state["search_rounds"] + 1}
+        results, calls, used = [result], [call], [tool]
+        if companion:
+            side_result, side_call = side.result()
+            log("execute_tool", **side_call)
+            results, calls, used = results + [side_result], calls + [side_call], used + [companion]
+        return {"tool_input": tool_input, "tool_results": state["tool_results"] + results,
+                "tool_calls": state["tool_calls"] + calls, "tools_used": state["tools_used"] + used,
+                "search_rounds": state["search_rounds"] + len(used)}
 
     def merge_and_validate(state: MainState) -> dict:
         """Citation은 chunk_id로 한 번만, Finding은 근거별로 보존. action_search 외 Tool 결과는 여기서 DB 대조한다."""
@@ -348,8 +432,16 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         open_unresolved = [w for w in state["unresolved"]
                            if not any(tool in w and tool in status_of and tool != issuer.get(w) for tool in TOOL_NAMES)]
         pending = [(tool, why) for tool, why in needs if tool not in tried]
+        # 넘기기(11/08): 주 의도 Tool이 근거 없음이고 거절이 아니면, 아직 안 부른 학교 행동 Tool을 한 번 부른다.
+        primary_result = next((r for r in results if r["tool_name"] == primary), None)
+        declined = bool(primary_result) and any(m in w for w in primary_result["warnings"] for m in DECLINE_MARKERS)
+        fallback = (primary != FALLBACK_TOOL and status_of.get(primary) == "NO_EVIDENCE" and not declined
+                    and FALLBACK_TOOL in registry and FALLBACK_TOOL not in tried)
         # 주 의도 Tool이 근거를 못 냈거나 연결되지 않았는데 다른 Tool만 답했다면 질문의 핵심이 빠진 것이다.
-        primary_unmet = status_of.get(primary) in ("NO_EVIDENCE", "ERROR", None)
+        # 단, 넘기기로 부른 학교 행동 Tool이 근거를 냈으면 그 근거가 주 의도 질문(원 질문)에 대한 것이므로 빠진 것으로 보지 않는다.
+        fell_back = (primary != FALLBACK_TOOL and FALLBACK_TOOL not in {tool for tool, _ in needs}
+                     and status_of.get(FALLBACK_TOOL) in ("OK", "PARTIAL"))
+        primary_unmet = status_of.get(primary) in ("NO_EVIDENCE", "ERROR", None) and not fell_back
 
         def partial_result(result: ToolResult) -> bool:
             if result["status"] != "PARTIAL":
@@ -357,13 +449,16 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
             own = [w for w in result["warnings"] if w.startswith(UNRESOLVED)]
             return not own or any(w in open_unresolved for w in own)   # 표시 없는 PARTIAL은 Tool 판단을 존중
 
+        # 동반 호출(질병 Tool) 결과는 보조 근거다: 그 Tool의 PARTIAL·ERROR가 질문 전체의 상태를 낮추지 않는다(근거 선별이 다시 본다).
+        companions = {c["tool"] for c in state["tool_calls"] if c.get("companion")}
+        own_results = [r for r in results if r["tool_name"] not in companions]
         if not results:
             status = "INSUFFICIENT_EVIDENCE" if pending else "ERROR"
         elif state["findings"]:
             unmet = [tool for tool, _ in needs if status_of.get(tool) != "OK"]
-            partial = any(partial_result(r) for r in results) or open_unresolved or unmet or primary_unmet
+            partial = any(partial_result(r) for r in own_results) or open_unresolved or unmet or primary_unmet
             status = "PARTIAL" if partial else "ANSWERED"
-        elif any(r["status"] == "ERROR" for r in results):
+        elif any(r["status"] == "ERROR" for r in own_results):
             status = "ERROR"
         else:
             status = "INSUFFICIENT_EVIDENCE"
@@ -371,6 +466,9 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         next_tool, next_reason = "", ""
         if status != "ANSWERED" and rounds < MAX_TOOL_CALLS and pending:
             next_tool, next_reason = pending[0]
+        elif status != "ANSWERED" and rounds < MAX_TOOL_CALLS and fallback:
+            next_tool = FALLBACK_TOOL
+            next_reason = f"주 의도 Tool({primary})이 근거를 찾지 못해 허용 문서 전체에서 다시 찾는다"
         unresolved = list(open_unresolved)
         if not next_tool:
             if state["findings"] and primary_unmet and primary not in state["skipped_tools"]:
@@ -427,12 +525,16 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         request = state["request"]
         subs = state.get("sub_questions", {})
         parts = list(subs.values()) if len(subs) > 1 else [request["question"]]
-        titles = {doc: names[0] for doc, names in DOC_TITLES.items()}
+        titles = {doc: doc_label(doc) for doc in DOC_TITLES}
         situation = state.get("situation") or {}
         started = time.perf_counter()
+        # 본문 일치 구간(11/08): 카드 청크의 본문 전체를 읽어 질문 핵심어가 든 구간을 카드에 더한다(읽기 전용, 쿼리 1회).
+        texts = chunk_texts(deps, [c["chunk_id"] for c in state["citations"][:MAX_CARDS]])
+        terms = key_terms([request["question"], *parts, *(situation.get("asks") or [])], weak=disease_surfaces(books))
         try:
             result = reranker(request["question"], parts, state["findings"], state["citations"], titles,
-                              situation=situation, pinned=pinned, facts=state.get("facts") or [])
+                              situation=situation, pinned=pinned, facts=state.get("facts") or [],
+                              texts=texts, terms=terms)
         except Exception as exc:  # noqa: BLE001 - LLM 실패는 재순위 없이 진행한다
             log("select_evidence", mode="fallback", error=f"{type(exc).__name__}: {str(exc)[:120]}",
                 seconds=round(time.perf_counter() - started, 2))
@@ -466,6 +568,16 @@ def build_main_graph(deps: dict, registry: dict[str, ToolCallable]):
         for chunk_id in pinned:
             picks.setdefault(chunk_id, {"role": (state.get("pin_roles") or {}).get(chunk_id, "RULE"), "part": 1,
                                         "quotes": []})
+        # 판본 우선 규칙(11/08): 고른 근거에 질병관리청 지침과 학교 문서가 함께 있으면, 학교 문서가 방역당국 지침을 우선하라고
+        # 적은 원문(교육부 매뉴얼 50쪽)을 판단 기준으로 붙인다. 답변은 두 기준이 다를 때 2026 지침을 결론에 둔다.
+        docs = {c["document_id"] for c in citations}
+        if (any(d.startswith("kdca_") for d in docs) and docs & SCHOOL_DOCS
+                and PRIORITY_CHUNK.split(":", 1)[0] in request["allowed_document_ids"]
+                and PRIORITY_CHUNK not in {c["chunk_id"] for c in citations}):
+            rule = priority_evidence(deps)
+            if rule:
+                findings, citations = findings + [rule[0]], citations + [rule[1]]
+                picks[PRIORITY_CHUNK] = {"role": "RULE", "part": 1, "quotes": [rule[1]["excerpt"]]}
         return {"findings": findings, "citations": citations, "status": status, "picks": picks,
                 "warnings": warnings, "unresolved": list(dict.fromkeys(unresolved))}
 
@@ -550,6 +662,24 @@ DOC_TITLES = {"moe_school_manual_v3": ("교육부 매뉴얼", "교육부"),
               "kdca_flu_facility_2026": ("질병관리청 인플루엔자 관리지침(학교용)", "질병청 인플루엔자"),
               "kdca_hfmd_2026": ("질병관리청 수족구병 관리지침", "질병청 수족구병"),
               "kdca_vaccine_preventable_2026": ("질병관리청 예방접종 대상 감염병 지침", "질병청 예방접종")}
+# 판본(11/08). 질병관리청 질병별 지침은 매년 개정되는 2026년판, 학교 문서는 그보다 오래된 판본이다(승우 님 확인:
+# 교육부 매뉴얼 2023·경기도 가이드북 2024). 근거 선별·답변 작성에 판본을 보여 주고, 같은 항목을 다르게 말하면 2026 지침을
+# 결론에 둔다. 교육부 매뉴얼 50쪽도 "방역당국에서 별도의 관리지침을 제시할 경우에는 그 지침을 우선 적용함"이라고 적는다.
+DOC_EDITIONS = {"moe_school_manual_v3": "제3차 개정판, 2023", "gyeonggi_school_guide_2025": "2024",
+                "kdca_measles_2026": "2026", "kdca_diagnosis_reporting_2026": "2026", "kdca_covid19_2026": "2026",
+                "kdca_respiratory_2026": "2026", "kdca_flu_facility_2026": "2026", "kdca_hfmd_2026": "2026",
+                "kdca_vaccine_preventable_2026": "2026", "moleg_infectious_disease_act_21521": "2026.10.8 시행"}
+SCHOOL_DOCS = frozenset({"moe_school_manual_v3", "gyeonggi_school_guide_2025"})
+# 학교 문서가 질병관리청 지침을 우선하라고 적은 원문(교육부 매뉴얼 PDF 50쪽). 근거에 두 출처가 함께 있으면 판단 기준으로 붙인다.
+PRIORITY_CHUNK = "moe_school_manual_v3:p0050:b01"
+PRIORITY_PHRASE = "방역당국에서 별도의 관리지침을 제시할 경우에는 그 지침을 우선 적용함"
+
+
+def doc_label(document_id: str) -> str:
+    """'질병관리청 수족구병 관리지침(2026)'처럼 문서 이름에 판본을 붙인다."""
+    name = DOC_TITLES.get(document_id, (document_id,))[0]
+    edition = DOC_EDITIONS.get(document_id)
+    return f"{name}({edition})" if edition else name
 OFF_STAGE_TAIL = " — 원문 배치 단계가 질문 단계와 다름"
 HEAD_RE = re.compile(r"^\[(?P<head>[^\]]*)\]\s*(?P<body>.*)$", re.DOTALL)
 ROLE_RE = re.compile(r"^(?:원문이 제시한 담당 예시|원문이 명시한 담당):\s*(?P<role>.+?)\s*—\s*(?P<text>.+)$", re.DOTALL)

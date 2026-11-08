@@ -34,6 +34,9 @@ PRINTED_PAGE = re.compile(
 )
 FALLBACK_SECTION = re.compile(r"^(?:\d+|[가-힣])\s+\S.*$")
 EMPTY_OCR_LINE = re.compile(r"^\(인식된 텍스트 없음[^\n]*\)\s*$", re.MULTILINE)
+EMPTY_PAGE_LINE = re.compile(
+    r"^\s*\[?(?:원본\s+PDF의\s+|원본\s+)?빈\s*페이지\.?\]?\s*$", re.MULTILINE
+)
 
 
 def make_chunk_id(document_id, pdf_page, block_no):
@@ -97,6 +100,7 @@ def extract_section(text):
 def has_content(text):
     """쪽번호·기호 또는 OCR 실패 표시만 있는 페이지를 제외한다."""
     text = EMPTY_OCR_LINE.sub("", text)
+    text = EMPTY_PAGE_LINE.sub("", text)
     return re.search(r"[^\d\s｜|·-]", text) is not None
 
 

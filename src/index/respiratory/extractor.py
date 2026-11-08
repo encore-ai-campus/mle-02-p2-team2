@@ -63,7 +63,24 @@ ACTION_FIELDS = (
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 BLOCKS_PATH = PROJECT_ROOT / "data/interim/respiratory/blocks.jsonl"
 PROMPT_PATH = PROJECT_ROOT / "src/index/respiratory/prompts/v0_school_action.md"
+PROMPT_PATHS = {
+    "v0": PROMPT_PATH,
+    "v1": PROJECT_ROOT / "src/index/respiratory/prompts/v1_school_action.md",
+}
 OUTPUT_PATH = PROJECT_ROOT / "data/interim/respiratory/steps_raw.jsonl"
+
+
+def load_prompt(version):
+    """명시된 프롬프트 버전만 읽고 빈 파일은 허용하지 않는다."""
+    path = PROMPT_PATHS.get(version)
+    if path is None:
+        raise ValueError(f"지원하지 않는 프롬프트 버전: {version}")
+    if not path.is_file():
+        raise ValueError(f"프롬프트 파일이 없습니다: {path}")
+    prompt = path.read_text(encoding="utf-8")
+    if not prompt.strip():
+        raise ValueError(f"프롬프트 파일이 비어 있습니다: {path}")
+    return prompt
 
 
 # 온톨로지 v3.1 6절의 전역 ID 규약을 적용한다.
@@ -116,11 +133,12 @@ def read_jsonl(path):
     return records
 
 
-def select_blocks(document_id, pages):
+def select_blocks(document_id, pages, records=None):
     """요청한 문서 ID와 PDF 쪽 범위의 청크만 입력 순서대로 선택한다."""
     blocks = []
     seen_chunk_ids = set()
-    for _, block in read_jsonl(BLOCKS_PATH):
+    selected_records = read_jsonl(BLOCKS_PATH) if records is None else records
+    for _, block in selected_records:
         if block.get("document_id") != document_id:
             continue
         page = block.get("pdf_page")
@@ -232,6 +250,25 @@ def validate_action(action, chunk_diseases, text):
     return issues
 
 
+def validate_block_action(action, chunk_diseases, block):
+    """표 행이면 근거가 행 자체에 있는지와 행 검수 상태도 확인한다."""
+    issues = validate_action(action, chunk_diseases, block.get("text", ""))
+    chunk_id = block.get("chunk_id", "")
+    if isinstance(chunk_id, str) and re.search(r":t\d{2}r\d{2}$", chunk_id):
+        row = block.get("row_text")
+        quote = action.get("evidence_quote")
+        if not isinstance(row, str) or not row.strip():
+            issues.append("표 행 원문이 없어 근거를 검증할 수 없습니다.")
+        elif isinstance(quote, str) and quote.strip() and " ".join(quote.split()) not in " ".join(row.split()):
+            issues.append("evidence_quote: 표 제목이나 머리글이 아닌 해당 행 원문에서 찾아야 합니다.")
+        flags = block.get("review_flags", [])
+        if not isinstance(flags, list):
+            issues.append("표 행 review_flags 형식이 올바르지 않습니다.")
+        else:
+            issues.extend(f"표 행 검수 필요: {flag}" for flag in flags if isinstance(flag, str) and flag)
+    return issues
+
+
 def call_model(client, model, prompt, block):
     """청크 하나를 모델에 보내고 JSON 응답 객체를 읽는다."""
     user_text = json.dumps(
@@ -300,25 +337,52 @@ def main():
     parser.add_argument(
         "--pages", required=True, type=parse_pages, help="PDF 쪽: 116, 116-118, 15,17"
     )
+    parser.add_argument("--prompt-version", choices=tuple(PROMPT_PATHS), default="v0")
+    parser.add_argument("--table-rows", action="store_true", help="Markdown 표 행 후보를 검토용으로 추출")
+    parser.add_argument("--candidate-output", type=Path, help="새 검토 결과 JSONL 경로(호흡기 노트북 폴더 안)")
     args = parser.parse_args()
 
     if Path.cwd().resolve() != PROJECT_ROOT:
         raise ValueError(f"저장소 루트에서 실행해 주세요: {PROJECT_ROOT}")
+    if args.table_rows:
+        if args.prompt_version != "v1" or args.candidate_output is None:
+            parser.error("--table-rows는 --prompt-version v1과 --candidate-output이 필요합니다.")
+        output_path = args.candidate_output.resolve()
+        safe_dir = (PROJECT_ROOT / "notebooks/respiratory").resolve()
+        if (
+            not output_path.is_relative_to(safe_dir)
+            or output_path.exists()
+            or not output_path.parent.is_dir()
+            or output_path.suffix != ".jsonl"
+        ):
+            parser.error("표 행 결과는 호흡기 노트북 폴더 안의 아직 없는 새 JSONL 파일이어야 합니다.")
+    else:
+        if args.candidate_output is not None:
+            parser.error("--candidate-output은 --table-rows와 함께 사용해야 합니다.")
+        output_path = OUTPUT_PATH
     load_dotenv(".env")
     model = os.getenv("OPENAI_MODEL", "").strip()
     if not model:
         raise ValueError(".env에 OPENAI_MODEL이 없습니다.")
     if not os.getenv("OPENAI_API_KEY"):
         raise ValueError(".env 또는 환경변수에 OPENAI_API_KEY가 없습니다.")
-    if not PROMPT_PATH.is_file():
-        raise ValueError(f"프롬프트 파일이 없습니다: {PROMPT_PATH}")
-    prompt = PROMPT_PATH.read_text(encoding="utf-8")
-    if not prompt.strip():
-        raise ValueError(f"프롬프트 파일이 비어 있습니다: {PROMPT_PATH}")
-    blocks = select_blocks(args.doc, args.pages)
+    prompt = load_prompt(args.prompt_version)
+    if args.table_rows:
+        from preprocess.respiratory.md_to_blocks import input_files
+        from preprocess.respiratory.table_rows import document_table_rows
+
+        path = input_files().get(args.doc)
+        if path is None:
+            raise ValueError(f"지원하지 않는 문서 ID: {args.doc}")
+        rows, table_warnings = document_table_rows(args.doc, path.read_text(encoding="utf-8"))
+        if table_warnings:
+            print(f"자동 처리하지 않은 표: {len(table_warnings)}개")
+        blocks = select_blocks(args.doc, args.pages, [("", row) for row in rows])
+    else:
+        blocks = select_blocks(args.doc, args.pages)
 
     # 기존 파일 자체의 JSON이 잘못됐다면 교체 대상을 안전하게 판별할 수 없다.
-    existing = read_jsonl(OUTPUT_PATH) if OUTPUT_PATH.exists() else []
+    existing = read_jsonl(output_path) if output_path.exists() else []
     client = OpenAI()
     successful_results = []
     failures = []
@@ -332,7 +396,7 @@ def main():
                 if not isinstance(action, dict):
                     raise TypeError("actions에 객체가 아닌 항목이 있습니다.")
                 action["step_order"] = normalize_step_order(action.get("step_order"))
-                issues = validate_action(action, diseases, block["text"])
+                issues = validate_block_action(action, diseases, block)
                 candidates.append((action, issues))
 
             # 청크 전체가 정상 처리된 후에만 성공 목록에 넣는다.
@@ -381,8 +445,9 @@ def main():
                     "status": "PENDING",
                     "issues": issues,
                     "model": model,
-                    "prompt_version": "v0",
+                    "prompt_version": args.prompt_version,
                     "source_chunk_id": block["chunk_id"],
+                    **({"table_candidate": True, "action_id_provisional": True} if args.table_rows else {}),
                 },
             })
 
@@ -390,7 +455,9 @@ def main():
     # 성공 결과가 행동 0개여도 해당 청크의 옛 행동은 더 이상 유효하지 않다.
     if successful_chunk_ids:
         lines = merge_results(existing, actions, successful_chunk_ids)
-        with OUTPUT_PATH.open("w", encoding="utf-8") as file:
+        # 표 후보 결과는 처음 확인한 뒤 동시 생성된 파일도 덮어쓰지 않는다.
+        mode = "x" if args.table_rows else "w"
+        with output_path.open(mode, encoding="utf-8") as file:
             if lines:
                 file.write("\n".join(lines) + "\n")
 

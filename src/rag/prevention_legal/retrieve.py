@@ -11,9 +11,49 @@
 """
 import json
 import re
+import threading
 from pathlib import Path
 
+from neo4j.exceptions import ServiceUnavailable, SessionExpired
+
 from rag.prevention_legal.neo4j_conn import connect
+
+# 읽기 전용 조회(검색·원문 대조)가 함께 쓰는 드라이버 (2026-11-08, 주승우 팀장 승인 하에 Claude 수정).
+# 예전에는 조회 함수마다 connect() 로 새 드라이버를 만들고 연결 확인까지 해서 Tool 호출 1회에 약 3초가 들었다
+# (측정: 6문항 중앙값 3.43초 → 재사용 0.39초, 결과 상태 동일). neo4j 드라이버는 스레드 안전하고 끊긴 연결은 스스로 다시 맺는다.
+# 테스트 노드 적재·삭제(load_test_blocks·delete_test_blocks)와 load_graph.py 의 쓰기는 지금처럼 connect() 를 쓴다.
+_READ_DRIVER = None
+_READ_LOCK = threading.Lock()
+
+
+def _read_driver():
+    """읽기 조회용 공용 드라이버. 처음 부를 때 한 번 만든다."""
+    global _READ_DRIVER
+    if _READ_DRIVER is None:
+        with _READ_LOCK:
+            if _READ_DRIVER is None:
+                _READ_DRIVER = connect()
+    return _READ_DRIVER
+
+
+def _read_rows(query: str, **params) -> list[dict]:
+    """공용 드라이버로 읽기 쿼리를 실행한다. 연결이 끊긴 경우에만 드라이버를 버리고 한 번 다시 연결해 재시도한다.
+    쿼리 오류 등 다른 예외는 그대로 올린다(예전처럼 run 의 ERROR 처리로 간다)."""
+    global _READ_DRIVER
+    try:
+        with _read_driver().session() as s:
+            return s.run(query, **params).data()
+    except (ServiceUnavailable, SessionExpired):
+        with _READ_LOCK:
+            broken, _READ_DRIVER = _READ_DRIVER, None
+        if broken is not None:
+            try:
+                broken.close()
+            except Exception:  # noqa: BLE001, S110 - 닫기 실패는 재시도를 막지 않는다
+                pass
+        with _read_driver().session() as s:
+            return s.run(query, **params).data()
+
 
 TEST_LABEL = "PLTest"   # 테스트 노드 표시 라벨
 TEST_PREFIX = "test_"   # 테스트 chunk_id 접두사 (운영 ID 와 섞이지 않게 한다)
@@ -111,16 +151,11 @@ def section_candidates(question: str, allowed_document_ids: list[str], k: int = 
     terms = terms[:MAX_TERMS]
     if not terms or not allowed_document_ids:
         return []
-    driver = connect()
-    try:
-        with driver.session() as s:
-            rows = s.run("MATCH (c:Chunk) WHERE c.section IS NOT NULL "
-                         "AND any(d IN $docs WHERE c.chunk_id STARTS WITH d + ':') "
-                         "AND any(t IN $terms WHERE c.section CONTAINS t) "
-                         "RETURN c.chunk_id AS chunk_id, c.section AS section LIMIT 500",
-                         docs=allowed_document_ids, terms=terms).data()
-    finally:
-        driver.close()
+    rows = _read_rows("MATCH (c:Chunk) WHERE c.section IS NOT NULL "
+                      "AND any(d IN $docs WHERE c.chunk_id STARTS WITH d + ':') "
+                      "AND any(t IN $terms WHERE c.section CONTAINS t) "
+                      "RETURN c.chunk_id AS chunk_id, c.section AS section LIMIT 500",
+                      docs=allowed_document_ids, terms=terms)
     scored = sorted(((sum(t in r["section"] for t in terms), r["chunk_id"]) for r in rows), reverse=True)
     return [cid for _, cid in scored[:k]]
 
@@ -132,14 +167,9 @@ def fetch_chunks(chunk_ids: list[str]) -> dict[str, dict]:
     """
     if not chunk_ids:
         return {}
-    driver = connect()
-    try:
-        with driver.session() as s:
-            rows = s.run("MATCH (c:Chunk) WHERE c.chunk_id IN $ids "
-                         "RETURN c.chunk_id AS chunk_id, c.text AS text, c.pdf_page AS pdf_page",
-                         ids=chunk_ids).data()
-    finally:
-        driver.close()
+    rows = _read_rows("MATCH (c:Chunk) WHERE c.chunk_id IN $ids "
+                      "RETURN c.chunk_id AS chunk_id, c.text AS text, c.pdf_page AS pdf_page",
+                      ids=chunk_ids)
     return {r["chunk_id"]: r for r in rows}
 
 
@@ -155,19 +185,14 @@ def fulltext_search(question: str, allowed_document_ids: list[str], k: int = 10)
     if not q:
         return []
 
-    driver = connect()
-    try:
-        with driver.session() as s:
-            rows = s.run(
-                f"""CALL db.index.fulltext.queryNodes('chunk_text', $q) YIELD node, score
-                    WHERE any(d IN $docs WHERE node.chunk_id STARTS WITH d + ':'
-                              OR node.chunk_id STARTS WITH '{TEST_PREFIX}' + d + ':')
-                    RETURN node.chunk_id AS chunk_id, node.text AS text, node.pdf_page AS pdf_page, score
-                    ORDER BY score DESC""",
-                q=q, docs=allowed_document_ids,
-            ).data()
-    finally:
-        driver.close()
+    rows = _read_rows(
+        f"""CALL db.index.fulltext.queryNodes('chunk_text', $q) YIELD node, score
+            WHERE any(d IN $docs WHERE node.chunk_id STARTS WITH d + ':'
+                      OR node.chunk_id STARTS WITH '{TEST_PREFIX}' + d + ':')
+            RETURN node.chunk_id AS chunk_id, node.text AS text, node.pdf_page AS pdf_page, score
+            ORDER BY score DESC""",
+        q=q, docs=allowed_document_ids,
+    )
 
     # test_ 를 떼어 원래 블록 ID 로 되돌리고, 같은 블록이 두 번 나오면 점수가 높은 쪽 하나만 남긴다
     seen, out = set(), []

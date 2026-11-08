@@ -1,0 +1,32 @@
+{
+  "document_version_values": [
+    "2026"
+  ],
+  "chunks": [
+    {
+      "chunk_id": "kdca_respiratory_2026:p0007:b01",
+      "identical_to_local_text": true,
+      "revised_scarlet_notice_present": null
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0075:b01",
+      "identical_to_local_text": true,
+      "revised_scarlet_notice_present": true
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0116:b01",
+      "identical_to_local_text": true,
+      "revised_scarlet_notice_present": null
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0118:b01",
+      "identical_to_local_text": true,
+      "revised_scarlet_notice_present": null
+    },
+    {
+      "chunk_id": "kdca_respiratory_2026:p0121:b01",
+      "identical_to_local_text": true,
+      "revised_scarlet_notice_present": null
+    }
+  ]
+}

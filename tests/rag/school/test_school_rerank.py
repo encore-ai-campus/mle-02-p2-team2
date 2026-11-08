@@ -190,3 +190,27 @@ def test_heading_without_passing_line_is_not_emitted(books):
     text = "담임교사가 보호자에게 연락합니다.[1]\n**학교장**\n- 학교장이 검토합니다.[1]\n"
     written = make_answer_writer(FakeText(text))("질문", ONE, books)
     assert written["answer"] and "학교장" not in written["answer"]
+
+
+# ---------------------------------------------------------------- 11/08 본문 일치 구간
+
+def test_text_windows_find_answer_line_outside_tool_excerpt():
+    from rag.school.rerank import evidence_cards, key_terms, text_windows, verify_quotes
+    text = ("병원체 - 마이코플라스마 폐렴균\n전파경로 - 비말 전파\n잠복기 - 2~3주\n" + "임상 양상 설명 " * 40
+            + "\n**전염기간** - 증상 발현 2∼8일 전부터 증상 발생 후 20일 이내\n치료 - 항생제")
+    terms = key_terms(["마이코플라스마 폐렴 전염기간은?"], weak={"마이코플라스마 폐렴"})
+    assert "전염기간" in terms and "마이코플라스마" not in terms
+    excerpt = text[:60]
+    windows = text_windows(text, terms, excerpt)
+    assert windows and "증상 발생 후 20일 이내" in windows[0]
+    citation = {"document_id": "kdca_respiratory_2026", "chunk_id": "c1", "pdf_page": 193, "excerpt": excerpt}
+    card = evidence_cards([{"claim": "전파경로 - 비말 전파", "chunk_ids": ["c1"]}], [citation], {},
+                          {"c1": text}, terms)[0]
+    kept, dropped = verify_quotes(["증상 발생 후 20일 이내"], card["source"])
+    assert kept and not dropped                               # 본문 일치 구간의 구절은 원문 대조를 통과한다
+
+
+def test_text_windows_skip_part_already_in_excerpt():
+    from rag.school.rerank import text_windows
+    text = "잠복기 - 1~7일(평균 2~5일)"
+    assert text_windows(text, ["잠복기"], excerpt=text) == []

@@ -279,6 +279,39 @@ def test_unresolved_warning_naming_a_tool_triggers_it_and_is_resolved_by_ok(book
     assert not any("legal_search 확인 필요" in w for w in out["warnings"])
 
 
+def test_primary_no_evidence_falls_back_to_action_search_once(books, monkeypatch):
+    # 11/08 넘기기: 법령 카드가 없어 주 의도 Tool이 NO_EVIDENCE면 학교 행동 Tool(허용 문서 전체 검색)을 한 번 부른다(Q21).
+    legal = _tool("legal_search", status="NO_EVIDENCE", warnings=["이 질문에 맞는 답 카드가 없거나 …"])
+    action = _tool("action_search", chunk="gyeonggi_school_guide_2025:p0204:b01")
+    d = _deps_no_db(books, monkeypatch)
+    out = run_main(query("감염병예방법상 학교장의 신고 의무는 무엇인가요?"), d,
+                   {"legal_search": legal, "action_search": action})
+    assert out["tools_used"] == ["legal_search", "action_search"] and len(action.calls) == 1
+    assert action.calls[0]["question"] == "감염병예방법상 학교장의 신고 의무는 무엇인가요?"
+    assert out["status"] == "ANSWERED" and out["citations"]
+    assert not any("주 의도" in w for w in out["warnings"])          # 넘긴 Tool이 답했으면 '주 의도 근거 없음'이 아니다
+
+
+def test_declined_primary_is_not_passed_to_action_search(books, monkeypatch):
+    # 법령 거부 카드(처벌 확정 요구)는 근거가 없어서가 아니라 확정할 수 없어서 거절한 것이므로 넘기지 않는다(Q28).
+    legal = _tool("legal_search", status="NO_EVIDENCE",
+                  warnings=["벌칙 조문의 적용 대상과 구체적 사실관계를 확인할 수 없어 처벌을 확정하지 않았습니다."])
+    action = _tool("action_search")
+    out = run_main(query("학교가 신고를 늦게 하면 어떤 처벌을 받는지 확정해서 알려 주세요."),
+                   _deps_no_db(books, monkeypatch), {"legal_search": legal, "action_search": action})
+    assert action.calls == [] and out["tools_used"] == ["legal_search"]
+
+
+def test_no_fallback_when_primary_is_action_or_fallback_not_registered(books, monkeypatch):
+    action = _tool("action_search", status="NO_EVIDENCE")
+    out = run_main(query("담임교사는 무엇을 하나요?"), _deps_no_db(books, monkeypatch), {"action_search": action})
+    assert len(action.calls) == 1 and out["search_rounds"] == 1
+    legal = _tool("legal_search", status="NO_EVIDENCE")
+    out = run_main(query("감염병예방법상 학교장의 신고 의무는 무엇인가요?"), _deps_no_db(books, monkeypatch),
+                   {"legal_search": legal})
+    assert out["tools_used"] == ["legal_search"] and out["status"] in ("INSUFFICIENT_EVIDENCE", "ERROR")
+
+
 def test_call_limit_is_three_and_missing_check_is_reported(books, monkeypatch):
     chain = {"action_search": "legal_search", "legal_search": "disease_search", "disease_search": "crossdoc_graph_search"}
     registry = {name: _tool(name, status="PARTIAL", warnings=[f"[미해결] {nxt} 확인 필요"])
@@ -332,3 +365,35 @@ def test_failed_tool_pointer_is_reported_once(books, monkeypatch):
     out = run_main(query(MIXED), _deps_no_db(books, monkeypatch), {"legal_search": legal, "action_search": action})
     assert out["status"] == "PARTIAL"
     assert sum("legal_search" in w for w in out["warnings"]) == 1
+
+
+# ---------------------------------------------------------------- 11/08 질병 동반 호출
+
+def test_named_disease_calls_disease_tool_alongside_action(books, monkeypatch):
+    # 학교 행동이 주 의도여도 질문이 승인 질병을 말하면 질병 Tool(2026 지침)을 첫 호출에 함께 부른다.
+    action = _tool("action_search")
+    disease = _tool("disease_search", status="PARTIAL", chunk="kdca_hfmd_2026:p0030:b01")
+    out = run_main({**query("수족구병 학생은 담임교사가 무엇을 하나요?"), "allowed_document_ids": ALLOWED + ["kdca_hfmd_2026"]},
+                   _deps_no_db(books, monkeypatch), {"action_search": action, "disease_search": disease})
+    assert out["tools_used"] == ["action_search", "disease_search"] and out["search_rounds"] == 2
+    assert len(disease.calls) == 1 and "동반 호출" in disease.calls[0]["task"]
+    assert out["status"] == "ANSWERED"                       # 동반 호출의 PARTIAL은 질문 전체 상태를 낮추지 않는다
+    assert {c["chunk_id"] for c in out["citations"]} >= {"kdca_hfmd_2026:p0030:b01"}
+
+
+def test_no_companion_without_named_disease_or_when_primary_is_disease(books, monkeypatch):
+    action, disease = _tool("action_search"), _tool("disease_search")
+    run_main(query("담임교사는 무엇을 하나요?"), _deps_no_db(books, monkeypatch),
+             {"action_search": action, "disease_search": disease})
+    assert disease.calls == []
+    disease2 = _tool("disease_search")
+    out = run_main(query("홍역 잠복기는?"), _deps_no_db(books, monkeypatch), {"disease_search": disease2})
+    assert out["tools_used"] == ["disease_search"] and len(disease2.calls) == 1
+
+
+def test_no_companion_for_procedure_question(books, monkeypatch):
+    # 공문·절차 질문은 질병 정보가 필요 없다(골든 S-A04: 동반 근거가 섞여 정답이 빠졌다).
+    action, disease = _tool("action_search"), _tool("disease_search")
+    run_main(query("홍역 학생이 확인되면 학교는 보건소 신고 공문을 어떻게 보내나요?"), _deps_no_db(books, monkeypatch),
+             {"action_search": action, "disease_search": disease})
+    assert disease.calls == []

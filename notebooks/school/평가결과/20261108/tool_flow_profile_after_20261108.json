@@ -1,0 +1,2935 @@
+[
+ {
+  "id": "D01",
+  "question": "전교생 중 5명 코로나 확진인데, 교장이 해야 할 일은?",
+  "status": "ANSWERED",
+  "seconds": 17.48,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 5.54,
+    "findings": 26,
+    "citations": 19
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.03,
+   "classify_scope": 2.41,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 5.54,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 5.01,
+   "compose_answer": 4.49
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 4.32
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.05
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.18
+   }
+  },
+  "final_from_tool": {
+   "action_search": 7
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 9
+ },
+ {
+  "id": "D02",
+  "question": "내가 담임이고 지금 홍역이 한 반에 몇 명씩 유행하는 것 같은데, 신고 해야할까? 그리고 안하면 어떻게 돼?",
+  "status": "ANSWERED",
+  "seconds": 16.78,
+  "intent": "ACTION",
+  "secondary": [
+   "LEGAL"
+  ],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "PARTIAL",
+    "seconds": 3.42,
+    "findings": 28,
+    "citations": 24
+   },
+   {
+    "tool": "legal_search",
+    "status": "NO_EVIDENCE",
+    "seconds": 1.59,
+    "findings": 0,
+    "citations": 0
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도",
+   "질문의 일부(LEGAL)"
+  ],
+  "eval_status": [
+   "PARTIAL",
+   "PARTIAL"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.32,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 5.01,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 4.59,
+   "compose_answer": 4.85
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.24
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.17
+   },
+   "legal.connect": {
+    "n": 1,
+    "sec": 0.87
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2,
+   "legal_search": 0
+  },
+  "later_tools": [
+   "legal_search"
+  ],
+  "later_kept": 0,
+  "final_citations": 12
+ },
+ {
+  "id": "D03",
+  "question": "우리 반 학생이 수두 확진을 받았대요. 담임으로서 오늘 뭐부터 해야 하나요?",
+  "status": "PARTIAL",
+  "seconds": 14.72,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.38,
+    "findings": 28,
+    "citations": 16
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.04,
+   "classify_scope": 2.14,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.38,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.52,
+   "compose_answer": 4.64
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 3.07
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.03
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.27
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 6
+ },
+ {
+  "id": "D04",
+  "question": "독감 걸린 학생 언제부터 등교할 수 있어요? 학부모가 물어보는데요.",
+  "status": "ANSWERED",
+  "seconds": 10.41,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.05,
+    "findings": 28,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.03,
+   "classify_scope": 1.94,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.05,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.08,
+   "compose_answer": 2.3
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.83
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.04
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.17
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 2
+ },
+ {
+  "id": "D05",
+  "question": "같은 반에서 설사·구토하는 학생이 3명 나왔어요. 식중독일 수도 있는데 보건교사는 뭘 해야 하죠?",
+  "status": "PARTIAL",
+  "seconds": 14.75,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.15,
+    "findings": 28,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.04,
+   "classify_scope": 2.76,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.15,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.5,
+   "compose_answer": 4.3
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.93
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.22
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 5
+ },
+ {
+  "id": "D06",
+  "question": "결핵 확진 교사가 나왔는데 학교는 무엇을 해야 하나요?",
+  "status": "ANSWERED",
+  "seconds": 13.5,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.21,
+    "findings": 28,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.04,
+   "classify_scope": 2.22,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.21,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.78,
+   "compose_answer": 3.25
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.95
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.05
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.21
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 8
+ },
+ {
+  "id": "D07",
+  "question": "성홍열 확진 학생이 1명 나왔는데 보건소에 신고해야 하나요?",
+  "status": "PARTIAL",
+  "seconds": 14.61,
+  "intent": "ACTION",
+  "secondary": [
+   "LEGAL"
+  ],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "PARTIAL",
+    "seconds": 3.49,
+    "findings": 27,
+    "citations": 20
+   },
+   {
+    "tool": "legal_search",
+    "status": "NO_EVIDENCE",
+    "seconds": 0.94,
+    "findings": 0,
+    "citations": 0
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도",
+   "질문의 일부(LEGAL)"
+  ],
+  "eval_status": [
+   "PARTIAL",
+   "PARTIAL"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.55,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.43,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 4.92,
+   "compose_answer": 2.7
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.29
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.18
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1,
+   "legal_search": 0
+  },
+  "later_tools": [
+   "legal_search"
+  ],
+  "later_kept": 0,
+  "final_citations": 5
+ },
+ {
+  "id": "D08",
+  "question": "수족구병 걸린 학생이 생겼는데 등교중지 해야 하나요? 기간은 얼마나요?",
+  "status": "ANSWERED",
+  "seconds": 9.96,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "PARTIAL",
+    "seconds": 3.48,
+    "findings": 15,
+    "citations": 11
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "PARTIAL"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.05,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.48,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.26,
+   "compose_answer": 2.16
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.34
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.13
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 6
+ },
+ {
+  "id": "D09",
+  "question": "우리 반 학생이 열이 나서 보건실에 보내려는데, 혼자 보내도 되나요?",
+  "status": "ANSWERED",
+  "seconds": 9.18,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.32,
+    "findings": 28,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.3,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.32,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 1.56,
+   "compose_answer": 1.98
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.1
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.21
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 1
+ },
+ {
+  "id": "D10",
+  "question": "인플루엔자가 학급마다 퍼지고 있어요. 휴업이나 단축수업을 해야 하나요?",
+  "status": "PARTIAL",
+  "seconds": 12.47,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.71,
+    "findings": 2,
+    "citations": 2
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.26,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.71,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.55,
+   "compose_answer": 3.93
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 3.11
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 0.6
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 7
+ },
+ {
+  "id": "D11",
+  "question": "홍역 의심 학생이 나왔는데 같은 반 다른 학생들은 어떻게 해야 하나요?",
+  "status": "PARTIAL",
+  "seconds": 12.67,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.13,
+    "findings": 28,
+    "citations": 20
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.03,
+   "classify_scope": 2.16,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.13,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.91,
+   "compose_answer": 3.43
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.92
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 5
+ },
+ {
+  "id": "D12",
+  "question": "코로나 걸린 학생도 출석 인정이 되나요? 어떤 서류를 내야 해요?",
+  "status": "PARTIAL",
+  "seconds": 10.56,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.62,
+    "findings": 13,
+    "citations": 13
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 2.23,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.62,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.67,
+   "compose_answer": 2.02
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.36
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.24
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 2
+ },
+ {
+  "id": "D13",
+  "question": "백일해 환자가 나오면 학교가 보건소에 알려야 하나요?",
+  "status": "ANSWERED",
+  "seconds": 13.27,
+  "intent": "ACTION",
+  "secondary": [
+   "LEGAL"
+  ],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "PARTIAL",
+    "seconds": 3.43,
+    "findings": 28,
+    "citations": 21
+   },
+   {
+    "tool": "legal_search",
+    "status": "NO_EVIDENCE",
+    "seconds": 1.36,
+    "findings": 0,
+    "citations": 0
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도",
+   "질문의 일부(LEGAL)"
+  ],
+  "eval_status": [
+   "PARTIAL",
+   "PARTIAL"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.6,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.79,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.44,
+   "compose_answer": 2.42
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.21
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.21
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1,
+   "legal_search": 0
+  },
+  "later_tools": [
+   "legal_search"
+  ],
+  "later_kept": 0,
+  "final_citations": 5
+ },
+ {
+  "id": "D14",
+  "question": "감염병 유행이 끝났다는 건 언제 판단하고, 그다음엔 뭘 해야 하나요?",
+  "status": "ANSWERED",
+  "seconds": 10.74,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.21,
+    "findings": 28,
+    "citations": 17
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.99,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.21,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.81,
+   "compose_answer": 2.71
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.04
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.17
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 5
+ },
+ {
+  "id": "D15",
+  "question": "보건교사가 출장 중인데 유증상 학생이 생겼어요. 누가 대신 처리하나요?",
+  "status": "PARTIAL",
+  "seconds": 14.25,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.26,
+    "findings": 28,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.27,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.26,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.34,
+   "compose_answer": 5.36
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.06
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 4
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 4
+ },
+ {
+  "id": "S-Q01",
+  "question": "학교에서 유증상 학생이 발견되면 담임교사와 보건교사는 각각 무엇을 확인하나요?",
+  "status": "ANSWERED",
+  "seconds": 10.23,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.33,
+    "findings": 28,
+    "citations": 21
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.06,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.33,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.29,
+   "compose_answer": 2.53
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.13
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 2
+ },
+ {
+  "id": "S-Q02",
+  "question": "경기도 초등학교에서 성홍열 확진 학생이 1명 나왔어요. 학교(담임·보건교사)는 무엇을 해야 하나요?",
+  "status": "ANSWERED",
+  "seconds": 16.7,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.32,
+    "findings": 22,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.04,
+   "classify_scope": 2.62,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.33,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 4.77,
+   "compose_answer": 4.93
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 3.08
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.05
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 4
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 9
+ },
+ {
+  "id": "S-Q03",
+  "question": "성홍열도 학교장이 보건소에 신고해야 하나요?",
+  "status": "ANSWERED",
+  "seconds": 14.39,
+  "intent": "ACTION",
+  "secondary": [
+   "LEGAL"
+  ],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "PARTIAL",
+    "seconds": 4.32,
+    "findings": 26,
+    "citations": 22
+   },
+   {
+    "tool": "legal_search",
+    "status": "NO_EVIDENCE",
+    "seconds": 1.21,
+    "findings": 0,
+    "citations": 0
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도",
+   "질문의 일부(LEGAL)"
+  ],
+  "eval_status": [
+   "PARTIAL",
+   "PARTIAL"
+  ],
+  "nodes": {
+   "normalize_input": 0.04,
+   "classify_scope": 2.35,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 5.54,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.66,
+   "compose_answer": 2.79
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 3.08
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.04
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1,
+   "legal_search": 0
+  },
+  "later_tools": [
+   "legal_search"
+  ],
+  "later_kept": 0,
+  "final_citations": 5
+ },
+ {
+  "id": "S-Q04",
+  "question": "보호자에게 연락해 진료를 요청하는 일을 교육부 매뉴얼과 경기도 가이드북은 각각 어떻게 설명하나요?",
+  "status": "ANSWERED",
+  "seconds": 8.44,
+  "intent": "CROSSDOC",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "crossdoc_graph_search",
+    "status": "OK",
+    "seconds": 0.51,
+    "findings": 13,
+    "citations": 8
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.96,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 0.52,
+   "merge_and_validate": 1.23,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 1.97,
+   "compose_answer": 2.74
+  },
+  "inner": {
+   "main.db_verify": {
+    "n": 1,
+    "sec": 0.6
+   },
+   "main.path_verify": {
+    "n": 1,
+    "sec": 0.63
+   }
+  },
+  "final_from_tool": {
+   "crossdoc_graph_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 3
+ },
+ {
+  "id": "S-Q05",
+  "question": "대응 제2단계에서 능동감시 대상은 누가 정하고 어디까지 하나요?",
+  "status": "ANSWERED",
+  "seconds": 12.18,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.23,
+    "findings": 28,
+    "citations": 20
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.02,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.23,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.4,
+   "compose_answer": 4.52
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.01
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.22
+   }
+  },
+  "final_from_tool": {
+   "action_search": 4
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 4
+ },
+ {
+  "id": "S-Q06",
+  "question": "능동감시는 언제 끝나나요?",
+  "status": "ANSWERED",
+  "seconds": 8.6,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.24,
+    "findings": 28,
+    "citations": 21
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.0,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.24,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 1.85,
+   "compose_answer": 1.5
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.03
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.21
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 1
+ },
+ {
+  "id": "S-Q07",
+  "question": "유행이 확산되는 대응 제3단계에서 학교장은 무엇을 하나요?",
+  "status": "ANSWERED",
+  "seconds": 9.83,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.71,
+    "findings": 28,
+    "citations": 20
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.16,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.71,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.03,
+   "compose_answer": 1.92
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.49
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.21
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 4
+ },
+ {
+  "id": "S-Q08",
+  "question": "교무부장은 유행 시 어떤 일을 맡나요?",
+  "status": "ANSWERED",
+  "seconds": 9.82,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.14,
+    "findings": 28,
+    "citations": 19
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.14,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.14,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.02,
+   "compose_answer": 2.51
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 1.87
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.27
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 4
+ },
+ {
+  "id": "S-Q09",
+  "question": "학년부장은 능동감시에서 무엇을 하나요?",
+  "status": "ANSWERED",
+  "seconds": 9.84,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.14,
+    "findings": 28,
+    "citations": 19
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.93,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.14,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.03,
+   "compose_answer": 1.72
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.93
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 2
+ },
+ {
+  "id": "S-Q10",
+  "question": "유행이 끝나면 학교는 어떤 후속 조치를 하나요?",
+  "status": "ANSWERED",
+  "seconds": 12.01,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.23,
+    "findings": 28,
+    "citations": 22
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.76,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.24,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 4.0,
+   "compose_answer": 3.0
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.03
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 6
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 8
+ },
+ {
+  "id": "S-Q11",
+  "question": "학교 내 유행은 어떤 기준으로 끝난 것으로 보나요?",
+  "status": "ANSWERED",
+  "seconds": 9.67,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.23,
+    "findings": 28,
+    "citations": 22
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.74,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.23,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.3,
+   "compose_answer": 2.38
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.04
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.19
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 4
+ },
+ {
+  "id": "S-O01",
+  "question": "일시적 관찰실은 어떤 장소에 어떻게 마련하나요?",
+  "status": "ANSWERED",
+  "seconds": 13.68,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.69,
+    "findings": 28,
+    "citations": 19
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.37,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.69,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.1,
+   "compose_answer": 3.5
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 3.49
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 1
+ },
+ {
+  "id": "S-O02",
+  "question": "일시적 관찰실에서 학생은 얼마나 머물고 어떻게 관리하나요?",
+  "status": "ANSWERED",
+  "seconds": 11.11,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.09,
+    "findings": 28,
+    "citations": 19
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.76,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.09,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.1,
+   "compose_answer": 3.14
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 1.9
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.19
+   }
+  },
+  "final_from_tool": {
+   "action_search": 5
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 5
+ },
+ {
+  "id": "S-O03",
+  "question": "일시적 관찰실로 보건실을 써도 되나요?",
+  "status": "ANSWERED",
+  "seconds": 10.14,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.98,
+    "findings": 28,
+    "citations": 21
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.87,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.98,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.06,
+   "compose_answer": 2.21
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.76
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.22
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 1
+ },
+ {
+  "id": "S-O04",
+  "question": "일시적 관찰실에서 학생을 돌보는 담당자는 누구로 정하나요? 두 문서가 같은가요?",
+  "status": "PARTIAL",
+  "seconds": 8.12,
+  "intent": "CROSSDOC",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "crossdoc_graph_search",
+    "status": "OK",
+    "seconds": 0.83,
+    "findings": 10,
+    "citations": 7
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.95,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 0.83,
+   "merge_and_validate": 1.69,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.0,
+   "compose_answer": 1.64
+  },
+  "inner": {
+   "main.db_verify": {
+    "n": 1,
+    "sec": 1.02
+   },
+   "main.path_verify": {
+    "n": 1,
+    "sec": 0.67
+   }
+  },
+  "final_from_tool": {
+   "crossdoc_graph_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 1
+ },
+ {
+  "id": "S-R01",
+  "question": "식중독이 의심되는 유행에서 영양(교)사는 무엇을 하나요?",
+  "status": "ANSWERED",
+  "seconds": 10.36,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.12,
+    "findings": 28,
+    "citations": 17
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 2.04,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.12,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 1.61,
+   "compose_answer": 2.57
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.87
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.25
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 3
+ },
+ {
+  "id": "S-R02",
+  "question": "행정실은 유행 시 소독과 관련해 무엇을 하나요?",
+  "status": "ANSWERED",
+  "seconds": 10.76,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.63,
+    "findings": 28,
+    "citations": 17
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.04,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.63,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.54,
+   "compose_answer": 2.53
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.37
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.25
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 5
+ },
+ {
+  "id": "S-R03",
+  "question": "유행의심 상황에서 교장·교감은 무엇을 하나요?",
+  "status": "ANSWERED",
+  "seconds": 10.9,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.31,
+    "findings": 28,
+    "citations": 19
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.07,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.31,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.53,
+   "compose_answer": 2.98
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.07
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.23
+   }
+  },
+  "final_from_tool": {
+   "action_search": 4
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 5
+ },
+ {
+  "id": "S-E01",
+  "question": "홍역 환자가 생기면 역학조사에 협조하기 위해 학교는 접촉자를 어떻게 파악하나요?",
+  "status": "ANSWERED",
+  "seconds": 11.77,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.29,
+    "findings": 9,
+    "citations": 8
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.16,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.29,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.4,
+   "compose_answer": 2.9
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 3.05
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.23
+   }
+  },
+  "final_from_tool": {
+   "action_search": 4
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 7
+ },
+ {
+  "id": "S-E02",
+  "question": "홍역 의심 환자가 추가로 생기면 누구에게 연락하나요?",
+  "status": "ANSWERED",
+  "seconds": 11.38,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.62,
+    "findings": 27,
+    "citations": 21
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 2.06,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.62,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.03,
+   "compose_answer": 2.64
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 3.38
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.23
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 7
+ },
+ {
+  "id": "S-E03",
+  "question": "수두 환자는 언제까지 격리하나요?",
+  "status": "ANSWERED",
+  "seconds": 9.61,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.35,
+    "findings": 16,
+    "citations": 16
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 1.79,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.35,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.23,
+   "compose_answer": 2.21
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.17
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.17
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 3
+ },
+ {
+  "id": "S-E04",
+  "question": "결핵 접촉자 조사에서 학교는 어떻게 협조하나요?",
+  "status": "ANSWERED",
+  "seconds": 13.88,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.88,
+    "findings": 21,
+    "citations": 19
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.92,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.88,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 4.08,
+   "compose_answer": 3.98
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.67
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 9
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 12
+ },
+ {
+  "id": "S-S01",
+  "question": "특수학교에서 감염병 의심 학생을 이동시킬 때 유의할 점은 무엇인가요?",
+  "status": "ANSWERED",
+  "seconds": 10.77,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.95,
+    "findings": 28,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 2.0,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.95,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.27,
+   "compose_answer": 2.52
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.72
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.22
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 3
+ },
+ {
+  "id": "S-S02",
+  "question": "교육연속성계획(ECP)에는 어떤 내용이 들어가나요?",
+  "status": "ANSWERED",
+  "seconds": 13.47,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.14,
+    "findings": 28,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.24,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.14,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.59,
+   "compose_answer": 3.47
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.94
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 6
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 6
+ },
+ {
+  "id": "S-A01",
+  "question": "등교중지 기간의 출석인정을 받으려면 어떤 서류가 필요한가요?",
+  "status": "ANSWERED",
+  "seconds": 10.14,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.27,
+    "findings": 22,
+    "citations": 17
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 1.82,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.27,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.21,
+   "compose_answer": 1.82
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.43
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.83
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 4
+ },
+ {
+  "id": "S-A02",
+  "question": "등교중지된 학생은 언제, 어떻게 다시 등교하나요?",
+  "status": "ANSWERED",
+  "seconds": 9.11,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.56,
+    "findings": 26,
+    "citations": 17
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 2.02,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.56,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 1.81,
+   "compose_answer": 1.69
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.35
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.21
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 1
+ },
+ {
+  "id": "S-A03",
+  "question": "학교에서 감염병 환자가 생기면 교육청에는 어떻게 보고하나요?",
+  "status": "ANSWERED",
+  "seconds": 10.19,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.2,
+    "findings": 28,
+    "citations": 21
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.83,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.2,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.69,
+   "compose_answer": 2.45
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 1.96
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.24
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 3
+ },
+ {
+  "id": "S-A04",
+  "question": "홍역 학생이 확인되면 학교는 보건소 신고 공문을 어떻게 보내나요?",
+  "status": "ANSWERED",
+  "seconds": 12.86,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.41,
+    "findings": 28,
+    "citations": 20
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.44,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.41,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.91,
+   "compose_answer": 3.08
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.22
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.01
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.18
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 7
+ },
+ {
+  "id": "S-F01",
+  "question": "학교 감염병 대응 제1단계는 언제 시작해서 언제 끝나나요?",
+  "status": "ANSWERED",
+  "seconds": 8.42,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.12,
+    "findings": 28,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.86,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.12,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 1.68,
+   "compose_answer": 1.74
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 1.98
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.14
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 1
+ },
+ {
+  "id": "S-F02",
+  "question": "학교 내 감염병 유행의심 기준은 무엇인가요?",
+  "status": "ANSWERED",
+  "seconds": 9.87,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.22,
+    "findings": 28,
+    "citations": 21
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.12,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.22,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 1.89,
+   "compose_answer": 2.62
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.06
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.16
+   }
+  },
+  "final_from_tool": {
+   "action_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 2
+ },
+ {
+  "id": "S-F03",
+  "question": "대응 제2단계의 주요 활동은 무엇인가요?",
+  "status": "ANSWERED",
+  "seconds": 10.28,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.41,
+    "findings": 28,
+    "citations": 22
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.79,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.41,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.9,
+   "compose_answer": 2.17
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.14
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.27
+   }
+  },
+  "final_from_tool": {
+   "action_search": 5
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 6
+ },
+ {
+  "id": "S-T01",
+  "question": "유증상 학생은 담임교사가 반드시 직접 보건실까지 데려가야 하나요?",
+  "status": "ANSWERED",
+  "seconds": 14.33,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.05,
+    "findings": 28,
+    "citations": 17
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 2.57,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.05,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.15,
+   "compose_answer": 4.54
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 2.87
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.18
+   }
+  },
+  "final_from_tool": {
+   "action_search": 2
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 2
+ },
+ {
+  "id": "S-T02",
+  "question": "학생 한 명이 열이 나서 보건실에 왔어요. 지금 바로 NEIS에 감염병 환자로 등록해야 하나요?",
+  "status": "PARTIAL",
+  "seconds": 11.93,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 3.17,
+    "findings": 28,
+    "citations": 23
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 1.98,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 3.17,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 3.32,
+   "compose_answer": 3.44
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 1.97
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.2
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 3
+ },
+ {
+  "id": "S-T03",
+  "question": "일시적 관찰실에서 보건교사가 학생을 돌봐야 하나요?",
+  "status": "ANSWERED",
+  "seconds": 12.11,
+  "intent": "ACTION",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "action_search",
+    "status": "OK",
+    "seconds": 4.23,
+    "findings": 28,
+    "citations": 18
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 2.13,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 4.24,
+   "merge_and_validate": 0.0,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.9,
+   "compose_answer": 2.82
+  },
+  "inner": {
+   "action.retrieve": {
+    "n": 1,
+    "sec": 3.06
+   },
+   "action.build": {
+    "n": 1,
+    "sec": 0.0
+   },
+   "action.db_verify": {
+    "n": 1,
+    "sec": 1.17
+   }
+  },
+  "final_from_tool": {
+   "action_search": 3
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 3
+ },
+ {
+  "id": "S-G01",
+  "question": "우리 반 학생이 열이 나고 몸에 발진이 있어요. 성홍열인지 판단해 주세요.",
+  "status": "INSUFFICIENT_EVIDENCE",
+  "seconds": 1.81,
+  "intent": null,
+  "secondary": null,
+  "tools": [],
+  "select_reasons": [],
+  "eval_status": [],
+  "nodes": {
+   "normalize_input": 0.01,
+   "classify_scope": 1.79,
+   "compose_answer": 0.0
+  },
+  "inner": {},
+  "final_from_tool": {},
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 0
+ },
+ {
+  "id": "S-G02",
+  "question": "○○○ 학생의 등교중지 정보를 NEIS에 대신 입력해 주세요.",
+  "status": "INSUFFICIENT_EVIDENCE",
+  "seconds": 1.93,
+  "intent": null,
+  "secondary": null,
+  "tools": [],
+  "select_reasons": [],
+  "eval_status": [],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 1.91,
+   "compose_answer": 0.0
+  },
+  "inner": {},
+  "final_from_tool": {},
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 0
+ },
+ {
+  "id": "S-G03",
+  "question": "오늘 점심 메뉴 추천해 줘.",
+  "status": "INSUFFICIENT_EVIDENCE",
+  "seconds": 2.46,
+  "intent": null,
+  "secondary": null,
+  "tools": [],
+  "select_reasons": [],
+  "eval_status": [],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 2.44,
+   "compose_answer": 0.0
+  },
+  "inner": {},
+  "final_from_tool": {},
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 0
+ },
+ {
+  "id": "S-G04",
+  "question": "안녕하세요, 이 서비스로 무엇을 할 수 있나요?",
+  "status": "ANSWERED",
+  "seconds": 1.52,
+  "intent": null,
+  "secondary": null,
+  "tools": [],
+  "select_reasons": [],
+  "eval_status": [],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 1.51,
+   "compose_answer": 0.0
+  },
+  "inner": {},
+  "final_from_tool": {},
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 0
+ },
+ {
+  "id": "S-D01",
+  "question": "홍역의 잠복기는 며칠인가요?",
+  "status": "ANSWERED",
+  "seconds": 7.56,
+  "intent": "DISEASE",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "disease_search",
+    "status": "OK",
+    "seconds": 1.62,
+    "findings": 8,
+    "citations": 8
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "ANSWERED"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 1.83,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 1.62,
+   "merge_and_validate": 1.03,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 1.79,
+   "compose_answer": 1.27
+  },
+  "inner": {
+   "main.db_verify": {
+    "n": 1,
+    "sec": 0.58
+   },
+   "main.path_verify": {
+    "n": 1,
+    "sec": 0.46
+   }
+  },
+  "final_from_tool": {
+   "disease_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 2
+ },
+ {
+  "id": "S-L01",
+  "question": "감염병예방법상 학교장의 신고 의무는 무엇인가요?",
+  "status": "ANSWERED",
+  "seconds": 10.39,
+  "intent": "LEGAL",
+  "secondary": [],
+  "tools": [
+   {
+    "tool": "legal_search",
+    "status": "PARTIAL",
+    "seconds": 1.91,
+    "findings": 1,
+    "citations": 1
+   }
+  ],
+  "select_reasons": [
+   "질문의 주 의도"
+  ],
+  "eval_status": [
+   "PARTIAL"
+  ],
+  "nodes": {
+   "normalize_input": 0.02,
+   "classify_scope": 2.1,
+   "classify_intent": 0.0,
+   "select_tool": 0.0,
+   "execute_tool": 1.92,
+   "merge_and_validate": 0.67,
+   "evaluate_evidence": 0.0,
+   "check_facts": 0.0,
+   "select_evidence": 2.9,
+   "compose_answer": 2.78
+  },
+  "inner": {
+   "main.db_verify": {
+    "n": 1,
+    "sec": 0.67
+   },
+   "main.path_verify": {
+    "n": 1,
+    "sec": 0.0
+   }
+  },
+  "final_from_tool": {
+   "legal_search": 1
+  },
+  "later_tools": [],
+  "later_kept": 0,
+  "final_citations": 2
+ }
+]

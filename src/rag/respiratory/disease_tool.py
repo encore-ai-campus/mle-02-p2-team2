@@ -80,6 +80,11 @@ WHERE c.chunk_id IN $ids
 RETURN c.chunk_id AS chunk_id, x.disease_id AS disease_id
 ORDER BY c.chunk_id, x.disease_id
 """
+DISEASE_ID_QUERY = """
+MATCH (d:Disease)
+WHERE d.disease_id IN $disease_ids
+RETURN DISTINCT d.disease_id AS disease_id
+"""
 DIRECT_QUERY = """
 MATCH (d:Document)-[:HAS_CHUNK]->(c:Chunk)
 WHERE d.document_id IN $allowed_document_ids AND c.text IS NOT NULL
@@ -96,6 +101,7 @@ MAX_TOP_K = 100
 HEADER_RE = re.compile(r"^\W*\d{4}년도?\s*\S+(\s\S+)?\s*관리지침")
 TABLE_CHUNK_RE = re.compile(r":t\d+r\d+$")
 PARTICLES = ("에서", "으로", "에게", "은", "는", "이", "가", "을", "를", "의", "에", "와", "과", "도", "로", "란")
+BRACKET_SEPARATORS = str.maketrans({character: " " for character in "()（）[]"})
 
 
 def _result(status: ToolStatus, warnings: list[str] | None = None) -> ToolResult:
@@ -138,12 +144,30 @@ def _default_deps() -> dict:
         raise
 
 
+def _remove_question_exclusions(question: str, disease_id: str, books: dict) -> str:
+    remaining = question
+    for phrase in books.get("exclude_phrases", {}).get(disease_id, []):
+        if isinstance(phrase, str) and phrase.strip():
+            pattern = r"\s*".join(re.escape(part) for part in phrase.split())
+            remaining = re.sub(pattern, " ", remaining, flags=re.IGNORECASE)
+    return remaining
+
+
 def _context_diseases(tool_input: ToolInput, books: dict) -> list[str]:
-    disease_ids = list(detect_diseases(tool_input["question"], books))
+    question = tool_input["question"]
+    disease_ids = []
+    for disease_id in detect_diseases(question, books):
+        # 다른 질병의 이름 안에 포함된 별칭만 지운 뒤 다시 판별한다.
+        # 같은 질문에 계절 인플루엔자도 별도로 언급된 경우는 남겨 둔다.
+        remaining = _remove_question_exclusions(question, disease_id, books)
+        if disease_id in detect_diseases(remaining, books):
+            disease_ids.append(disease_id)
     for entity_id in tool_input.get("context_entity_ids", []):
         if isinstance(entity_id, str) and entity_id.startswith("Disease:"):
             disease_id = entity_id.removeprefix("Disease:")
-            if disease_id and disease_id not in disease_ids:
+            remaining = _remove_question_exclusions(question, disease_id, books)
+            excluded_only = remaining != question and disease_id not in detect_diseases(remaining, books)
+            if disease_id and disease_id not in disease_ids and not excluded_only:
                 disease_ids.append(disease_id)
     return disease_ids
 
@@ -188,8 +212,22 @@ def _about_diseases(
     return result
 
 
-def focus_terms(question: str, books: dict) -> list[str]:
-    """질문에서 조사·문장부호·질병명·검색 불용어를 뺀 핵심어를 만든다."""
+def _known_disease_ids(driver, disease_ids: list[str], database) -> set[str]:
+    """로컬 별칭 사전과 별도로 실제 DB에 존재하는 질병 ID만 확인한다."""
+    if not disease_ids:
+        return set()
+    try:
+        records, _, _ = driver.execute_query(
+            DISEASE_ID_QUERY, database_=database, routing_="r", disease_ids=disease_ids
+        )
+    except Exception as error:
+        raise SearchError(f"{type(error).__name__}: Disease ID 조회 실패") from error
+    requested = set(disease_ids)
+    return {record["disease_id"] for record in records if record["disease_id"] in requested}
+
+
+def _focus_terms(question: str, books: dict, *, split_brackets: bool) -> list[str]:
+    """괄호 분리 여부에 따라 질문의 핵심어를 만든다."""
     stopword_keys = {compare_key(word) for word in STOPWORDS}
     config = books.get("exclude_phrases", {})
     stopword_keys.update(compare_key(word) for word in config.get("focus_stopwords", []))
@@ -207,7 +245,11 @@ def focus_terms(question: str, books: dict) -> list[str]:
 
     terms = []
     seen = set()
-    for raw_term in question.split():
+    # '전염 기간'처럼 띄어 쓴 문서 용어를 붙여 쓴다(띄어 쓰면 '전염'이 '전파'로 바뀌어 '전염기간' 줄을 찾지 못했다, 2026-11-08).
+    question = re.sub(r"(전염|감염)\s+(가능\s*)?(기간|력)", lambda m: m.group(1) + (m.group(2) or "").replace(" ", "")
+                      + m.group(3), question)
+    words = question.translate(BRACKET_SEPARATORS).split() if split_brackets else question.split()
+    for raw_term in words:
         term = "".join(
             character
             for character in raw_term
@@ -239,6 +281,11 @@ def focus_terms(question: str, books: dict) -> list[str]:
         terms.append(term)
         seen.add(key)
     return terms
+
+
+def focus_terms(question: str, books: dict) -> list[str]:
+    """괄호 안의 단어를 분리한 뒤 조사·질병명·검색 불용어를 뺀다."""
+    return _focus_terms(question, books, split_brackets=True)
 
 
 def _name_positions(text: str, name: str) -> list[int]:
@@ -362,6 +409,69 @@ def _direct_candidates(driver, database, allowed, disease_ids, names, terms, exc
             break
         offset += page_size
     return hits
+
+
+# 한 질병만 다루는 질병관리청 2026 지침(문서 제목 기준). 이 문서의 청크는 본문에 병명이 없어도 그 질병의 근거다.
+DEDICATED_DOCS = {
+    "kdca_hfmd_2026": "HFMD",
+    "kdca_measles_2026": "MEASLES",
+    "kdca_flu_facility_2026": "INFLUENZA",
+    "kdca_covid19_2026": "COVID19",
+}
+SCOPED_QUERY = """
+MATCH (d:Document)-[:HAS_CHUNK]->(c:Chunk)
+WHERE d.document_id IN $allowed_document_ids AND c.text IS NOT NULL
+  AND (d.document_id IN $docs OR any(name IN $names WHERE coalesce(c.section, '') CONTAINS name))
+  AND any(term IN $terms WHERE c.text CONTAINS term OR coalesce(c.section, '') CONTAINS term)
+RETURN d.document_id AS document_id, c.chunk_id AS chunk_id, c.pdf_page AS pdf_page,
+       c.printed_page AS printed_page, c.text AS text, c.section AS section
+ORDER BY c.chunk_id LIMIT 200
+"""
+
+
+def _scope_disease_ids(
+    hit: dict,
+    disease_ids: list[str],
+    names: dict[str, list[str]],
+    exclusions: dict | None = None,
+) -> set[str]:
+    """질병 전용 문서이거나 소제목에 병명이 있으면 그 질병 ID.
+    단, 본문·소제목에 그 질병의 제외 문구(예: 인플루엔자의 '파라인플루엔자'·'조류인플루엔자')가 있으면 보지 않는다."""
+    section = hit.get("section") or ""
+    body = section + " " + (hit.get("text") or "")
+    matched = set()
+    for disease_id in disease_ids:
+        if any(phrase and phrase in body for phrase in (exclusions or {}).get(disease_id, [])):
+            continue
+        if DEDICATED_DOCS.get(hit.get("document_id")) == disease_id or any(
+            name and name in section for name in names.get(disease_id, [])
+        ):
+            matched.add(disease_id)
+    return matched
+
+
+def _scoped_candidates(driver, database, allowed, disease_ids, names, terms, exclusions=None, limit=10):
+    """질병 전용 문서·병명 소제목 청크 중 핵심어가 든 것(핵심어를 많이 담은 순서로 최대 limit개)."""
+    if not allowed or not disease_ids or not terms:
+        return []
+    docs = [doc for doc, disease_id in DEDICATED_DOCS.items() if disease_id in disease_ids and doc in allowed]
+    surfaces = [name for disease_id in disease_ids for name in names.get(disease_id, []) if len(name) >= 2]
+    try:
+        records, _, _ = driver.execute_query(
+            SCOPED_QUERY, database_=database, allowed_document_ids=list(allowed), docs=docs,
+            names=surfaces, terms=list(terms),
+        )
+    except Exception as error:
+        raise SearchError(f"{type(error).__name__}: 질병 전용 후보 조회 실패") from error
+    rows = [record.data() if hasattr(record, "data") else dict(record) for record in records]
+    rows = [row for row in rows if _scope_disease_ids(row, disease_ids, names, exclusions)]
+
+    def overlap(row):
+        body = (row.get("section") or "") + " " + (row.get("text") or "")
+        return sum(term in body for term in terms)
+
+    rows.sort(key=lambda row: (-overlap(row), row["chunk_id"]))
+    return rows[:limit]
 
 
 def _merge_direct_candidates(hits, direct, preferred):
@@ -506,7 +616,13 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
     disease_ids = _context_diseases(tool_input, books)
     if not disease_ids:
         return _result("NO_EVIDENCE", ["질문에서 지원 질병을 찾지 못함"])
+    excluded_question_diseases = [
+        disease_id for disease_id in detect_diseases(tool_input["question"], books)
+        if _remove_question_exclusions(tool_input["question"], disease_id, books) != tool_input["question"]
+    ]
     requested_focus_terms = focus_terms(tool_input["question"], books)
+    unsplit_focus_terms = _focus_terms(tool_input["question"], books, split_brackets=False)
+    bracket_terms = [term for term in requested_focus_terms if term not in unsplit_focus_terms]
 
     allowed_document_ids = list(tool_input["allowed_document_ids"])
     request = {
@@ -526,15 +642,15 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
         top_k = 8
     top_k = min(top_k, MAX_TOP_K)
 
-    searched = search_school_chunks(
-        driver,
-        request,
-        books,
-        embedder=embedder,
-        mode="hybrid",
-        k=max(top_k * 4, 30),
-        database=database,
-    )
+    search_options = {
+        "embedder": embedder,
+        "mode": "hybrid",
+        "k": max(top_k * 4, 30),
+        "database": database,
+    }
+    if bracket_terms:
+        search_options["extra_terms"] = bracket_terms
+    searched = search_school_chunks(driver, request, books, **search_options)
     raw_hits = searched.get("hits", [])
     if not isinstance(raw_hits, list):
         raise TypeError("검색 결과 hits가 목록이 아닙니다.")
@@ -551,11 +667,20 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
     )
     if direct_hits:
         raw_hits = _merge_direct_candidates(raw_hits, direct_hits, request.get("preferred_document_ids", []))
+    # 질병 전용 지침·소제목 후보(2026-11-08, 주승우 팀장 승인 하에 Claude 추가). 2026 질병별 지침 청크는 본문에 병명이 없는
+    # 경우가 많고(수족구 지침 '발열이 없고, 수포가 마른 후 복귀'), ABOUT 관계도 거의 없어(코로나19·홍역·수족구 0개)
+    # 위 경로로는 찾지 못했다. 질문 질병의 전용 문서이거나 소제목에 병명이 있는 청크 중 핵심어가 든 것을 후보에 더한다.
+    scoped_hits = _scoped_candidates(driver, database, allowed_document_ids, disease_ids, names, requested_focus_terms,
+                                     books.get("exclude_phrases", {}))
+    if scoped_hits:
+        raw_hits = _merge_direct_candidates(raw_hits, scoped_hits, request.get("preferred_document_ids", []))
 
     allowed = set(allowed_document_ids)
     hits = []
     seen_chunk_ids = set()
     warnings = []
+    if excluded_question_diseases:
+        warnings.append("질문의 별도 질환 표현은 현재 질병 검색에서 제외되어 전체 비교는 확인 필요")
     for hit in raw_hits:
         if not isinstance(hit, dict):
             warnings.append("잘못된 검색 결과 청크를 건너뜀")
@@ -581,6 +706,7 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
         disease_ids,
         database,
     )
+    known_disease_ids = _known_disease_ids(driver, disease_ids, database)
 
     findings: list[Finding] = []
     citations: list[Citation] = []
@@ -612,6 +738,8 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
                 names,
             )
         }
+        # 질병 전용 문서·소제목의 병명도 본문 병명과 같게 본다(2026-11-08).
+        text_matches |= _scope_disease_ids(hit, disease_ids, names, exclude_phrases)
         disease_name_chunk_seen = disease_name_chunk_seen or bool(text_matches)
         actual_about_ids = about_by_chunk.get(chunk_id, set())
         matched_ids = [
@@ -623,6 +751,8 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
             continue
 
         focus_position = _focus_position(searchable_text, requested_focus_terms)
+        if focus_position is None and _focus_position(hit.get("section") or "", requested_focus_terms) is not None:
+            focus_position = 0   # 핵심어가 소제목에만 있는 짧은 청크(예: '복귀 기준' 절의 한 줄)는 청크 처음을 근거 위치로 본다
         is_fallback = bool(requested_focus_terms and focus_position is None)
         focus_chunk_seen = focus_chunk_seen or focus_position is not None
         if is_fallback:
@@ -668,7 +798,8 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
             "claim": claim,
             "chunk_ids": [chunk_id],
             "action_ids": [],
-            "disease_ids": matched_ids,
+            # 텍스트의 질병명은 검색에 쓰되, 실제 Disease 노드가 없는 ID는 반환하지 않는다.
+            "disease_ids": [disease_id for disease_id in matched_ids if disease_id in known_disease_ids],
             "concept_ids": [],
         }
         if is_fallback:
@@ -705,7 +836,17 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
 
     missing_disease_ids = [disease_id for disease_id in disease_ids if disease_id not in found_disease_ids]
     warnings.extend(f"근거를 찾지 못한 disease_id: {disease_id}" for disease_id in missing_disease_ids)
-    status: ToolStatus = "PARTIAL" if missing_disease_ids or used_fallback else "OK"
+    missing_nodes = [
+        disease_id for disease_id in disease_ids
+        if disease_id in found_disease_ids and disease_id not in known_disease_ids
+    ]
+    warnings.extend(
+        f"DB에 Disease 노드가 없어 disease_id를 반환하지 않음: {disease_id}"
+        for disease_id in missing_nodes
+    )
+    status: ToolStatus = (
+        "PARTIAL" if missing_disease_ids or missing_nodes or used_fallback or excluded_question_diseases else "OK"
+    )
     return {
         "tool_name": "disease_search",
         "status": status,

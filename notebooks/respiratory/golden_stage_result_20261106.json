@@ -1,0 +1,251 @@
+{
+  "allowed_document_ids": [
+    "gyeonggi_school_guide_2025",
+    "kdca_covid19_2026",
+    "kdca_diagnosis_reporting_2026",
+    "kdca_flu_facility_2026",
+    "kdca_hfmd_2026",
+    "kdca_measles_2026",
+    "kdca_respiratory_2026",
+    "kdca_vaccine_preventable_2026",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+  ],
+  "cases": [
+    {
+      "id": "R-F2",
+      "question": "성홍열 잠복기는?",
+      "focus_terms": [
+        "잠복기"
+      ],
+      "targets": [
+        {
+          "chunk_id": "kdca_respiratory_2026:p0109:b01",
+          "fulltext_64": null,
+          "vector_64": 61,
+          "rrf_all": 83,
+          "rrf_32": null,
+          "direct_20": 5,
+          "merged": 37,
+          "filtered_no_top_limit": 5,
+          "final_top_8": 5,
+          "target_details": {
+            "exists_in_allowed_documents": true,
+            "focus_matches": [
+              "잠복기"
+            ],
+            "text_disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "about_disease_ids": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "R-F4",
+      "question": "코로나19 확진 학생의 격리 권고 기간은?",
+      "focus_terms": [
+        "확진",
+        "격리",
+        "권고",
+        "기간"
+      ],
+      "targets": [
+        {
+          "chunk_id": "kdca_covid19_2026:p0028:b01",
+          "fulltext_64": 33,
+          "vector_64": 44,
+          "rrf_all": 22,
+          "rrf_32": 22,
+          "direct_20": 13,
+          "merged": 5,
+          "filtered_no_top_limit": 5,
+          "final_top_8": 5,
+          "target_details": {
+            "exists_in_allowed_documents": true,
+            "focus_matches": [
+              "확진",
+              "격리",
+              "권고",
+              "기간"
+            ],
+            "text_disease_ids": [
+              "COVID19"
+            ],
+            "about_disease_ids": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "R-Q2",
+      "question": "인플루엔자 발생 시 학교(교직원)가 참고할 시설별 예방 조치는?",
+      "focus_terms": [
+        "발생",
+        "참고할",
+        "시설별",
+        "예방",
+        "조치"
+      ],
+      "targets": [
+        {
+          "chunk_id": "kdca_flu_facility_2026:p0017:b01",
+          "fulltext_64": 18,
+          "vector_64": 6,
+          "rrf_all": 11,
+          "rrf_32": 11,
+          "direct_20": null,
+          "merged": 12,
+          "filtered_no_top_limit": 12,
+          "final_top_8": null,
+          "target_details": {
+            "exists_in_allowed_documents": true,
+            "focus_matches": [
+              "발생",
+              "예방",
+              "조치"
+            ],
+            "text_disease_ids": [
+              "INFLUENZA"
+            ],
+            "about_disease_ids": [
+              "INFLUENZA"
+            ]
+          }
+        },
+        {
+          "chunk_id": "kdca_flu_facility_2026:p0018:b01",
+          "fulltext_64": 7,
+          "vector_64": 2,
+          "rrf_all": 2,
+          "rrf_32": 2,
+          "direct_20": null,
+          "merged": 4,
+          "filtered_no_top_limit": 4,
+          "final_top_8": 4,
+          "target_details": {
+            "exists_in_allowed_documents": true,
+            "focus_matches": [
+              "발생",
+              "예방"
+            ],
+            "text_disease_ids": [
+              "INFLUENZA"
+            ],
+            "about_disease_ids": [
+              "INFLUENZA"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R-Q3",
+      "question": "성홍열 진단 학생의 등교중지 기준은?",
+      "focus_terms": [
+        "진단",
+        "등교",
+        "기준"
+      ],
+      "targets": [
+        {
+          "chunk_id": "kdca_respiratory_2026:p0118:b01",
+          "fulltext_64": null,
+          "vector_64": null,
+          "rrf_all": null,
+          "rrf_32": null,
+          "direct_20": null,
+          "merged": null,
+          "filtered_no_top_limit": null,
+          "final_top_8": null,
+          "target_details": {
+            "exists_in_allowed_documents": true,
+            "focus_matches": [
+              "진단",
+              "등교"
+            ],
+            "text_disease_ids": [],
+            "about_disease_ids": []
+          }
+        },
+        {
+          "chunk_id": "kdca_respiratory_2026:p0116:b01",
+          "fulltext_64": 16,
+          "vector_64": 20,
+          "rrf_all": 4,
+          "rrf_32": 4,
+          "direct_20": null,
+          "merged": 7,
+          "filtered_no_top_limit": 6,
+          "final_top_8": 6,
+          "target_details": {
+            "exists_in_allowed_documents": true,
+            "focus_matches": [
+              "진단",
+              "등교"
+            ],
+            "text_disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "about_disease_ids": [
+              "SCARLET_FEVER"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R-T1",
+      "question": "인플루엔자가 유행하면 학교는 휴교해야 하나?",
+      "focus_terms": [
+        "유행",
+        "휴교"
+      ],
+      "targets": [
+        {
+          "chunk_id": "kdca_flu_facility_2026:p0013:b01",
+          "fulltext_64": 33,
+          "vector_64": null,
+          "rrf_all": 66,
+          "rrf_32": null,
+          "direct_20": 19,
+          "merged": 33,
+          "filtered_no_top_limit": 29,
+          "final_top_8": null,
+          "target_details": {
+            "exists_in_allowed_documents": true,
+            "focus_matches": [
+              "휴교"
+            ],
+            "text_disease_ids": [
+              "INFLUENZA"
+            ],
+            "about_disease_ids": []
+          }
+        },
+        {
+          "chunk_id": "gyeonggi_school_guide_2025:p0236:b04",
+          "fulltext_64": 52,
+          "vector_64": 44,
+          "rrf_all": 15,
+          "rrf_32": 15,
+          "direct_20": 9,
+          "merged": 4,
+          "filtered_no_top_limit": 4,
+          "final_top_8": 4,
+          "target_details": {
+            "exists_in_allowed_documents": true,
+            "focus_matches": [
+              "유행"
+            ],
+            "text_disease_ids": [
+              "INFLUENZA"
+            ],
+            "about_disease_ids": []
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "mode": "fulltext_and_direct_no_external_ai",
+  "cases": [
+    {
+      "question": "인플루엔자 잠복기는?",
+      "status": "OK",
+      "warnings": [],
+      "citations": [
+        {
+          "document_id": "moe_school_manual_v3",
+          "pdf_page": 49,
+          "chunk_id": "moe_school_manual_v3:p0049:t01r08"
+        },
+        {
+          "document_id": "moe_school_manual_v3",
+          "pdf_page": 221,
+          "chunk_id": "moe_school_manual_v3:p0221:t01r02"
+        },
+        {
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 6,
+          "chunk_id": "kdca_flu_facility_2026:p0006:b01"
+        },
+        {
+          "document_id": "moe_school_manual_v3",
+          "pdf_page": 50,
+          "chunk_id": "moe_school_manual_v3:p0050:t01r01"
+        },
+        {
+          "document_id": "moe_school_manual_v3",
+          "pdf_page": 224,
+          "chunk_id": "moe_school_manual_v3:p0224:t01r05"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 157,
+          "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r08"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 160,
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r01"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 160,
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r09"
+        }
+      ],
+      "bad_citations": {},
+      "bad_findings": {}
+    },
+    {
+      "question": "독감 잠복기는?",
+      "status": "OK",
+      "warnings": [],
+      "citations": [
+        {
+          "document_id": "moe_school_manual_v3",
+          "pdf_page": 49,
+          "chunk_id": "moe_school_manual_v3:p0049:t01r08"
+        },
+        {
+          "document_id": "moe_school_manual_v3",
+          "pdf_page": 221,
+          "chunk_id": "moe_school_manual_v3:p0221:t01r02"
+        },
+        {
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 6,
+          "chunk_id": "kdca_flu_facility_2026:p0006:b01"
+        },
+        {
+          "document_id": "moe_school_manual_v3",
+          "pdf_page": 50,
+          "chunk_id": "moe_school_manual_v3:p0050:t01r01"
+        },
+        {
+          "document_id": "moe_school_manual_v3",
+          "pdf_page": 224,
+          "chunk_id": "moe_school_manual_v3:p0224:t01r05"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 157,
+          "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r08"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 160,
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r01"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 160,
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r09"
+        }
+      ],
+      "bad_citations": {},
+      "bad_findings": {}
+    },
+    {
+      "question": "조류인플루엔자 잠복기는?",
+      "status": "NO_EVIDENCE",
+      "warnings": [
+        "질문에서 지원 질병을 찾지 못함"
+      ],
+      "citations": [],
+      "bad_citations": {},
+      "bad_findings": {}
+    },
+    {
+      "question": "조류 독감 잠복기는?",
+      "status": "NO_EVIDENCE",
+      "warnings": [
+        "질문에서 지원 질병을 찾지 못함"
+      ],
+      "citations": [],
+      "bad_citations": {},
+      "bad_findings": {}
+    },
+    {
+      "question": "파라인플루엔자 잠복기는?",
+      "status": "NO_EVIDENCE",
+      "warnings": [
+        "질문에서 지원 질병을 찾지 못함"
+      ],
+      "citations": [],
+      "bad_citations": {},
+      "bad_findings": {}
+    },
+    {
+      "question": "조류인플루엔자와 인플루엔자 잠복기를 비교해 주세요",
+      "status": "PARTIAL",
+      "warnings": [
+        "질문의 별도 질환 표현은 현재 질병 검색에서 제외되어 전체 비교는 확인 필요"
+      ],
+      "citations": [
+        {
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 25,
+          "chunk_id": "kdca_flu_facility_2026:p0025:b01"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 157,
+          "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r08"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 160,
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r01"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 160,
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r09"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 166,
+          "chunk_id": "gyeonggi_school_guide_2025:p0166:t01r02"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "pdf_page": 174,
+          "chunk_id": "gyeonggi_school_guide_2025:p0174:b03"
+        },
+        {
+          "document_id": "kdca_flu_facility_2026",
+          "pdf_page": 6,
+          "chunk_id": "kdca_flu_facility_2026:p0006:b01"
+        },
+        {
+          "document_id": "kdca_respiratory_2026",
+          "pdf_page": 58,
+          "chunk_id": "kdca_respiratory_2026:p0058:b01"
+        }
+      ],
+      "bad_citations": {},
+      "bad_findings": {}
+    }
+  ]
+}

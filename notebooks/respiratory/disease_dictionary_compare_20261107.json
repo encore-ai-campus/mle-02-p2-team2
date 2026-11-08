@@ -1,0 +1,71 @@
+{
+  "cases": [
+    {
+      "disease_id": "COVID19",
+      "local": {
+        "name": "코로나바이러스감염증-19",
+        "aliases": [
+          "COVID-19",
+          "코로나",
+          "코로나19"
+        ]
+      },
+      "db": {
+        "name": "코로나바이러스감염증-19",
+        "aliases": [
+          "COVID-19",
+          "코로나",
+          "코로나19"
+        ]
+      },
+      "same": true
+    },
+    {
+      "disease_id": "INFLUENZA",
+      "local": {
+        "name": "인플루엔자",
+        "aliases": [
+          "Flu",
+          "독감"
+        ]
+      },
+      "db": {
+        "name": "인플루엔자",
+        "aliases": [
+          "Flu",
+          "독감"
+        ]
+      },
+      "same": true
+    },
+    {
+      "disease_id": "MENINGOCOCCAL",
+      "local": {
+        "name": "수막구균 감염증",
+        "aliases": [
+          "Meningococcal disease",
+          "수막구균",
+          "침습성 수막구균 감염증"
+        ]
+      },
+      "db": null,
+      "same": false
+    },
+    {
+      "disease_id": "SCARLET_FEVER",
+      "local": {
+        "name": "성홍열",
+        "aliases": [
+          "Scarlet fever"
+        ]
+      },
+      "db": {
+        "name": "성홍열",
+        "aliases": [
+          "Scarlet fever"
+        ]
+      },
+      "same": true
+    }
+  ]
+}
