@@ -1,0 +1,1046 @@
+{
+  "question_id": "R-Q3",
+  "question": "성홍열 진단 학생의 등교중지 기준은?",
+  "executed_at_kst": "2026-11-08T14:23:14.249558+09:00",
+  "entrypoint": "rag.ui.service.build_resources → rag.ui.service.ask(polish=True)",
+  "status": "MAIN_CHECK_COMPLETED",
+  "additional_external_transmission_approval": "송수림 11/8: R-Q3 실행에 필요한 근거·프롬프트·파생 질의 전송 승인",
+  "LLM_stages": {
+    "router": [
+      {
+        "response_type": "DOMAIN",
+        "intent": "ACTION",
+        "secondary": [],
+        "diseases": [
+          "SCARLET_FEVER"
+        ],
+        "roles": [],
+        "confidence": "llm",
+        "reason": "성홍열 확진 학생의 학교 등교중지 기준을 묻는 학교 감염병 대응 질문입니다.",
+        "sub_questions": {
+          "action_search": "성홍열 확진 학생의 등교중지 기간과 등교 기준은 무엇인가요?"
+        },
+        "search_queries": {
+          "action_search": "감염병별 등교중지 기간 및 등교 기준"
+        },
+        "situation": {
+          "disease": "성홍열",
+          "status": "확진",
+          "count": null,
+          "scope": "",
+          "asker_role": "",
+          "asks": [
+            "등교중지 기준"
+          ]
+        },
+        "checks": [
+          "EXCLUSION"
+        ]
+      }
+    ],
+    "reranker": [
+      {
+        "picks": {
+          "kdca_respiratory_2026:p0294:b01": {
+            "card": "E5",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "항생제 치료 시작 후 최소 24시간까지 등원·등교 중지"
+            ],
+            "dropped_quotes": []
+          },
+          "kdca_respiratory_2026:p0116:b01": {
+            "card": "E7",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지"
+            ],
+            "dropped_quotes": []
+          },
+          "moe_school_manual_v3:p0050:t01r04": {
+            "card": "E1",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "항생제 치료 시작 후 24시간까지 | 항생제 치료 시작 후 24시간까지"
+            ],
+            "dropped_quotes": []
+          },
+          "gyeonggi_school_guide_2025:p0160:t01r03": {
+            "card": "E2",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "항생제 치료 시작 후 24시간까지|항생제 치료 시작 후 24시간까지"
+            ],
+            "dropped_quotes": []
+          },
+          "moe_school_manual_v3:p0207:b01": {
+            "card": "E8",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "성홍열을 진단받은 경우는 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지"
+            ],
+            "dropped_quotes": []
+          }
+        },
+        "order": [
+          "kdca_respiratory_2026:p0294:b01",
+          "kdca_respiratory_2026:p0116:b01",
+          "moe_school_manual_v3:p0050:t01r04",
+          "gyeonggi_school_guide_2025:p0160:t01r03",
+          "moe_school_manual_v3:p0207:b01"
+        ],
+        "coverage": [
+          {
+            "part": 1,
+            "question": "성홍열 진단 학생의 등교중지 기준은?",
+            "status": "ANSWERED",
+            "missing": ""
+          }
+        ],
+        "invalid": [],
+        "cards": 11
+      }
+    ],
+    "answer_writer": [
+      {
+        "answer": "**성홍열 확진 학생은 항생제 치료를 시작한 뒤 최소 24시간까지 등교를 중지해야 합니다.**[1][2]\n\n**상황 판단**\n- 질병관리청 호흡기감염병 관리지침(2026)은 성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교 중지하도록 안내합니다.[2]\n- 교육부 매뉴얼(2023)도 같은 기준을 제시하며, 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 합니다.[5][6]",
+        "problems": [],
+        "draft": "**성홍열 확진 학생은 항생제 치료를 시작한 뒤 최소 24시간까지 등교를 중지해야 합니다.**[1][2]\n\n**상황 판단**\n- 질병관리청 호흡기감염병 관리지침(2026)은 성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교 중지하도록 안내합니다.[2]\n- 교육부 매뉴얼(2023)도 같은 기준을 제시하며, 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 합니다.[5][6]",
+        "dropped": [],
+        "moved": [],
+        "marked": [],
+        "attempts": 1
+      }
+    ]
+  },
+  "embedding_inputs": [
+    {
+      "question": "성홍열 진단 학생의 등교중지 기준은?",
+      "reused": false
+    },
+    {
+      "question": "감염병별 등교중지 기간 및 등교 기준",
+      "reused": false
+    },
+    {
+      "question": "성홍열 진단 학생의 등교중지 기준은?",
+      "reused": true
+    }
+  ],
+  "openai_http_requests": [],
+  "db_writes": 0,
+  "source_code_writes": 0,
+  "bundle_writes": 0,
+  "allowed_document_ids": [
+    "gyeonggi_school_guide_2025",
+    "kdca_covid19_2026",
+    "kdca_diagnosis_reporting_2026",
+    "kdca_flu_facility_2026",
+    "kdca_hfmd_2026",
+    "kdca_measles_2026",
+    "kdca_respiratory_2026",
+    "kdca_vaccine_preventable_2026",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+  ],
+  "LLM_models": {
+    "router": "gpt-6-luna",
+    "reranker": "gpt-6-luna",
+    "answer_writer": "gpt-6-luna"
+  },
+  "main": {
+    "output": {
+      "response_type": "DOMAIN",
+      "status": "ANSWERED",
+      "answer": "**성홍열 확진 학생은 항생제 치료를 시작한 뒤 최소 24시간까지 등교를 중지해야 합니다.**[1][2]\n\n**상황 판단**\n- 질병관리청 호흡기감염병 관리지침(2026)은 성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교 중지하도록 안내합니다.[2]\n- 교육부 매뉴얼(2023)도 같은 기준을 제시하며, 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 합니다.[5][6]",
+      "findings": [
+        {
+          "claim": "[교육부 매뉴얼 PDF 50쪽 · 판단 기준: 질병별 등교중지 기간] 원문: “[표 3-3] 그 외 학교 내 감염병의 종류 및 특성\n| 감염병 | 임상 증상 | 감염 가능 기간 | 등교 중지(격리) 기간¹⁾²⁾ | 잠복기³⁾ | 밀접접촉자 파악 | 일시적 격리⁴⁾ | 마스크 착용 |\n| 성홍열 | 미만성 구진, 발열, 두통, 구토, 복통, 오한 및 인후염 | 항생제 치료 시작 후 24시간까지 | 항생제 치료 시작 후 24시간까지 | 1-3일 | O | O | O |”",
+          "chunk_ids": [
+            "moe_school_manual_v3:p0050:t01r04"
+          ],
+          "action_ids": [],
+          "disease_ids": [],
+          "concept_ids": []
+        },
+        {
+          "claim": "[경기도 가이드북 PDF 160쪽 · 판단 기준: 질병별 등교중지 기간] 원문: “표 3-2 감염병별 역학적 특성 및 관리방안 (계속)\n|감염병|임상증상|감염 가능 기간|등교중지(격리)<br>기간1)2)|잠복기3)|밀접<br>접촉자<br>파악|일시적<br>격리4)|마스크<br>착용|\n|성홍열|미만성 구진, 발열,<br>두통, 구토, 복통,<br>오한 및 인후염|<br>항생제 치료 시작 후<br>24시간까지|항생제 치료 시작 후<br>24시간까지|<br>1~3일|O|O|O|”",
+          "chunk_ids": [
+            "gyeonggi_school_guide_2025:p0160:t01r03"
+          ],
+          "action_ids": [],
+          "disease_ids": [],
+          "concept_ids": []
+        },
+        {
+          "claim": "[2026년도 호흡기감염병 관리지침 PDF 294쪽] 원문: “- 성홍열 의심 증상이 있는 경우 빠른 시일 내 진료  - 항생제 치료 시작 후 최소 24시간까지 등원·등교 중지”",
+          "chunk_ids": [
+            "kdca_respiratory_2026:p0294:b01"
+          ],
+          "action_ids": [],
+          "disease_ids": [],
+          "concept_ids": []
+        },
+        {
+          "claim": "학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함",
+          "chunk_ids": [
+            "kdca_respiratory_2026:p0116:b01"
+          ],
+          "action_ids": [],
+          "disease_ids": [
+            "SCARLET_FEVER"
+          ],
+          "concept_ids": []
+        },
+        {
+          "claim": "있는 경우는 빠른 시일 내에 의료기관에서 진료를 받고, 성홍열로 진단되는 경우는 의사의 처방에 따라",
+          "chunk_ids": [
+            "kdca_respiratory_2026:p0294:b01"
+          ],
+          "action_ids": [],
+          "disease_ids": [
+            "SCARLET_FEVER"
+          ],
+          "concept_ids": []
+        },
+        {
+          "claim": "등교(등원) 중지: 성홍열을 진단받은 경우는 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지",
+          "chunk_ids": [
+            "moe_school_manual_v3:p0207:b01"
+          ],
+          "action_ids": [],
+          "disease_ids": [
+            "SCARLET_FEVER"
+          ],
+          "concept_ids": []
+        },
+        {
+          "claim": "[교육부 매뉴얼 PDF 50쪽 · 판단 기준: 지침 우선 적용] 원문: “방역당국에서 별도의 관리지침을 제시할 경우에는 그 지침을 우선\n적용함”",
+          "chunk_ids": [
+            "moe_school_manual_v3:p0050:b01"
+          ],
+          "action_ids": [],
+          "disease_ids": [],
+          "concept_ids": []
+        }
+      ],
+      "citations": [
+        {
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0294:b01",
+          "pdf_page": 294,
+          "printed_page": 274,
+          "excerpt": "- 성홍열 의심 증상이 있는 경우 빠른 시일 내 진료\n\n- 항생제 치료 시작 후 최소 24시간까지 등원·등교 중지"
+        },
+        {
+          "document_id": "kdca_respiratory_2026",
+          "chunk_id": "kdca_respiratory_2026:p0116:b01",
+          "pdf_page": 116,
+          "printed_page": 96,
+          "excerpt": "행종료 후 14일 이내 제출\n\n- 결과보고서는 방역통합정보시스템 결과보고서 업로드를 통해 제출\n\n**바** **집단발생 관리**\n\n학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함\n\n1) 대상\n\n- 학교, 유치원 및 어린이집의 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는\n\n성홍열 환자나 의사환자가 2명"
+        },
+        {
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0050:t01r04",
+          "pdf_page": 50,
+          "printed_page": 36,
+          "excerpt": "[표 3-3] 그 외 학교 내 감염병의 종류 및 특성\n| 감염병 | 임상 증상 | 감염 가능 기간 | 등교 중지(격리) 기간¹⁾²⁾ | 잠복기³⁾ | 밀접접촉자 파악 | 일시적 격리⁴⁾ | 마스크 착용 |\n| 성홍열 | 미만성 구진, 발열, 두통, 구토, 복통, 오한 및 인후염 | 항생제 치료 시작 후 24시간까지 | 항생제 치료 시작 후 24시간까지 | 1-3일 | O | O | O |"
+        },
+        {
+          "document_id": "gyeonggi_school_guide_2025",
+          "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+          "pdf_page": 160,
+          "printed_page": 150,
+          "excerpt": "표 3-2 감염병별 역학적 특성 및 관리방안 (계속)\n|감염병|임상증상|감염 가능 기간|등교중지(격리)<br>기간1)2)|잠복기3)|밀접<br>접촉자<br>파악|일시적<br>격리4)|마스크<br>착용|\n|성홍열|미만성 구진, 발열,<br>두통, 구토, 복통,<br>오한 및 인후염|<br>항생제 치료 시작 후<br>24시간까지|항생제 치료 시작 후<br>24시간까지|<br>1~3일|O|O|O|"
+        },
+        {
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0207:b01",
+          "pdf_page": 207,
+          "printed_page": 193,
+          "excerpt": "현재 백신은 개발되어 있지 않음\n∙ 생활 지도 및 보건교육 실시 내용\n등교(등원) 중지: 성홍열을 진단받은 경우는 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지\n손 씻기 강조: 등교(등원) 시, 화장실 다녀온 후, 놀이 후, 식사 전 후, 하교(하원) 시 손 위생\n기침예절\n‣ 기침할 때는 휴지나 옷소매 위쪽으로 입과 코를 가리고 하고 반드시 올"
+        },
+        {
+          "document_id": "moe_school_manual_v3",
+          "chunk_id": "moe_school_manual_v3:p0050:b01",
+          "pdf_page": 50,
+          "printed_page": null,
+          "excerpt": "방역당국에서 별도의 관리지침을 제시할 경우에는 그 지침을 우선\n적용함"
+        }
+      ],
+      "action_ids": [],
+      "warnings": [
+        "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다."
+      ],
+      "tools_used": [
+        "action_search",
+        "disease_search"
+      ],
+      "search_rounds": 2
+    },
+    "trace": [
+      {
+        "step": "normalize_input",
+        "request_id": "ui-3707bb18a019",
+        "region": "NATIONAL",
+        "allowed": 10
+      },
+      {
+        "step": "classify_scope",
+        "mode": "llm",
+        "response_type": "DOMAIN",
+        "intent": "ACTION",
+        "secondary": [],
+        "reason": "성홍열 확진 학생의 학교 등교중지 기준을 묻는 학교 감염병 대응 질문입니다.",
+        "confidence": "llm",
+        "sub_questions": {
+          "action_search": "성홍열 확진 학생의 등교중지 기간과 등교 기준은 무엇인가요?"
+        },
+        "search_queries": {
+          "action_search": "감염병별 등교중지 기간 및 등교 기준"
+        },
+        "situation": {
+          "disease": "성홍열",
+          "status": "확진",
+          "count": null,
+          "scope": "",
+          "asker_role": "",
+          "asks": [
+            "등교중지 기준"
+          ]
+        },
+        "checks": [
+          "EXCLUSION"
+        ],
+        "rule": {
+          "response_type": "DOMAIN",
+          "intent": "ACTION",
+          "secondary": [],
+          "confidence": "high"
+        },
+        "error": null,
+        "seconds": 2.79
+      },
+      {
+        "step": "classify_intent",
+        "intent": "ACTION",
+        "secondary": []
+      },
+      {
+        "step": "select_tool",
+        "tool": "action_search",
+        "registered": true,
+        "round": 1,
+        "reason": "질문의 주 의도"
+      },
+      {
+        "step": "execute_tool",
+        "request_id": "ui-3707bb18a019",
+        "tool": "action_search",
+        "status": "OK",
+        "findings": 2,
+        "citations": 2,
+        "graph_paths": 0,
+        "seconds": 4.13,
+        "error": null,
+        "sub_question": null,
+        "companion": false
+      },
+      {
+        "step": "execute_tool",
+        "request_id": "ui-3707bb18a019",
+        "tool": "disease_search",
+        "status": "OK",
+        "findings": 8,
+        "citations": 8,
+        "graph_paths": 8,
+        "seconds": 3.23,
+        "error": null,
+        "sub_question": null,
+        "companion": true
+      },
+      {
+        "step": "merge_and_validate",
+        "findings": 10,
+        "citations": 8,
+        "unresolved": 0
+      },
+      {
+        "step": "evaluate_evidence",
+        "status": "ANSWERED",
+        "rounds": 2,
+        "unresolved": 0,
+        "resolved": 0,
+        "next_tool": null,
+        "decision": "종료"
+      },
+      {
+        "step": "check_facts",
+        "mode": "db",
+        "checks": [
+          "EXCLUSION"
+        ],
+        "found": {
+          "등교중지 기간": [
+            "moe_school_manual_v3:p0050:t01r04",
+            "gyeonggi_school_guide_2025:p0160:t01r03",
+            "moe_school_manual_v3:p0223:t01r06"
+          ]
+        },
+        "facts": [],
+        "added": 3,
+        "seconds": 0.22
+      },
+      {
+        "step": "select_evidence",
+        "mode": "llm",
+        "cards": 11,
+        "before": [
+          13,
+          11
+        ],
+        "candidates": [
+          "moe_school_manual_v3:p0050:t01r04",
+          "gyeonggi_school_guide_2025:p0160:t01r03",
+          "moe_school_manual_v3:p0223:t01r06",
+          "gyeonggi_school_guide_2025:p0181:b01",
+          "kdca_respiratory_2026:p0294:b01",
+          "kdca_diagnosis_reporting_2026:p0104:t01r02",
+          "kdca_respiratory_2026:p0116:b01",
+          "moe_school_manual_v3:p0207:b01",
+          "gyeonggi_school_guide_2025:p0180:t01r09",
+          "kdca_respiratory_2026:p0114:b01",
+          "kdca_respiratory_2026:p0113:b01"
+        ],
+        "after": [
+          6,
+          5
+        ],
+        "status": "ANSWERED",
+        "coverage": [
+          {
+            "part": 1,
+            "question": "성홍열 진단 학생의 등교중지 기준은?",
+            "status": "ANSWERED",
+            "missing": ""
+          }
+        ],
+        "picks": [
+          {
+            "chunk_id": "kdca_respiratory_2026:p0294:b01",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "항생제 치료 시작 후 최소 24시간까지 등원·등교 중지"
+            ],
+            "dropped_quotes": []
+          },
+          {
+            "chunk_id": "kdca_respiratory_2026:p0116:b01",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지"
+            ],
+            "dropped_quotes": []
+          },
+          {
+            "chunk_id": "moe_school_manual_v3:p0050:t01r04",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "항생제 치료 시작 후 24시간까지 | 항생제 치료 시작 후 24시간까지"
+            ],
+            "dropped_quotes": []
+          },
+          {
+            "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "항생제 치료 시작 후 24시간까지|항생제 치료 시작 후 24시간까지"
+            ],
+            "dropped_quotes": []
+          },
+          {
+            "chunk_id": "moe_school_manual_v3:p0207:b01",
+            "role": "DIRECT",
+            "part": 1,
+            "quotes": [
+              "성홍열을 진단받은 경우는 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지"
+            ],
+            "dropped_quotes": []
+          }
+        ],
+        "invalid": [],
+        "seconds": 3.79
+      },
+      {
+        "step": "compose_answer",
+        "mode": "llm",
+        "problems": [],
+        "dropped": [],
+        "moved": [],
+        "marked": [],
+        "attempts": 1,
+        "added": [],
+        "draft": "**성홍열 확진 학생은 항생제 치료를 시작한 뒤 최소 24시간까지 등교를 중지해야 합니다.**[1][2]\n\n**상황 판단**\n- 질병관리청 호흡기감염병 관리지침(2026)은 성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교 중지하도록 안내합니다.[2]\n- 교육부 매뉴얼(2023)도 같은 기준을 제시하며, 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 합니다.[5][6]",
+        "template": "원문에서 확인한 내용입니다.\n\n■ 원문 그대로 (행동으로 정리되지 않은 문단·표)\n- “[표 3-3] 그 외 학교 내 감염병의 종류 및 특성 | 감염병 | 임상 증상 | 감염 가능 기간 | 등교 중지(격리) 기간¹⁾²⁾ | 잠복기³⁾ | 밀접접촉자 파악 | 일시적 격리⁴⁾ | 마스크 착용 | | 성홍열 | 미만성 구진…”  (교육부 p.50 · 판단 기준: 질병별 등교중지 기간) [3]\n- “표 3-2 감염병별 역학적 특성 및 관리방안 (계속) |감염병|임상증상|감염 가능 기간|등교중지(격리)<br>기간1)2)|잠복기3)|밀접<br>접촉자<br>파악|일시적<br>격리4)|마스크<br>착용| |성홍열|미만성 구진, 발열,…”  (경기도 p.160 · 판단 기준: 질병별 등교중지 기간) [4]\n\n■ 질병관리청 호흡기감염병 관리지침\n- 학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함  (질병청 호흡기 p.116) [2]\n- 있는 경우는 빠른 시일 내에 의료기관에서 진료를 받고, 성홍열로 진단되는 경우는 의사의 처방에 따라  (질병청 호흡기 p.294) [1]\n\n■ 교육부 매뉴얼\n- 등교(등원) 중지: 성홍열을 진단받은 경우는 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지  (교육부 p.207) [5]\n\n그 밖의 근거 2건은 findings·citations에 있습니다.",
+        "seconds": 2.86
+      }
+    ],
+    "tool_results": [
+      {
+        "tool_name": "action_search",
+        "status": "OK",
+        "findings": [
+          {
+            "claim": "[경기도 가이드북 PDF 181쪽] 원문: “- 등교중지: 성홍열을 진단받은 경우 항생제 치료 시작 후 적어도 24시간까지 등교중지 - 손 씻기 강조: 등교 시, 화장실 다녀온 후, 놀이 후, 식사 전 후, 하교 시 손 위생 ¢ 학부모와 교직원들에게 안내문 발송”",
+            "chunk_ids": [
+              "gyeonggi_school_guide_2025:p0181:b01"
+            ],
+            "action_ids": [],
+            "disease_ids": [],
+            "concept_ids": []
+          },
+          {
+            "claim": "[2026년도 호흡기감염병 관리지침 PDF 294쪽] 원문: “- 성홍열 의심 증상이 있는 경우 빠른 시일 내 진료  - 항생제 치료 시작 후 최소 24시간까지 등원·등교 중지”",
+            "chunk_ids": [
+              "kdca_respiratory_2026:p0294:b01"
+            ],
+            "action_ids": [],
+            "disease_ids": [],
+            "concept_ids": []
+          }
+        ],
+        "citations": [
+          {
+            "document_id": "gyeonggi_school_guide_2025",
+            "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+            "pdf_page": 181,
+            "printed_page": 171,
+            "excerpt": "- 등교중지: 성홍열을 진단받은 경우 항생제 치료 시작 후 적어도 24시간까지 등교중지\n- 손 씻기 강조: 등교 시, 화장실 다녀온 후, 놀이 후, 식사 전 후, 하교 시 손 위생\n¢ 학부모와 교직원들에게 안내문 발송"
+          },
+          {
+            "document_id": "kdca_respiratory_2026",
+            "chunk_id": "kdca_respiratory_2026:p0294:b01",
+            "pdf_page": 294,
+            "printed_page": 274,
+            "excerpt": "- 성홍열 의심 증상이 있는 경우 빠른 시일 내 진료\n\n- 항생제 치료 시작 후 최소 24시간까지 등원·등교 중지"
+          }
+        ],
+        "graph_paths": [],
+        "warnings": [
+          "원문 인용 Finding은 검색된 원문을 그대로 옮긴 것이다. 해석·적용 판단은 포함하지 않는다."
+        ]
+      },
+      {
+        "tool_name": "disease_search",
+        "status": "OK",
+        "findings": [
+          {
+            "claim": "- 진단 여부 확인",
+            "chunk_ids": [
+              "gyeonggi_school_guide_2025:p0181:b01"
+            ],
+            "action_ids": [],
+            "disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "concept_ids": []
+          },
+          {
+            "claim": "36. [제2급-18] 성홍열(Scarlet fever) | 항목 | 원문 내용 | 신고를 위한 진단기준: ○ 환자 : 성홍열에 부합되는 임상증상을 나타내면서 확인 진단을 위한 검사기준에 따라 감염병병원체 감염이 확인된 사람 ○ 의사환자 - 의심환자 : 임상증상 및 역학적 연관성을 감안하여 성홍열이 의심되나 진단을 위한 검사기준에부합하는 검사결과가 없는 사",
+            "chunk_ids": [
+              "kdca_diagnosis_reporting_2026:p0104:t01r02"
+            ],
+            "action_ids": [],
+            "disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "concept_ids": []
+          },
+          {
+            "claim": "학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함",
+            "chunk_ids": [
+              "kdca_respiratory_2026:p0116:b01"
+            ],
+            "action_ids": [],
+            "disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "concept_ids": []
+          },
+          {
+            "claim": "있는 경우는 빠른 시일 내에 의료기관에서 진료를 받고, 성홍열로 진단되는 경우는 의사의 처방에 따라",
+            "chunk_ids": [
+              "kdca_respiratory_2026:p0294:b01"
+            ],
+            "action_ids": [],
+            "disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "concept_ids": []
+          },
+          {
+            "claim": "등교(등원) 중지: 성홍열을 진단받은 경우는 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지",
+            "chunk_ids": [
+              "moe_school_manual_v3:p0207:b01"
+            ],
+            "action_ids": [],
+            "disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "concept_ids": []
+          },
+          {
+            "claim": "성홍열 개요 |항목|내용|",
+            "chunk_ids": [
+              "gyeonggi_school_guide_2025:p0180:t01r09"
+            ],
+            "action_ids": [],
+            "disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "concept_ids": []
+          },
+          {
+            "claim": "라 진단을 위한 검사 기준",
+            "chunk_ids": [
+              "kdca_respiratory_2026:p0114:b01"
+            ],
+            "action_ids": [],
+            "disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "concept_ids": []
+          },
+          {
+            "claim": "나 신고 시기 및 신고를 위한 진단 기준",
+            "chunk_ids": [
+              "kdca_respiratory_2026:p0113:b01"
+            ],
+            "action_ids": [],
+            "disease_ids": [
+              "SCARLET_FEVER"
+            ],
+            "concept_ids": []
+          }
+        ],
+        "citations": [
+          {
+            "document_id": "gyeonggi_school_guide_2025",
+            "chunk_id": "gyeonggi_school_guide_2025:p0181:b01",
+            "pdf_page": 181,
+            "printed_page": 171,
+            "excerpt": "학교 내 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는 성홍열 환자나 의사환자가 2명 이상\n발생 시 집단발생을 확인하고 예방 및 관리 실시\n¢ 집단발생 확인\n- 진단 여부 확인\n- 발생 현황 확인: 발생 건수, 연령, 발생장소(학급, 반 등), 노출자 수 등\n- 중증 사례 확인: 합병증, 입원, 수두 중복 감염 등\n¢ 예방수칙 교육 및 홍"
+          },
+          {
+            "document_id": "kdca_diagnosis_reporting_2026",
+            "chunk_id": "kdca_diagnosis_reporting_2026:p0104:t01r02",
+            "pdf_page": 104,
+            "printed_page": 96,
+            "excerpt": "36. [제2급-18] 성홍열(Scarlet fever) | 항목 | 원문 내용 | 신고를 위한 진단기준: ○ 환자 : 성홍열에 부합되는 임상증상을 나타내면서 확인 진단을 위한 검사기준에 따라 감염병병원체 감염이 확인된 사람 ○ 의사환자 - 의심환자 : 임상증상 및 역학적 연관성을 감안하여 성홍열이 의심되나 진단을 위한 검사기준에부합하는 검사결과가 없는 사"
+          },
+          {
+            "document_id": "kdca_respiratory_2026",
+            "chunk_id": "kdca_respiratory_2026:p0116:b01",
+            "pdf_page": 116,
+            "printed_page": 96,
+            "excerpt": "행종료 후 14일 이내 제출\n\n- 결과보고서는 방역통합정보시스템 결과보고서 업로드를 통해 제출\n\n**바** **집단발생 관리**\n\n학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함\n\n1) 대상\n\n- 학교, 유치원 및 어린이집의 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는\n\n성홍열 환자나 의사환자가 2명"
+          },
+          {
+            "document_id": "kdca_respiratory_2026",
+            "chunk_id": "kdca_respiratory_2026:p0294:b01",
+            "pdf_page": 294,
+            "printed_page": 274,
+            "excerpt": "합니다.\n\n이에, 아래와 같이 성홍열 의심 증상 및 주의사항을 알려드리오니 참고하시어, 자녀가 성홍열 의심증상이\n\n있는 경우는 빠른 시일 내에 의료기관에서 진료를 받고, 성홍열로 진단되는 경우는 의사의 처방에 따라\n\n항생제 치료를 받으시기 바랍니다.\n\n또한 다른 어린이들에게 전파를 차단하기 위해서는 항생제 치료 시작 후 최소 24시간까지는 등원·등교를\n\n시"
+          },
+          {
+            "document_id": "moe_school_manual_v3",
+            "chunk_id": "moe_school_manual_v3:p0207:b01",
+            "pdf_page": 207,
+            "printed_page": 193,
+            "excerpt": "현재 백신은 개발되어 있지 않음\n∙ 생활 지도 및 보건교육 실시 내용\n등교(등원) 중지: 성홍열을 진단받은 경우는 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지\n손 씻기 강조: 등교(등원) 시, 화장실 다녀온 후, 놀이 후, 식사 전 후, 하교(하원) 시 손 위생\n기침예절\n‣ 기침할 때는 휴지나 옷소매 위쪽으로 입과 코를 가리고 하고 반드시 올"
+          },
+          {
+            "document_id": "gyeonggi_school_guide_2025",
+            "chunk_id": "gyeonggi_school_guide_2025:p0180:t01r09",
+            "pdf_page": 180,
+            "printed_page": 170,
+            "excerpt": "성홍열 개요\n|항목|내용|\n|진 단|∙확인 진단: 검체(구인두도말, 혈액)에서 S. pyogenes 분리 동정<br>∙추정 진단: 검체(구인두도말)에서 특이 항원 검출|"
+          },
+          {
+            "document_id": "kdca_respiratory_2026",
+            "chunk_id": "kdca_respiratory_2026:p0114:b01",
+            "pdf_page": 114,
+            "printed_page": 94,
+            "excerpt": "- ● 2026년도 호흡기감염병 관리지침(수막구균 감염증, 성홍열, 급성호흡기감염증)\n\n**라** **진단을 위한 검사 기준**\n\n- 확인 진단\n\n－ 검체(구인두도말, 혈액)에서 S. pyogenes 분리 동정\n\n- 추정 진단\n\n－ 검체(구인두도말)에서 특이 항원 검출\n\n###### **4**\n\n**역학조사**\n\n**가** **대상**\n\n- 개별 사례조사\n"
+          },
+          {
+            "document_id": "kdca_respiratory_2026",
+            "chunk_id": "kdca_respiratory_2026:p0113:b01",
+            "pdf_page": 113,
+            "printed_page": 93,
+            "excerpt": "－\n단원 Ⅱ 각 론 성홍열\n\n###### **3**\n\n**감시**\n\n**가** **신고범위**\n\n: 환자, 의사환자\n\n**나** **신고 시기 및 신고를 위한 진단 기준**\n\n**<표 2-2> 성홍열 신고를 위한 진단 기준**\n\n**신고 시기** ∙ 24시간 이내\n\n∙ 성홍열에 부합되는 임상증상을 나타내면서 확인 진단을 위한 검사기준에 따라 감염병\n\n병원체"
+          }
+        ],
+        "graph_paths": [
+          {
+            "edges": [
+              {
+                "source_ref": "Document:gyeonggi_school_guide_2025",
+                "relationship_type": "HAS_CHUNK",
+                "target_ref": "Chunk:gyeonggi_school_guide_2025:p0181:b01"
+              }
+            ]
+          },
+          {
+            "edges": [
+              {
+                "source_ref": "Document:kdca_diagnosis_reporting_2026",
+                "relationship_type": "HAS_CHUNK",
+                "target_ref": "Chunk:kdca_diagnosis_reporting_2026:p0104:t01r02"
+              }
+            ]
+          },
+          {
+            "edges": [
+              {
+                "source_ref": "Document:kdca_respiratory_2026",
+                "relationship_type": "HAS_CHUNK",
+                "target_ref": "Chunk:kdca_respiratory_2026:p0116:b01"
+              },
+              {
+                "source_ref": "Chunk:kdca_respiratory_2026:p0116:b01",
+                "relationship_type": "ABOUT",
+                "target_ref": "Disease:SCARLET_FEVER"
+              }
+            ]
+          },
+          {
+            "edges": [
+              {
+                "source_ref": "Document:kdca_respiratory_2026",
+                "relationship_type": "HAS_CHUNK",
+                "target_ref": "Chunk:kdca_respiratory_2026:p0294:b01"
+              }
+            ]
+          },
+          {
+            "edges": [
+              {
+                "source_ref": "Document:moe_school_manual_v3",
+                "relationship_type": "HAS_CHUNK",
+                "target_ref": "Chunk:moe_school_manual_v3:p0207:b01"
+              }
+            ]
+          },
+          {
+            "edges": [
+              {
+                "source_ref": "Document:gyeonggi_school_guide_2025",
+                "relationship_type": "HAS_CHUNK",
+                "target_ref": "Chunk:gyeonggi_school_guide_2025:p0180:t01r09"
+              },
+              {
+                "source_ref": "Chunk:gyeonggi_school_guide_2025:p0180:t01r09",
+                "relationship_type": "ABOUT",
+                "target_ref": "Disease:SCARLET_FEVER"
+              }
+            ]
+          },
+          {
+            "edges": [
+              {
+                "source_ref": "Document:kdca_respiratory_2026",
+                "relationship_type": "HAS_CHUNK",
+                "target_ref": "Chunk:kdca_respiratory_2026:p0114:b01"
+              }
+            ]
+          },
+          {
+            "edges": [
+              {
+                "source_ref": "Document:kdca_respiratory_2026",
+                "relationship_type": "HAS_CHUNK",
+                "target_ref": "Chunk:kdca_respiratory_2026:p0113:b01"
+              }
+            ]
+          }
+        ],
+        "warnings": []
+      }
+    ],
+    "seconds": 14.68,
+    "request_id": "ui-3707bb18a019"
+  },
+  "final_answer": "**성홍열 확진 학생은 항생제 치료를 시작한 뒤 최소 24시간까지 등교를 중지해야 합니다.**[1][2]\n\n**상황 판단**\n- 질병관리청 호흡기감염병 관리지침(2026)은 성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교 중지하도록 안내합니다.[2]\n- 교육부 매뉴얼(2023)도 같은 기준을 제시하며, 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 합니다.[5][6]",
+  "final_status": "ANSWERED",
+  "final_citations": [
+    {
+      "number": 1,
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0294:b01",
+      "pdf_page": 294,
+      "printed_page": 274,
+      "excerpt": "- 성홍열 의심 증상이 있는 경우 빠른 시일 내 진료\n\n- 항생제 치료 시작 후 최소 24시간까지 등원·등교 중지"
+    },
+    {
+      "number": 2,
+      "document_id": "kdca_respiratory_2026",
+      "chunk_id": "kdca_respiratory_2026:p0116:b01",
+      "pdf_page": 116,
+      "printed_page": 96,
+      "excerpt": "행종료 후 14일 이내 제출\n\n- 결과보고서는 방역통합정보시스템 결과보고서 업로드를 통해 제출\n\n**바** **집단발생 관리**\n\n학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함\n\n1) 대상\n\n- 학교, 유치원 및 어린이집의 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는\n\n성홍열 환자나 의사환자가 2명"
+    },
+    {
+      "number": 3,
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0050:t01r04",
+      "pdf_page": 50,
+      "printed_page": 36,
+      "excerpt": "[표 3-3] 그 외 학교 내 감염병의 종류 및 특성\n| 감염병 | 임상 증상 | 감염 가능 기간 | 등교 중지(격리) 기간¹⁾²⁾ | 잠복기³⁾ | 밀접접촉자 파악 | 일시적 격리⁴⁾ | 마스크 착용 |\n| 성홍열 | 미만성 구진, 발열, 두통, 구토, 복통, 오한 및 인후염 | 항생제 치료 시작 후 24시간까지 | 항생제 치료 시작 후 24시간까지 | 1-3일 | O | O | O |"
+    },
+    {
+      "number": 4,
+      "document_id": "gyeonggi_school_guide_2025",
+      "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+      "pdf_page": 160,
+      "printed_page": 150,
+      "excerpt": "표 3-2 감염병별 역학적 특성 및 관리방안 (계속)\n|감염병|임상증상|감염 가능 기간|등교중지(격리)<br>기간1)2)|잠복기3)|밀접<br>접촉자<br>파악|일시적<br>격리4)|마스크<br>착용|\n|성홍열|미만성 구진, 발열,<br>두통, 구토, 복통,<br>오한 및 인후염|<br>항생제 치료 시작 후<br>24시간까지|항생제 치료 시작 후<br>24시간까지|<br>1~3일|O|O|O|"
+    },
+    {
+      "number": 5,
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0207:b01",
+      "pdf_page": 207,
+      "printed_page": 193,
+      "excerpt": "현재 백신은 개발되어 있지 않음\n∙ 생활 지도 및 보건교육 실시 내용\n등교(등원) 중지: 성홍열을 진단받은 경우는 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지\n손 씻기 강조: 등교(등원) 시, 화장실 다녀온 후, 놀이 후, 식사 전 후, 하교(하원) 시 손 위생\n기침예절\n‣ 기침할 때는 휴지나 옷소매 위쪽으로 입과 코를 가리고 하고 반드시 올"
+    },
+    {
+      "number": 6,
+      "document_id": "moe_school_manual_v3",
+      "chunk_id": "moe_school_manual_v3:p0050:b01",
+      "pdf_page": 50,
+      "printed_page": null,
+      "excerpt": "방역당국에서 별도의 관리지침을 제시할 경우에는 그 지침을 우선\n적용함"
+    }
+  ],
+  "criterion_check": {
+    "answer_contains_24hours": true,
+    "answer_contains_antibiotic_treatment_start_24hours": true,
+    "answer_sentences_with_24hours": [
+      {
+        "sentence": "**성홍열 확진 학생은 항생제 치료를 시작한 뒤 최소 24시간까지 등교를 중지해야 합니다.**[1][2]",
+        "contains_antibiotic": true,
+        "contains_treatment": true,
+        "contains_start": true,
+        "contains_school_exclusion": true,
+        "citations": [
+          {
+            "citation_number": 1,
+            "chunk_id": "kdca_respiratory_2026:p0294:b01",
+            "excerpt": "- 성홍열 의심 증상이 있는 경우 빠른 시일 내 진료\n\n- 항생제 치료 시작 후 최소 24시간까지 등원·등교 중지",
+            "antibiotic_24h_source_spans": [
+              "항생제 치료를 받으시기 바랍니다. 또한 다른 어린이들에게 전파를 차단하기 위해서는 항생제 치료 시작 후 최소 24시간까지는 등원·등교를 시키시면 안됩니다. **□ 성홍열 의심증상** - 갑작스러운 발열 - 갑자기 발생한 인두염과 인후통 - 두통, 메스꺼움, 구토, 복통 - 증상",
+              "항생제 치료 시작 후 최소 24시간까지 등원·등교 중지 - 항생제는 처방에 따라 모두 복용하여 치료 완료 **□ 성홍열 환아 간호 시** - 충분한 수분 섭취 - 가능한 말을 삼가고 가습 - 매일"
+            ]
+          },
+          {
+            "citation_number": 2,
+            "chunk_id": "kdca_respiratory_2026:p0116:b01",
+            "excerpt": "행종료 후 14일 이내 제출\n\n- 결과보고서는 방역통합정보시스템 결과보고서 업로드를 통해 제출\n\n**바** **집단발생 관리**\n\n학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함\n\n1) 대상\n\n- 학교, 유치원 및 어린이집의 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는\n\n성홍열 환자나 의사환자가 2명",
+            "antibiotic_24h_source_spans": [
+              "항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지 ∙ ･ 손씻기 강조: 등교(등원) 시, 화장실 다녀온 후, 놀이 후, 식사 전 후, 하교(하원) 시 손위생 － 학부모와 직원들에게 안내문 "
+            ]
+          }
+        ]
+      },
+      {
+        "sentence": "- 질병관리청 호흡기감염병 관리지침(2026)은 성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교 중지하도록 안내합니다.[2]",
+        "contains_antibiotic": true,
+        "contains_treatment": true,
+        "contains_start": true,
+        "contains_school_exclusion": true,
+        "citations": [
+          {
+            "citation_number": 2,
+            "chunk_id": "kdca_respiratory_2026:p0116:b01",
+            "excerpt": "행종료 후 14일 이내 제출\n\n- 결과보고서는 방역통합정보시스템 결과보고서 업로드를 통해 제출\n\n**바** **집단발생 관리**\n\n학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함\n\n1) 대상\n\n- 학교, 유치원 및 어린이집의 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는\n\n성홍열 환자나 의사환자가 2명",
+            "antibiotic_24h_source_spans": [
+              "항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지 ∙ ･ 손씻기 강조: 등교(등원) 시, 화장실 다녀온 후, 놀이 후, 식사 전 후, 하교(하원) 시 손위생 － 학부모와 직원들에게 안내문 "
+            ]
+          }
+        ]
+      }
+    ],
+    "note": "문장별 인용 번호를 최종 citations에 대응하고 실제 DB 본문 근거 구간도 함께 기록.",
+    "supporting_chunk_ids": [
+      "kdca_respiratory_2026:p0294:b01",
+      "kdca_respiratory_2026:p0116:b01"
+    ],
+    "supporting_reranker_quotes": [
+      {
+        "chunk_id": "kdca_respiratory_2026:p0294:b01",
+        "quotes": [
+          "항생제 치료 시작 후 최소 24시간까지 등원·등교 중지"
+        ]
+      },
+      {
+        "chunk_id": "kdca_respiratory_2026:p0116:b01",
+        "quotes": [
+          "성홍열 진단 시 항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지"
+        ]
+      }
+    ]
+  },
+  "p116_excerpt_diagnosis": {
+    "chunk_id": "kdca_respiratory_2026:p0116:b01",
+    "focus_terms": [
+      "진단",
+      "등교",
+      "기준"
+    ],
+    "focus_first_positions": [
+      {
+        "term": "진단",
+        "first_position": 526
+      },
+      {
+        "term": "등교",
+        "first_position": 345
+      }
+    ],
+    "chosen_position": 345,
+    "chosen_claim": "학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함",
+    "chosen_excerpt": "행종료 후 14일 이내 제출\n\n- 결과보고서는 방역통합정보시스템 결과보고서 업로드를 통해 제출\n\n**바** **집단발생 관리**\n\n학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함\n\n1) 대상\n\n- 학교, 유치원 및 어린이집의 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는\n\n성홍열 환자나 의사환자가 2명",
+    "excerpt_start": 245,
+    "excerpt_end": 445,
+    "excerpt_limit_characters": 200,
+    "target_24h_source_spans": [
+      {
+        "start": 691,
+        "end": 784,
+        "text": "항생제 치료 시작 후 적어도 24시간까지 등교(등원) 중지\n\n∙ ･\n손씻기 강조: 등교(등원) 시, 화장실 다녀온 후, 놀이 후, 식사 전 후, 하교(하원) 시 손위생"
+      }
+    ],
+    "actual_disease_search_citations_in_main": [
+      {
+        "document_id": "kdca_respiratory_2026",
+        "chunk_id": "kdca_respiratory_2026:p0116:b01",
+        "pdf_page": 116,
+        "printed_page": 96,
+        "excerpt": "행종료 후 14일 이내 제출\n\n- 결과보고서는 방역통합정보시스템 결과보고서 업로드를 통해 제출\n\n**바** **집단발생 관리**\n\n학부모 안내를 통한 성홍열 환자의 치료 및 등원(등교) 중지와 감염전파 예방이 중요함\n\n1) 대상\n\n- 학교, 유치원 및 어린이집의 동일 학급이나 동일 반 등에서 7일 이내에 역학적 연관성이 있는\n\n성홍열 환자나 의사환자가 2명"
+      }
+    ],
+    "computed_excerpt_matches_main_tool": true,
+    "functions": {
+      "_search": {
+        "file": "src/rag/respiratory/disease_tool.py",
+        "line": 646
+      },
+      "_focus_position": {
+        "file": "src/rag/respiratory/disease_tool.py",
+        "line": 347
+      },
+      "_claim_at": {
+        "file": "src/rag/respiratory/disease_tool.py",
+        "line": 538
+      },
+      "_excerpt_around": {
+        "file": "src/rag/respiratory/disease_tool.py",
+        "line": 577
+      }
+    },
+    "reason": "p116은 표 행이 아닌 블록 청크이므로 _search는 핵심어 최초 등장 위치의 최솟값을 basis_position으로 사용. _claim_at은 그 위치의 줄, _excerpt_around는 앞뒤 약100자를 포함한200자를 반환. 항생제·24시간이 함께 있는 구간을 우선하지 않으며 F3 순위 가중치는 발췌 위치에 반영되지 않음.",
+    "main_compensated_for_excerpt_gap": true,
+    "main_compensation": "메인 재순위 단계가 본문에서 추가로 읽은 구간에서 24시간 기준을 찾아 원문 일치 검증을 통과한 quotes로 채택."
+  },
+  "proposed_changes_only": [
+    {
+      "target_functions": [
+        "_search basis_position",
+        "_focus_position",
+        "_excerpt_around"
+      ],
+      "proposal": "본문의 모든 후보 구간을 비교해 질문의 행위 핵심어와 시간·조건이 함께 있는 문장/문단을 우선 발췌. 이번 질문은 등교·중지와 항생제 치료 시작·24시간이 같은 구간에 있는지 확인하고 문장 끝을 잘라내지 않도록 경계를 보존.",
+      "generic_rule": "질문 행위·조건 일치도로 선정하며 특정 문서·쪽수·정답 ID를 우선하지 않음.",
+      "implemented": false
+    },
+    {
+      "target_functions": [
+        "_direct_candidates action_keys",
+        "focus_terms 사전 정규화"
+      ],
+      "proposal": "고정 행동 단어10개를 코드에서 관리하는 대신 승인된 ActionConcept 사전의 name·aliases와 검수한 질의 표현에서 로드. 귀가·귀가조치도 원문 맥락을 확인해 해당 행동 개념의 검수된 검색 표현으로 등록하고 같은 로더를 순위·발췌 선정에 재사용.",
+      "dictionary_source": "src/index/school/dictionaries/concepts.json",
+      "dictionary_version": "school-draft-2026-11-04b",
+      "dictionary_status": "DRAFT_LOCAL_UNAPPROVED",
+      "relevant_existing_entries": [
+        {
+          "concept_id": "CONTACT_GUARDIAN",
+          "name": "개별 보호자 연락",
+          "group": "7-1 신고·보고·통보",
+          "description": "유증상·환자 학생의 보호자에게 연락하여 인계·진료 요청 등",
+          "not_for": [
+            "전체 안내"
+          ]
+        },
+        {
+          "concept_id": "REQUEST_MEDICAL_VISIT",
+          "name": "의료기관 진료 요청·안내",
+          "group": "7-2 발견·확인·등교 관리"
+        },
+        {
+          "concept_id": "EXCLUDE_FROM_SCHOOL",
+          "name": "등교중지 실시·통보",
+          "group": "7-2 발견·확인·등교 관리"
+        },
+        {
+          "concept_id": "END_EXCLUSION",
+          "name": "등교중지 해제·복귀 확인",
+          "group": "7-2 발견·확인·등교 관리"
+        },
+        {
+          "concept_id": "ISSUE_EXCLUSION_NOTICE",
+          "name": "등교중지 안내문 배부·생활수칙 안내",
+          "group": "7-2 발견·확인·등교 관리"
+        }
+      ],
+      "gwigah_present_in_current_dictionary": false,
+      "note": "현재 사전에서 귀가 표기를 찾지 못했으므로 이미 등록된 별칭이라고 간주하지 않음. 귀가를 모든 등교중지 상황과 무조건 동의어로 처리하지 않음.",
+      "implemented": false
+    }
+  ],
+  "source_and_bundle_hashes_unchanged": true,
+  "source_hashes_sha256": {
+    "src/rag/ui/service.py": "35d214a409583aa6b541abff429c23947fde18ee27d21ef32ea8a02ab502642b",
+    "src/rag/respiratory/disease_tool.py": "f289e6c6f78e3f24493fe6d3fd5c1ef6f13fb19f88c30f195bffddb6f58c35a9",
+    "src/rag/school/rerank.py": "33d69a326f75d4fc60df6559360fb4414ec5f40c604d7ebe966fe382888bd083",
+    "src/rag/school/answer_writer.py": "0c2c471b50e17c1cf24b225dcbe09ea047f905bbedab3c03fb5ebd9a48eaaaf4",
+    "src/rag/school/main_graph.py": "7d017de98fdaa2b6e49becbb36ab1bae41218af54203b23f1f51d58b276d5e6a",
+    "data/interim/respiratory/bundle.json": "eb9b18eba3fedbb6c1d3bbde80096963f32d20ff8e105f22256b50497467b914"
+  },
+  "logical_call_observation": {
+    "LLM_stage_invocations": {
+      "router": 1,
+      "reranker": 1,
+      "answer_writer": 1
+    },
+    "embedding_wrapper_calls": 3,
+    "distinct_embedding_inputs": 2,
+    "http_request_count": null,
+    "http_note": "HTTP 후크에서 요청을 관측하지 못했으므로 빈 목록을 실제 API 요청0회로 해석하지 않음. 기록한 호출 수는 메인 의존 함수 호출 기준이며 재시도 횟수는 별도 측정하지 않음."
+  },
+  "limitations": [
+    "메인 R-Q3 1회 실행 결과. F3 적용 전 메인 답변과의 통제된 전후 비교는 아니므로 이번 답변을 F3만의 효과로 단정하지 않음.",
+    "p116의 Tool 발췌에는 24시간 기준이 없지만 이번 메인 실행에서는 본문 추가 구간과 재순위 quotes로 보완됨.",
+    "③은 수정 후보만 기록했으며 코드·사전은 변경하지 않음."
+  ]
+}
