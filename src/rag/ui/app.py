@@ -46,6 +46,12 @@ PROGRESS = {"classify_scope": "질문을 이해했습니다. 검색 도구를 �
 COMPOSE_MODES = {"llm": "다듬은 답변(검사 통과)", "template": "원문 정리형", "template_fallback": "원문 정리형(다듬은 답변이 검사에 걸림)"}
 STATUS_STYLE = {"ANSWERED": ("✅", "green"), "PARTIAL": ("🟡", "orange"), "INSUFFICIENT_EVIDENCE": ("⚪", "gray"),
                 "ERROR": ("⛔", "red")}
+# 예시 질문(11/09): 11/08 메인 화면에서 실제로 실행해 확인한 질문만 둔다(Q10·Q11 ANSWERED, Q23 PARTIAL). 문구를 바꾸지 않는다.
+# 버튼 라벨은 짧게, 실제로 실행되는 질문은 두 번째 값이다.
+EXAMPLE_QUESTIONS = [("의사 신고 vs 학교장 신고", "의사가 하는 신고와 학교장 등이 하는 신고는 법적으로 어떻게 구분되나요?"),
+                     ("신고의무자가 아닌 사람이 발견하면", "신고의무자가 아닌 사람이 감염병 환자로 의심되는 사람을 발견하면 어떻게 해야 하나요?"),
+                     ("백일해 접촉자 안내", "학교에서 백일해 환자가 발생했을 때 접촉자 안내는 어떻게 하나요?")]
+PENDING_KEY = "pending_question"     # 예시 버튼이 누른 질문을 다음 재실행으로 넘기는 session_state 키(다른 키와 겹치지 않게 한 곳에서 관리)
 
 
 # ---------------------------------------------------------------- 자원·접근
@@ -419,6 +425,24 @@ def show_footer() -> None:
         st.caption("입력한 질문은 서비스 점검을 위해 저장될 수 있습니다. 학생 이름·연락처 같은 개인정보는 입력하지 마세요.")
 
 
+def pick_example(text: str) -> None:
+    """예시 버튼의 on_click 콜백. 질문을 맡겨 두기만 한다. 실제 실행은 main()이 채팅 입력과 같은 경로로 한다."""
+    st.session_state[PENDING_KEY] = text
+
+
+def clear_conversation() -> None:
+    """'현재 화면 대화 지우기' 버튼의 on_click 콜백. 화면 대화(history)만 비운다.
+    저장한 답변(saved)·인증·개발자 설정과 서버의 질문 이력 파일은 건드리지 않는다."""
+    st.session_state["history"] = []
+
+
+def show_examples() -> None:
+    """대화가 비어 있을 때 예시 질문 버튼을 보여 준다. 누르면 pick_example 이 질문을 맡긴다."""
+    st.caption("예시 질문을 눌러 바로 물어볼 수 있습니다.")
+    for index, (label, text) in enumerate(EXAMPLE_QUESTIONS):
+        st.button(f"💬 {label}", key=f"example-{index}", on_click=pick_example, args=(text,), help=text)
+
+
 def render_history(items: list[dict], documents: dict, developer: bool = False) -> None:
     """최근 대화 10건을 새것부터 보여 준다. developer 가 참이면 점검용 정보도 함께 보여 준다."""
     for index, item in enumerate(items[:10]):
@@ -500,7 +524,10 @@ def main() -> None:
     st.title("🏫 학교 감염병 대응 길잡이")
     st.caption("교육부·경기도교육청·질병관리청 지침과 감염병예방법을 지식 그래프로 묶어, 근거 원문과 쪽수로 답합니다.")
 
-    question = st.chat_input("질문을 입력하세요 (예: 결핵 확진 학생이 나오면 담임교사는 무엇을 하나요?)")
+    typed = st.chat_input("질문을 입력하세요 (예: 결핵 확진 학생이 나오면 담임교사는 무엇을 하나요?)")
+    # 예시 버튼이 맡긴 질문은 pop 으로 꺼내 한 번만 쓴다(다음 재실행에서 다시 실행되지 않는다). 직접 입력이 있으면 그것이 우선.
+    pending = st.session_state.pop(PENDING_KEY, None)
+    question = typed or pending
     history_items = st.session_state.setdefault("history", [])
 
     saved = st.session_state.setdefault("saved", [])
@@ -515,6 +542,11 @@ def main() -> None:
             if history.logging_enabled():
                 history.append_record(history.make_record(question, result, polish=polish))
             st.rerun()      # 스트리밍 화면을 지우고 최종 결과(출처·처리 흐름 포함)로 다시 그린다
+        if not history_items:
+            show_examples()
+        else:
+            st.button("🧹 현재 화면 대화 지우기", key="clear-conversation", on_click=clear_conversation,
+                      help="화면에 쌓인 대화만 지웁니다. '저장한 답변'과 서비스 점검용 질문 기록은 그대로 남습니다.")
         render_history(history_items, documents, developer=developer)
     with tabs[1]:
         show_saved()
