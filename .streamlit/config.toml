@@ -1,0 +1,10 @@
+# 화면 테마(11/09 시안 C). 이 파일을 지우면 Streamlit 기본 테마로 돌아간다.
+# 로컬: 프로젝트 루트에서 `streamlit run src/rag/ui/app.py` 로 실행할 때 읽힌다. 클라우드: 저장소 루트의 이 파일을 읽는다.
+# 접속 정보·비밀번호는 여기에 넣지 않는다(Secrets/.env 사용, .streamlit/secrets.toml 은 Git 에서 제외).
+[theme]
+base = "light"
+primaryColor = "#2457d6"
+backgroundColor = "#eef1f5"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#18212d"
+font = "sans serif"

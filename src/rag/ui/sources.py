@@ -73,6 +73,28 @@ def source_lines(citations: list[dict], documents: dict, urls: dict[str, str]) -
     return [source_line(g, urls.get(g["document_id"])) for g in group_sources(citations, documents)]
 
 
+def source_cards(citations: list[dict], documents: dict, urls: dict[str, str]) -> list[dict]:
+    """답변 하나의 근거 문서를 카드 화면용으로 만든다(11/09 시안 C). 문서 하나당 한 장.
+    title_md: 문서명(링크가 있으면 링크, 마크다운 이스케이프). chips: 발행처·판본·PDF 쪽·인쇄 쪽을 칩 글자로 나눈 목록.
+    모든 값은 DB·manifest 의 메타데이터와 Citation 쪽수이며 사용자 입력이 아니다. 쓰는 쪽에서 HTML 이스케이프도 한다."""
+    cards = []
+    for g in group_sources(citations, documents):
+        meta = documents.get(g["document_id"]) or {}
+        title = _esc(g["title"])
+        url = urls.get(g["document_id"])
+        chips = []
+        issuer = meta.get("issuer")
+        if issuer and "확인 필요" not in str(issuer):        # '확인 필요'는 칩으로 보여 주지 않는다(발행처 칩만 생략)
+            chips.append(str(issuer))
+        if g.get("version"):
+            chips.append(f"판본 {g['version']}")
+        chips.append("PDF " + ", ".join(f"{p}쪽" for p in g["pages"]))
+        if g["printed"]:
+            chips.append("인쇄 " + ", ".join(f"{p}쪽" for p in g["printed"]))
+        cards.append({"document_id": g["document_id"], "title_md": f"**[{title}]({url})**" if url else f"**{title}**", "chips": chips})
+    return cards
+
+
 # 사용자에게 보이면 안 되는 내부 낱말(도구 이름·DB 대조 등). 이 낱말이 든 주의 문구는 일반 사용자 화면에서 뺀다.
 INTERNAL_WORDS = ("_search", "Finding", "DB", "chunk", "Tool", "도구", "경로", "registry")
 

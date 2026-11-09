@@ -1,4 +1,4 @@
-"""예시 질문 버튼·대화 지우기 버튼(11/09)을 Streamlit AppTest 로 확인한다. Neo4j·LLM 없이 실행한다.
+"""예시 질문 버튼·대화 지우기 버튼·답변/근거 두 칸 배치(11/09)를 Streamlit AppTest 로 확인한다. Neo4j·LLM 없이 실행한다.
 
 설명
 - service.build_resources / service.ask 를 가짜로 바꿔 화면의 버튼 흐름만 본다. 실제 답변 품질은 확인하지 않는다.
@@ -10,6 +10,7 @@ from pathlib import Path
 import pytest
 
 pytest.importorskip("streamlit")
+import streamlit as st
 from streamlit.testing.v1 import AppTest
 
 from rag.ui import service
@@ -39,6 +40,7 @@ def calls(monkeypatch):
 
 
 def _run() -> AppTest:
+    st.cache_resource.clear()      # app.py 의 resources() 캐시가 시험 사이에 남아 이전 가짜 자원을 쓰지 않게 한다
     at = AppTest.from_file(APP, default_timeout=30)
     at.run()
     assert not at.exception
@@ -90,3 +92,113 @@ def test_clear_keeps_saved_answers_and_shows_examples_again(calls):
     # 지운 뒤에도 다음 질문이 정상 실행된다
     at.chat_input[0].set_value("다음 질문").run()
     assert calls[-1] == "다음 질문" and len(at.session_state["history"]) == 1
+
+
+def test_domain_answer_is_split_into_answer_and_sources_columns(calls):
+    # 시안 C: 감염병(DOMAIN) 답변은 왼쪽 답변, 오른쪽 근거 문서 두 칸이다
+    at = _run()
+    _button(at, "example-0").click().run()
+    assert not at.exception
+    assert len(at.columns) == 2
+    left = " ".join(m.value for m in at.columns[0].markdown)
+    right = " ".join(m.value for m in at.columns[1].markdown)
+    assert "답: 의사가 하는 신고와" in left and "panel-title" in left
+    assert "근거 문서" in right
+
+
+def test_non_domain_answer_has_no_sources_column(calls, monkeypatch):
+    def general_ask(res, question, region, allowed, polish=True, on_event=None, on_line=None):
+        output = {"status": "ANSWERED", "answer": "일반 안내", "citations": [], "warnings": [],
+                  "response_type": "GENERAL", "tools_used": [], "findings": [], "search_rounds": 0}
+        return {"output": output, "trace": [], "tool_results": [], "seconds": 0.1, "request_id": "ui-g"}
+
+    monkeypatch.setattr(service, "ask", general_ask)
+    at = _run()
+    at.chat_input[0].set_value("안녕").run()
+    assert not at.exception
+    assert len(at.columns) == 0           # 근거 칸을 만들지 않는다
+    assert any("일반 안내" in m.value for m in at.markdown)
+
+
+def test_developer_view_keeps_two_columns_and_extra_tabs(calls, monkeypatch):
+    # 개발자 화면(?dev=1, 로컬 시험용 DEV_ALLOW_OPEN=1)도 같은 두 칸 배치 아래에 점검 탭을 그대로 둔다
+    monkeypatch.delenv("DEV_PASSWORD", raising=False)
+    monkeypatch.setenv("DEV_ALLOW_OPEN", "1")
+    st.cache_resource.clear()
+    at = AppTest.from_file(APP, default_timeout=30)
+    at.query_params["dev"] = "1"
+    at.run()
+    assert not at.exception
+    _button(at, "example-0").click().run()
+    assert not at.exception
+    # 개발자 화면은 처리 흐름의 지표 칸 등 다른 칸도 있으므로 개수 대신 앞의 두 칸(답변·근거 문서)을 확인한다
+    assert any("답: 의사가 하는 신고와" in m.value for m in at.columns[0].markdown)
+    assert any("근거 문서" in m.value for m in at.columns[1].markdown)
+    labels = [t.label for t in at.tabs]
+    assert any(label.startswith("출처") for label in labels) and "처리 흐름" in labels and "그래프 경로" in labels
+    assert any(label.startswith("주의·한계") for label in labels)
+    assert any("사용한 도구" in c.value for c in at.caption)
+
+
+def _install_partial_ask(monkeypatch, status: str, warnings: list[str], citations: list[dict]):
+    """상태·경고·인용을 지정한 가짜 ask 와 문서 2개짜리 가짜 resources 를 끼운다."""
+    monkeypatch.setattr(service, "build_resources", lambda: {
+        "documents": {"doc_a": {"title": "문서 A", "version": "2026"}, "doc_b": {"title": "문서 B"}}, "deps": {}})
+
+    def fake_ask(res, question, region, allowed, polish=True, on_event=None, on_line=None):
+        output = {"status": status, "answer": "일부 답", "citations": citations, "warnings": warnings,
+                  "response_type": "DOMAIN", "tools_used": [], "findings": [], "search_rounds": 1}
+        return {"output": output, "trace": [], "tool_results": [], "seconds": 0.1, "request_id": "ui-p"}
+
+    monkeypatch.setattr(service, "ask", fake_ask)
+
+
+CITATIONS = [{"document_id": "doc_a", "pdf_page": 3, "printed_page": None, "chunk_id": "doc_a:p0003:b01", "excerpt": "x"},
+             {"document_id": "doc_b", "pdf_page": 9, "printed_page": 5, "chunk_id": "doc_b:p0009:b01", "excerpt": "y"}]
+
+
+def test_partial_answer_keeps_notice_and_unresolved_note_in_sources_column(calls, monkeypatch):
+    # 안내와 '확인이 필요한 부분'은 오른쪽 근거 칸의 카드 뒤에 있다(사라지지 않는다). 카드는 문서마다 한 장, 번호 없음.
+    _install_partial_ask(monkeypatch, "PARTIAL", ["[미해결] 근거에서 확인하지 못한 부분: 접촉자 범위"], CITATIONS)
+    at = _run()
+    _button(at, "example-0").click().run()
+    assert not at.exception
+    right = at.columns[1]
+    texts = [m.value for m in right.markdown] + [c.value for c in right.caption]
+    assert "**문서 A**" in texts and "**문서 B**" in texts                               # 문서명 카드
+    chips = " ".join(t for t in texts if "src-chip" in t)
+    assert ">PDF 3쪽<" in chips and ">PDF 9쪽<" in chips and ">인쇄 5쪽<" in chips and ">판본 2026<" in chips   # 칩
+    assert not any(t.startswith("[1]") for t in texts)                      # 카드에 번호를 붙이지 않는다
+    assert any("일부만 확인한 답변입니다" in t for t in texts)
+    assert any(e.label.startswith("확인이 필요한 부분") for e in right.expander)
+    left = " ".join(m.value for m in at.columns[0].markdown)
+    assert "일부 답" in left and "일부만 확인한 답변입니다" not in left        # 안내는 근거 칸에만 있다
+
+
+def test_insufficient_evidence_shows_notice_without_cards(calls, monkeypatch):
+    _install_partial_ask(monkeypatch, "INSUFFICIENT_EVIDENCE", [], [])
+    at = _run()
+    _button(at, "example-0").click().run()
+    assert not at.exception
+    right = at.columns[1]
+    assert any("표시할 출처가 없습니다" in c.value for c in right.caption)
+    assert any("제공된 공식 자료에서 확인하지 못했습니다" in i.value for i in right.info)
+
+
+def test_general_user_view_hides_developer_extras(calls):
+    # 일반 사용자 화면에는 사용한 도구 캡션도 개발자 탭도 없다
+    at = _run()
+    _button(at, "example-0").click().run()
+    assert not at.exception
+    assert not any("사용한 도구" in c.value for c in at.caption)
+    assert len(at.tabs) == 2 and at.tabs[0].label == "질문하기"
+
+
+def test_question_is_styled_line_and_rendered_as_plain_markdown(calls):
+    # 질문은 사용자 입력이라 HTML 로 그리지 않고 일반 마크다운으로 그린다(스타일은 container key 클래스)
+    at = _run()
+    at.chat_input[0].set_value("<b>질문</b> 입니다").run()
+    assert not at.exception
+    values = [m.value for m in at.markdown]
+    assert "<b>질문</b> 입니다" in values                                              # 그대로 마크다운 본문으로 전달
+    assert not any(v.startswith('<div class="qline') for v in values)

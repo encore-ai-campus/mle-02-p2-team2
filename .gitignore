@@ -15,3 +15,4 @@ data/raw/
 .DS_Store
 data/interim/
 /지시서들
+.streamlit/secrets.toml

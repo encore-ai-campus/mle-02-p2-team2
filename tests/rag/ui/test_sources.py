@@ -40,3 +40,27 @@ def test_real_manifest_loads_without_error():
     assert all(u.startswith(("http://", "https://")) for u in urls.values())
 
 
+
+
+def test_source_cards_split_title_and_chips():
+    cards = sources.source_cards(CITES, DOCS, {"law": "https://example.org/law"})
+    assert [c["document_id"] for c in cards] == ["gyeonggi", "law"]
+    assert cards[0]["title_md"] == "**경기도 가이드북**"                       # URL 이 없으면 링크 없이 굵게
+    assert cards[0]["chips"] == ["경기도교육청", "판본 2024.05", "PDF 171쪽, 172쪽", "인쇄 161쪽, 162쪽"]
+    assert cards[1]["title_md"] == "**[감염병예방법](https://example.org/law)**"
+    assert cards[1]["chips"] == ["법제처", "판본 제21521호", "PDF 19쪽"]       # 인쇄 쪽이 없으면 그 칩은 없다
+
+
+def test_source_cards_skip_unconfirmed_issuer_and_fall_back_to_id():
+    docs = {"d": {"title": "문서", "version": None, "issuer": "확인 필요"}}
+    card = sources.source_cards([{"document_id": "d", "pdf_page": 3, "printed_page": None}], docs, {})[0]
+    assert card["chips"] == ["PDF 3쪽"]                                        # '확인 필요' 발행처·없는 판본은 칩으로 만들지 않는다
+    fallback = sources.source_cards([{"document_id": "zz", "pdf_page": 1, "printed_page": None}], {}, {})[0]
+    assert fallback["title_md"] == "**zz**" and fallback["chips"] == ["PDF 1쪽"]
+    assert sources.source_cards([], DOCS, {}) == []
+
+
+def test_source_cards_escape_markdown_in_title():
+    docs = {"d": {"title": "A_[B]*", "issuer": "x"}}
+    card = sources.source_cards([{"document_id": "d", "pdf_page": 1, "printed_page": None}], docs, {})[0]
+    assert card["title_md"] == r"**A\_\[B\]\***"

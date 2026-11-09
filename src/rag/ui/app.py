@@ -53,6 +53,32 @@ EXAMPLE_QUESTIONS = [("의사 신고 vs 학교장 신고", "의사가 하는 신
                      ("백일해 접촉자 안내", "학교에서 백일해 환자가 발생했을 때 접촉자 안내는 어떻게 하나요?")]
 PENDING_KEY = "pending_question"     # 예시 버튼이 누른 질문을 다음 재실행으로 넘기는 session_state 키(다른 키와 겹치지 않게 한 곳에서 관리)
 
+# 화면 모양(11/09 시안 C): 색·글꼴은 .streamlit/config.toml 테마가 정하고, 여기서는 테마로 안 되는 것만 CSS로 더한다.
+# 글꼴을 못 불러와도(오프라인) 뒤의 대체 글꼴로 보이며 화면 기능에는 영향이 없다. 이 CSS를 통째로 지우면 Streamlit 기본 모양이 된다.
+PAGE_CSS = """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap');
+.stApp, .stMarkdown, .stCaption, .stChatInput textarea, .stButton button { font-family: "IBM Plex Sans KR", "Malgun Gothic", sans-serif; }
+h1 { font-weight: 600; letter-spacing: -0.01em; }
+.panel-title { display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
+               color: #5b6676; margin: 0 0 0.35rem 0; }
+/* 큰 박스(답변·근거)는 흰색, 박스 안의 근거 카드는 아주 연한 회청색으로 구분한다. 이름표(st-key-…)는 코드의 container key 와 짝이다 */
+[class*="st-key-answerbox-"], [class*="st-key-sourcebox-"] { background: #ffffff; border-radius: 0.5rem; }
+[class*="st-key-doccard-"] { background: #f4f6fa; }
+/* 질문 문장: 굵은 글씨 + 아래 검정 줄(시안 C). 이름표 qline- 은 코드의 container key 와 짝이다 */
+[class*="st-key-qline-"] p { font-size: 1.1rem; font-weight: 600; margin: 0; padding-bottom: 0.55rem; border-bottom: 2px solid #18212d; }
+/* 근거 칩: 발행처·판본·쪽수를 고정폭 글꼴의 작은 테두리 칩으로 */
+.src-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.25rem 0 0.4rem 0; }
+.src-chip { font-family: "IBM Plex Mono", Consolas, monospace; font-size: 0.75rem; color: #5b6676; background: #ffffff;
+            border: 1px solid #cdd3dc; border-radius: 4px; padding: 1px 7px; }
+.tone { color: #ffffff; padding: 2px 10px; border-radius: 4px; letter-spacing: 0; font-size: 0.8rem; }
+.tone-green { background: #167a52; }
+.tone-orange { background: #b45f06; }
+.tone-gray { background: #5b6676; }
+.tone-red { background: #b3261e; }
+</style>
+"""
+
 
 # ---------------------------------------------------------------- 자원·접근
 
@@ -77,6 +103,19 @@ def gate() -> bool:
 
 
 # ---------------------------------------------------------------- 표시 도우미
+
+TONES = ("green", "orange", "gray", "red")   # 상태 배지 색(STATUS_STYLE 의 색 이름). 이 밖의 값은 gray 로 그린다
+
+
+def panel_title(title: str, extra: str = "", tone: str = "") -> None:
+    """칸 제목(작은 글씨). 고정 문구만 받으므로 HTML 로 그리되, 그래도 이스케이프한다.
+    tone 이 있으면 오른쪽 extra 를 그 색의 배지로 그린다(상태 표시). tone 은 TONES 안의 값만 클래스 이름으로 쓴다."""
+    if extra and tone:
+        tail = f'<span class="tone tone-{tone if tone in TONES else "gray"}">{html.escape(extra)}</span>'
+    else:
+        tail = f"<span>{html.escape(extra)}</span>" if extra else ""
+    st.markdown(f'<div class="panel-title"><span>{html.escape(title)}</span>{tail}</div>', unsafe_allow_html=True)
+
 
 def answer_markdown(text: str) -> str:
     """compose_text의 구역 제목(■)을 굵은 제목으로 바꾸고 줄바꿈을 보존한다. 문구는 바꾸지 않는다."""
@@ -218,15 +257,20 @@ def source_urls() -> dict:
     return sources.load_urls()
 
 
-def show_user_notes(output: dict, documents: dict) -> None:
+def show_user_notes(output: dict, documents: dict, key_prefix: str = "") -> None:
     """모든 사용자에게 보이는 근거 문서(문서명·판본·PDF 쪽수)와 확인이 필요한 부분. 발췌문은 보이지 않는다."""
     if output.get("response_type") != "DOMAIN":
         return
-    lines = sources.source_lines(output.get("citations", []), documents, source_urls())
-    if lines:
-        st.markdown("**근거 문서**")
-        for line in lines:
-            st.markdown("- " + line)
+    cards = sources.source_cards(output.get("citations", []), documents, source_urls())
+    panel_title("근거 문서", f"{len(cards)}건" if cards else "")
+    if cards:
+        # 문서마다 테두리 카드 한 장: 문서명(링크) + 발행처·판본·쪽수 칩. 문서 단위 묶음이라 답변 속 [번호]와 번호가 같지 않다(번호를 붙이지 않는다).
+        for number, card in enumerate(cards):
+            # key 는 CSS 가 카드를 찾는 이름표다(.st-key-doccard-…). 한 화면에 결과가 여러 개일 수 있어 요청마다 다르게 붙인다.
+            with st.container(border=True, key=f"doccard-{key_prefix}-{number}"):
+                st.markdown(card["title_md"])
+                chips = "".join(f'<span class="src-chip">{html.escape(c)}</span>' for c in card["chips"])
+                st.markdown(f'<div class="src-chips">{chips}</div>', unsafe_allow_html=True)
     else:
         st.caption("표시할 출처가 없습니다.")
     if output["status"] == "INSUFFICIENT_EVIDENCE":
@@ -240,16 +284,15 @@ def show_user_notes(output: dict, documents: dict) -> None:
                 st.markdown("- " + note)
 
 
-def show_result(result: dict, documents: dict, developer: bool = False) -> None:
-    """답변을 보여 준다. 일반 사용자에게는 상태와 최종 답변만, 개발자에게는 점검용 정보(출처·처리 흐름·경로·주의)도 보여 준다."""
+def show_answer_panel(result: dict, developer: bool = False) -> None:
+    """답변 칸: 상태 배지와 최종 답변. 개발자에게는 사용한 도구와 원문 정리형 답변도 보여 준다."""
     output = result["output"]
-    icon, color = STATUS_STYLE.get(output["status"], ("•", "gray"))
+    _, color = STATUS_STYLE.get(output["status"], ("•", "gray"))
     status_label = service.STATUS_LABELS.get(output["status"], output["status"])
+    panel_title("답변", status_label, tone=color)    # 상태는 칸 제목 오른쪽의 색 배지
     if developer:
         tools = ", ".join(service.TOOL_LABELS.get(t, t).split(" (")[0] for t in output["tools_used"]) or "도구 호출 없음"
-        st.markdown(f"{icon} :{color}[**{status_label}**] · {tools}")
-    else:
-        st.markdown(f"{icon} :{color}[**{status_label}**]")
+        st.caption(f"사용한 도구: {tools}")
     compose = next((t for t in result["trace"] if t["step"] == "compose_answer"), {})
     if compose.get("mode") == "llm":
         st.markdown(output["answer"])
@@ -260,7 +303,22 @@ def show_result(result: dict, documents: dict, developer: bool = False) -> None:
         st.markdown(answer_markdown(output["answer"]))
         if developer and compose.get("mode") == "template_fallback":
             st.caption("다듬은 답변이 근거 검사를 통과하지 못해 원문 정리형으로 보여 드립니다.")
-    show_user_notes(output, documents)
+
+
+def show_result(result: dict, documents: dict, developer: bool = False) -> None:
+    """답변을 보여 준다. 감염병 질문은 왼쪽 답변·오른쪽 근거 문서로 나란히(좁은 화면에서는 위아래로 쌓인다).
+    일반 사용자에게는 상태와 최종 답변·근거만, 개발자에게는 점검용 정보(출처·처리 흐름·경로·주의)도 보여 준다."""
+    output = result["output"]
+    rid = re.sub(r"[^A-Za-z0-9_-]", "-", str(result.get("request_id") or "r"))   # 컨테이너 key(=CSS 이름표)에 쓸 수 있는 글자만
+    if output.get("response_type") == "DOMAIN":
+        left, right = st.columns([1.15, 1], gap="large")
+        with left, st.container(border=True, key=f"answerbox-{rid}"):    # 두 칸 모두 흰 박스(테두리 컨테이너) 안에 담는다
+            show_answer_panel(result, developer)
+        with right, st.container(border=True, key=f"sourcebox-{rid}"):
+            show_user_notes(output, documents, rid)
+    else:
+        with st.container(border=True, key=f"answerbox-{rid}"):          # 일반 안내·범위 밖 질문은 근거 칸이 없다
+            show_answer_panel(result, developer)
     if not developer:
         return
     limits = [service.TOOL_LIMITS[t] for t in output["tools_used"] if t in service.TOOL_LIMITS]
@@ -425,6 +483,12 @@ def show_footer() -> None:
         st.caption("입력한 질문은 서비스 점검을 위해 저장될 수 있습니다. 학생 이름·연락처 같은 개인정보는 입력하지 마세요.")
 
 
+def question_line(question: str, key: str) -> None:
+    """질문 문장(굵은 글씨 + 아래 줄). 질문은 사용자 입력이므로 HTML 이 아니라 일반 마크다운으로 그린다(스타일은 key 로 붙는 CSS 클래스가 한다)."""
+    with st.container(key=f"qline-{key}"):
+        st.markdown(question)
+
+
 def pick_example(text: str) -> None:
     """예시 버튼의 on_click 콜백. 질문을 맡겨 두기만 한다. 실제 실행은 main()이 채팅 입력과 같은 경로로 한다."""
     st.session_state[PENDING_KEY] = text
@@ -439,15 +503,16 @@ def clear_conversation() -> None:
 def show_examples() -> None:
     """대화가 비어 있을 때 예시 질문 버튼을 보여 준다. 누르면 pick_example 이 질문을 맡긴다."""
     st.caption("예시 질문을 눌러 바로 물어볼 수 있습니다.")
-    for index, (label, text) in enumerate(EXAMPLE_QUESTIONS):
-        st.button(f"💬 {label}", key=f"example-{index}", on_click=pick_example, args=(text,), help=text)
+    columns = st.columns(len(EXAMPLE_QUESTIONS))      # 넓은 화면에서는 가로로, 좁은 화면에서는 Streamlit 이 위아래로 쌓는다
+    for column, (index, (label, text)) in zip(columns, enumerate(EXAMPLE_QUESTIONS)):
+        with column:
+            st.button(f"💬 {label}", key=f"example-{index}", on_click=pick_example, args=(text,), help=text, width="stretch")
 
 
 def render_history(items: list[dict], documents: dict, developer: bool = False) -> None:
     """최근 대화 10건을 새것부터 보여 준다. developer 가 참이면 점검용 정보도 함께 보여 준다."""
     for index, item in enumerate(items[:10]):
-        with st.chat_message("user"):
-            st.markdown(item["question"])
+        question_line(item["question"], f"hist-{index}")
         with st.chat_message("assistant"):
             if "error" in item:
                 st.error(f"처리 중 오류가 났습니다: {item['error']}")
@@ -463,8 +528,7 @@ def render_history(items: list[dict], documents: dict, developer: bool = False) 
 def answer_live(res: dict, question: str, allowed: list[str], polish: bool) -> dict:
     """질문을 처리하면서 단계 진행을 보여 주고, 근거 검사를 통과한 답변 줄을 바로 출력한다(11/07 스트리밍).
     다듬은 답변이 최종적으로 검사에 걸려 원문 정리형으로 되돌아가면, 다시 그릴 때 최종 답변으로 바뀐다."""
-    with st.chat_message("user"):
-        st.markdown(question)
+    question_line(question, "live")
     with st.chat_message("assistant"):
         progress = st.status("질문을 이해하는 중…", expanded=False)
         board = st.empty()
@@ -521,6 +585,7 @@ def main() -> None:
                                      format_func=lambda d: doc_label(documents, d), key="allowed")
             st.caption("선택한 문서 안에서만 근거를 찾습니다. 기본값은 DB에 적재된 모든 문서입니다.")
 
+    st.markdown(PAGE_CSS, unsafe_allow_html=True)
     st.title("🏫 학교 감염병 대응 길잡이")
     st.caption("교육부·경기도교육청·질병관리청 지침과 감염병예방법을 지식 그래프로 묶어, 근거 원문과 쪽수로 답합니다.")
 
