@@ -1,0 +1,674 @@
+{
+  "schema_version": "text2cypher-aura-20261109-v1",
+  "observed_at_kst": "2026-11-09T09:54:00.840117+09:00",
+  "connection": {
+    "instance_alias": "team2-project-aura",
+    "instance_fingerprint": "f1382cfa4160",
+    "database": "9df2d804",
+    "tls_certificate_verified": true,
+    "dedicated_readonly_settings": false
+  },
+  "libraries": {
+    "neo4j": "6.4.1",
+    "langchain-openai": "1.7.3",
+    "neo4j-graphrag": null,
+    "ipywidgets": "8.1.9",
+    "nbformat": "5.11.1"
+  },
+  "properties": {
+    "Document": [
+      "document_id",
+      "issuer",
+      "region",
+      "title",
+      "version"
+    ],
+    "Chunk": [
+      "chunk_id",
+      "pdf_page",
+      "printed_page",
+      "section",
+      "text"
+    ],
+    "SchoolAction": [
+      "action_id",
+      "action_text",
+      "modality",
+      "scope",
+      "stage",
+      "step_order",
+      "timing_text",
+      "when_text"
+    ],
+    "Disease": [
+      "aliases",
+      "disease_id",
+      "name"
+    ],
+    "SchoolRole": [
+      "aliases",
+      "name",
+      "role_id"
+    ],
+    "ActionConcept": [
+      "concept_id",
+      "name"
+    ]
+  },
+  "relationships": [
+    {
+      "source_labels": [
+        "Chunk"
+      ],
+      "relationship_type": "ABOUT",
+      "target_labels": [
+        "Disease"
+      ],
+      "relationship_properties": []
+    },
+    {
+      "source_labels": [
+        "SchoolAction"
+      ],
+      "relationship_type": "DONE_BY",
+      "target_labels": [
+        "SchoolRole"
+      ],
+      "relationship_properties": [
+        "basis"
+      ]
+    },
+    {
+      "source_labels": [
+        "SchoolAction"
+      ],
+      "relationship_type": "FOR_DISEASE",
+      "target_labels": [
+        "Disease"
+      ],
+      "relationship_properties": []
+    },
+    {
+      "source_labels": [
+        "Document"
+      ],
+      "relationship_type": "HAS_CHUNK",
+      "target_labels": [
+        "Chunk"
+      ],
+      "relationship_properties": []
+    },
+    {
+      "source_labels": [
+        "SchoolAction"
+      ],
+      "relationship_type": "INSTANCE_OF",
+      "target_labels": [
+        "ActionConcept"
+      ],
+      "relationship_properties": []
+    },
+    {
+      "source_labels": [
+        "SchoolAction"
+      ],
+      "relationship_type": "SUPPORTED_BY",
+      "target_labels": [
+        "Chunk"
+      ],
+      "relationship_properties": []
+    }
+  ],
+  "excluded_labels": [],
+  "excluded_patterns": [],
+  "dictionaries": {
+    "Document": [
+      {
+        "id": "gyeonggi_school_guide_2025",
+        "title": "경기도 학교 감염병 예방관리 실무 가이드북",
+        "region": "GYEONGGI"
+      },
+      {
+        "id": "kdca_covid19_2026",
+        "title": "2026년도 코로나바이러스감염증-19 관리지침",
+        "region": "NATIONAL"
+      },
+      {
+        "id": "kdca_diagnosis_reporting_2026",
+        "title": "2026년 법정감염병 진단·신고기준 지침",
+        "region": "NATIONAL"
+      },
+      {
+        "id": "kdca_flu_facility_2026",
+        "title": "2026 인플루엔자 관리지침(어린이집·유치원·학교용)",
+        "region": "NATIONAL"
+      },
+      {
+        "id": "kdca_hfmd_2026",
+        "title": "2026년도 엔테로바이러스 감염증·수족구병 관리지침",
+        "region": "NATIONAL"
+      },
+      {
+        "id": "kdca_measles_2026",
+        "title": "2026년도 홍역 대응 지침",
+        "region": "NATIONAL"
+      },
+      {
+        "id": "kdca_respiratory_2026",
+        "title": "2026년도 호흡기감염병 관리지침",
+        "region": "NATIONAL"
+      },
+      {
+        "id": "kdca_vaccine_preventable_2026",
+        "title": "2026년도 예방접종 대상 감염병 관리 지침",
+        "region": "NATIONAL"
+      },
+      {
+        "id": "moe_school_manual_v3",
+        "title": "학교 감염병 예방·위기대응 매뉴얼 제3차 개정판(초·중·고·특수학교용)",
+        "region": "NATIONAL"
+      },
+      {
+        "id": "moleg_infectious_disease_act_21521",
+        "title": "감염병의 예방 및 관리에 관한 법률(법률)(제21521호)",
+        "region": "NATIONAL"
+      }
+    ],
+    "Disease": [
+      {
+        "id": "COVID19",
+        "name": "코로나바이러스감염증-19",
+        "aliases": [
+          "코로나19",
+          "코로나",
+          "COVID-19"
+        ]
+      },
+      {
+        "id": "EKC",
+        "name": "유행성각결막염",
+        "aliases": []
+      },
+      {
+        "id": "HFMD",
+        "name": "수족구병",
+        "aliases": [
+          "수족구",
+          "손발입병",
+          "Hand-foot-mouth disease"
+        ]
+      },
+      {
+        "id": "INFLUENZA",
+        "name": "인플루엔자",
+        "aliases": [
+          "독감",
+          "Flu"
+        ]
+      },
+      {
+        "id": "MEASLES",
+        "name": "홍역",
+        "aliases": [
+          "Measles"
+        ]
+      },
+      {
+        "id": "MUMPS",
+        "name": "유행성이하선염",
+        "aliases": [
+          "볼거리",
+          "Mumps"
+        ]
+      },
+      {
+        "id": "MYCOPLASMA_PNEUMONIA",
+        "name": "마이코플라스마 폐렴균 감염증",
+        "aliases": [
+          "마이코플라스마 폐렴"
+        ]
+      },
+      {
+        "id": "PERTUSSIS",
+        "name": "백일해",
+        "aliases": [
+          "Pertussis"
+        ]
+      },
+      {
+        "id": "SCARLET_FEVER",
+        "name": "성홍열",
+        "aliases": [
+          "Scarlet fever"
+        ]
+      },
+      {
+        "id": "TUBERCULOSIS",
+        "name": "결핵",
+        "aliases": [
+          "TB"
+        ]
+      },
+      {
+        "id": "VARICELLA",
+        "name": "수두",
+        "aliases": [
+          "Chickenpox"
+        ]
+      }
+    ],
+    "SchoolRole": [
+      {
+        "id": "ADMIN_OFFICE",
+        "name": "행정실",
+        "aliases": []
+      },
+      {
+        "id": "COUNSELOR",
+        "name": "상담교사",
+        "aliases": [
+          "상담",
+          "상담(담당)교사"
+        ]
+      },
+      {
+        "id": "DISCOVERING_STAFF",
+        "name": "발견 교직원",
+        "aliases": [
+          "유증상자를 발견한 교직원"
+        ]
+      },
+      {
+        "id": "GRADE_HEAD",
+        "name": "학년부장",
+        "aliases": []
+      },
+      {
+        "id": "HEAD_OF_ACADEMIC_AFFAIRS",
+        "name": "교무부장",
+        "aliases": [
+          "교무"
+        ]
+      },
+      {
+        "id": "HEALTH_TEACHER",
+        "name": "보건교사",
+        "aliases": [
+          "보건(담당)교사",
+          "보건"
+        ]
+      },
+      {
+        "id": "HOMEROOM_TEACHER",
+        "name": "담임교사",
+        "aliases": [
+          "담임",
+          "담임(담당)교사"
+        ]
+      },
+      {
+        "id": "INFECTION_MGMT_TEAM",
+        "name": "학교 감염병 관리조직",
+        "aliases": [
+          "감염병관리조직",
+          "학생 감염병 관리조직",
+          "보건안전팀",
+          "비상대책팀",
+          "비상대책반",
+          "발생감시팀",
+          "예방관리팀",
+          "학사·인력관리팀",
+          "교수학습운영팀",
+          "행정지원팀"
+        ]
+      },
+      {
+        "id": "PRINCIPAL",
+        "name": "학교장",
+        "aliases": [
+          "교장"
+        ]
+      },
+      {
+        "id": "SCHOOL_TEACHER_IN_CHARGE",
+        "name": "학교[담당교사]",
+        "aliases": null
+      },
+      {
+        "id": "SUBJECT_TEACHER",
+        "name": "교과교사",
+        "aliases": [
+          "교과",
+          "교과담당교사"
+        ]
+      },
+      {
+        "id": "VICE_PRINCIPAL",
+        "name": "교감",
+        "aliases": []
+      }
+    ],
+    "ActionConcept": [
+      {
+        "id": "ACTIVATE_RESPONSE_ORG",
+        "name": "학교 감염병 관리조직·비상대응체계 활성화"
+      },
+      {
+        "id": "ACTIVE_SURVEILLANCE",
+        "name": "능동감시 실시·강화"
+      },
+      {
+        "id": "ADJUST_SCHOOL_ACTIVITIES",
+        "name": "학사일정 조정·교육활동 제한 검토"
+      },
+      {
+        "id": "ATTENDANCE_RECOGNITION",
+        "name": "출석인정 처리·증빙 확인"
+      },
+      {
+        "id": "CHECK_MEDICAL_RESULT",
+        "name": "진료·검사 결과 확인"
+      },
+      {
+        "id": "CONTACT_GUARDIAN",
+        "name": "개별 보호자 연락"
+      },
+      {
+        "id": "CONTACT_HEALTH_TEACHER",
+        "name": "보건(담당)교사에게 연락"
+      },
+      {
+        "id": "COOPERATE_HEALTH_AUTHORITY",
+        "name": "방역당국 협조"
+      },
+      {
+        "id": "DECLARE_OUTBREAK_END",
+        "name": "유행 종료 선언·평가"
+      },
+      {
+        "id": "DETECT_SYMPTOMATIC",
+        "name": "유증상자 발견·확인"
+      },
+      {
+        "id": "END_EXCLUSION",
+        "name": "등교중지 해제·복귀 확인"
+      },
+      {
+        "id": "ESCORT_TO_HEALTH_ROOM",
+        "name": "보건실·일시적 관찰실로 이동·동행"
+      },
+      {
+        "id": "EXCLUDE_FROM_SCHOOL",
+        "name": "등교중지 실시·통보"
+      },
+      {
+        "id": "HEALTH_EDUCATION",
+        "name": "감염병 예방·위생수칙 교육"
+      },
+      {
+        "id": "INFORM_GUARDIANS_NOTICE",
+        "name": "보호자 대상 발생 안내"
+      },
+      {
+        "id": "ISSUE_EXCLUSION_NOTICE",
+        "name": "등교중지 안내문 배부·생활수칙 안내"
+      },
+      {
+        "id": "LEARNING_LOSS_PLAN",
+        "name": "수업결손 대책·보충"
+      },
+      {
+        "id": "MANAGE_CLOSE_CONTACTS",
+        "name": "밀접접촉자 파악·관리"
+      },
+      {
+        "id": "MANAGE_HIGH_RISK",
+        "name": "보건학적 고위험군·취약계층 관리"
+      },
+      {
+        "id": "MEDIA_COMPLAINT_RESPONSE",
+        "name": "언론·민원 대응"
+      },
+      {
+        "id": "NOTIFY_HEALTH_CENTER_LEGAL",
+        "name": "학교장의 보건소 법정 신고"
+      },
+      {
+        "id": "PSYCHOLOGICAL_SUPPORT",
+        "name": "심리 지원"
+      },
+      {
+        "id": "REPORT_EDU_OFFICE",
+        "name": "교육청 발생 보고"
+      },
+      {
+        "id": "REPORT_HEALTH_CENTER",
+        "name": "보건소 신고"
+      },
+      {
+        "id": "REQUEST_MEDICAL_VISIT",
+        "name": "의료기관 진료 요청·안내"
+      },
+      {
+        "id": "SCHOOL_CLOSURE",
+        "name": "휴업·휴교 검토·실시"
+      },
+      {
+        "id": "STAFF_DUTY_SUBSTITUTE",
+        "name": "교직원 복무·대체인력 처리"
+      },
+      {
+        "id": "VENTILATE_DISINFECT",
+        "name": "환기·소독"
+      }
+    ]
+  },
+  "action_values": [
+    {
+      "scope": "COMMON",
+      "stage": "RESPONSE_1",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "UNKNOWN",
+      "stage": "RESPONSE_1",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "MANDATORY"
+    },
+    {
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "DISCRETIONARY"
+    },
+    {
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "RECOMMENDED"
+    },
+    {
+      "scope": "DISEASE_GROUP",
+      "stage": "RESPONSE_2",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "COMMON",
+      "stage": "RESPONSE_2",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "COMMON",
+      "stage": "RESPONSE_3",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "DISEASE_GROUP",
+      "stage": "RESPONSE_3",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "COMMON",
+      "stage": "RECOVERY",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "COMMON",
+      "stage": "RESPONSE_1",
+      "modality": "RECOMMENDED"
+    },
+    {
+      "scope": "DISEASE_GROUP",
+      "stage": "RESPONSE_1",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "UNKNOWN",
+      "stage": "RESPONSE_2",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "UNKNOWN",
+      "stage": "RESPONSE_2",
+      "modality": "RECOMMENDED"
+    },
+    {
+      "scope": "UNKNOWN",
+      "stage": "RESPONSE_3",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "UNKNOWN",
+      "stage": "PREVENTION",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "NAMED_DISEASES",
+      "stage": "RESPONSE_2",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "COMMON",
+      "stage": "PREVENTION",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "COMMON",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "NAMED_DISEASES",
+      "stage": "RECOVERY",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "NAMED_DISEASES",
+      "stage": "RECOVERY",
+      "modality": "RECOMMENDED"
+    },
+    {
+      "scope": "COMMON",
+      "stage": "UNSPECIFIED",
+      "modality": "MANDATORY"
+    },
+    {
+      "scope": "UNKNOWN",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "NAMED_DISEASES",
+      "stage": "RESPONSE_3",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "DISEASE_GROUP",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED"
+    },
+    {
+      "scope": "COMMON",
+      "stage": "RESPONSE_1",
+      "modality": "DISCRETIONARY"
+    },
+    {
+      "scope": "COMMON",
+      "stage": "RESPONSE_2",
+      "modality": "RECOMMENDED"
+    },
+    {
+      "scope": "UNKNOWN",
+      "stage": "RECOVERY",
+      "modality": "UNSPECIFIED"
+    }
+  ],
+  "done_by_basis": [
+    {
+      "basis": "EXAMPLE",
+      "relationship_count": 306
+    },
+    {
+      "basis": "EXPLICIT",
+      "relationship_count": 6
+    }
+  ],
+  "semantics": [
+    "pdf_page는 PDF 뷰어 기준 1부터, printed_page는 인쇄 쪽수이며 null일 수 있음.",
+    "FOR_DISEASE 없는 COMMON/DISEASE_GROUP 행동도 있음. 질병별 관계 검색을 전체 학교 행동으로 일반화하지 않음.",
+    "ABOUT은 청크의 주제이며, 연결된 행동의 FOR_DISEASE나 의무를 자동으로 뜻하지 않음.",
+    "DONE_BY.basis=EXAMPLE은 역할 예시이며 확정 의무가 아님.",
+    "잠복기·증상·기간은 Disease 속성이 아님. Chunk 원문에서 확인해야 함.",
+    "그래프는 명시적 DB 관계만 반환. 노드 속성명 합집합은 모든 노드의 속성 존재를 뜻하지 않음."
+  ],
+  "semantic_sources": [
+    "교육시설_감염병_GraphRAG_온톨로지_스키마_설명서_v3.1.md",
+    "notebooks/respiratory/visual_queries.cypher"
+  ],
+  "differences": {
+    "ActionConcept.group_observed": false,
+    "embedding": "존재 여부와 관계없이 프롬프트·로그에서 제외",
+    "all_properties_are_union_not_required": true
+  },
+  "account": {
+    "readonly_account_verified": false,
+    "role_query_status": "OK",
+    "privilege_query_status": "OK",
+    "write_capable_role_observed": true,
+    "granted_actions": [
+      "access",
+      "constraint",
+      "execute",
+      "index",
+      "load",
+      "match",
+      "set_database_default_language",
+      "token",
+      "transaction_management",
+      "write"
+    ],
+    "execution_policy": "사용자 요청에 따라 기존 계정 사용; 계정 권한과 별도로 프로그램의 조회 검사를 강제",
+    "user_direction": "11/9 사용자 요청: 기존 계정으로 프로그램에서 읽기만 수행"
+  },
+  "scope": "프로젝트 Aura의 현재 Document 전체. 문서별 접근 제한 기능을 구현한 것은 아님.",
+  "browser_verification": {
+    "status": "NOT_VERIFIED",
+    "user_response": "아직 확인하지 못함",
+    "source": "11/9 사용자 응답",
+    "expected_python_rows": 8,
+    "cypher_sha256": "52e61af4e8902fe4b8b921f278d3bd34f7960457b2eddf66c0060f2ba2b48b20",
+    "reason": "Chrome 컴퓨터 제어 미승인; 같은 프로젝트 Aura 화면에서의 수동 확인은 아직 미실시"
+  },
+  "retriever_reuse": {
+    "installed": false,
+    "method_signature": null,
+    "method": "제공된 수업 흐름의 생성→EXPLAIN→query_type r→실행 단계를 분리 적용"
+  }
+}

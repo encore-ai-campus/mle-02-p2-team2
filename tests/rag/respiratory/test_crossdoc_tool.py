@@ -257,3 +257,42 @@ def test_graph_edges_keep_contract_directions(monkeypatch):
         "DONE_BY",
         "SchoolRole:HOMEROOM_TEACHER",
     ) in edge_tuples
+
+
+def test_named_disease_actions_are_selected_first(monkeypatch):
+    # 같은 문서에 질병 무관 행동이 앞 번호로 많아도, 질문 질병(수족구병)에 연결된 행동이 상한 안에 든다.
+    filler = [
+        make_action("doc_a", f"doc_a:p0010:a{i:02d}", f"doc_a:p0010:b{i:02d}", text=f"일반 등교중지 안내 {i}",
+                    concept_ids=["EXCLUDE_FROM_SCHOOL"])
+        for i in range(1, 6)
+    ]
+    target = make_action("doc_a", "doc_a:p0049:a01", "doc_a:p0049:t01r03", text="수족구병 환자는 수포 발생 후 6일간 등교 중지",
+                         concept_ids=["EXCLUDE_FROM_SCHOOL"], disease_ids=["HFMD"])
+    other = make_action("doc_b", "doc_b:p0030:a01", "doc_b:p0030:b01", text="발열이 없고 수포가 마른 후 복귀",
+                        concept_ids=["EXCLUDE_FROM_SCHOOL"], disease_ids=["HFMD"])
+    patch_search(monkeypatch, [*filler, target, other])
+    request = make_tool_input("수족구병 등교중지 기간은 문서마다 어떻게 다른가요?",
+                              context_entity_ids=["ActionConcept:EXCLUDE_FROM_SCHOOL"])
+    request["top_k"] = 1
+
+    result = crossdoc_graph_search(request, deps=make_deps())
+
+    action_ids = [a for f in result["findings"] for a in f["action_ids"]]
+    assert action_ids == ["doc_a:p0049:a01", "doc_b:p0030:a01"]
+    edges = {(e["source_ref"], e["relationship_type"], e["target_ref"])
+             for p in result["graph_paths"] for e in p["edges"]}
+    assert ("SchoolAction:doc_a:p0049:a01", "FOR_DISEASE", "Disease:HFMD") in edges
+
+
+def test_without_named_disease_order_is_unchanged(monkeypatch):
+    actions = [
+        make_action("doc_a", "doc_a:p0001:a01", "doc_a:p0001:b01"),
+        make_action("doc_a", "doc_a:p0002:a01", "doc_a:p0002:b01", disease_ids=["MEASLES"]),
+    ]
+    patch_search(monkeypatch, actions)
+    request = make_tool_input(allowed=["doc_a"], context_entity_ids=["ActionConcept:CONTACT_GUARDIAN"])
+    request["top_k"] = 1
+
+    result = crossdoc_graph_search(request, deps=make_deps())
+
+    assert [a for f in result["findings"] for a in f["action_ids"]] == ["doc_a:p0001:a01"]

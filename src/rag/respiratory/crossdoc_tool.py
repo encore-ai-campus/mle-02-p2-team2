@@ -7,7 +7,7 @@ import json
 import re
 from typing import Any
 
-from index.school.dictionaries import load_dictionaries
+from index.school.dictionaries import compare_key, load_dictionaries
 from index.school.neo4j_local import get_driver
 from rag.respiratory.disease_tool import (
     Citation,
@@ -99,6 +99,24 @@ def _select_concepts(tool_input: ToolInput, books: dict) -> list[str]:
     if highest <= 0:
         return []
     return [concept_id for concept_id, score in scores.items() if score == highest]
+
+
+def _named_diseases(question: str, books: dict) -> set[str]:
+    """질문에 나온 승인 질병 ID(사전 이름·별칭 2글자 이상)."""
+    key = compare_key(question)
+    return {
+        entry["disease_id"]
+        for entry in books.get("disease", {}).get("entries", [])
+        if any(len(compare_key(n)) >= 2 and compare_key(n) in key
+               for n in (entry.get("name", ""), *entry.get("aliases", [])))
+    }
+
+
+def _disease_first(rows: list[dict], disease_ids: set[str]) -> list[dict]:
+    """질문 질병에 FOR_DISEASE로 연결된 행동을 먼저 둔다(나머지 순서는 그대로). 질병이 없으면 그대로."""
+    if not disease_ids:
+        return rows
+    return sorted(rows, key=lambda row: not (disease_ids & set(_unique_strings(row.get("disease_ids")))))
 
 
 def _select_actions(rows: list[dict], allowed: set[str], top_k: int) -> list[dict]:
@@ -217,6 +235,9 @@ def _graph_path(action: dict, evidences: list[dict], concept_ids: list[str]) -> 
         role_id = role.get("role_id")
         if isinstance(role_id, str) and role_id:
             add_edge(action_ref, "DONE_BY", f"SchoolRole:{role_id}")
+    # DB에서 읽은 실제 FOR_DISEASE 관계만 경로에 남긴다.
+    for disease_id in _unique_strings(action.get("disease_ids")):
+        add_edge(action_ref, "FOR_DISEASE", f"Disease:{disease_id}")
     return {"edges": edges}
 
 
@@ -244,7 +265,7 @@ def _search(tool_input: ToolInput, deps: dict) -> ToolResult:
     )
     if not isinstance(rows, list):
         raise TypeError("비교 검색 결과가 목록이 아닙니다.")
-    actions = _select_actions(rows, allowed, top_k)
+    actions = _select_actions(_disease_first(rows, _named_diseases(tool_input["question"], books)), allowed, top_k)
     if not actions:
         return _result("NO_EVIDENCE", ["허용 문서에서 비교 근거를 찾지 못함"])
 

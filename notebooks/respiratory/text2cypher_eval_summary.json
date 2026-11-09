@@ -1,0 +1,166 @@
+{
+  "evaluated_at_kst": "2026-11-09T09:48:28.111316+09:00",
+  "generated_questions": 8,
+  "seen": {
+    "True": {
+      "questions": 2,
+      "passes": 2
+    },
+    "False": {
+      "questions": 6,
+      "passes": 6
+    }
+  },
+  "status_counts": {
+    "OK": 6,
+    "UNSUPPORTED": 2
+  },
+  "retrieval_result_comparison": {
+    "questions": 6,
+    "passes": 6
+  },
+  "policy_checks": {
+    "questions": 2,
+    "passes": 2
+  },
+  "legacy": [
+    {
+      "case_id": "LEGACY01",
+      "run_at_kst": "2026-11-09T09:48:26.521886+09:00",
+      "kind": "previous_fixed_query_comparison",
+      "generated_now": false,
+      "cypher": "MATCH (doc:Document) OPTIONAL MATCH (doc)-[:HAS_CHUNK]->(chunk:Chunk) RETURN doc.document_id AS document_id, doc.title AS title, count(DISTINCT chunk) AS chunk_count ORDER BY document_id LIMIT 50",
+      "validation_status": "VALID",
+      "row_count": 10,
+      "comparison_pass": true
+    },
+    {
+      "case_id": "LEGACY02",
+      "run_at_kst": "2026-11-09T09:48:27.026951+09:00",
+      "kind": "previous_fixed_query_comparison",
+      "generated_now": false,
+      "cypher": "MATCH (action:SchoolAction)-[:FOR_DISEASE]->(disease:Disease {disease_id: 'SCARLET_FEVER'}) MATCH (doc:Document)-[:HAS_CHUNK]->(chunk:Chunk)<-[:SUPPORTED_BY]-(action) RETURN doc.document_id AS document_id, chunk.pdf_page AS pdf_page, action.action_id AS action_id, action.action_text AS action_text ORDER BY document_id, action_id LIMIT 50",
+      "validation_status": "VALID",
+      "row_count": 6,
+      "comparison_pass": true
+    },
+    {
+      "case_id": "LEGACY03",
+      "run_at_kst": "2026-11-09T09:48:27.539606+09:00",
+      "kind": "previous_fixed_query_comparison",
+      "generated_now": false,
+      "cypher": "MATCH (doc:Document)-[:HAS_CHUNK]->(chunk:Chunk)<-[:SUPPORTED_BY]-(action:SchoolAction)-[:INSTANCE_OF]->(concept:ActionConcept {concept_id: 'CONTACT_GUARDIAN'}) RETURN DISTINCT doc.document_id AS document_id, doc.title AS title, action.action_id AS action_id, action.action_text AS action_text, chunk.pdf_page AS pdf_page ORDER BY document_id, action_id LIMIT 50",
+      "validation_status": "VALID",
+      "row_count": 8,
+      "comparison_pass": true
+    }
+  ],
+  "db_counts_before": {
+    "nodes": 2271,
+    "relationships": 3098
+  },
+  "db_counts_after": {
+    "nodes": 2271,
+    "relationships": 3098
+  },
+  "db_count_changes": {
+    "nodes": 0,
+    "relationships": 0
+  },
+  "browser_verified": true,
+  "readonly_account_verified": false,
+  "limitations": [
+    "소수 문항의 단회 실행으로 일반 성능을 보장하지 않음",
+    "Aura 화면은 11/9 10:01 송수림이 직접 확인한 사용자 보고이며, 표의 행 수를 직접 확인하지 않고 SchoolAction 노드 8개·문서 3개로 Python 결과와 대조함",
+    "기존 계정 사용. DB 계정 자체의 읽기 전용 권한은 보장하지 않음",
+    "기준 쿼리는 에이전트 확인이며 별도 사람 판독은 미실시"
+  ],
+  "browser_verification": {
+    "status": "VERIFIED",
+    "user_response": "2026-11-09 10:01 KST, 송수림 직접 실행: 같은 프로젝트 Aura 인스턴스의 Query 화면에서 E01을 실행해 그래프로 확인했다. 문서 3개(교육부 매뉴얼·경기도 가이드북·2026 인플루엔자 관리지침), SchoolAction 8개(교육부 4·경기 3·인플루엔자 1), ActionConcept 1개(개별 보호자 연락=CONTACT_GUARDIAN)를 확인했다. 표 화면의 행 수는 직접 보지 않았으며 그래프의 SchoolAction 노드 8개·문서 3개로 Python 결과 8행·3문서와 대조했다.",
+    "source": "송수림 직접 실행·그래프 확인(사용자 보고)",
+    "expected_python_rows": 8,
+    "cypher_sha256": "52e61af4e8902fe4b8b921f278d3bd34f7960457b2eddf66c0060f2ba2b48b20",
+    "reason": "같은 프로젝트 Aura Query의 E01 그래프에서 구성·관계 방향을 확인하고 노드 수로 Python 결과와 대조함",
+    "confirmed_at_kst": "2026-11-09T10:01:00+09:00",
+    "confirmed_by": "송수림",
+    "query_id": "E01",
+    "browser_table_row_count_checked": false,
+    "browser_school_action_nodes": 8,
+    "browser_document_nodes": 3,
+    "school_actions_by_document": {
+      "moe_school_manual_v3": 4,
+      "gyeonggi_school_guide_2025": 3,
+      "kdca_flu_facility_2026": 1
+    },
+    "action_concept_id": "CONTACT_GUARDIAN",
+    "action_concept_nodes": 1,
+    "relationship_directions": [
+      "Document-HAS_CHUNK->Chunk",
+      "SchoolAction-SUPPORTED_BY->Chunk",
+      "SchoolAction-INSTANCE_OF->ActionConcept"
+    ],
+    "capture": "captures/t2c_contact_guardian.png",
+    "automated_visual_verification": false
+  },
+  "notebook_validation": {
+    "executed_code_cells": 8,
+    "errors": 0,
+    "actual_widget_callback_rows": 8,
+    "generated_validated_executed_query_equal": true,
+    "note": "화면 클릭 검증과 구분하는 nbclient 커널 콜백 실행"
+  },
+  "tests": {
+    "command": "uv run --no-sync pytest tests/rag/respiratory -q",
+    "result": "89 passed in 1.43s",
+    "ruff": "All checks passed!"
+  },
+  "final_validator_replay": {
+    "questions": 8,
+    "matches": 8,
+    "new_llm_calls": 0,
+    "query_executions": 0,
+    "checks": [
+      {
+        "case_id": "E01",
+        "status": "VALID",
+        "matches_saved_status": true
+      },
+      {
+        "case_id": "E02",
+        "status": "VALID",
+        "matches_saved_status": true
+      },
+      {
+        "case_id": "N01",
+        "status": "VALID",
+        "matches_saved_status": true
+      },
+      {
+        "case_id": "N02",
+        "status": "VALID",
+        "matches_saved_status": true
+      },
+      {
+        "case_id": "N03",
+        "status": "VALID",
+        "matches_saved_status": true
+      },
+      {
+        "case_id": "N04",
+        "status": "VALID",
+        "matches_saved_status": true
+      },
+      {
+        "case_id": "N05",
+        "status": "UNSUPPORTED",
+        "matches_saved_status": true
+      },
+      {
+        "case_id": "N06",
+        "status": "UNSUPPORTED",
+        "matches_saved_status": true
+      }
+    ]
+  }
+}

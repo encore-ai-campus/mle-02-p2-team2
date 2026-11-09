@@ -1,0 +1,65 @@
+[
+ {
+  "run": 1,
+  "id": "A",
+  "question": "수족구병 진단받은 학생, 언제부터 등교시키면 되나요?",
+  "status": "ANSWERED",
+  "route": "ACTION",
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "tool_paths_with_targets": [],
+  "final_action_ids": [],
+  "final_target_actions": [],
+  "cited": [
+   "kdca_hfmd_2026:p0029:b01",
+   "kdca_hfmd_2026:p0030:b01",
+   "moe_school_manual_v3:p0049:t01r03",
+   "gyeonggi_school_guide_2025:p0157:t01r03",
+   "moe_school_manual_v3:p0071:b02",
+   "gyeonggi_school_guide_2025:p0205:b01",
+   "moe_school_manual_v3:p0050:b01"
+  ],
+  "seconds": 15.12,
+  "answer": "**수족구병 학생은 발열이 없고 수포가 마른 뒤 등교시키세요.** 질병관리청 2026 지침은 확산 방지를 위해 등교중지를 권장하고, 복귀 기준을 이렇게 제시합니다.[1][2]\n\n**이후에 할 일**\n- 등교중지 종료 시점 전이라도 감염성이 소실되었다는 의사의 진료확인서 또는 소견서를 제시하면 등교할 수 있습니다.[5]"
+ },
+ {
+  "run": 1,
+  "id": "B",
+  "question": "수족구병 등교중지 기간이 교육부 매뉴얼, 경기도 가이드북, 질병관리청 지침에서 각각 어떻게 다른가요?",
+  "status": "PARTIAL",
+  "route": "CROSSDOC",
+  "tools": [
+   [
+    "crossdoc_graph_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "tool_paths_with_targets": [],
+  "final_action_ids": [],
+  "final_target_actions": [],
+  "cited": [
+   "moe_school_manual_v3:p0049:t01r03",
+   "gyeonggi_school_guide_2025:p0157:t01r03",
+   "gyeonggi_school_guide_2025:p0187:b02",
+   "kdca_hfmd_2026:p0029:b01",
+   "moe_school_manual_v3:p0059:b02",
+   "gyeonggi_school_guide_2025:p0186:t01r02",
+   "gyeonggi_school_guide_2025:p0164:t01r09",
+   "moe_school_manual_v3:p0050:b01"
+  ],
+  "seconds": 13.99,
+  "answer": "**질병관리청 지침(2026)은 수족구병 환자의 등교중지를 권장하지만 구체적인 기간은 제시하지 않습니다. 교육부 매뉴얼(2023)과 경기도 가이드북(2024)은 모두 ‘수포 발생 후 6일간 또는 가피가 형성될 때까지’로 같습니다.**[1][2][4]\n\n**상황 판단**\n- 교육부 매뉴얼(2023)은 수족구병의 등교중지 기간을 ‘수포 발생 후 6일간 또는 가피가 형성될 때까지’로 안내합니다.[1]\n- 경기도 가이드북(2024)도 같은 기간을 안내합니다.[2][3]\n- 질병관리청 지침(2026)은 확산 방지를 위해 등교·등원중지를 권장하지만, 구체적인 중지 기간은 제시하지 않습니다.[4]\n- 교육부 매뉴얼(2023)은 방역당국에서 별도 관리지침을 제시하면 그 지침을 우선 적용하도록 안내합니다.[8]\n- 수족구병은 제4급 법정감염병이며, 교육부 매뉴얼의 학교장 신고 대상 목록에는 없습니다.[5][6]"
+ }
+]

@@ -1,0 +1,305 @@
+[
+ {
+  "run": 1,
+  "id": "A",
+  "question": "수족구병 진단받은 학생, 언제부터 등교시키면 되나요?",
+  "status": "ANSWERED",
+  "route": "ACTION",
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "tool_paths_with_targets": [
+   {
+    "tool": "action_search",
+    "actions": [
+     "gyeonggi_school_guide_2025:p0157:a01"
+    ],
+    "edges": [
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -SUPPORTED_BY-> Chunk:gyeonggi_school_guide_2025:p0157:t01r03",
+     "Document:gyeonggi_school_guide_2025 -HAS_CHUNK-> Chunk:gyeonggi_school_guide_2025:p0157:t01r03",
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   },
+   {
+    "tool": "action_search",
+    "actions": [
+     "moe_school_manual_v3:p0049:a01"
+    ],
+    "edges": [
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -SUPPORTED_BY-> Chunk:moe_school_manual_v3:p0049:t01r03",
+     "Document:moe_school_manual_v3 -HAS_CHUNK-> Chunk:moe_school_manual_v3:p0049:t01r03",
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   },
+   {
+    "tool": "action_search",
+    "actions": [
+     "kdca_hfmd_2026:p0030:a01"
+    ],
+    "edges": [
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -SUPPORTED_BY-> Chunk:kdca_hfmd_2026:p0030:b01",
+     "Document:kdca_hfmd_2026 -HAS_CHUNK-> Chunk:kdca_hfmd_2026:p0030:b01",
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   }
+  ],
+  "final_action_ids": [
+   "gyeonggi_school_guide_2025:p0157:a01",
+   "moe_school_manual_v3:p0049:a01",
+   "kdca_hfmd_2026:p0030:a01"
+  ],
+  "final_target_actions": [
+   "gyeonggi_school_guide_2025:p0157:a01",
+   "kdca_hfmd_2026:p0030:a01",
+   "moe_school_manual_v3:p0049:a01"
+  ],
+  "cited": [
+   "kdca_hfmd_2026:p0030:b01",
+   "gyeonggi_school_guide_2025:p0157:t01r03",
+   "moe_school_manual_v3:p0049:t01r03",
+   "moe_school_manual_v3:p0050:b01"
+  ],
+  "seconds": 12.55,
+  "answer": "**수족구병 확진 학생은 발열이 없고 수포가 마른 뒤 등교할 수 있습니다.**[1]\n\n**상황 판단**\n- 질병관리청 수족구병 관리지침(2026)은 발열이 없고 수포가 마른 후 복귀하도록 안내합니다.[1]\n- 경기도 가이드북(2024)과 교육부 매뉴얼(2023)은 수포 발생 후 6일간 또는 가피가 형성될 때까지 등교중지로 안내하지만, 교육부 매뉴얼은 방역당국의 별도 관리지침이 있으면 이를 우선 적용하도록 합니다.[2][3][4]"
+ },
+ {
+  "run": 1,
+  "id": "B",
+  "question": "수족구병 등교중지 기간이 교육부 매뉴얼, 경기도 가이드북, 질병관리청 지침에서 각각 어떻게 다른가요?",
+  "status": "PARTIAL",
+  "route": "CROSSDOC",
+  "tools": [
+   [
+    "crossdoc_graph_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "tool_paths_with_targets": [
+   {
+    "tool": "crossdoc_graph_search",
+    "actions": [
+     "gyeonggi_school_guide_2025:p0157:a01"
+    ],
+    "edges": [
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -SUPPORTED_BY-> Chunk:gyeonggi_school_guide_2025:p0157:t01r03",
+     "Document:gyeonggi_school_guide_2025 -HAS_CHUNK-> Chunk:gyeonggi_school_guide_2025:p0157:t01r03",
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   },
+   {
+    "tool": "crossdoc_graph_search",
+    "actions": [
+     "kdca_hfmd_2026:p0030:a01"
+    ],
+    "edges": [
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -SUPPORTED_BY-> Chunk:kdca_hfmd_2026:p0030:b01",
+     "Document:kdca_hfmd_2026 -HAS_CHUNK-> Chunk:kdca_hfmd_2026:p0030:b01",
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   },
+   {
+    "tool": "crossdoc_graph_search",
+    "actions": [
+     "moe_school_manual_v3:p0049:a01"
+    ],
+    "edges": [
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -SUPPORTED_BY-> Chunk:moe_school_manual_v3:p0049:t01r03",
+     "Document:moe_school_manual_v3 -HAS_CHUNK-> Chunk:moe_school_manual_v3:p0049:t01r03",
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   }
+  ],
+  "final_action_ids": [
+   "gyeonggi_school_guide_2025:p0157:a01",
+   "kdca_hfmd_2026:p0030:a01",
+   "moe_school_manual_v3:p0049:a01"
+  ],
+  "final_target_actions": [
+   "gyeonggi_school_guide_2025:p0157:a01",
+   "kdca_hfmd_2026:p0030:a01",
+   "moe_school_manual_v3:p0049:a01"
+  ],
+  "cited": [
+   "moe_school_manual_v3:p0049:t01r03",
+   "gyeonggi_school_guide_2025:p0157:t01r03",
+   "kdca_hfmd_2026:p0029:b01",
+   "kdca_hfmd_2026:p0030:b01",
+   "moe_school_manual_v3:p0059:b02",
+   "gyeonggi_school_guide_2025:p0186:t01r02",
+   "gyeonggi_school_guide_2025:p0164:t01r09",
+   "moe_school_manual_v3:p0050:b01"
+  ],
+  "seconds": 13.28,
+  "answer": "**질병관리청 지침(2026)은 등교·등원 중지를 권고하고, 발열이 없고 수포가 마른 후 복귀하도록 합니다. 교육부 매뉴얼(2023)과 경기도 가이드북(2024)은 모두 ‘수포 발생 후 6일간 또는 가피가 형성될 때까지’로 제시합니다.**[1][2][3][4]\n\n**상황 판단**\n- 교육부 매뉴얼과 경기도 가이드북의 등교중지 기간은 같습니다. 질병관리청 지침은 구체적인 중지 일수 대신 중지 권고와 복귀 조건을 제시합니다.[1][2][3][4]\n- 교육부 매뉴얼은 방역당국이 별도 관리지침을 제시하면 그 지침을 우선 적용하도록 안내합니다.[8]\n\n**이후에 할 일**\n- 질병관리청 지침에 따라 발열이 없고 수포가 마른 후 복귀하도록 안내합니다.[4]"
+ },
+ {
+  "run": 2,
+  "id": "A",
+  "question": "수족구병 진단받은 학생, 언제부터 등교시키면 되나요?",
+  "status": "ANSWERED",
+  "route": "ACTION",
+  "tools": [
+   [
+    "action_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "tool_paths_with_targets": [
+   {
+    "tool": "action_search",
+    "actions": [
+     "gyeonggi_school_guide_2025:p0157:a01"
+    ],
+    "edges": [
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -SUPPORTED_BY-> Chunk:gyeonggi_school_guide_2025:p0157:t01r03",
+     "Document:gyeonggi_school_guide_2025 -HAS_CHUNK-> Chunk:gyeonggi_school_guide_2025:p0157:t01r03",
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   },
+   {
+    "tool": "action_search",
+    "actions": [
+     "moe_school_manual_v3:p0049:a01"
+    ],
+    "edges": [
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -SUPPORTED_BY-> Chunk:moe_school_manual_v3:p0049:t01r03",
+     "Document:moe_school_manual_v3 -HAS_CHUNK-> Chunk:moe_school_manual_v3:p0049:t01r03",
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   },
+   {
+    "tool": "action_search",
+    "actions": [
+     "kdca_hfmd_2026:p0030:a01"
+    ],
+    "edges": [
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -SUPPORTED_BY-> Chunk:kdca_hfmd_2026:p0030:b01",
+     "Document:kdca_hfmd_2026 -HAS_CHUNK-> Chunk:kdca_hfmd_2026:p0030:b01",
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   }
+  ],
+  "final_action_ids": [
+   "gyeonggi_school_guide_2025:p0157:a01",
+   "moe_school_manual_v3:p0049:a01",
+   "kdca_hfmd_2026:p0030:a01"
+  ],
+  "final_target_actions": [
+   "gyeonggi_school_guide_2025:p0157:a01",
+   "kdca_hfmd_2026:p0030:a01",
+   "moe_school_manual_v3:p0049:a01"
+  ],
+  "cited": [
+   "kdca_hfmd_2026:p0030:b01",
+   "gyeonggi_school_guide_2025:p0157:t01r03",
+   "moe_school_manual_v3:p0049:t01r03",
+   "gyeonggi_school_guide_2025:p0187:b02",
+   "moe_school_manual_v3:p0050:b01"
+  ],
+  "seconds": 11.34,
+  "answer": "**수족구병 확진 학생은 발열이 없고 수포가 마른 뒤 등교시킬 수 있습니다. 질병관리청 2026 지침을 우선 적용합니다.**[1][5]\n\n**상황 판단**\n- 질병관리청 2026 지침은 복귀 기준을 ‘발열이 없고, 수포가 마른 후’로 안내합니다.[1]\n- 경기도 가이드북(2024)과 교육부 매뉴얼(2023)은 ‘수포 발생 후 6일간 또는 가피가 형성될 때까지’ 등교중지로 안내합니다.[2][3]\n- 교육부 매뉴얼(2023)은 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 안내합니다.[5]"
+ },
+ {
+  "run": 2,
+  "id": "B",
+  "question": "수족구병 등교중지 기간이 교육부 매뉴얼, 경기도 가이드북, 질병관리청 지침에서 각각 어떻게 다른가요?",
+  "status": "PARTIAL",
+  "route": "CROSSDOC",
+  "tools": [
+   [
+    "crossdoc_graph_search",
+    "OK"
+   ],
+   [
+    "disease_search",
+    "OK"
+   ]
+  ],
+  "tool_paths_with_targets": [
+   {
+    "tool": "crossdoc_graph_search",
+    "actions": [
+     "gyeonggi_school_guide_2025:p0157:a01"
+    ],
+    "edges": [
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -SUPPORTED_BY-> Chunk:gyeonggi_school_guide_2025:p0157:t01r03",
+     "Document:gyeonggi_school_guide_2025 -HAS_CHUNK-> Chunk:gyeonggi_school_guide_2025:p0157:t01r03",
+     "SchoolAction:gyeonggi_school_guide_2025:p0157:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   },
+   {
+    "tool": "crossdoc_graph_search",
+    "actions": [
+     "kdca_hfmd_2026:p0030:a01"
+    ],
+    "edges": [
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -SUPPORTED_BY-> Chunk:kdca_hfmd_2026:p0030:b01",
+     "Document:kdca_hfmd_2026 -HAS_CHUNK-> Chunk:kdca_hfmd_2026:p0030:b01",
+     "SchoolAction:kdca_hfmd_2026:p0030:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   },
+   {
+    "tool": "crossdoc_graph_search",
+    "actions": [
+     "moe_school_manual_v3:p0049:a01"
+    ],
+    "edges": [
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -INSTANCE_OF-> ActionConcept:EXCLUDE_FROM_SCHOOL",
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -SUPPORTED_BY-> Chunk:moe_school_manual_v3:p0049:t01r03",
+     "Document:moe_school_manual_v3 -HAS_CHUNK-> Chunk:moe_school_manual_v3:p0049:t01r03",
+     "SchoolAction:moe_school_manual_v3:p0049:a01 -FOR_DISEASE-> Disease:HFMD"
+    ]
+   }
+  ],
+  "final_action_ids": [
+   "gyeonggi_school_guide_2025:p0157:a01",
+   "kdca_hfmd_2026:p0030:a01",
+   "moe_school_manual_v3:p0049:a01"
+  ],
+  "final_target_actions": [
+   "gyeonggi_school_guide_2025:p0157:a01",
+   "kdca_hfmd_2026:p0030:a01",
+   "moe_school_manual_v3:p0049:a01"
+  ],
+  "cited": [
+   "moe_school_manual_v3:p0223:t01r10",
+   "moe_school_manual_v3:p0049:t01r03",
+   "gyeonggi_school_guide_2025:p0157:t01r03",
+   "gyeonggi_school_guide_2025:p0187:b02",
+   "kdca_hfmd_2026:p0029:b01",
+   "kdca_hfmd_2026:p0030:b01",
+   "moe_school_manual_v3:p0059:b02",
+   "gyeonggi_school_guide_2025:p0186:t01r02",
+   "gyeonggi_school_guide_2025:p0164:t01r09",
+   "moe_school_manual_v3:p0050:b01"
+  ],
+  "seconds": 13.37,
+  "answer": "**질병관리청 지침(2026)은 고정된 등교중지 일수를 제시하지 않고, 발열이 없고 수포가 마른 뒤 복귀하도록 안내합니다. 교육부 매뉴얼(2023)과 경기도 가이드북(2024)은 모두 ‘수포 발생 후 6일간 또는 가피가 형성될 때까지’로 같습니다.**[1][3][5][6]\n\n**상황 판단**\n- 교육부 매뉴얼(2023)과 경기도 가이드북(2024)의 등교중지 기준은 서로 다르지 않습니다.[1][3]\n- 질병관리청 지침(2026)은 수족구병 환자의 등교·등원 중지를 권장하고, 복귀 조건을 제시하지만 구체적인 중지 일수는 정하지 않습니다.[5][6]\n- 교육부 매뉴얼(2023)은 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 안내합니다.[10]\n\n**이후에 할 일**\n- 질병관리청 지침(2026)에 따라 발열이 없고 수포가 마른 뒤 복귀하도록 안내합니다.[6]"
+ }
+]
