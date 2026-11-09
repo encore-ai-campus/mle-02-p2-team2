@@ -182,3 +182,29 @@ uv run pytest tests/rag/respiratory -q
 - 호흡기 원문은 일부개정판인데 manifest URL은 이전 판본을 가리킨다. (출처: [문서 판본 점검](기획배경_문서판본_20261107.md))
 
 `data/interim/respiratory/`의 묶음·추출 산출물은 Git 제외 로컬 자료다.
+
+
+## Text2Cypher 조회(11/9 추가)
+
+초기 CLI 버전(src/rag/respiratory/text2cypher_tool.py).
+시험 질문이 프롬프트 예시와 같아 생성 능력 증명은 아님.
+시연·평가는 아래 'Text2Cypher 그래프 시연' 절을 따른다.
+
+
+## Text2Cypher 그래프 시연(11/9)
+
+[질문 입력 노트북](text2cypher_demo.ipynb)에서 실제 Aura 구조·값 사전을 펼쳐 보고 자유 질문 → LLM 생성 → EXPLAIN 검사 → 읽기 실행 순서로 진행한다. Path·Node·Relationship을 보존하고, 검증한 같은 쿼리를 Aura 조회 화면에 복사해 그래프를 확인하는 개발자용 시연이다. 기존 터미널 Tool·메인 LangGraph·DB 스키마·데이터는 바꾸지 않았다. ([사용법](Text2Cypher_시연_사용법.md), [시연 부품](text2cypher_demo.py), [실제 스키마](text2cypher_schema.json))
+
+- 실제 구조 6종·관계 방향 6종, 문서 10·질병 11·역할 12·행동 개념 28개의 값 사전을 수집했다. 전체 원문·embedding·비밀 접속 정보는 LLM에 보내지 않는다.
+- CALL 읽기 서브쿼리·UNION은 허용하고 프로시저·외부 접근·쓰기·관리 구문은 거부한다. EXPLAIN r 판정과 실행 직전 재검사를 적용한다. LIMIT을 자동으로 붙여 의미를 바꾸지 않으며 연결·트랜잭션 10초, 표시 50행·100노드·150관계, 가변 경로 최대 3홉으로 제한한다.
+- 사용자 요청에 따라 기존 계정을 사용했다. **DB 계정 자체가 읽기 전용인 것은 아니며**, 프로그램에서 조회만 허용한다. 읽기 전용 계정 요건과의 차이를 [스키마 계정 확인](text2cypher_schema.json)에 기록했다.
+- 실제 평가 8문항: 조회 6/6 기준 결과 일치·지원 밖/쓰기 요청 거부 2/2. 예시 2개와 새 질문 6개를 구분하며, 새 질문 6개 중 2개는 거부 시험이다. 기존 3개 고정 조회 결과도 10·6·8행으로 같았다. ([질문·생성문·실행문·ID/집계·지연 기록](text2cypher_eval.jsonl), [평가 요약](text2cypher_eval_summary.json))
+- 평가 전후 DB 노드 2,271·관계 3,098로 개수 변화 0. 이는 11/9 실행 시점 수치이며 이전 11/8 스냅샷과 구분한다.
+- 노트북 코드 셀 8개 오류 0, 입력 UI 콜백 실제 실행 8행. 호흡기 테스트 `89 passed in 1.43s`, ruff 통과. 패키지 추가 설치·Git 실행은 없었다.
+- **Aura 화면 대조 확인 완료**(11/9 10:01, 송수림 직접 실행): 같은 프로젝트 인스턴스의 Query 화면에서 E01을 실행해 문서 3개·SchoolAction 8개(교육부 4·경기 3·인플루엔자 1)·ActionConcept 1개(개별 보호자 연락=CONTACT_GUARDIAN)와 `Document-HAS_CHUNK->Chunk, SchoolAction-SUPPORTED_BY->Chunk, SchoolAction-INSTANCE_OF->ActionConcept` 방향을 그래프로 확인했다. 표의 행 수를 직접 본 것은 아니며, 그래프의 SchoolAction 노드 8개·문서 3개로 Python 결과 8행·3문서와 같음을 확인했다. [캡처](captures/t2c_contact_guardian.png)
+- 소수 질문의 단회 평가이며 별도 사람 판독은 미실시다. 생성 Cypher는 틀릴 수 있고 결과는 Citation을 대신하지 않는다. `neo4j-graphrag` 미설치 환경에서 수업의 생성·검증 흐름을 분리 적용했다.
+
+```bash
+# 기존 환경으로 평가 재실행: 새 LLM 호출이 발생하며 DB는 읽기만 한다.
+uv run --no-sync python notebooks/respiratory/text2cypher_evaluate.py
+```
