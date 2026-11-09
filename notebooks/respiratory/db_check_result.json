@@ -7,7 +7,7 @@
     },
     {
       "label": "Chunk",
-      "count": 1735
+      "count": 1748
     },
     {
       "label": "Disease",
@@ -36,7 +36,7 @@
     {
       "document_id": "kdca_covid19_2026",
       "title": "2026년도 코로나바이러스감염증-19 관리지침",
-      "chunk_count": 73,
+      "chunk_count": 86,
       "school_action_count": 0
     },
     {
@@ -107,7 +107,7 @@
     },
     {
       "type": "HAS_CHUNK",
-      "count": 1735
+      "count": 1748
     },
     {
       "type": "INSTANCE_OF",
@@ -160,7 +160,7 @@
       "end_labels": [
         "Chunk"
       ],
-      "count": 1735,
+      "count": 1748,
       "allowed": true
     },
     {

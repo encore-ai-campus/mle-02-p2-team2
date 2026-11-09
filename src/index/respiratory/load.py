@@ -14,12 +14,14 @@ import argparse
 import json
 import sys
 from collections import Counter
+from html.parser import HTMLParser
 from pathlib import Path
 
 from index.respiratory.extractor import read_jsonl
 from index.school import embed
 from index.school.bundle import build_load_bundle
 from index.school.dictionaries import load_dictionaries
+from index.school.ids_local import chunk_row_id, parse_id
 from index.school.load import load_bundle, verify_loaded_bundle
 from index.school.neo4j_local import get_driver
 
@@ -57,6 +59,8 @@ NORMALIZED_PATH = INTERIM_DIR / "steps_normalized.jsonl"
 BLOCKS_PATH = INTERIM_DIR / "blocks.jsonl"
 BUNDLE_PATH = INTERIM_DIR / "bundle.json"
 EMBED_LEDGER_PATH = INTERIM_DIR / "embed_ledger.jsonl"
+TABLE_ROWS_PATH = INTERIM_DIR / "table_rows.jsonl"
+TABLE_REVIEW_PATH = PROJECT_ROOT / "notebooks/respiratory/table_rows_검수표_20261108.md"
 CHUNK_FIELDS = ("chunk_id", "document_id", "text", "pdf_page", "printed_page", "section")
 ACTION_FIELDS = (
     "action_id", "action_text", "scope", "stage", "step_order", "when_text",
@@ -64,7 +68,90 @@ ACTION_FIELDS = (
 )
 
 
-def make_inputs():
+class TableReviewParser(HTMLParser):
+    """검수표의 HTML 셀을 읽는다. 파이프·줄바꿈·HTML 엔티티를 보존한다."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.rows = []
+        self.row = None
+        self.cell = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "tr":
+            self.row = []
+        elif tag in {"td", "th"} and self.row is not None:
+            self.cell = []
+
+    def handle_data(self, data):
+        if self.cell is not None:
+            self.cell.append(data)
+
+    def handle_endtag(self, tag):
+        if tag in {"td", "th"} and self.cell is not None:
+            self.row.append("".join(self.cell))
+            self.cell = None
+        elif tag == "tr" and self.row is not None:
+            self.rows.append(self.row)
+            self.row = None
+
+
+def approved_table_chunks(existing_chunks):
+    """확인이 정확히 OK인 ID만 원본 JSONL에서 가져와 청크로 변환한다."""
+    parser = TableReviewParser()
+    parser.feed(TABLE_REVIEW_PATH.read_text(encoding="utf-8"))
+    headers = ["chunk_id", "pdf_page", "table_title", "header", "row_text", "확인"]
+    if not parser.rows or parser.rows[0] != headers:
+        raise ValueError("표 행 검수표의 열 형식이 다릅니다.")
+    approved, seen = [], set()
+    for row in parser.rows[1:]:
+        if len(row) != len(headers) or not row[0]:
+            raise ValueError("표 행 검수표의 행 형식이 다릅니다.")
+        if row[0] in seen:
+            raise ValueError(f"검수표 중복 ID: {row[0]}")
+        seen.add(row[0])
+        if row[-1] == "OK":
+            approved.append(row[0])
+    if not approved:
+        raise ValueError("확인이 OK인 표 행이 없습니다.")
+
+    candidates = {}
+    for _, row in read_jsonl(TABLE_ROWS_PATH):
+        cid = row.get("chunk_id")
+        if not isinstance(cid, str) or cid in candidates:
+            raise ValueError(f"표 행 JSONL의 누락·중복 ID: {cid}")
+        candidates[cid] = row
+    existing = {row["chunk_id"] for row in existing_chunks}
+    chunks = []
+    for cid in approved:
+        if cid not in candidates:
+            raise ValueError(f"OK 행이 JSONL에 없습니다: {cid}")
+        if cid in existing:
+            raise ValueError(f"기존 청크와 중복 ID: {cid}")
+        row = candidates[cid]
+        parsed = parse_id(cid)
+        if (parsed["kind"] != "chunk_row" or row.get("document_id") not in DOCUMENT_IDS
+                or type(row.get("pdf_page")) is not int
+                or parsed["document_id"] != row["document_id"]
+                or parsed["page"] != row["pdf_page"]
+                or chunk_row_id(row["document_id"], row["pdf_page"],
+                                parsed["table"], parsed["row"]) != cid):
+            raise ValueError(f"표 행 ID·문서·PDF 쪽 불일치: {cid}")
+        if ("printed_page" not in row or (row["printed_page"] is not None
+                and (type(row["printed_page"]) is not int or row["printed_page"] < 1))):
+            raise ValueError(f"표 행 인쇄 쪽 오류: {cid}")
+        if any(not isinstance(row.get(key), str) for key in ("table_title", "header", "row_text")):
+            raise ValueError(f"표 행 원문 필드 누락: {cid}")
+        chunks.append({
+            "chunk_id": cid, "document_id": row["document_id"],
+            "text": "\n".join(row[key] for key in ("table_title", "header", "row_text")),
+            "section": row["table_title"], "pdf_page": row["pdf_page"],
+            "printed_page": row["printed_page"],
+        })
+    return chunks
+
+
+def make_inputs(*, table_rows=False):
     """정규화된 행동과 원문 청크를 승우의 적재 패키지 입력으로 변환한다.
 
     다른 상태의 행동은 적재 후보에서 제외한다. 같은 청크를 여러 행동이
@@ -114,12 +201,14 @@ def make_inputs():
             official_chunks.append({field: row[field] for field in CHUNK_FIELDS})
         except KeyError as error:
             raise ValueError(f"청크에 필드가 없습니다: {error.args[0]}") from error
+    if table_rows:
+        official_chunks.extend(approved_table_chunks(official_chunks))
     return actions, official_chunks, chunk_diseases
 
 
-def make_bundle():
+def make_bundle(*, table_rows=False):
     """학교 공통 함수와 사전으로 패키지를 만들고 허용 구조를 검사한다."""
-    actions, chunks, chunk_diseases = make_inputs()
+    actions, chunks, chunk_diseases = make_inputs(table_rows=table_rows)
     books = load_dictionaries()
     return build_load_bundle(
         actions,
@@ -128,6 +217,33 @@ def make_bundle():
         books,
         chunk_diseases=chunk_diseases,
     )
+
+
+def apply_table_chunks(driver, chunks, database=None):
+    """새 표 행과 HAS_CHUNK만 한 트랜잭션으로 추가하고 기존 속성은 건드리지 않는다."""
+    ids = [chunk["chunk_id"] for chunk in chunks]
+    if len(ids) != len(set(ids)):
+        raise ValueError("추가 표 행 ID 중복")
+    rows = [{"document_id": parse_id(chunk["chunk_id"])["document_id"], "props": chunk}
+            for chunk in chunks]
+
+    def create(tx):
+        existing = tx.run(
+            "MATCH (c:Chunk) WHERE c.chunk_id IN $ids RETURN count(c) AS n", ids=ids,
+        ).single()["n"]
+        if existing:
+            raise ValueError("추가 표 행 ID가 이미 DB에 있습니다.")
+        count = tx.run(
+            "UNWIND $rows AS row MATCH (d:Document {document_id: row.document_id}) "
+            "CREATE (c:Chunk) SET c = row.props CREATE (d)-[:HAS_CHUNK]->(c) "
+            "RETURN count(c) AS n", rows=rows,
+        ).single()["n"]
+        if count != len(chunks):
+            raise ValueError("표 행 추가 건수 불일치: 문서 끝점을 확인하세요.")
+        return {"Chunk": count, "HAS_CHUNK": count}
+
+    with driver.session(database=database) as session:
+        return session.execute_write(create)
 
 
 def require_our_ids(bundle):
@@ -219,6 +335,7 @@ def main():
     parser.add_argument("--apply", action="store_true", help="안전 검사 후 공통 Neo4j에 적재")
     parser.add_argument("--check-db", action="store_true", help="DB 상태 읽기 전용 조회")
     parser.add_argument("--embed", action="store_true", help="호흡기 청크의 임베딩 생성·적재")
+    parser.add_argument("--table-rows", action="store_true", help="검수표 OK 행만 청크로 추가")
     args = parser.parse_args()
     if args.check_db and (args.apply or args.embed):
         parser.error("--check-db는 읽기 전용이므로 --apply 또는 --embed와 함께 쓸 수 없습니다.")
@@ -231,7 +348,13 @@ def main():
             call_external(driver.close)
         return
 
-    bundle = make_bundle()
+    bundle = make_bundle(table_rows=args.table_rows)
+    table_chunks = []
+    if args.table_rows:
+        original_ids = {row["chunk_id"] for row in make_bundle()["nodes"]["Chunk"]}
+        table_chunks = [row for row in bundle["nodes"]["Chunk"]
+                        if row["chunk_id"] not in original_ids]
+        print(f"validate_bundle: 통과 / 추가 청크: {len(table_chunks)}")
     print_bundle_counts(bundle)
     if not args.apply and not args.embed:
         # 기본 모드는 DB에 접속하지 않고 요청한 패키지 파일만 저장한다.
@@ -245,7 +368,10 @@ def main():
     driver, database = call_external(get_driver, PROJECT_ROOT / ".env")
     try:
         if args.apply:
-            written = call_external(load_bundle, driver, bundle, database)
+            if args.table_rows:
+                written = call_external(apply_table_chunks, driver, table_chunks, database)
+            else:
+                written = call_external(load_bundle, driver, bundle, database)
             print(f"적재 처리 건수: {json.dumps(written, ensure_ascii=False)}")
             print_verification(call_external(verify_loaded_bundle, driver, bundle, database))
         if args.embed:
@@ -255,7 +381,7 @@ def main():
             result = call_external(
                 embed.embed_chunks,
                 driver,
-                bundle["nodes"]["Chunk"],
+                table_chunks if args.table_rows else bundle["nodes"]["Chunk"],
                 embedder,
                 ledger=EMBED_LEDGER_PATH,
                 database=database,
