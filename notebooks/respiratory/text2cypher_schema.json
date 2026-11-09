@@ -1,6 +1,6 @@
 {
   "schema_version": "text2cypher-aura-20261109-v1",
-  "observed_at_kst": "2026-11-09T09:54:00.840117+09:00",
+  "observed_at_kst": "2026-11-09T10:30:14.847337+09:00",
   "connection": {
     "instance_alias": "team2-project-aura",
     "instance_fingerprint": "f1382cfa4160",
@@ -660,11 +660,7 @@
   "scope": "프로젝트 Aura의 현재 Document 전체. 문서별 접근 제한 기능을 구현한 것은 아님.",
   "browser_verification": {
     "status": "NOT_VERIFIED",
-    "user_response": "아직 확인하지 못함",
-    "source": "11/9 사용자 응답",
-    "expected_python_rows": 8,
-    "cypher_sha256": "52e61af4e8902fe4b8b921f278d3bd34f7960457b2eddf66c0060f2ba2b48b20",
-    "reason": "Chrome 컴퓨터 제어 미승인; 같은 프로젝트 Aura 화면에서의 수동 확인은 아직 미실시"
+    "reason": "Chrome 컴퓨터 제어 미승인; 실제 Aura 화면에서 대조 필요"
   },
   "retriever_reuse": {
     "installed": false,
