@@ -14,6 +14,7 @@ import html
 import os
 import re
 import sys
+import uuid
 from datetime import datetime
 from pathlib import Path
 
@@ -51,6 +52,7 @@ STATUS_STYLE = {"ANSWERED": ("✅", "green"), "PARTIAL": ("🟡", "orange"), "IN
 EXAMPLE_QUESTIONS = [("의사 신고 vs 학교장 신고", "의사가 하는 신고와 학교장 등이 하는 신고는 법적으로 어떻게 구분되나요?"),
                      ("신고의무자가 아닌 사람이 발견하면", "신고의무자가 아닌 사람이 감염병 환자로 의심되는 사람을 발견하면 어떻게 해야 하나요?"),
                      ("백일해 접촉자 안내", "학교에서 백일해 환자가 발생했을 때 접촉자 안내는 어떻게 하나요?")]
+FOCUS_KEY = "focus_hid"              # 사이드바 질문 기록에서 고른 질문의 번호(hid). 없으면 전체 대화를 보여 준다
 PENDING_KEY = "pending_question"     # 예시 버튼이 누른 질문을 다음 재실행으로 넘기는 session_state 키(다른 키와 겹치지 않게 한 곳에서 관리)
 
 # 화면 모양(11/09 시안 C): 색·글꼴은 .streamlit/config.toml 테마가 정하고, 여기서는 테마로 안 되는 것만 CSS로 더한다.
@@ -496,8 +498,44 @@ def pick_example(text: str) -> None:
 
 def clear_conversation() -> None:
     """'현재 화면 대화 지우기' 버튼의 on_click 콜백. 화면 대화(history)만 비운다.
-    저장한 답변(saved)·인증·개발자 설정과 서버의 질문 이력 파일은 건드리지 않는다."""
+    저장한 답변(saved)·인증·개발자 설정과 서버의 질문 이력 파일은 건드리지 않는다. 고른 질문(FOCUS_KEY)도 함께 푼다."""
     st.session_state["history"] = []
+    st.session_state.pop(FOCUS_KEY, None)
+
+
+def pick_history(hid: str) -> None:
+    """사이드바 질문 기록 버튼의 on_click 콜백. 그 질문(과 저장돼 있는 답변)만 보이게 표시해 둔다. 질문을 다시 실행하지 않는다."""
+    st.session_state[FOCUS_KEY] = hid
+
+
+def show_all_history() -> None:
+    """'전체 대화 보기' 버튼의 on_click 콜백. 고른 질문 표시를 푼다."""
+    st.session_state.pop(FOCUS_KEY, None)
+
+
+def history_label(item: dict) -> str:
+    """사이드바 버튼 글자: 상태 아이콘 + 질문 앞부분(줄바꿈·공백은 한 칸으로). 전체 질문은 버튼 도움말에 둔다."""
+    icon = "⛔" if "error" in item else STATUS_STYLE.get(item["output"]["status"], ("•", "gray"))[0]
+    text = " ".join(item["question"].split())
+    return f"{icon} {text[:26]}{'…' if len(text) > 26 else ''}"
+
+
+def show_history_sidebar(items: list[dict]) -> None:
+    """사이드바 '질문 기록'(11/09): 이 접속에서 한 질문 최근 10건을 새것부터 보여 주고, 누르면 그 질문·답변만 본다.
+    새 저장소를 쓰지 않는다(session_state 의 history 재사용). 서버의 질문 이력 파일과는 별개이며 새로고침하면 사라진다."""
+    with st.sidebar:
+        st.subheader("질문 기록")
+        st.caption("이 접속에서 한 질문입니다. 새로고침하면 사라집니다.")
+        if not items:
+            st.caption("아직 질문이 없습니다.")
+            return
+        focus = st.session_state.get(FOCUS_KEY)
+        for number, item in enumerate(items[:10]):
+            hid = item.get("hid") or f"i{number}"
+            st.button(history_label(item), key=f"hist-pick-{hid}", on_click=pick_history, args=(hid,), help=item["question"],
+                      type="primary" if hid == focus else "secondary", width="stretch")
+        if focus:
+            st.button("전체 대화 보기", key="hist-all-sidebar", on_click=show_all_history, width="stretch")
 
 
 def show_examples() -> None:
@@ -509,9 +547,13 @@ def show_examples() -> None:
             st.button(f"💬 {label}", key=f"example-{index}", on_click=pick_example, args=(text,), help=text, width="stretch")
 
 
-def render_history(items: list[dict], documents: dict, developer: bool = False) -> None:
-    """최근 대화 10건을 새것부터 보여 준다. developer 가 참이면 점검용 정보도 함께 보여 준다."""
-    for index, item in enumerate(items[:10]):
+def render_history(items: list[dict], documents: dict, developer: bool = False, focus: str | None = None) -> None:
+    """최근 대화 10건을 새것부터 보여 준다. developer 가 참이면 점검용 정보도 함께 보여 준다.
+    focus(질문 번호)가 있고 목록에 있으면 그 질문 하나만 보여 준다(없는 번호면 전체)."""
+    shown = items[:10]
+    chosen = [i for number, i in enumerate(shown) if (i.get("hid") or f"i{number}") == focus] if focus else []
+    shown = chosen or shown
+    for index, item in enumerate(shown):
         question_line(item["question"], f"hist-{index}")
         with st.chat_message("assistant"):
             if "error" in item:
@@ -521,7 +563,7 @@ def render_history(items: list[dict], documents: dict, developer: bool = False) 
                 if st.button("📌 답변 저장", key=f"save-{item['request_id']}"):
                     save_answer(item, documents)
                     st.rerun()
-        if index == 0 and len(items) > 1:
+        if index == 0 and len(shown) > 1:
             st.divider()
 
 
@@ -567,7 +609,7 @@ def main() -> None:
         st.stop()
     documents = res["documents"]
 
-    # 일반 사용자에게는 사이드바가 없다. 답변 다듬기(LLM + 근거 검사)는 가능하면 항상 켠다(키가 없으면 원문 정리형).
+    # 사이드바는 '질문 기록'(모든 사용자)과 개발자 설정(개발자만)이다. 답변 다듬기(LLM + 근거 검사)는 가능하면 항상 켠다(키가 없으면 원문 정리형).
     can_polish = "answer_writer" in res["deps"]
     polish = can_polish
     developer = is_developer()
@@ -594,6 +636,8 @@ def main() -> None:
     pending = st.session_state.pop(PENDING_KEY, None)
     question = typed or pending
     history_items = st.session_state.setdefault("history", [])
+    show_history_sidebar(history_items)     # 일반·개발자 화면 모두 사이드바에 질문 기록(개발자 설정은 위에서 이미 그려졌다)
+    focus = st.session_state.get(FOCUS_KEY)
 
     saved = st.session_state.setdefault("saved", [])
     labels = ["질문하기", f"저장한 답변 ({len(saved)})"] + (["대시보드"] if developer else [])
@@ -602,8 +646,9 @@ def main() -> None:
         if question:
             if not allowed:
                 st.warning("참고 문서를 하나 이상 선택하세요. 빈 목록은 '허용 문서 없음'으로 처리됩니다.")
+            st.session_state.pop(FOCUS_KEY, None)       # 새 질문의 답이 바로 보이도록 고른 질문 표시를 푼다
             result = answer_live(res, question, allowed, polish)
-            history_items.insert(0, {"question": question, **result})
+            history_items.insert(0, {"question": question, "hid": uuid.uuid4().hex[:8], **result})
             if history.logging_enabled():
                 history.append_record(history.make_record(question, result, polish=polish))
             st.rerun()      # 스트리밍 화면을 지우고 최종 결과(출처·처리 흐름 포함)로 다시 그린다
@@ -612,7 +657,9 @@ def main() -> None:
         else:
             st.button("🧹 현재 화면 대화 지우기", key="clear-conversation", on_click=clear_conversation,
                       help="화면에 쌓인 대화만 지웁니다. '저장한 답변'과 서비스 점검용 질문 기록은 그대로 남습니다.")
-        render_history(history_items, documents, developer=developer)
+            if focus:     # 사이드바가 접힌 좁은 화면에서도 돌아갈 수 있게 본문에도 버튼을 둔다
+                st.button("← 전체 대화 보기", key="hist-all-main", on_click=show_all_history)
+        render_history(history_items, documents, developer=developer, focus=focus)
     with tabs[1]:
         show_saved()
     if developer:

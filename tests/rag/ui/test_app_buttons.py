@@ -202,3 +202,77 @@ def test_question_is_styled_line_and_rendered_as_plain_markdown(calls):
     values = [m.value for m in at.markdown]
     assert "<b>질문</b> 입니다" in values                                              # 그대로 마크다운 본문으로 전달
     assert not any(v.startswith('<div class="qline') for v in values)
+
+
+# ---------------------------------------------------------------- 사이드바 질문 기록(11/09)
+
+def _hist_buttons(at: AppTest) -> list:
+    return [b for b in at.sidebar.button if b.key.startswith("hist-pick-")]
+
+
+def _ask_two(at: AppTest) -> None:
+    at.chat_input[0].set_value("첫 질문").run()
+    at.chat_input[0].set_value("둘째 질문").run()
+
+
+def _main_text(at: AppTest) -> str:
+    return " ".join(m.value for m in at.markdown)
+
+
+def test_sidebar_history_empty_then_lists_questions_newest_first(calls):
+    at = _run()
+    assert _hist_buttons(at) == []
+    assert any("아직 질문이 없습니다" in c.value for c in at.sidebar.caption)
+    _ask_two(at)
+    assert not at.exception
+    assert [b.label for b in _hist_buttons(at)] == ["✅ 둘째 질문", "✅ 첫 질문"]       # 새것부터, 상태 아이콘 포함
+
+
+def test_sidebar_pick_shows_only_that_question_without_asking_again(calls):
+    at = _run()
+    _ask_two(at)
+    n_calls = len(calls)
+    _hist_buttons(at)[1].click().run()                  # 오래된 '첫 질문' 선택
+    assert not at.exception
+    assert len(calls) == n_calls                        # 다시 질문(LLM 호출)하지 않는다
+    text = _main_text(at)
+    assert "답: 첫 질문" in text and "답: 둘째 질문" not in text
+    assert any(b.key == "hist-all-main" for b in at.button)
+    # 전체 보기로 돌아가면 둘 다 보인다
+    _button(at, "hist-all-main").click().run()
+    text = _main_text(at)
+    assert "답: 첫 질문" in text and "답: 둘째 질문" in text
+
+
+def test_new_question_clears_pick_and_clear_conversation_empties_sidebar(calls):
+    at = _run()
+    _ask_two(at)
+    _hist_buttons(at)[1].click().run()
+    at.chat_input[0].set_value("셋째 질문").run()       # 새 질문이면 고른 표시를 풀고 새 답을 보여 준다
+    assert "focus_hid" not in at.session_state
+    assert "답: 셋째 질문" in _main_text(at)
+    _button(at, "clear-conversation").click().run()
+    assert _hist_buttons(at) == []
+    assert any("아직 질문이 없습니다" in c.value for c in at.sidebar.caption)
+
+
+def test_sidebar_history_label_truncates_and_keeps_full_question_in_help(calls):
+    at = _run()
+    long_q = "아주 긴 질문 " * 8
+    at.chat_input[0].set_value(long_q).run()
+    button = _hist_buttons(at)[0]
+    assert button.label.endswith("…") and len(button.label) <= 2 + 26 + 1
+    assert button.help == long_q
+
+
+def test_developer_sidebar_keeps_settings_and_history(calls, monkeypatch):
+    monkeypatch.delenv("DEV_PASSWORD", raising=False)
+    monkeypatch.setenv("DEV_ALLOW_OPEN", "1")
+    st.cache_resource.clear()
+    at = AppTest.from_file(APP, default_timeout=30)
+    at.query_params["dev"] = "1"
+    at.run()
+    at.chat_input[0].set_value("개발자 질문").run()
+    assert not at.exception
+    assert [b.label for b in _hist_buttons(at)] == ["✅ 개발자 질문"]
+    assert any(h.value == "개발자 설정" for h in at.sidebar.header)
