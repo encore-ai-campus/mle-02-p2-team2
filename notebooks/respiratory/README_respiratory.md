@@ -13,6 +13,7 @@
 - 문서별 행동·담당 비교: [`crossdoc_graph_search`](../../src/rag/respiratory/crossdoc_tool.py).
 - 공동 DB 읽기 전용 점검 및 결과 저장: [`db_check.py`](db_check.py).
 - 문서 간 경로 시각화 질의: [`visual_queries.cypher`](visual_queries.cypher).
+- 질문→Cypher 생성 조회 시연(Text2Cypher): [`text2cypher_demo.ipynb`](text2cypher_demo.ipynb), [사용법](Text2Cypher_시연_사용법.md).
 
 ## 제출 증빙: 전처리·추출·정규화
 
@@ -119,7 +120,7 @@ SchoolAction:kdca_flu_facility_2026:p0017:a04 -[:FOR_DISEASE]-> Disease:INFLUENZ
 SchoolAction:kdca_flu_facility_2026:p0017:a04 -[:SUPPORTED_BY]-> Chunk:kdca_flu_facility_2026:p0017:b01
 ```
 
-스키마·그래프 제출 증빙: [ERD·관계 방향 설명](Neo4j_ERD_v0.2.md), [Cypher 질의](visual_queries.cypher), [기존 성홍열 그래프 캡처](captures/scarlet_fever.png), [기존 문서 횡단 그래프 캡처](captures/crossdoc.png). 캡처는 이전 실행 기록이며 최신 전체 수치는 [DB 점검 결과](db_check_result.json)를 따른다.
+스키마·그래프 제출 증빙: [ERD·관계 방향 설명](Neo4j_ERD_v0.2.md), [Cypher 질의](visual_queries.cypher), [성홍열 그래프 캡처](captures/scarlet_fever.png), [문서 횡단 그래프 캡처](captures/crossdoc.png), [Text2Cypher 보호자 연락 그래프 캡처](captures/t2c_contact_guardian.png). 앞의 두 캡처는 11/8 표 행 적재 후 다시 찍은 것이고(4d30b8a), 전체 수치는 [DB 점검 결과](db_check_result.json)를 따른다.
 
 
 ## 실행 명령
@@ -131,14 +132,16 @@ uv run python -m rag.respiratory.disease_tool "인플루엔자 잠복기는?"
 uv run python -m rag.respiratory.crossdoc_tool "보호자 연락은 문서마다 누가 하나요?" --concept CONTACT_GUARDIAN
 uv run python notebooks/respiratory/db_check.py
 uv run pytest tests/rag/respiratory -q
+# Text2Cypher 평가 재실행(LLM 호출,DB는 읽기만)
+uv run --no-sync python notebooks/respiratory/text2cypher_evaluate.py
 ```
 
 ## 저장된 결과
 
-- 담당 3문서의 조각(Chunk)은 389개(호흡기 286·인플루엔자 30·코로나19 73)로, 빈 페이지 표시 8개 정리 후 수치다. 중복 검토 문서는 정리 전 기록이다. (출처: [DB 중복 검토](DB_중복_검토_20261106.md), [DB 점검 결과](db_check_result.json))
+- 담당 3문서의 조각(Chunk)은 402개(호흡기 286·인플루엔자 30·코로나19 86)로, 빈 페이지 표시 8개 정리 후 11/8 코로나19 p39 표 행 13개 적재를 포함한 수치다. 중복 검토 문서는 정리 전 기록이다. (출처: [DB 중복 검토](DB_중복_검토_20261106.md), [DB 점검 결과](db_check_result.json))
 - 담당 3문서의 행동(SchoolAction)은 15개(호흡기 2·인플루엔자 13·코로나19 0)이며 성홍열 p116 등교중지 행동 추가를 포함한다. (출처: [DB 점검 결과](db_check_result.json))
-- DB 점검 스냅샷 노드 합계 2,255: Document 10, Chunk 1,735, SchoolAction 459, ActionConcept 28, SchoolRole 12, Disease 11. (출처: [DB 점검 결과](db_check_result.json))
-- DB 점검 스냅샷 관계 합계 3,076: HAS_CHUNK 1,735, SUPPORTED_BY 459, DONE_BY 312, INSTANCE_OF 290, ABOUT 166, FOR_DISEASE 114. (출처: [DB 점검 결과](db_check_result.json))
+- DB 점검 스냅샷(11/8 표 행 적재 후) 노드 합계 2,268: Document 10, Chunk 1,748, SchoolAction 459, ActionConcept 28, SchoolRole 12, Disease 11. (출처: [DB 점검 결과](db_check_result.json))
+- DB 점검 스냅샷(11/8 표 행 적재 후) 관계 합계 3,089: HAS_CHUNK 1,748, SUPPORTED_BY 459, DONE_BY 312, INSTANCE_OF 290, ABOUT 166, FOR_DISEASE 114. (출처: [DB 점검 결과](db_check_result.json))
 - 점검 항목의 위반은 모두 0: 허용 패턴 밖 관계, SUPPORTED_BY 없는 행동, HAS_CHUNK 없는 청크, basis 없는 DONE_BY, 임베딩 없는 청크. (출처: [DB 점검 결과](db_check_result.json))
 - 전체 `tests` 실행 결과는 421 passed·11 skipped이며, 요청 범위의 ruff도 통과했다. (출처: [F3 골든 비교 결과](F3_golden_compare_20261108.json)의 `validation`)
 - 골든 11문항 회귀 검증 결과는 통과 5·부분 통과 4·실패 2, F3 전후 판정 하락은 0이다. 이미 사용한 질문셋이며 독립 검증은 하지 않았다. (출처: [F3 골든 비교 결과](F3_golden_compare_20261108.json))
