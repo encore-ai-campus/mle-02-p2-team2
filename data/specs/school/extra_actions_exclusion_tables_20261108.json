@@ -1,0 +1,369 @@
+{
+  "description": "질병별 감염병 특성 표의 '등교중지(격리) 기간' 칸에서 규칙으로 만든 출처별 학교 행동(2026-11-08, 주승우 지시, Claude 생성). 칸 원문은 timing_text에 그대로 둔다.",
+  "actions": [
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0157:a02",
+      "action_text": "결핵 환자는 약물 치료 시작 후 2주까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "결핵",
+      "timing_text": "약물 치료 시작 후 2주까지",
+      "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r01",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "TUBERCULOSIS"
+      ]
+    },
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0157:a03",
+      "action_text": "수두 환자는 모든 수포에 가피가 형성될 때까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "수두",
+      "timing_text": "모든 수포에 가피가 형성될 때까지",
+      "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r02",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "VARICELLA"
+      ]
+    },
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0157:a04",
+      "action_text": "유행성 각결막염 등교 중지(격리) 기간: 격리없이 개인 위생수칙을 철저히 지킬 것을 권장",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "유행성 각결막염",
+      "timing_text": "격리없이 개인 위생수칙을 철저히 지킬 것을 권장",
+      "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r05",
+      "concept_id": null,
+      "disease_ids": [
+        "EKC"
+      ]
+    },
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0157:a05",
+      "action_text": "유행성 이하선염 환자는 증상 발생 후 5일까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "유행성 이하선염",
+      "timing_text": "증상 발생 후 5일까지",
+      "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r06",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "MUMPS"
+      ]
+    },
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0157:a06",
+      "action_text": "인플루엔자 등교 중지(격리) 기간: 유행차단을 위한 등교중지는 의미 없지만 환자상태에 따라 실시",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "인플루엔자",
+      "timing_text": "유행차단을 위한 등교중지는 의미 없지만 환자상태에 따라 실시5)",
+      "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r08",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "INFLUENZA"
+      ]
+    },
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0158:a01",
+      "action_text": "홍역 환자는 발진 4일 전부터 4일 후까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "홍역",
+      "timing_text": "발진 4일 전부터 4일 후까지",
+      "chunk_id": "gyeonggi_school_guide_2025:p0158:t01r09",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "MEASLES"
+      ]
+    },
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0159:a01",
+      "action_text": "백일해 환자는 항생제 투여 후 5일까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "백일해",
+      "timing_text": "항생제 투여 후 5일까지",
+      "chunk_id": "gyeonggi_school_guide_2025:p0159:t01r06",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "PERTUSSIS"
+      ]
+    },
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0159:a02",
+      "action_text": "유행성 이하선염 환자는 증상 발생 후 5일까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "유행성 이하선염",
+      "timing_text": "증상 발생 후 5일까지",
+      "chunk_id": "gyeonggi_school_guide_2025:p0159:t01r07",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "MUMPS"
+      ]
+    },
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0160:a01",
+      "action_text": "성홍열 환자는 항생제 치료 시작 후 24시간까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "성홍열",
+      "timing_text": "항생제 치료 시작 후 24시간까지",
+      "chunk_id": "gyeonggi_school_guide_2025:p0160:t01r03",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0049:a02",
+      "action_text": "결핵 환자는 약물 치료 시작 후 2주까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "결핵",
+      "timing_text": "약물 치료 시작 후 2주까지",
+      "chunk_id": "moe_school_manual_v3:p0049:t01r01",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "TUBERCULOSIS"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0049:a03",
+      "action_text": "수두 환자는 모든 수포에 가피가 형성될 때까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "수두",
+      "timing_text": "모든 수포에 가피가 형성될 때까지",
+      "chunk_id": "moe_school_manual_v3:p0049:t01r02",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "VARICELLA"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0049:a04",
+      "action_text": "유행성 각결막염 등교 중지(격리) 기간: 격리없이 개인 위생수칙을 철저히 지킬 것을 권장",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "유행성 각결막염",
+      "timing_text": "격리없이 개인 위생수칙을 철저히 지킬 것을 권장",
+      "chunk_id": "moe_school_manual_v3:p0049:t01r05",
+      "concept_id": null,
+      "disease_ids": [
+        "EKC"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0049:a05",
+      "action_text": "유행성 이하선염 환자는 증상 발생 후 5일까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "유행성 이하선염",
+      "timing_text": "증상 발생 후 5일까지",
+      "chunk_id": "moe_school_manual_v3:p0049:t01r06",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "MUMPS"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0049:a06",
+      "action_text": "인플루엔자 등교 중지(격리) 기간: 유행차단을 위한 등교 중지는 의미 없지만 환자상태에 따라 실시",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "인플루엔자",
+      "timing_text": "유행차단을 위한 등교 중지는 의미 없지만 환자상태에 따라 실시⁵⁾",
+      "chunk_id": "moe_school_manual_v3:p0049:t01r08",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "INFLUENZA"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0050:a01",
+      "action_text": "백일해 환자는 항생제 투여 후 5일까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "백일해",
+      "timing_text": "항생제 투여 후 5일까지",
+      "chunk_id": "moe_school_manual_v3:p0050:t01r03",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "PERTUSSIS"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0050:a02",
+      "action_text": "성홍열 환자는 항생제 치료 시작 후 24시간까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "성홍열",
+      "timing_text": "항생제 치료 시작 후 24시간까지",
+      "chunk_id": "moe_school_manual_v3:p0050:t01r04",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0050:a03",
+      "action_text": "홍역 환자는 발진 4일 전부터 4일 후까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "홍역",
+      "timing_text": "발진 4일 전부터 4일 후까지",
+      "chunk_id": "moe_school_manual_v3:p0050:t01r07",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "MEASLES"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0221:a01",
+      "action_text": "결핵 환자는 약물 치료 시작 후 2주까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "결핵",
+      "timing_text": "약물 치료 시작 후 2주까지",
+      "chunk_id": "moe_school_manual_v3:p0221:t01r06",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "TUBERCULOSIS"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0223:a01",
+      "action_text": "백일해 환자는 항생제 투여 후 5일까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "백일해",
+      "timing_text": "항생제 투여 후 5일까지",
+      "chunk_id": "moe_school_manual_v3:p0223:t01r02",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "PERTUSSIS"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0223:a02",
+      "action_text": "성홍열 환자는 항생제 치료 시작 후 24시간까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "성홍열",
+      "timing_text": "항생제 치료 시작 후 24시간까지",
+      "chunk_id": "moe_school_manual_v3:p0223:t01r06",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "SCARLET_FEVER"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0223:a03",
+      "action_text": "수두 환자는 모든 수포에 가피가 형성될 때 까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "수두",
+      "timing_text": "모든 수포에 가피가 형성될 때 까지",
+      "chunk_id": "moe_school_manual_v3:p0223:t01r08",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "VARICELLA"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0223:a04",
+      "action_text": "수족구병 환자는 수포 발생 후 6일간 또는 가피가 형성될 때 까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "수족구병",
+      "timing_text": "수포 발생 후 6일간 또는 가피가 형성될 때 까지",
+      "chunk_id": "moe_school_manual_v3:p0223:t01r10",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "HFMD"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0224:a01",
+      "action_text": "유행성 각결막염 등교 중지(격리) 기간: 격리없이 개인위생수칙을 철저히 지킬 것을 권장",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "유행성 각결막염",
+      "timing_text": "격리없이 개인위생수칙을 철저히 지킬 것을 권장",
+      "chunk_id": "moe_school_manual_v3:p0224:t01r03",
+      "concept_id": null,
+      "disease_ids": [
+        "EKC"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0224:a02",
+      "action_text": "유행성 이하선염 환자는 증상 발생 후 5일까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "유행성 이하선염",
+      "timing_text": "증상 발생 후 5일까지",
+      "chunk_id": "moe_school_manual_v3:p0224:t01r04",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "MUMPS"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0224:a03",
+      "action_text": "인플루엔자 등교 중지(격리) 기간: 유행차단을 위한 등교 중지는 의미없지만 환자상태에 따라 실시",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "인플루엔자",
+      "timing_text": "유행차단을 위한 등교 중지는 의미없지만 환자상태에 따라 실시",
+      "chunk_id": "moe_school_manual_v3:p0224:t01r05",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "INFLUENZA"
+      ]
+    },
+    {
+      "action_id": "moe_school_manual_v3:p0226:a01",
+      "action_text": "홍역 환자는 발진이 나타난 후 5일까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "홍역",
+      "timing_text": "발진이 나타난 후 5일까지",
+      "chunk_id": "moe_school_manual_v3:p0226:t01r03",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": [
+        "MEASLES"
+      ]
+    }
+  ]
+}

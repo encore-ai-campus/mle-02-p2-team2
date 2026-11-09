@@ -1,0 +1,42 @@
+{
+  "description": "수족구병 등교중지(복귀) 기준 학교 행동 3개 추가 적재 명세. 출처별 SchoolAction을 따로 두고 ActionConcept(EXCLUDE_FROM_SCHOOL)와 Disease(HFMD)를 공유한다. 2026-11-08 주승우(팀장) 지시, Claude 작성. 청크·문서는 기존 노드를 MATCH만 한다.",
+  "concept_note": "질병관리청 지침 p30은 소제목이 '복귀 기준(등교, 등원 중지자)'이라 END_EXCLUSION으로도 볼 수 있다. 기존 적재 선례(호흡기 p116 성홍열 '항생제 치료 시작 후 24시간까지 등교 중지', 홍역 p93 '전염기간 동안 등교하지 않도록')가 질병별 등교중지 기간·종료 조건을 EXCLUDE_FROM_SCHOOL로 두었으므로 같은 개념으로 둔다.",
+  "actions": [
+    {
+      "action_id": "moe_school_manual_v3:p0049:a01",
+      "action_text": "수족구병 환자는 수포 발생 후 6일간 또는 가피가 형성될 때까지 등교 중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "수족구병",
+      "timing_text": "수포 발생 후 6일간 또는 가피가 형성될 때까지",
+      "chunk_id": "moe_school_manual_v3:p0049:t01r03",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": ["HFMD"]
+    },
+    {
+      "action_id": "gyeonggi_school_guide_2025:p0157:a01",
+      "action_text": "수족구병 환자는 수포 발생 후 6일간 또는 가피가 형성될 때까지 등교중지(격리)한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "수족구병",
+      "timing_text": "수포 발생 후 6일간 또는 가피가 형성될 때까지",
+      "chunk_id": "gyeonggi_school_guide_2025:p0157:t01r03",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": ["HFMD"]
+    },
+    {
+      "action_id": "kdca_hfmd_2026:p0030:a01",
+      "action_text": "등교·등원 중지자는 발열이 없고 수포가 마른 후 복귀한다.",
+      "scope": "NAMED_DISEASES",
+      "stage": "UNSPECIFIED",
+      "modality": "UNSPECIFIED",
+      "when_text": "수족구병으로 등교·등원 중지된 경우",
+      "timing_text": "발열이 없고, 수포가 마른 후",
+      "chunk_id": "kdca_hfmd_2026:p0030:b01",
+      "concept_id": "EXCLUDE_FROM_SCHOOL",
+      "disease_ids": ["HFMD"]
+    }
+  ]
+}

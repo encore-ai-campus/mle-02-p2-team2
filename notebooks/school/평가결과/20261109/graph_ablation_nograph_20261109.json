@@ -1,0 +1,2181 @@
+{
+ "gold": {
+  "R1": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0167:a01",
+    "gyeonggi_school_guide_2025:p0167:a02",
+    "gyeonggi_school_guide_2025:p0167:a03",
+    "gyeonggi_school_guide_2025:p0167:a04",
+    "gyeonggi_school_guide_2025:p0167:a05",
+    "gyeonggi_school_guide_2025:p0167:a06",
+    "gyeonggi_school_guide_2025:p0167:a07",
+    "gyeonggi_school_guide_2025:p0167:a08",
+    "gyeonggi_school_guide_2025:p0167:a09",
+    "gyeonggi_school_guide_2025:p0167:a10",
+    "gyeonggi_school_guide_2025:p0167:a11",
+    "gyeonggi_school_guide_2025:p0167:a12",
+    "gyeonggi_school_guide_2025:p0167:a13",
+    "gyeonggi_school_guide_2025:p0167:a14",
+    "gyeonggi_school_guide_2025:p0167:a15",
+    "gyeonggi_school_guide_2025:p0167:a16",
+    "gyeonggi_school_guide_2025:p0167:a17",
+    "gyeonggi_school_guide_2025:p0167:a18",
+    "gyeonggi_school_guide_2025:p0167:a19",
+    "gyeonggi_school_guide_2025:p0167:a20",
+    "gyeonggi_school_guide_2025:p0167:a21",
+    "gyeonggi_school_guide_2025:p0167:a22",
+    "gyeonggi_school_guide_2025:p0167:a23",
+    "gyeonggi_school_guide_2025:p0167:a24",
+    "gyeonggi_school_guide_2025:p0167:a25",
+    "moe_school_manual_v3:p0040:a01",
+    "moe_school_manual_v3:p0040:a02",
+    "moe_school_manual_v3:p0040:a03",
+    "moe_school_manual_v3:p0040:a04",
+    "moe_school_manual_v3:p0040:a05",
+    "moe_school_manual_v3:p0040:a06",
+    "moe_school_manual_v3:p0040:a07",
+    "moe_school_manual_v3:p0040:a08",
+    "moe_school_manual_v3:p0040:a09",
+    "moe_school_manual_v3:p0065:a01",
+    "moe_school_manual_v3:p0065:a02",
+    "moe_school_manual_v3:p0066:a03",
+    "moe_school_manual_v3:p0066:a04",
+    "moe_school_manual_v3:p0066:a05",
+    "moe_school_manual_v3:p0066:a06",
+    "moe_school_manual_v3:p0066:a07",
+    "moe_school_manual_v3:p0066:a11",
+    "moe_school_manual_v3:p0066:a12",
+    "moe_school_manual_v3:p0066:a13",
+    "moe_school_manual_v3:p0066:a14",
+    "moe_school_manual_v3:p0066:a15",
+    "moe_school_manual_v3:p0066:a19",
+    "moe_school_manual_v3:p0066:a20",
+    "moe_school_manual_v3:p0066:a21",
+    "moe_school_manual_v3:p0066:a22",
+    "moe_school_manual_v3:p0066:a23",
+    "moe_school_manual_v3:p0066:a24",
+    "moe_school_manual_v3:p0067:a04",
+    "moe_school_manual_v3:p0067:a05"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0167:t01r01",
+    "moe_school_manual_v3:p0040:t01r01",
+    "moe_school_manual_v3:p0065:t01r02",
+    "moe_school_manual_v3:p0066:t01r02",
+    "moe_school_manual_v3:p0066:t02r02",
+    "moe_school_manual_v3:p0066:t03r02",
+    "moe_school_manual_v3:p0067:t01r02"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ]
+  },
+  "R2": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0167:a28",
+    "gyeonggi_school_guide_2025:p0167:a29",
+    "gyeonggi_school_guide_2025:p0167:a30",
+    "gyeonggi_school_guide_2025:p0167:a31",
+    "gyeonggi_school_guide_2025:p0167:a32",
+    "gyeonggi_school_guide_2025:p0167:a33",
+    "gyeonggi_school_guide_2025:p0167:a34",
+    "gyeonggi_school_guide_2025:p0167:a35",
+    "gyeonggi_school_guide_2025:p0167:a36",
+    "gyeonggi_school_guide_2025:p0167:a37",
+    "moe_school_manual_v3:p0036:a11",
+    "moe_school_manual_v3:p0036:a12",
+    "moe_school_manual_v3:p0036:a13",
+    "moe_school_manual_v3:p0036:a14",
+    "moe_school_manual_v3:p0036:a15",
+    "moe_school_manual_v3:p0036:a16",
+    "moe_school_manual_v3:p0036:a17",
+    "moe_school_manual_v3:p0036:a18",
+    "moe_school_manual_v3:p0036:a19",
+    "moe_school_manual_v3:p0036:a20",
+    "moe_school_manual_v3:p0036:a21",
+    "moe_school_manual_v3:p0036:a22"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0167:t01r03",
+    "moe_school_manual_v3:p0036:t01r02"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ]
+  },
+  "R3": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0164:a13",
+    "gyeonggi_school_guide_2025:p0165:a01",
+    "gyeonggi_school_guide_2025:p0165:a02",
+    "gyeonggi_school_guide_2025:p0165:a03",
+    "gyeonggi_school_guide_2025:p0165:a04",
+    "gyeonggi_school_guide_2025:p0165:a05",
+    "gyeonggi_school_guide_2025:p0165:a06",
+    "gyeonggi_school_guide_2025:p0165:a07",
+    "gyeonggi_school_guide_2025:p0165:a08",
+    "gyeonggi_school_guide_2025:p0165:a09",
+    "gyeonggi_school_guide_2025:p0165:a10",
+    "gyeonggi_school_guide_2025:p0165:a36",
+    "moe_school_manual_v3:p0038:a12",
+    "moe_school_manual_v3:p0038:a13",
+    "moe_school_manual_v3:p0040:a18",
+    "moe_school_manual_v3:p0040:a19",
+    "moe_school_manual_v3:p0040:a20",
+    "moe_school_manual_v3:p0040:a21",
+    "moe_school_manual_v3:p0040:a22",
+    "moe_school_manual_v3:p0043:a01",
+    "moe_school_manual_v3:p0043:a02",
+    "moe_school_manual_v3:p0043:a03",
+    "moe_school_manual_v3:p0043:a04",
+    "moe_school_manual_v3:p0043:a05",
+    "moe_school_manual_v3:p0043:a06",
+    "moe_school_manual_v3:p0043:a07",
+    "moe_school_manual_v3:p0043:a08",
+    "moe_school_manual_v3:p0043:a09",
+    "moe_school_manual_v3:p0043:a10",
+    "moe_school_manual_v3:p0043:a11",
+    "moe_school_manual_v3:p0043:a12",
+    "moe_school_manual_v3:p0043:a13",
+    "moe_school_manual_v3:p0043:a14",
+    "moe_school_manual_v3:p0043:a15",
+    "moe_school_manual_v3:p0043:a16",
+    "moe_school_manual_v3:p0043:a17",
+    "moe_school_manual_v3:p0043:a18",
+    "moe_school_manual_v3:p0068:a06"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0164:t01r09",
+    "gyeonggi_school_guide_2025:p0165:t01r05",
+    "gyeonggi_school_guide_2025:p0165:t02r02",
+    "gyeonggi_school_guide_2025:p0165:t02r03",
+    "gyeonggi_school_guide_2025:p0165:t02r04",
+    "moe_school_manual_v3:p0038:t01r03",
+    "moe_school_manual_v3:p0040:t01r04",
+    "moe_school_manual_v3:p0043:t01r01",
+    "moe_school_manual_v3:p0068:t02r04"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ]
+  },
+  "R4": {
+   "actions": [
+    "moe_school_manual_v3:p0040:a15",
+    "moe_school_manual_v3:p0040:a16",
+    "moe_school_manual_v3:p0040:a17",
+    "moe_school_manual_v3:p0044:a01",
+    "moe_school_manual_v3:p0044:a02",
+    "moe_school_manual_v3:p0044:a03",
+    "moe_school_manual_v3:p0044:a04",
+    "moe_school_manual_v3:p0044:a05",
+    "moe_school_manual_v3:p0044:a06",
+    "moe_school_manual_v3:p0044:a07",
+    "moe_school_manual_v3:p0044:a08"
+   ],
+   "chunks": [
+    "moe_school_manual_v3:p0040:t01r03",
+    "moe_school_manual_v3:p0044:t01r01"
+   ],
+   "docs": [
+    "moe_school_manual_v3"
+   ]
+  },
+  "C1": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0165:a35",
+    "gyeonggi_school_guide_2025:p0166:a28",
+    "gyeonggi_school_guide_2025:p0167:a05",
+    "gyeonggi_school_guide_2025:p0167:a22",
+    "gyeonggi_school_guide_2025:p0167:a23",
+    "gyeonggi_school_guide_2025:p0179:a11",
+    "gyeonggi_school_guide_2025:p0185:a12",
+    "gyeonggi_school_guide_2025:p0194:a12",
+    "gyeonggi_school_guide_2025:p0203:a11",
+    "gyeonggi_school_guide_2025:p0245:a10",
+    "kdca_flu_facility_2026:p0018:a01",
+    "kdca_respiratory_2026:p0116:a01",
+    "moe_school_manual_v3:p0042:a12",
+    "moe_school_manual_v3:p0043:a15",
+    "moe_school_manual_v3:p0067:a05"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0165:t01r04",
+    "gyeonggi_school_guide_2025:p0166:t01r02",
+    "gyeonggi_school_guide_2025:p0167:t01r01",
+    "gyeonggi_school_guide_2025:p0179:t01r11",
+    "gyeonggi_school_guide_2025:p0185:t01r13",
+    "gyeonggi_school_guide_2025:p0194:t01r13",
+    "gyeonggi_school_guide_2025:p0203:t01r12",
+    "gyeonggi_school_guide_2025:p0245:t02r04",
+    "kdca_flu_facility_2026:p0018:b01",
+    "kdca_respiratory_2026:p0116:b01",
+    "moe_school_manual_v3:p0042:t01r01",
+    "moe_school_manual_v3:p0043:t01r01",
+    "moe_school_manual_v3:p0067:t01r02"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "kdca_respiratory_2026",
+    "moe_school_manual_v3"
+   ]
+  },
+  "C2": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0164:a07",
+    "gyeonggi_school_guide_2025:p0166:a09",
+    "gyeonggi_school_guide_2025:p0167:a06",
+    "gyeonggi_school_guide_2025:p0167:a35",
+    "gyeonggi_school_guide_2025:p0179:a10",
+    "gyeonggi_school_guide_2025:p0182:a05",
+    "gyeonggi_school_guide_2025:p0185:a10",
+    "gyeonggi_school_guide_2025:p0194:a10",
+    "gyeonggi_school_guide_2025:p0203:a10",
+    "gyeonggi_school_guide_2025:p0245:a09",
+    "kdca_flu_facility_2026:p0017:a05",
+    "kdca_measles_2026:p0093:a01",
+    "moe_school_manual_v3:p0036:a10",
+    "moe_school_manual_v3:p0036:a17",
+    "moe_school_manual_v3:p0040:a07",
+    "moe_school_manual_v3:p0040:a14",
+    "moe_school_manual_v3:p0043:a25",
+    "moe_school_manual_v3:p0066:a02",
+    "moe_school_manual_v3:p0066:a04"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0164:t01r05",
+    "gyeonggi_school_guide_2025:p0166:t01r01",
+    "gyeonggi_school_guide_2025:p0167:t01r01",
+    "gyeonggi_school_guide_2025:p0167:t01r03",
+    "gyeonggi_school_guide_2025:p0179:t01r10",
+    "gyeonggi_school_guide_2025:p0182:t01r06",
+    "gyeonggi_school_guide_2025:p0185:t01r11",
+    "gyeonggi_school_guide_2025:p0194:t01r11",
+    "gyeonggi_school_guide_2025:p0203:t01r11",
+    "gyeonggi_school_guide_2025:p0245:t02r04",
+    "kdca_flu_facility_2026:p0017:b01",
+    "kdca_measles_2026:p0093:b01",
+    "moe_school_manual_v3:p0036:t01r01",
+    "moe_school_manual_v3:p0036:t01r02",
+    "moe_school_manual_v3:p0040:t01r01",
+    "moe_school_manual_v3:p0040:t01r02",
+    "moe_school_manual_v3:p0043:t01r02",
+    "moe_school_manual_v3:p0066:t01r01",
+    "moe_school_manual_v3:p0066:t01r02"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "kdca_measles_2026",
+    "moe_school_manual_v3"
+   ]
+  },
+  "C3": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0166:a17",
+    "gyeonggi_school_guide_2025:p0166:a18",
+    "gyeonggi_school_guide_2025:p0166:a19",
+    "gyeonggi_school_guide_2025:p0167:a24",
+    "gyeonggi_school_guide_2025:p0167:a25",
+    "gyeonggi_school_guide_2025:p0167:a36",
+    "kdca_flu_facility_2026:p0018:a02",
+    "kdca_flu_facility_2026:p0018:a03",
+    "kdca_flu_facility_2026:p0018:a04",
+    "moe_school_manual_v3:p0036:a02",
+    "moe_school_manual_v3:p0040:a15",
+    "moe_school_manual_v3:p0040:a16",
+    "moe_school_manual_v3:p0040:a17",
+    "moe_school_manual_v3:p0043:a29",
+    "moe_school_manual_v3:p0043:a30",
+    "moe_school_manual_v3:p0044:a01",
+    "moe_school_manual_v3:p0044:a05",
+    "moe_school_manual_v3:p0044:a06",
+    "moe_school_manual_v3:p0056:a11",
+    "moe_school_manual_v3:p0056:a12",
+    "moe_school_manual_v3:p0056:a14",
+    "moe_school_manual_v3:p0067:a07"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0166:t01r01",
+    "gyeonggi_school_guide_2025:p0167:t01r01",
+    "gyeonggi_school_guide_2025:p0167:t01r03",
+    "kdca_flu_facility_2026:p0018:b01",
+    "moe_school_manual_v3:p0036:t01r01",
+    "moe_school_manual_v3:p0040:t01r03",
+    "moe_school_manual_v3:p0043:t01r02",
+    "moe_school_manual_v3:p0044:t01r01",
+    "moe_school_manual_v3:p0056:t01r04",
+    "moe_school_manual_v3:p0067:t02r01"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ]
+  },
+  "C4": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0166:a34",
+    "gyeonggi_school_guide_2025:p0171:a01",
+    "gyeonggi_school_guide_2025:p0171:a02",
+    "gyeonggi_school_guide_2025:p0171:a03",
+    "gyeonggi_school_guide_2025:p0171:a06",
+    "gyeonggi_school_guide_2025:p0171:a08",
+    "gyeonggi_school_guide_2025:p0171:a09",
+    "gyeonggi_school_guide_2025:p0179:a06",
+    "gyeonggi_school_guide_2025:p0179:a08",
+    "gyeonggi_school_guide_2025:p0185:a07",
+    "gyeonggi_school_guide_2025:p0194:a07",
+    "gyeonggi_school_guide_2025:p0203:a07",
+    "kdca_flu_facility_2026:p0018:a05",
+    "moe_school_manual_v3:p0043:a18",
+    "moe_school_manual_v3:p0044:a08"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0166:t01r02",
+    "gyeonggi_school_guide_2025:p0171:t01r02",
+    "gyeonggi_school_guide_2025:p0171:t01r03",
+    "gyeonggi_school_guide_2025:p0171:t01r04",
+    "gyeonggi_school_guide_2025:p0171:t01r05",
+    "gyeonggi_school_guide_2025:p0171:t01r07",
+    "gyeonggi_school_guide_2025:p0171:t01r08",
+    "gyeonggi_school_guide_2025:p0179:t01r06",
+    "gyeonggi_school_guide_2025:p0179:t01r08",
+    "gyeonggi_school_guide_2025:p0185:t01r08",
+    "gyeonggi_school_guide_2025:p0194:t01r08",
+    "gyeonggi_school_guide_2025:p0203:t01r08",
+    "kdca_flu_facility_2026:p0018:b01",
+    "moe_school_manual_v3:p0043:t01r01",
+    "moe_school_manual_v3:p0044:t01r01"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ]
+  },
+  "C5": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0164:a10",
+    "gyeonggi_school_guide_2025:p0164:a14",
+    "gyeonggi_school_guide_2025:p0165:a02",
+    "gyeonggi_school_guide_2025:p0165:a14",
+    "gyeonggi_school_guide_2025:p0165:a28",
+    "gyeonggi_school_guide_2025:p0166:a22",
+    "gyeonggi_school_guide_2025:p0166:a31",
+    "gyeonggi_school_guide_2025:p0167:a01",
+    "gyeonggi_school_guide_2025:p0167:a02",
+    "gyeonggi_school_guide_2025:p0167:a10",
+    "gyeonggi_school_guide_2025:p0168:a04",
+    "gyeonggi_school_guide_2025:p0179:a09",
+    "gyeonggi_school_guide_2025:p0179:a14",
+    "gyeonggi_school_guide_2025:p0182:a04",
+    "gyeonggi_school_guide_2025:p0182:a08",
+    "gyeonggi_school_guide_2025:p0185:a09",
+    "gyeonggi_school_guide_2025:p0185:a15",
+    "gyeonggi_school_guide_2025:p0194:a09",
+    "gyeonggi_school_guide_2025:p0194:a15",
+    "gyeonggi_school_guide_2025:p0203:a09",
+    "gyeonggi_school_guide_2025:p0203:a17",
+    "gyeonggi_school_guide_2025:p0245:a05",
+    "gyeonggi_school_guide_2025:p0245:a06",
+    "gyeonggi_school_guide_2025:p0245:a07",
+    "gyeonggi_school_guide_2025:p0245:a08",
+    "kdca_flu_facility_2026:p0016:a03",
+    "moe_school_manual_v3:p0038:a03",
+    "moe_school_manual_v3:p0038:a08",
+    "moe_school_manual_v3:p0038:a12",
+    "moe_school_manual_v3:p0040:a05",
+    "moe_school_manual_v3:p0040:a13",
+    "moe_school_manual_v3:p0042:a03",
+    "moe_school_manual_v3:p0042:a08",
+    "moe_school_manual_v3:p0042:a09",
+    "moe_school_manual_v3:p0043:a23",
+    "moe_school_manual_v3:p0060:a01",
+    "moe_school_manual_v3:p0060:a02",
+    "moe_school_manual_v3:p0060:a03",
+    "moe_school_manual_v3:p0060:a04",
+    "moe_school_manual_v3:p0060:a05",
+    "moe_school_manual_v3:p0060:a06",
+    "moe_school_manual_v3:p0060:a07",
+    "moe_school_manual_v3:p0060:a08",
+    "moe_school_manual_v3:p0065:a01",
+    "moe_school_manual_v3:p0065:a05",
+    "moe_school_manual_v3:p0066:a11"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0164:t01r08",
+    "gyeonggi_school_guide_2025:p0164:t01r09",
+    "gyeonggi_school_guide_2025:p0165:t02r02",
+    "gyeonggi_school_guide_2025:p0165:t02r05",
+    "gyeonggi_school_guide_2025:p0165:t02r08",
+    "gyeonggi_school_guide_2025:p0166:t01r02",
+    "gyeonggi_school_guide_2025:p0167:t01r01",
+    "gyeonggi_school_guide_2025:p0168:t01r01",
+    "gyeonggi_school_guide_2025:p0179:t01r09",
+    "gyeonggi_school_guide_2025:p0179:t01r15",
+    "gyeonggi_school_guide_2025:p0182:t01r05",
+    "gyeonggi_school_guide_2025:p0182:t01r09",
+    "gyeonggi_school_guide_2025:p0185:t01r10",
+    "gyeonggi_school_guide_2025:p0185:t01r15",
+    "gyeonggi_school_guide_2025:p0194:t01r10",
+    "gyeonggi_school_guide_2025:p0194:t01r15",
+    "gyeonggi_school_guide_2025:p0203:t01r10",
+    "gyeonggi_school_guide_2025:p0203:t01r16",
+    "gyeonggi_school_guide_2025:p0245:t02r03",
+    "kdca_flu_facility_2026:p0016:b01",
+    "moe_school_manual_v3:p0038:t01r01",
+    "moe_school_manual_v3:p0038:t01r02",
+    "moe_school_manual_v3:p0038:t01r03",
+    "moe_school_manual_v3:p0040:t01r01",
+    "moe_school_manual_v3:p0040:t01r02",
+    "moe_school_manual_v3:p0042:t01r01",
+    "moe_school_manual_v3:p0043:t01r02",
+    "moe_school_manual_v3:p0060:t01r03",
+    "moe_school_manual_v3:p0060:t02r03",
+    "moe_school_manual_v3:p0065:t01r02",
+    "moe_school_manual_v3:p0065:t01r04",
+    "moe_school_manual_v3:p0066:t02r02"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ]
+  },
+  "D1": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0203:a01",
+    "gyeonggi_school_guide_2025:p0203:a02",
+    "gyeonggi_school_guide_2025:p0203:a03",
+    "gyeonggi_school_guide_2025:p0203:a04",
+    "gyeonggi_school_guide_2025:p0203:a05",
+    "gyeonggi_school_guide_2025:p0203:a06",
+    "gyeonggi_school_guide_2025:p0203:a07",
+    "gyeonggi_school_guide_2025:p0203:a08",
+    "gyeonggi_school_guide_2025:p0203:a09",
+    "gyeonggi_school_guide_2025:p0203:a10",
+    "gyeonggi_school_guide_2025:p0203:a11",
+    "gyeonggi_school_guide_2025:p0203:a12",
+    "gyeonggi_school_guide_2025:p0203:a13",
+    "gyeonggi_school_guide_2025:p0203:a14",
+    "gyeonggi_school_guide_2025:p0203:a15",
+    "gyeonggi_school_guide_2025:p0203:a16",
+    "gyeonggi_school_guide_2025:p0203:a17",
+    "gyeonggi_school_guide_2025:p0203:a18",
+    "kdca_measles_2026:p0093:a01",
+    "kdca_measles_2026:p0093:a02",
+    "kdca_measles_2026:p0093:a03",
+    "kdca_measles_2026:p0093:a04",
+    "kdca_measles_2026:p0093:a05",
+    "kdca_measles_2026:p0093:a06"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0203:t01r01",
+    "gyeonggi_school_guide_2025:p0203:t01r02",
+    "gyeonggi_school_guide_2025:p0203:t01r03",
+    "gyeonggi_school_guide_2025:p0203:t01r04",
+    "gyeonggi_school_guide_2025:p0203:t01r05",
+    "gyeonggi_school_guide_2025:p0203:t01r07",
+    "gyeonggi_school_guide_2025:p0203:t01r08",
+    "gyeonggi_school_guide_2025:p0203:t01r09",
+    "gyeonggi_school_guide_2025:p0203:t01r10",
+    "gyeonggi_school_guide_2025:p0203:t01r11",
+    "gyeonggi_school_guide_2025:p0203:t01r12",
+    "gyeonggi_school_guide_2025:p0203:t01r13",
+    "gyeonggi_school_guide_2025:p0203:t01r14",
+    "gyeonggi_school_guide_2025:p0203:t01r15",
+    "gyeonggi_school_guide_2025:p0203:t01r16",
+    "gyeonggi_school_guide_2025:p0203:t01r17",
+    "kdca_measles_2026:p0093:b01",
+    "kdca_measles_2026:p0093:b03",
+    "kdca_measles_2026:p0093:b04",
+    "kdca_measles_2026:p0093:b05",
+    "kdca_measles_2026:p0093:b06"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026"
+   ]
+  },
+  "D2": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0179:a01",
+    "gyeonggi_school_guide_2025:p0179:a02",
+    "gyeonggi_school_guide_2025:p0179:a03",
+    "gyeonggi_school_guide_2025:p0179:a04",
+    "gyeonggi_school_guide_2025:p0179:a05",
+    "gyeonggi_school_guide_2025:p0179:a06",
+    "gyeonggi_school_guide_2025:p0179:a07",
+    "gyeonggi_school_guide_2025:p0179:a08",
+    "gyeonggi_school_guide_2025:p0179:a09",
+    "gyeonggi_school_guide_2025:p0179:a10",
+    "gyeonggi_school_guide_2025:p0179:a11",
+    "gyeonggi_school_guide_2025:p0179:a12",
+    "gyeonggi_school_guide_2025:p0179:a13",
+    "gyeonggi_school_guide_2025:p0179:a14",
+    "gyeonggi_school_guide_2025:p0179:a15",
+    "gyeonggi_school_guide_2025:p0179:a16",
+    "gyeonggi_school_guide_2025:p0182:a01",
+    "gyeonggi_school_guide_2025:p0182:a02",
+    "gyeonggi_school_guide_2025:p0182:a07",
+    "gyeonggi_school_guide_2025:p0182:a08"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0179:t01r01",
+    "gyeonggi_school_guide_2025:p0179:t01r02",
+    "gyeonggi_school_guide_2025:p0179:t01r03",
+    "gyeonggi_school_guide_2025:p0179:t01r04",
+    "gyeonggi_school_guide_2025:p0179:t01r05",
+    "gyeonggi_school_guide_2025:p0179:t01r06",
+    "gyeonggi_school_guide_2025:p0179:t01r07",
+    "gyeonggi_school_guide_2025:p0179:t01r08",
+    "gyeonggi_school_guide_2025:p0179:t01r09",
+    "gyeonggi_school_guide_2025:p0179:t01r10",
+    "gyeonggi_school_guide_2025:p0179:t01r11",
+    "gyeonggi_school_guide_2025:p0179:t01r13",
+    "gyeonggi_school_guide_2025:p0179:t01r14",
+    "gyeonggi_school_guide_2025:p0179:t01r15",
+    "gyeonggi_school_guide_2025:p0179:t01r16",
+    "gyeonggi_school_guide_2025:p0179:t01r17",
+    "gyeonggi_school_guide_2025:p0182:t01r01",
+    "gyeonggi_school_guide_2025:p0182:t01r03",
+    "gyeonggi_school_guide_2025:p0182:t01r08",
+    "gyeonggi_school_guide_2025:p0182:t01r09"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025"
+   ]
+  },
+  "D3": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0194:a01",
+    "gyeonggi_school_guide_2025:p0194:a02",
+    "gyeonggi_school_guide_2025:p0194:a03",
+    "gyeonggi_school_guide_2025:p0194:a04",
+    "gyeonggi_school_guide_2025:p0194:a05",
+    "gyeonggi_school_guide_2025:p0194:a06",
+    "gyeonggi_school_guide_2025:p0194:a07",
+    "gyeonggi_school_guide_2025:p0194:a08",
+    "gyeonggi_school_guide_2025:p0194:a09",
+    "gyeonggi_school_guide_2025:p0194:a10",
+    "gyeonggi_school_guide_2025:p0194:a11",
+    "gyeonggi_school_guide_2025:p0194:a12",
+    "gyeonggi_school_guide_2025:p0194:a13",
+    "gyeonggi_school_guide_2025:p0194:a14",
+    "gyeonggi_school_guide_2025:p0194:a15",
+    "gyeonggi_school_guide_2025:p0194:a16",
+    "gyeonggi_school_guide_2025:p0194:a17",
+    "gyeonggi_school_guide_2025:p0194:a18"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0194:t01r01",
+    "gyeonggi_school_guide_2025:p0194:t01r02",
+    "gyeonggi_school_guide_2025:p0194:t01r03",
+    "gyeonggi_school_guide_2025:p0194:t01r04",
+    "gyeonggi_school_guide_2025:p0194:t01r05",
+    "gyeonggi_school_guide_2025:p0194:t01r07",
+    "gyeonggi_school_guide_2025:p0194:t01r08",
+    "gyeonggi_school_guide_2025:p0194:t01r09",
+    "gyeonggi_school_guide_2025:p0194:t01r10",
+    "gyeonggi_school_guide_2025:p0194:t01r11",
+    "gyeonggi_school_guide_2025:p0194:t01r12",
+    "gyeonggi_school_guide_2025:p0194:t01r13",
+    "gyeonggi_school_guide_2025:p0194:t01r14",
+    "gyeonggi_school_guide_2025:p0194:t01r15",
+    "gyeonggi_school_guide_2025:p0194:t01r16",
+    "gyeonggi_school_guide_2025:p0194:t01r17"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025"
+   ]
+  },
+  "D4": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0185:a01",
+    "gyeonggi_school_guide_2025:p0185:a02",
+    "gyeonggi_school_guide_2025:p0185:a03",
+    "gyeonggi_school_guide_2025:p0185:a04",
+    "gyeonggi_school_guide_2025:p0185:a05",
+    "gyeonggi_school_guide_2025:p0185:a06",
+    "gyeonggi_school_guide_2025:p0185:a07",
+    "gyeonggi_school_guide_2025:p0185:a08",
+    "gyeonggi_school_guide_2025:p0185:a09",
+    "gyeonggi_school_guide_2025:p0185:a10",
+    "gyeonggi_school_guide_2025:p0185:a11",
+    "gyeonggi_school_guide_2025:p0185:a12",
+    "gyeonggi_school_guide_2025:p0185:a13",
+    "gyeonggi_school_guide_2025:p0185:a14",
+    "gyeonggi_school_guide_2025:p0185:a15",
+    "gyeonggi_school_guide_2025:p0185:a16",
+    "gyeonggi_school_guide_2025:p0185:a17",
+    "gyeonggi_school_guide_2025:p0185:a18"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0185:t01r01",
+    "gyeonggi_school_guide_2025:p0185:t01r02",
+    "gyeonggi_school_guide_2025:p0185:t01r03",
+    "gyeonggi_school_guide_2025:p0185:t01r04",
+    "gyeonggi_school_guide_2025:p0185:t01r05",
+    "gyeonggi_school_guide_2025:p0185:t01r07",
+    "gyeonggi_school_guide_2025:p0185:t01r08",
+    "gyeonggi_school_guide_2025:p0185:t01r09",
+    "gyeonggi_school_guide_2025:p0185:t01r10",
+    "gyeonggi_school_guide_2025:p0185:t01r11",
+    "gyeonggi_school_guide_2025:p0185:t01r12",
+    "gyeonggi_school_guide_2025:p0185:t01r13",
+    "gyeonggi_school_guide_2025:p0185:t01r14",
+    "gyeonggi_school_guide_2025:p0185:t01r15",
+    "gyeonggi_school_guide_2025:p0185:t01r16",
+    "gyeonggi_school_guide_2025:p0185:t01r17"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025"
+   ]
+  },
+  "D5": {
+   "actions": [
+    "gyeonggi_school_guide_2025:p0171:a01",
+    "gyeonggi_school_guide_2025:p0171:a02",
+    "gyeonggi_school_guide_2025:p0171:a03",
+    "gyeonggi_school_guide_2025:p0171:a04",
+    "gyeonggi_school_guide_2025:p0171:a05",
+    "gyeonggi_school_guide_2025:p0171:a06",
+    "gyeonggi_school_guide_2025:p0171:a07",
+    "gyeonggi_school_guide_2025:p0171:a08",
+    "gyeonggi_school_guide_2025:p0171:a09"
+   ],
+   "chunks": [
+    "gyeonggi_school_guide_2025:p0171:t01r02",
+    "gyeonggi_school_guide_2025:p0171:t01r03",
+    "gyeonggi_school_guide_2025:p0171:t01r04",
+    "gyeonggi_school_guide_2025:p0171:t01r05",
+    "gyeonggi_school_guide_2025:p0171:t01r06",
+    "gyeonggi_school_guide_2025:p0171:t01r07",
+    "gyeonggi_school_guide_2025:p0171:t01r08"
+   ],
+   "docs": [
+    "gyeonggi_school_guide_2025"
+   ]
+  },
+  "D6": {
+   "actions": [
+    "kdca_flu_facility_2026:p0016:a03",
+    "kdca_flu_facility_2026:p0017:a01",
+    "kdca_flu_facility_2026:p0017:a02",
+    "kdca_flu_facility_2026:p0017:a03",
+    "kdca_flu_facility_2026:p0017:a04",
+    "kdca_flu_facility_2026:p0017:a05",
+    "kdca_flu_facility_2026:p0017:a06",
+    "kdca_flu_facility_2026:p0018:a01",
+    "kdca_flu_facility_2026:p0018:a02",
+    "kdca_flu_facility_2026:p0018:a03",
+    "kdca_flu_facility_2026:p0018:a04",
+    "kdca_flu_facility_2026:p0018:a05",
+    "kdca_flu_facility_2026:p0018:a06",
+    "moe_school_manual_v3:p0038:a02",
+    "moe_school_manual_v3:p0038:a03",
+    "moe_school_manual_v3:p0038:a10",
+    "moe_school_manual_v3:p0038:a11",
+    "moe_school_manual_v3:p0040:a07",
+    "moe_school_manual_v3:p0040:a13"
+   ],
+   "chunks": [
+    "kdca_flu_facility_2026:p0016:b01",
+    "kdca_flu_facility_2026:p0017:b01",
+    "kdca_flu_facility_2026:p0018:b01",
+    "moe_school_manual_v3:p0038:t01r01",
+    "moe_school_manual_v3:p0038:t01r02",
+    "moe_school_manual_v3:p0040:t01r01",
+    "moe_school_manual_v3:p0040:t01r02"
+   ],
+   "docs": [
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ]
+  },
+  "K1": {
+   "actions": [],
+   "chunks": [
+    "kdca_respiratory_2026:p0193:b01",
+    "kdca_respiratory_2026:p0201:b01"
+   ],
+   "docs": [
+    "kdca_respiratory_2026"
+   ]
+  },
+  "K2": {
+   "actions": [],
+   "chunks": [
+    "kdca_covid19_2026:p0028:b01"
+   ],
+   "docs": [
+    "kdca_covid19_2026"
+   ]
+  },
+  "K3": {
+   "actions": [],
+   "chunks": [
+    "kdca_respiratory_2026:p0109:b01"
+   ],
+   "docs": [
+    "kdca_respiratory_2026"
+   ]
+  }
+ },
+ "rows": [
+  {
+   "run": 1,
+   "id": "R1",
+   "kind": "역할×단계",
+   "question": "감염병 확진 학생이 2명 이상 나온 상황에서 담임교사가 해야 할 일을 모두 알려주세요.",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 7,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 3,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 6,
+   "cited_gold": 4,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 21.1,
+   "answer": "**확진 학생이 2명 이상이면, 같은 학급에서 최대 잠복기 이내에 발생했거나 공통 공간 노출로 관련성이 의심되는 경우 유행의심 기준에 해당해 대응 제3단계로 격상합니다. 담임교사는 아래 업무를 진행하세요.**[1][3]\n\n**상황 판단**\n- 두 학생이 같은 학급에서 최대 잠복기 이내에 확진됐거나, 서로 다른 학급이어도 이동식 수업·급식 등 공통 공간 노출로 관련성이 의심되면 유행의심 기준에 해당합니다.[1]\n- 발생 범위가 ‘학생 2명 이상’이라는 사실만으로는 같은 학급 여부나 공통 노출 여부를 알 수 없으므로, 해당 조건을 확인해 대응 단계를 판단하세요.[1]\n- 경기도 가이드북(2024)은 감염병(의심) 환자가 2명 이상 있는 상황을 대응 제3단계로 제시합니다.[2]\n\n**지금 바로 할 일**\n1. 담임교사는 매일 학급 학생의 추가 환자 발생 여부를 출결석과 증상 유무로 파악하고, 매일 1교시 후 학년부장에게 보고합니다. *(교육부 매뉴얼의 대응 제3단계 역할 예시)*[5]\n2. 담임교사는 보호자에게 학교 내 감염병 유행의심 상황을 알리고 의료기관 진료를 안내합니다. *(교육부 매뉴얼의 대응 제3단계 역할 예시)*[4]\n3. 담임교사는 의료기관 진료 결과에 따라 등교중지를 실시하고, 확진 학생을 나이스(NEIS)에 등록합니다. *(교육부 매뉴얼의 대응 제3단계 역할 예시)*[4]\n4. 담임교사는 보호자에게 등교중지 학생의 생활수칙과 필요한 행정조치를 안내합니다. *(교육부 매뉴얼의 대응 제3단계 역할 예시)*[4]\n5. 담임교사는 학급 조·종례 시간 등을 이용해 해당 감염병의 증상·예방법과 증상 발생 시 행동 요령을 주기적으로 교육합니다. *(교육부 매뉴얼의 대응 제3단계 역할 예시)*[6]\n6. 담임교사는 가정통신문으로 보호자에게 감염병 유행 사실을 알리고, 개인위생 관리·외출 자제·다중이용시설 출입 자제 등 자녀 생활지도 협조를 요청합니다. *(교육부 매뉴얼의 대응 제3단계 역할 예시)*[6]\n\n**이후에 할 일**\n- 담임교사는 최대 잠복기 동안 추가 환자 발생을 감시하고, 가정통신문 배부와 보건교육을 실시합니다.[3]\n- 담임교사는 보건(담당)교사나 방역당국의 요청에 따라 마스크 착용·예방교육 등을 실시합니다.[3]\n- 담임교사는 보건학적 고위험군 보호자에게 연락하고, 조치 결과를 보건(담당)교사에게 통보합니다.[3]\n- 담임교사는 사회적 취약계층의 위생수칙 교육·생활지도를 하고, 등교중지 시 필요하면 급식 제공 방안이나 지자체 복지서비스 연계 의뢰를 위해 관련 부서나 교사와 협의합니다.[3]\n- 담임교사는 교실 등의 창문을 수시로 열어 충분히 환기하고, 감염병 유증상자가 속한 학급의 소독을 실시합니다.[3]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "R2",
+   "kind": "역할×단계",
+   "question": "의심 증상 학생이 처음 발견됐을 때 보건교사가 해야 할 일은 무엇인가요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 2,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 1,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 3,
+   "cited_gold": 1,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 13.0,
+   "answer": "**보건교사는 의심 증상과 진료 여부를 확인하고, 일시적 관찰 필요성을 판단해 실시하세요.**[1]\n\n**지금 바로 할 일**\n1. 보건교사는 감염병을 의심할 수 있는 증상인지 확인하고, 의료기관 진료 여부를 물어봅니다.[1]\n2. 보건교사는 학생이 발열을 호소하면 체온을 측정해 실제 발열 여부를 다시 확인합니다.[1]\n3. 보건교사는 응급상황이면 즉시 적절한 조치를 하고, 일시적 관찰이 필요한지 판단해 실시합니다.[1]\n4. 보건교사는 담임교사에게 필요한 조치를 요청합니다. 여기에는 보호자에게 연락해 의료기관 진료를 요청하고, 교실 환기·소독 및 학생 위생수칙 교육을 하는 일이 포함됩니다.[1]\n5. 보건교사는 최초 발견 시 유행상황을 확인하고 보고하며, 학생 감염병 주간소식과 월간예보를 통해 교내 발생수준과 비교합니다.[3]\n\n**학교 내 다른 담당의 역할**\n- 담임교사는 보건교사의 요청에 따라 보호자에게 연락해 의료기관 진료를 요청하고, 교실 환기·소독 및 학생 위생수칙 교육을 합니다.[1]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "R3",
+   "kind": "역할",
+   "question": "학교장이 하는 일에는 어떤 것들이 있나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 9,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 6,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 4,
+   "cited_gold": 3,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 11.9,
+   "answer": "**학교장은 모든 단계에서 대응을 총괄하며, 단계에 따라 신고·능동감시 지시, 학교감염병관리조직 활성화, 전파 차단 조치와 유행 종료 선언을 합니다.**[1][2][3][4]\n\n**상황 판단**\n- 경기도 가이드북(2024)은 학교장의 역할을 모든 단계의 ‘총괄’로 제시합니다.[1]\n\n**학교 내 다른 담당의 역할**\n- 학교장은 대응 제2단계에서 신고가 필요한 법정감염병이면 관할 보건소장에게 보고하고, 부장급 교사를 통해 능동감시를 실시하도록 지시합니다.[4]\n- 학교장은 대응 제3단계에서 학교감염병관리조직을 활성화하고, 신고가 필요한 법정감염병이면 관할 보건소장에게 보고합니다.[3]\n- 학교장은 대응 제3단계에서 유행 확산 정도에 따라 학사일정 조정과 각종 교육 활동 제한을 검토·실시합니다.[3]\n- 학교장은 복구단계에서 유행 종료를 선언하고, 학생 감염병 관리조직의 유행 시 대응 활동 중단 및 예방단계로 복귀를 지시합니다.[2]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "R4",
+   "kind": "역할",
+   "question": "행정실은 감염병 대응에서 무슨 일을 맡나요?",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 2,
+   "gold_docs": [
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 1,
+   "tool_docs": [
+    "moe_school_manual_v3"
+   ],
+   "cited": 2,
+   "cited_gold": 1,
+   "cited_docs": [
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 11.1,
+   "answer": "**행정실은 모의훈련 시나리오 예시에서 환기·소독 지원, 방역물품 비치·배포, 시설·통학 차량 방역소독, 역학조사 관련 서류 준비·협조를 맡습니다.**[1]\n\n**상황 판단**\n- 이는 교육부 매뉴얼(2023)의 모의훈련 시나리오 예시이며, 학교별 역할은 학교 상황에 따라 자율적으로 정할 수 있습니다.[1][2]\n\n**今 바로 할 일**\n1. (시나리오 예시) 행정실은 보건실·교실·일시적 관찰실 등의 환기 및 소독을 지원합니다.[1]\n2. (시나리오 예시) 행정실은 손세척제·손소독제·마스크·환경소독제 등 교내 방역물품을 비치·배포하고, 교실 표면소독용 소독제와 사용 방법을 안내합니다.[1]\n3. (시나리오 예시) 행정실은 학교 시설 및 통학 차량 등을 방역 소독합니다.[1]\n4. (시나리오 예시) 행정실은 역학조사 관련 서류를 준비하고 협조합니다.[1]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "C1",
+   "kind": "개념 비교",
+   "question": "보호자에게 감염병 발생을 알리는 일은 교육부 매뉴얼, 경기도 가이드북, 질병관리청 지침에서 각각 어떻게 안내하나요?",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 13,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "kdca_respiratory_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 1,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 3,
+   "cited_gold": 1,
+   "cited_docs": [
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 12.9,
+   "answer": "**교육부 매뉴얼은 단계에 따라 가정통신문으로 보호자에게 발생·유행 사실을 알리고 생활지도 협조를 요청하도록 안내합니다. 경기도 가이드북과 질병관리청 지침의 보호자 안내 방법·내용은 제공된 근거에서 확인되지 않습니다.**[1][2][3]\n\n**상황 판단**\n- 교육부 매뉴얼(2023)은 대응 제2단계에서 학교 내 감염병 발생 사실을, 대응 제3단계에서 감염병 유행 사실 또는 유행의심 상황을 보호자에게 알리도록 안내합니다.[1][2][3]\n\n**지금 바로 할 일**\n1. 대응 제2단계에서는 가정통신문을 배부해 보호자에게 학교 내 감염병 발생 사실을 알리고, 개인위생 관리와 외출·다중이용시설 출입 자제 등 자녀 생활지도 협조를 요청합니다.[2]\n2. 대응 제3단계에서는 가정통신문으로 감염병 유행 사실을 알리고, 개인위생 관리·외출 자제·다중이용시설 출입 자녀 생활지도 협조를 요청합니다.[1]\n3. 대응 제3단계의 유행의심 상황에서는 담임교사가 보호자에게 상황을 알리고 의료기관 진료를 안내하며, 등교 중지 학생의 생활수칙과 필요한 행정조치를 안내합니다.[3]\n\n※ 확인하지 못한 부분: 경기도 가이드북과 질병관리청 지침의 보호자 안내 방법·내용은 제공된 근거에서 확인되지 않았습니다.\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "C2",
+   "kind": "개념 비교",
+   "question": "아픈 학생을 병원에 보내 진료받게 하는 일은 문서마다 어떻게 안내하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 19,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "kdca_measles_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 4,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026",
+    "moe_school_manual_v3"
+   ],
+   "cited": 3,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 12.5,
+   "answer": "**두 문서 모두 담임교사가 보호자에게 의료기관 진료를 안내하고, 등교중지 안내문을 학교 홈페이지에서 내려받아 이용하도록 안내합니다. 경기도 가이드북은 학교에서 감염병 의심 환자가 발생한 경우의 인계·진료 조치도 제시합니다.**[1][2][3]\n\n**상황 판단**\n- 감염병 의심증상으로 학생이 미등교한 경우, 두 문서 모두 보호자에게 의료기관 진료를 안내하도록 합니다.[1][2]\n- 학교에서 감염병(의심) 환자가 발생한 경우, 경기도 가이드북은 일시적 관찰실에 격리한 뒤 보호자에게 인계해 병원 진료를 받게 하도록 안내합니다.[3]\n\n**지금 바로 할 일**\n1. 담임교사는 보호자에게 의료기관 진료를 받도록 안내하고, 등교중지 안내문을 학교 홈페이지에서 내려받아 이용하도록 안내합니다.[1][2]\n2. 학교에서 감염병(의심) 환자가 발생했다면, 경기도 가이드북에 따라 일시적 관찰실에 격리하고 보호자에게 인계해 병원 진료를 받게 합니다.[3]"
+  },
+  {
+   "run": 1,
+   "id": "C3",
+   "kind": "개념 비교",
+   "question": "교실 환기와 소독은 문서별로 어떻게 하라고 하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 10,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 2,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 3,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 12.8,
+   "answer": "**교육부 매뉴얼은 교실 창문을 수시로 열어 충분히 환기하고, 감염병 발생 시 임시 소독을 하도록 합니다. 경기도 가이드북은 표면을 닦아 소독하고, 소독 중 창문을 열어 두며 소독 후 충분히 환기하도록 안내합니다.**[1][2][3]\n\n**문서별 안내**\n- 교육부 매뉴얼(2023): 교실 등의 창문을 수시 개방하여 충분히 환기하고, 감염병 발생에 따른 임시 소독을 실시합니다.[1]\n- 교육부 매뉴얼(2023): 감염병 유증상자가 속한 학급은 소독제로 오염 가능성이 높은 물체 표면을 닦습니다.[1]\n- 경기도 가이드북(2024): 접촉범위가 불분명해 소독 효과가 미흡할 수 있으므로 닦는 방법으로 표면 소독을 합니다.[2]\n- 경기도 가이드북(2024): 소독할 때 창문을 연 상태로 하고, 소독 후에도 충분히 환기합니다.[3]\n- 경기도 가이드북(2024): 소독 후 물과 비누로 손을 씻고, 소독 시 장갑·마스크·앞치마를 착용하도록 안내합니다.[2][3]"
+  },
+  {
+   "run": 1,
+   "id": "C4",
+   "kind": "개념 비교",
+   "question": "보건소 역학조사에 학교는 어떻게 협조해야 하는지 문서별로 알려주세요.",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 15,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 0,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 3,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 14.8,
+   "answer": "**교육부 매뉴얼은 모의훈련 시나리오 예시로 환자 현황 파악, 능동감시, 보건소 역학조사 요청·실시 협조를 제시합니다. 경기도 가이드북은 학교 자체 판단보다 보건소 역학조사 결과를 따르는 것이 바람직하다고 안내합니다.**[1][3]\n\n**문서별 비교**\n- 교육부 매뉴얼(2023)은 모의훈련 시나리오 예시로 ‘역학조사 관련 서류 준비 및 협조’를 제시하며, 해당 학교 환자발생 현황 파악과 관내 학교 능동감시, 관찰 보건소 역학조사 요청 및 실시 협조를 적고 있습니다.[1]\n- 교육부 매뉴얼(2023)의 모의훈련 시나리오 예시에서 담임교사는 본인 반 학생의 결석·조퇴·지각 사유와 의심환자를 파악하고, 병원이송·결석·조퇴 학생의 인적사항과 유증상자 분포도, 관련 특이사항을 확인합니다.[2]\n- 경기도 가이드북(2024)은 학교 자체적으로 유행 여부를 판단하기보다 보건소 역학조사 결과에 따르는 것이 바람직하다고 안내합니다.[3]\n- 경기도 가이드북(2024)은 선제적 대응을 위해 유행의심 기준에 해당하면 실제 유행 여부가 불확실하더라도 대응 제3단계 활동을 수행하도록 안내합니다.[3]\n\n**지금 바로 할 일**\n1. 학교는 교육부 매뉴얼의 모의훈련 시나리오 예시를 참고해 환자발생 현황을 파악하고, 관내 학교 능동감시와 보건소 역학조사 요청·실시 협조를 준비합니다.[1]\n2. 담임교사는 모의훈련 시나리오 예시대로 본인 반의 결석·조퇴·지각 사유와 의심환자, 관련 인적사항·유증상자 분포도·특이사항을 파악합니다.[2]\n\n**학교 내 다른 담당의 역할**\n- 보건교사는 경기도 가이드북의 대응 제2단계에서 보건실 이용 학생을 대상으로 추가 의심환자 발생을 파악하고, 능동감시의 범위와 방법을 학교장에게 보고합니다.[3]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "C5",
+   "kind": "개념 비교",
+   "question": "결석·조퇴한 학생을 살피는 능동감시는 문서별로 어떻게 다른가요?",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 32,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 5,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 6,
+   "cited_gold": 3,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 16.8,
+   "answer": "**교육부 매뉴얼은 결석·조퇴·지각 사유 확인과 증상 관찰을 명시하고, 경기도 가이드북은 감시 대상을 학급·과정·통학버스·방과후 수업 등으로 구체화합니다.**[1][2][4]\n\n**상황 판단**\n- 교육부 매뉴얼(2023)은 대응 제2단계에서 능동감시 대상 학급 담임교사가 결석·조퇴·지각 사유와 학급 학생의 증상을 살피도록 합니다.[1]\n- 경기도 가이드북(2024)은 감염병(의심) 환자 1명 발생 시 일부만 감시하고, 유행이 의심되면 전체 학급으로 확대하도록 합니다.[4]\n\n**지금 바로 할 일**\n1. 교육부 매뉴얼(2023) 기준으로, 능동감시 대상 학급 담임교사는 결석·조퇴·지각한 학생의 사유를 확인하고 학급 학생들의 증상 유무를 관찰해 추가 (의심)환자 발생 여부를 파악한 뒤 보건(담당)교사에게 통보합니다.[1]\n2. 경기도 가이드북(2024) 기준으로, 감염병(의심) 환자 1명 발생 시 같은 과정의 학급, 같은 통학버스 탑승 학생, 종일반·방과후 수업을 함께 듣는 학생을 감시 대상에 포함합니다.[4]\n3. 교육부 매뉴얼(2023)은 대응 제2단계에서 같은 층의 학급, 이동식 수업을 함께 듣는 학생, 수인성·식품 매개 감염병 환자와 같은 음식을 먹은 학생을 일부 감시 대상으로 제시합니다.[2]\n\n**이후에 할 일**\n- 교육부 매뉴얼(2023)은 대응 제3단계에서 감시를 전체 학급으로 확대하고, 담임교사가 매일 출결석과 증상 유무로 추가 환자 발생 여부를 파악해 매일 1교시 후 학년부장에게 보고하도록 제시합니다.[2][3]\n- 경기도 가이드북(2024)은 감염병 유행이 의심되는 상황에서 전체 학급으로 감시를 확대하도록 합니다.[4]\n\n※ 확인하지 못한 부분: 경기도 가이드북(2024)에는 결석·조퇴 학생을 확인하는 구체적 방법이 제시되지 않았습니다.\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "D1",
+   "kind": "질병별",
+   "question": "홍역 학생이 나오면 학교가 해야 할 일은 무엇인가요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 21,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026"
+   ],
+   "tool_candidates": 18,
+   "tool_gold": 1,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026"
+   ],
+   "cited": 8,
+   "cited_gold": 1,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 15.5,
+   "answer": "**홍역 학생이 확인되면 학교는 교육(지원)청에 보고하고, 학교장은 관할 보건소장에게 신고하며, 홍역(의심) 진단을 받은 학생에게는 전염기간 동안 등교하지 않도록 안내하세요.**[1][2][6]\n\n**상황 판단**\n- 홍역은 제2급 법정감염병이며, 교육부 매뉴얼의 학교장 신고 대상 목록에 포함되어 있습니다.[1][7]\n- 질병관리청 홍역 관리지침(2026)은 의료기관 진료 결과 홍역(의심) 진단을 받은 경우, 발진이 나타난 후 4일까지를 전염기간으로 안내합니다.[6]\n\n**지금 바로 할 일**\n1. 학교는 교육(지원)청의 보고절차에 따라 나이스(NEIS)로 교육(지원)청에 보고합니다.[1][2]\n2. 학교장은 관할 보건소장에게 신고합니다.[2][3]\n3. 학교는 의료기관 진료 결과 홍역(의심) 진단을 받은 학생에게 전염기간 동안 등교하지 않도록 안내합니다. (원문 조건: 발진이 나타난 후)[6]\n\n**이후에 할 일**\n- 학교는 능동감시체계 운영 방안에 따라 감시범위와 방법을 정해 실시합니다.[2]\n- 방역당국에서 별도의 관리지침을 제시하면 그 지침을 우선 적용합니다.[8]\n\n**신고·법적 사항**\n- 담임교사는 법 제12조제1항의 신고의무자로 열거되어 있지 않습니다. 신고의무자가 아니더라도 감염병환자 등으로 의심되는 사람을 발견하면 보건소장에게 알려야 합니다.[3][4]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "D2",
+   "kind": "질병별",
+   "question": "백일해 환자가 생기면 학교는 어떤 조치를 하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ],
+    [
+     "legal_search",
+     "NO_EVIDENCE"
+    ]
+   ],
+   "gold_chunks": 20,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "tool_candidates": 21,
+   "tool_gold": 4,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "cited": 11,
+   "cited_gold": 2,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 22.7,
+   "answer": "**백일해 환자가 발생하면 환자를 등교중지하고, 학교는 학교장 보고·교육(지원)청 보고와 추가 환자 감시를 진행합니다. 백일해는 제2급감염병이지만 교육부 매뉴얼의 학교장 신고 대상 목록에는 없어, 그 목록에 따른 학교장 신고 대상은 아닙니다.**[1][2][7][8]\n\n**상황 판단**\n- 백일해는 제2급 법정감염병입니다.[8]\n- 경기도 가이드북(2024)의 학교장 신고 대상 목록에는 백일해가 없습니다.[7]\n- 같은 학급 등에서 21일 이내 역학적 연관성이 있는 환자나 의사환자가 2명 이상이면 집단발생을 확인하고 예방·관리를 실시합니다.[3]\n\n**지금 바로 할 일**\n1. 학교는 환자를 비말주의로 관리하고, 백일해 의심 증상자는 즉시 의료기관에서 진료받도록 권고합니다.[1][5]\n2. 보건교사는 환자 발생 사실을 학교장에게 보고하고, 나이스(NEIS)로 교육(지원)청에 보고합니다.[2]\n3. 보건교사는 보건실 이용 학생을 대상으로 추가 의심환자 발생을 파악하고, 능동감시의 범위와 방법을 학교장에게 보고합니다.[2]\n4. 학교는 접촉자 증상 발생을 모니터링합니다.[4]\n\n**이후에 할 일**\n- 유효한 항생제를 복용한 환자는 투약 후 5일까지 등교중지하고, 치료를 받지 않은 환자는 기침이 멈출 때까지 최소 3주 이상 격리합니다. 등교 여부는 의사와 상담 후 결정하도록 안내합니다. (원문 조건: 치료 시작 후)[1]\n- 추가 의심환자가 발생하면 관할 보건소에 즉시 연락합니다.[6]\n- 같은 학급 등에서 21일 이내 역학적 연관성이 있는 환자나 의사환자가 2명 이상이면 집단발생 예방·관리를 실시합니다.[3]\n\n**학교 내 다른 담당의 역할**\n- 학교장은 환자 발생 사실을 보고받고, 보건교사가 보고한 능동감시 범위와 방법을 확인합니다.[2]\n- 학교장은 신고가 필요한 법정감염병인 경우 관할 보건소장에게 신고합니다. 다만 백일해는 교육부 매뉴얼의 신고 대상 목록에 없습니다.[7][11]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "D3",
+   "kind": "질병별",
+   "question": "유행성이하선염(볼거리)이 발생하면 학교는 무엇을 하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 16,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "tool_candidates": 19,
+   "tool_gold": 0,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "cited": 9,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 18.0,
+   "answer": "**유행성이하선염 환자가 발생하면 등교중지와 추가 환자 감시를 하고, 같은 학급 등에서 25일 이내 역학적 연관성이 있는 환자·의사환자가 2명 이상이면 집단발생 대응을 하세요. 유행성이하선염은 제2급 법정감염병이지만, 교육부 매뉴얼의 학교장 신고 대상 목록에는 없어 그 목록에 따른 학교장 신고 대상은 아닙니다.**[1][2][5][7]\n\n**상황 판단**\n- 유행성이하선염은 제2급 법정감염병입니다.[7]\n- 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에는 유행성이하선염이 없습니다. 따라서 해당 목록에 따른 학교장 신고 대상은 아닙니다.[5]\n- 같은 학급이나 동일 반 등에서 25일 이내 역학적 연관성이 있는 환자·의사환자가 2명 이상이면 경기도 가이드북(2024)의 집단발생 확인·예방·관리 기준에 해당합니다.[2]\n- 교육부 매뉴얼(2023)은 최대 잠복기 이내 동일 학급에서 의심·확진 환자 2명 이상이거나, 다른 학급이어도 공통 공간 노출로 관련성이 의심되면 유행의심 기준에 해당하고 대응 제3단계로 격상하도록 합니다.[8]\n\n**지금 바로 할 일**\n1. 학교는 환자에게 전염성이 소실될 때까지 등교중지를 실시하고, 손 씻기·기침 예절 교육을 하며 마스크 착용을 권고합니다.[1]\n2. 학교는 결석·조퇴·지각 사유를 확인하고 의심증상을 관찰해 추가 환자 발생 여부를 파악합니다.[2]\n3. 학교는 추가 의심환자의 보호자에게 의료기관 진료를 안내하고, 진료 결과에 따라 등교중지 조치를 합니다.[2]\n4. 학교는 예방수칙을 교육·홍보하고 학부모와 교직원에게 안내문을 발송합니다.[2]\n\n**이후에 할 일**\n- 학교는 환자·의사환자 2명 이상이 역학적으로 연관된 경우 진단 여부와 합병증·입원 여부를 확인하고 집단발생을 확인해 예방·관리를 실시합니다.[2]\n- 학교는 접촉자의 유증상 여부와 추가 환자 발생을 모니터링합니다.[3]\n- 경기도 가이드북(2024)은 환자 등교중지를 증상 발현 후 5일까지로 안내합니다.[3]\n\n**학교 내 다른 담당의 역할**\n- 학교장은 신고가 필요한 법정감염병인 경우 관할 보건소장에게 보고합니다. 다만 유행성이하선염은 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에 없습니다.[4][5]\n- 학교장은 대응 제3단계에서 학교감염병관리조직의 기능을 강화하고, 유행 확산 정도에 따라 학사일정 조정 및 교육 활동 제한을 검토·실시합니다.[6]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "D4",
+   "kind": "질병별",
+   "question": "수두에 걸린 학생이 있으면 학교가 해야 할 일은?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 16,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "tool_candidates": 18,
+   "tool_gold": 0,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "cited": 6,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 15.4,
+   "answer": "**수두 확진 학생은 모든 수포에 가피가 생길 때까지 등교를 중지하도록 하고, 학교는 접촉자 증상 감시를 하십시오. 수두는 제2급 법정감염병이지만, 교육부 매뉴얼의 학교장 신고 대상 목록에는 없어 그 목록에 따른 학교장 신고 대상은 아닙니다.**[2][4][6]\n\n**상황 판단**\n- 수두는 제2급 법정감염병입니다.[6]\n- 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에 수두가 없으므로, 해당 목록에 따른 학교장 신고 대상은 아닙니다.[4]\n\n**지금 바로 할 일**\n1. 학교는 확진 학생의 등교를 모든 수포에 가피가 형성될 때까지 중지하도록 합니다.[2]\n2. 학교는 접촉자를 파악하고 증상 발생을 모니터링합니다.[2][5]\n3. 학교는 환자 관리에 표준주의·공기주의·접촉주의를 적용합니다.[5]\n\n**이후에 할 일**\n- 예방접종을 받은 환자에게 병변 가피가 생기지 않는 경우, 경기도 가이드북(2024)은 24시간 동안 새로운 피부병변이 나타나지 않을 때까지 격리 또는 타인과 접촉 제한을 권장합니다.[5]\n\n**신고·법적 사항**\n- 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에 수두가 없으므로, 그 목록에 따른 학교장 신고 대상은 아닙니다.[4]"
+  },
+  {
+   "run": 1,
+   "id": "D5",
+   "kind": "질병별",
+   "question": "결핵 환자가 학교에서 확인되면 학교는 무엇을 해야 하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 7,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "tool_candidates": 16,
+   "tool_gold": 0,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "cited": 8,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 17.0,
+   "answer": "**결핵 확진 환자가 확인되면 학교는 교육(지원)청에 보고하고, 학교장은 관할 보건소에 신고해야 합니다. 접촉자 조사는 관할 보건소와 협의해 진행하세요.**[1][2][4]\n\n**상황 판단**\n- 결핵은 학교장 신고 대상 감염병 목록에 있으며, 제2급 법정감염병입니다.[1][8]\n\n**지금 바로 할 일**\n1. 학교는 교육(지원)청의 보고절차에 따라 나이스 전자결재로 교육(지원)청과 보건소에 보고합니다. 서면 신고가 여의치 않으면 팩스나 전화를 활용합니다.[1]\n2. 학교장은 관할 보건소에 신고합니다.[2]\n3. 학교장은 결핵환자의 객담을 포함한 호흡기검체 검사 결과가 양성인 경우, 관할 보건소와 협의해 접촉자 조사를 진행합니다.[4]\n4. 학교장은 접촉자조사 대상자에게 결핵 관련 안내 예시를 참고해 안내문을 배포합니다.[4]\n\n**이후에 할 일**\n- 전염성 결핵환자는 전염성 소실이 확인되면 등교 일시 제한을 해제하고 복귀할 수 있습니다. 교육부 매뉴얼(2023)은 전염성 소실에 대한 의사 소견서 등 관련 근거를 확인·보관하도록 안내합니다.[5]\n\n**학교 내 다른 담당의 역할**\n- 보건교사는 환자 발생 사실을 학교장에게 보고하고, 나이스로 교육(지원)청에 보고합니다.[3]\n- 보건교사는 능동감시의 범위와 방법을 학교장에게 보고하고, 보건실 이용 학생 중 추가 의심환자 발생 여부를 파악합니다.[3]\n\n**신고·법적 사항**\n- 감염병예방법 제12조의 신고의무자는 학교의 관리인·경영자 또는 대표자입니다. 담임교사는 해당 조항의 신고의무자 목록에 적혀 있지 않습니다.[6]\n- 신고의무자가 아니더라도 감염병환자 등으로 의심되는 사람을 발견하면 보건소장에게 알려야 합니다.[7]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "D6",
+   "kind": "질병별",
+   "question": "인플루엔자가 유행할 때 학교와 시설이 해야 할 일은?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 7,
+   "gold_docs": [
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 18,
+   "tool_gold": 4,
+   "tool_docs": [
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "cited": 12,
+   "cited_gold": 2,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 18.6,
+   "answer": "**인플루엔자는 제4급 법정감염병이며, 교육부 매뉴얼의 학교장 신고 대상 목록에는 없습니다. 유행 시에는 질병관리청 2026 인플루엔자 관리지침에 따라 시설 내 유입을 막고, 발생하면 확산 방지에 집중하세요.**[1][7][8]\n\n**상황 판단**\n- 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에 인플루엔자는 없으므로, 이 목록에 따른 학교장 신고 대상은 아닙니다.[7]\n- 학교에서 최대 잠복기 이내에 같은 학급의 의심·확진 환자가 2명 이상이거나, 다른 학급 환자라도 이동수업·급식 등 공통 공간 노출로 관련성이 의심되면 유행의심 기준에 해당해 대응 제3단계로 격상합니다.[9]\n\n**지금 바로 할 일**\n1. 영·유아, 학생 및 교직원은 유행 시기 등원·등교 전에 인플루엔자 의심증상 등 건강상태를 확인합니다.[2]\n2. 시설은 가정통신문 안내문 발송 등 사전예방 활동을 합니다.[2]\n3. 실내에서는 출입문과 창문을 동시에 열어 환기합니다.[3]\n4. 교육부 매뉴얼(2023)은 유행기간에 교실의 혼잡과 접촉을 줄이도록 안내합니다.[6]\n\n**이후에 할 일**\n- 교직원이 인플루엔자로 진단받으면 감염력이 소실될 때까지 업무를 일시적으로 제한하도록 권고합니다. 감염력 소실은 해열 후 24시간 경과입니다.[3]\n- 유행의심 기준을 충족하면 대응 제3단계로 격상하고, 기존 의심·확진 환자가 완치된 뒤 최대 잠복기 동안 추가 환자가 없으면 예방단계로 복귀합니다.[9]\n\n**학교 내 다른 담당의 역할**\n- 학교장(경기도 가이드북의 대응 제3단계 담당 예시)은 학교감염병관리조직의 기능을 강화하고, 유행 확산 정도에 따라 학사일정 조정 및 각종 교육 활동 제한을 검토·실시합니다.[4]\n- 보건교사(경기도 가이드북의 대응 제2단계 담당 예시)는 보건실 이용 학생을 대상으로 추가 의심·확진 환자 발생을 파악하고, 예방교육 자료 제공 및 학급 예방교육 안내를 합니다.[5]\n\n**신고·법적 사항**\n- 인플루엔자는 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에 없으므로, 그 목록에 따른 학교장 신고 대상은 아닙니다.[7]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 1,
+   "id": "K1",
+   "kind": "대조군",
+   "question": "마이코플라스마 폐렴 전염기간은?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 2,
+   "gold_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 1,
+   "tool_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "cited": 2,
+   "cited_gold": 1,
+   "cited_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "docs_covered": [
+    "kdca_respiratory_2026"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": true,
+   "seconds": 10.5,
+   "answer": "**마이코플라스마 폐렴은 증상 발현 2~8일 전부터 증상 발생 후 20일 이내까지 전염될 수 있습니다. 다만 일부 문헌은 감염 발생 후 14주까지 전파 가능성을 제시합니다.**[1][2]"
+  },
+  {
+   "run": 1,
+   "id": "K2",
+   "kind": "대조군",
+   "question": "코로나19 전염 기간은 얼마나 되나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 1,
+   "gold_docs": [
+    "kdca_covid19_2026"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 0,
+   "tool_docs": [
+    "kdca_covid19_2026"
+   ],
+   "cited": 3,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_covid19_2026",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "kdca_covid19_2026"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": true,
+   "seconds": 10.6,
+   "answer": "**코로나19는 증상 발생 1~3일 전부터 전파될 수 있고, 증상이 나타나는 시기에 전파가 쉽습니다. 바이러스 양은 감염 첫 주 안에 최고점에 도달한 뒤 점차 감소합니다.**[1]\n\n**상황 판단**\n- 전염 기간을 며칠로 딱 잘라 말하기보다, 증상 발생 전부터 전파될 수 있고 감염 첫 주에 바이러스 양이 가장 많아진 뒤 감소한다고 보시면 됩니다.[1]\n- 경기도 가이드북(2024)은 발병 전 2일~발병 후 3일까지 전파력이 가장 높고, 대부분 7일 이후에는 소실된다고 안내합니다.[2]\n- 교육부 매뉴얼(2023)은 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 합니다.[3]"
+  },
+  {
+   "run": 1,
+   "id": "K3",
+   "kind": "대조군",
+   "question": "성홍열 잠복기는 얼마인가요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 1,
+   "gold_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 0,
+   "tool_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "cited": 1,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "docs_covered": [],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": true,
+   "seconds": 8.5,
+   "answer": "**성홍열의 잠복기는 1~7일이며, 평균 2~5일입니다.**[1]"
+  },
+  {
+   "run": 2,
+   "id": "R1",
+   "kind": "역할×단계",
+   "question": "감염병 확진 학생이 2명 이상 나온 상황에서 담임교사가 해야 할 일을 모두 알려주세요.",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 7,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 3,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 6,
+   "cited_gold": 4,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 17.7,
+   "answer": "**확진 학생이 2명 이상이면, 같은 학급에서 최대 잠복기 이내에 발생했거나 공통 공간 노출로 관련성이 의심되는 경우 유행의심 기준에 해당해 대응 제3단계로 격상합니다. 담임교사는 아래 업무를 진행하세요.**[1][3]\n\n**상황 판단**\n- 두 학생이 같은 학급에서 최대 잠복기 이내에 확진된 경우 유행의심 기준에 해당합니다. 서로 다른 학급이어도 이동식 수업·급식 등 공통 공간 노출로 관련성이 의심되면 해당할 수 있습니다.[1]\n- 유행의심 기준을 충족하면 대응 제3단계로 격상합니다. 경기도 가이드북은 대응 제3단계 상황을 감염병(의심) 환자 2명 이상으로 제시합니다.[1][2]\n\n**지금 바로 할 일**\n1. 담임교사는 매일 학급 학생의 추가 감염병(의심) 환자 발생 여부를 출결석과 증상 유무로 파악하고, 매일 1교시 후 학년부장에게 보고합니다. *(대응 제3단계 역할 예시)*[3][5]\n2. 담임교사는 보호자에게 학교 내 감염병 유행의심 상황을 알리고 의료기관 진료를 안내합니다. 의료기관 진료 결과에 따라 등교중지를 실시합니다. *(대응 제3단계 역할 예시)*[3][4]\n3. 담임교사는 확진 학생을 나이스(NEIS)에 등록하고, 보호자에게 등교중지 학생의 생활수칙과 필요한 행정조치를 안내합니다. *(대응 제3단계 역할 예시)*[3][4]\n4. 담임교사는 학급 조·종례 시간 등을 이용해 해당 감염병의 증상·예방법·증상 발생 시 행동 요령을 주기적으로 교육합니다. *(대응 제3단계 역할 예시)*[6]\n5. 담임교사는 가정통신문으로 보호자에게 감염병 유행 사실을 알리고, 개인위생 관리·외출 자제·다중이용시설 출입 자제 등 자녀 생활지도 협조를 요청합니다. *(대응 제3단계 역할 예시)*[6]\n\n**이후에 할 일**\n- 담임교사는 최대 잠복기 동안 추가 (의심)환자 발생을 감시하고, 가정통신문 배부와 보건교육을 실시합니다. *(대응 제3단계 역할 예시)*[3]\n- 담임교사는 보건(담당)교사나 방역당국의 요청에 따라 마스크 착용·예방교육 등을 실시합니다. *(대응 제3단계 역할 예시)*[3]\n- 담임교사는 보건학적 고위험군 보호자에게 연락하고, 조치 결과를 보건(담당)교사에게 통보합니다. *(대응 제3단계 역할 예시)*[3]\n- 담임교사는 사회적 취약계층의 위생수칙 교육·생활지도 등을 위해 관련 부서나 교사와 협의합니다. 등교중지 시 필요하면 급식 제공 방안이나 지자체 복지서비스 연계 의뢰도 협의합니다. *(대응 제3단계 역할 예시)*[3]\n- 담임교사는 교실 등의 창문을 수시로 열어 충분히 환기하고, 감염병 유증상자가 속한 학급의 소독을 실시합니다. *(대응 제3단계 역할 예시)*[3]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "R2",
+   "kind": "역할×단계",
+   "question": "의심 증상 학생이 처음 발견됐을 때 보건교사가 해야 할 일은 무엇인가요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 2,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 1,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 2,
+   "cited_gold": 1,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 11.2,
+   "answer": "**보건교사는 먼저 감염병 의심 증상과 의료기관 진료 여부를 확인하고, 필요하면 일시적 관찰을 실시한 뒤 담임교사에게 필요한 조치를 요청합니다.**[1]\n\n**지금 바로 할 일**\n1. 보건교사는 감염병을 의심할 수 있는 증상인지 확인하고 의료기관 진료 여부를 물어봅니다.[1]\n2. 보건교사는 학생이 발열을 호소하면 체온을 측정해 실제 발열 여부를 다시 확인합니다.[1]\n3. 보건교사는 응급상황이면 즉시 적절한 조치를 하고, 일시적 관찰이 필요한지 판단해 실시합니다.[1]\n4. 보건교사는 담임교사에게 보호자 연락 및 의료기관 진료 요청, 교실 환기·소독, 학생 위생수칙 교육 등 필요한 조치를 요청합니다.[1]\n\n**이후에 할 일**\n- 감염병(의심) 환자 발생을 확인하면 보건교사는 추가 (의심)환자 파악 등 대응 제2단계 활동을 수행합니다.[1]\n- 대응 제2단계에서는 보건교사가 발생 사실을 학교장에게 보고하고, 나이스(NEIS)로 교육(지원)청에 보고하며, 보건실 이용 학생을 대상으로 추가 (의심)환자 발생을 파악합니다.[2]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "R3",
+   "kind": "역할",
+   "question": "학교장이 하는 일에는 어떤 것들이 있나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 9,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 5,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 4,
+   "cited_gold": 3,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 11.5,
+   "answer": "**학교장은 모든 단계에서 감염병 대응을 총괄합니다. 단계에 따라 신고·능동감시 지시, 대응 강화, 유행 종료 선언 등을 합니다.[1][2][3][4]**\n\n**상황 판단**\n- 경기도 가이드북(2024)은 학교장 역할을 단계별로 제시합니다. 아래 업무는 해당 단계에 배치된 역할입니다.[2][3][4]\n\n**지금 바로 할 일**\n1. 학교장은 대응 제2단계에서 신고가 필요한 법정감염병인 경우 관할 보건소장에게 보고합니다.[4]\n2. 학교장은 대응 제2단계에서 부장급 교사를 통해 능동감시 실시를 지시합니다.[4]\n3. 학교장은 대응 제3단계에서 학교감염병관리조직의 기능을 강화할 수 있도록 조치합니다.[2]\n4. 학교장은 대응 제3단계에서 유행 확산 정도에 따라 학사일정 조정 및 각종 교육 활동에 대한 제한을 검토하고 실시합니다.[2]\n\n**이후에 할 일**\n- 학교장은 복구단계에서 유행 종료를 선언하고, 학생 감염병 관리조직의 유행 시 대응 활동 중단 및 예방단계로 복귀를 지시합니다.[3]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "R4",
+   "kind": "역할",
+   "question": "행정실은 감염병 대응에서 무슨 일을 맡나요?",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 2,
+   "gold_docs": [
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 1,
+   "tool_docs": [
+    "moe_school_manual_v3"
+   ],
+   "cited": 2,
+   "cited_gold": 1,
+   "cited_docs": [
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 13.2,
+   "answer": "**행정실은 모의훈련 시나리오 예시에서 환기·소독 지원, 방역물품 비치·배포, 시설·통학 차량 방역 소독, 역학조사 서류 준비·협조를 맡습니다.**[1]\n\n**지금 바로 할 일**\n1. 행정실은 보건실·교실·일시적 관찰실 등의 환기 및 소독을 지원합니다(모의훈련 시나리오 예시).[1]\n2. 행정실은 교내 방역물품을 비치·배포하고, 교실 표면소독을 위한 소독제와 사용 방법을 안내합니다(모의훈련 시나리오 예시).[1]\n3. 행정실은 학교 시설 및 통학 차량 등을 방역 소독합니다(모의훈련 시나리오 예시).[1]\n4. 행정실은 역학조사 관련 서류를 준비하고 협조합니다(모의훈련 시나리오 예시).[1]\n\n**상황 판단**\n- 위 업무는 교육부 매뉴얼의 모의훈련 시나리오 예시이며, 매뉴얼은 학교 내 조직구성 및 구성원 역할을 예시로 제시하고 학교 상황에 따라 자율적으로 정할 수 있다고 안내합니다.[1][2]\n- 대응 제3단계의 담당자별 역할 표에는 방역 활동 담당으로 ‘행정지원팀/각 실 관리담당 교직원’이 제시되어 있습니다.[2]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "C1",
+   "kind": "개념 비교",
+   "question": "보호자에게 감염병 발생을 알리는 일은 교육부 매뉴얼, 경기도 가이드북, 질병관리청 지침에서 각각 어떻게 안내하나요?",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 13,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "kdca_respiratory_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 1,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 2,
+   "cited_gold": 1,
+   "cited_docs": [
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 13.3,
+   "answer": "**교육부 매뉴얼은 가정통신문으로 보호자에게 학교 내 감염병 발생 사실 또는 감염병 유행 사실을 알리고, 자녀 생활지도 협조를 요청하도록 안내합니다.**[1][2]\n\n**상황 판단**\n- 교육부 매뉴얼의 대응 제2단계는 학교 내 감염병 발생 사실을 알리도록 안내합니다.[1]\n- 교육부 매뉴얼의 대응 제3단계는 감염병 유행 사실을 알리도록 안내합니다.[2]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "C2",
+   "kind": "개념 비교",
+   "question": "아픈 학생을 병원에 보내 진료받게 하는 일은 문서마다 어떻게 안내하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 19,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "kdca_measles_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 4,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026",
+    "moe_school_manual_v3"
+   ],
+   "cited": 6,
+   "cited_gold": 1,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 13.2,
+   "answer": "**문서별로 안내는 대체로 같지만, 홍역 의심 환자는 질병관리청 지침에 따라 의료기관 진료 안내와 관할 보건소 신고를 하세요.**[5][6]\n\n**상황 판단**\n- 경기도 가이드북(2024)과 교육부 매뉴얼(2023)은 감염병 의심 학생의 보호자에게 의료기관 진료를 안내하도록 합니다.[1][2]\n- 홍역(의심) 환자는 질병관리청 홍역 관리지침(2026)의 별도 기준을 우선 적용합니다.[5][6]\n\n**지금 바로 할 일**\n1. 담임교사는 감염병 의심증상으로 미등교한 학생의 보호자에게 의료기관 진료를 안내하고, 등교중지 안내문을 학교 홈페이지에서 내려받아 이용하도록 안내합니다.[1][2]\n2. 감염병(의심) 환자가 학교에서 발생하면 일시적 관찰실에 격리하고, 보호자에게 인계해 병원 진료를 받게 합니다.[3]\n3. 홍역(의심) 환자가 교내에서 발생하면 의료기관에서 진료받도록 안내하고 관할 보건소에 신고합니다.[5]\n\n**이후에 할 일**\n- 교육부 매뉴얼(2023)은 진료 결과 감염병(의심) 환자로 확인된 경우 해당 학생을 즉시 퇴소(격리) 조치하도록 안내합니다.[4]"
+  },
+  {
+   "run": 2,
+   "id": "C3",
+   "kind": "개념 비교",
+   "question": "교실 환기와 소독은 문서별로 어떻게 하라고 하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 10,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 2,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 3,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 12.7,
+   "answer": "**교육부 매뉴얼은 교실 창문을 수시로 열어 충분히 환기하고, 감염병 발생 시 임시 소독을 하도록 합니다. 경기도 가이드북은 표면을 닦아 소독하고, 소독 중 창문을 열며 소독 후에도 충분히 환기하도록 안내합니다.**[1][2][3]\n\n**문서별 안내**\n- 교육부 매뉴얼(2023): 교실 등의 창문을 수시 개방하여 충분히 환기하고, 감염병 발생에 따른 임시 소독을 실시합니다.[1]\n- 교육부 매뉴얼(2023): 감염병 유증상자가 속한 학급은 소독제로 오염 가능성이 높은 물체 표면을 닦습니다.[1]\n- 경기도 가이드북(2024): 접촉범위가 불분명해 소독 효과가 미흡할 수 있으므로 닦는 방법으로 표면 소독을 합니다.[2]\n- 경기도 가이드북(2024): 소독할 때는 창문을 연 상태로 하고, 소독 후 충분히 환기하며 물과 비누로 손을 씻습니다.[2][3]\n- 경기도 가이드북(2024): 소독 시 장갑·마스크·앞치마를 착용하고, 남은 소독액은 폐기하도록 안내합니다.[3]"
+  },
+  {
+   "run": 2,
+   "id": "C4",
+   "kind": "개념 비교",
+   "question": "보건소 역학조사에 학교는 어떻게 협조해야 하는지 문서별로 알려주세요.",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 15,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 0,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 2,
+   "cited_gold": 0,
+   "cited_docs": [
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 11.4,
+   "answer": "**교육부 매뉴얼(2023)의 모의훈련 시나리오 예시에서는 학교가 환자 발생 현황을 파악하고, 보건소 역학조사를 요청·실시하는 데 협조하며 관련 서류를 준비하도록 제시합니다.**[1]\n\n**상황 판단**\n- 아래 내용은 교육부 매뉴얼의 모의훈련 시나리오 예시이며, 일반 지침으로 단정할 수는 없습니다.[1]\n\n**지금 바로 할 일**\n1. (시나리오 예시) 학교는 해당 학교의 환자 발생 현황을 파악하고, 관내 학교에 대한 능동감시를 실시합니다.[1]\n2. (시나리오 예시) 학교는 관내 학교에 대한 관찰을 위해 보건소 역학조사를 요청하고, 조사 실시를 협조합니다.[1]\n3. (시나리오 예시) 학교는 역학조사 관련 서류를 준비합니다.[1]\n\n**학교 내 다른 담당의 역할**\n- (시나리오 예시) 교육(지원)청은 역학조사 관련 서류 준비를 지원·확인하고, 학교·교육지원청·역학조사기관 담당자의 연락처를 파악해 조정하는 역할을 합니다.[2]\n\n※ 확인하지 못한 부분: 학교가 준비할 서류의 구체적인 종류와 학교 담당자의 세부 역할은 확인되지 않습니다."
+  },
+  {
+   "run": 2,
+   "id": "C5",
+   "kind": "개념 비교",
+   "question": "결석·조퇴한 학생을 살피는 능동감시는 문서별로 어떻게 다른가요?",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "crossdoc_graph_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 32,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 5,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "cited": 5,
+   "cited_gold": 2,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 14.7,
+   "answer": "**교육부 매뉴얼은 담임교사가 결석·조퇴·지각 사유와 학급 내 증상을 확인해 보건(담당)교사에게 알리도록 하고, 경기도 가이드북은 감염병 발생 상황에 따라 감시 대상을 일부 학급에서 전체 학급으로 넓히도록 합니다.**[1][2][3]\n\n**상황 판단**\n- 교육부 매뉴얼(2023)은 대응 단계에 따라 확인·보고 내용을 제시하고, 경기도 가이드북(2024)은 환자 발생 범위에 따라 능동감시 대상을 정합니다.[1][2][3]\n- 경기도 가이드북(2024)은 감염병(의심) 환자 1명 발생 시 일부 대상부터 감시하고, 유행이 의심되면 전체 학급으로 확대하도록 합니다.[3]\n\n**지금 바로 할 일**\n1. 교육부 매뉴얼(2023) 대응 제2단계에서는 담임교사가 결석·조퇴·지각한 학생의 사유를 확인하고, 학급 학생들의 증상 유무를 관찰해 추가 (의심)환자 발생 여부를 파악한 뒤 보건(담당)교사에게 통보합니다.[1]\n2. 교육부 매뉴얼(2023) 대응 제3단계에서는 담임교사가 매일 출결석과 증상 유무를 확인해 추가 발생 여부를 파악하고, 매일 1교시 후 학년부장에게 보고합니다.[2]\n3. 경기도 가이드북(2024)에서는 환자 1명 발생 시 해당 학급이 있는 동일한 과정의 학급, 같은 통학버스 탑승 학생, 종일반·방과후 수업을 함께 듣는 학생을 대상으로 일부 능동감시를 실시합니다.[3]\n4. 경기도 가이드북(2024)에서는 감염병 유행이 의심되면 능동감시를 전체 학급으로 확대합니다.[3]\n\n※ 확인하지 못한 부분: 경기도 가이드북(2024)에서 결석·조퇴 학생을 구체적으로 어떻게 살피는지는 확인되지 않습니다.\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "D1",
+   "kind": "질병별",
+   "question": "홍역 학생이 나오면 학교가 해야 할 일은 무엇인가요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 21,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026"
+   ],
+   "tool_candidates": 18,
+   "tool_gold": 1,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026"
+   ],
+   "cited": 10,
+   "cited_gold": 1,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025",
+    "kdca_measles_2026"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 16.2,
+   "answer": "**홍역 학생이 확인되면 학교는 교육(지원)청에 보고하고, 학교장은 관할 보건소장에게 신고하며, 학교 내 능동감시를 실시해야 합니다. 홍역(의심) 진단을 받은 학생은 발진이 나타난 후 4일까지 등교하지 않도록 안내합니다.**[1][4][7][8]\n\n**상황 판단**\n- 홍역은 학교장 신고 대상 감염병 목록에 있으며, 제2급 법정감염병입니다.[1][9]\n- 경기도 가이드북의 대응 제2단계 주요 활동에는 교육(지원)청 보고, 보건소 신고, 능동감시가 포함됩니다.[4]\n\n**지금 바로 할 일**\n1. 학교는 교육(지원)청 보고절차에 따라 나이스(NEIS)로 교육(지원)청에 보고합니다. 서면 신고가 여의치 않으면 팩스나 전화를 활용합니다.[1][4]\n2. 학교장은 관할 보건소장에게 신고합니다.[4][7]\n3. 학교는 능동감시체계 운영 방안에 따라 감시 범위와 방법을 정해 실시합니다.[4]\n4. 학교는 의료기관 진료 결과 홍역(의심) 진단을 받은 학생에게 발진이 나타난 후 4일까지 등교하지 않도록 안내합니다.[8]\n\n**이후에 할 일**\n- 교육부 매뉴얼(2023)은 방역당국에서 별도의 관리지침을 제시하면 그 지침을 우선 적용하도록 하고 있습니다. 질병관리청 홍역 관리지침(2026)의 등교 안내 기준을 적용합니다.[10][8]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "D2",
+   "kind": "질병별",
+   "question": "백일해 환자가 생기면 학교는 어떤 조치를 하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 20,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "tool_candidates": 19,
+   "tool_gold": 3,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "cited": 7,
+   "cited_gold": 1,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 15.2,
+   "answer": "**백일해 환자가 생기면 등교중지와 비말주의 격리를 안내하고, 학교 내 감시를 실시하세요. 백일해는 제2급 법정감염병이지만, 교육부 매뉴얼의 학교장 신고 대상 목록에는 없습니다.**[1][3][4][7]\n\n**상황 판단**\n- 백일해는 제2급 법정감염병입니다.[7]\n- 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에 백일해가 없으므로, 그 목록에 따른 학교장 신고 대상은 아닙니다.[4]\n- 동일 학급이나 동일 반 등에서 21일 이내 역학적 연관성이 있는 환자 또는 의사환자가 2명 이상이면 집단발생을 확인하고 예방·관리를 실시합니다.[5]\n\n**지금 바로 할 일**\n1. 환자에게 백일해에 유효한 항생제를 복용했다면 투약 후 5일까지 등교중지하도록 안내하고, 증상에 별도 치료가 필요할 수 있으므로 의사와 상담 후 등교 여부를 결정하도록 안내합니다.[1]\n2. 환자에게 표준주의 및 비말주의 격리를 안내합니다.[1]\n3. 학교는 학교 내 능동감시체계 운영 방안에 따라 감시범위와 방법을 정해 실시합니다.[3]\n\n**이후에 할 일**\n- 항생제 치료를 받지 않은 경우에는 기침이 멈출 때까지 최소한 3주 이상 격리하도록 안내합니다. (원문 조건: 치료 시작 후)[1]\n- 추가 의심환자가 발생하면 즉시 관할 보건소에 연락합니다.[6]\n- 접촉자는 증상 발생을 모니터링합니다.[2]\n\n**학교 내 다른 담당의 역할**\n- 학교장은 신고가 필요한 법정감염병인 경우 관할 보건소장에게 신고합니다. 백일해는 교육부 매뉴얼의 학교장 신고 대상 목록에 없습니다.[3][4]"
+  },
+  {
+   "run": 2,
+   "id": "D3",
+   "kind": "질병별",
+   "question": "유행성이하선염(볼거리)이 발생하면 학교는 무엇을 하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 16,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "tool_candidates": 19,
+   "tool_gold": 0,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "cited": 9,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 17.0,
+   "answer": "**유행성이하선염 환자가 발생하면 추가 의심환자를 살피고, 환자는 증상 발현 후 5일까지 등교중지하도록 안내하세요. 유행성이하선염은 제2급 법정감염병이지만, 교육부 매뉴얼의 학교장 신고 대상 목록에는 없어 그 목록에 따른 학교장 신고 대상은 아닙니다.**[3][5][7]\n\n**상황 판단**\n- 유행성이하선염은 제2급 법정감염병입니다.[7]\n- 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에는 유행성이하선염이 없습니다.[5]\n- 학교 내 동일 학급이나 동일 반 등에서 25일 이내 역학적 연관성이 있는 환자나 의사환자가 2명 이상이면 집단발생을 확인하고 예방·관리를 실시합니다.[1]\n- 교육부 매뉴얼(2023) 기준으로는 최대 잠복기 이내 동일 학급에서 의심·확진 환자 2명 이상이거나, 다른 학급이라도 공통 공간 노출로 관련성이 의심되면 유행의심 기준에 해당하며 대응 제3단계로 격상합니다.[8]\n\n**지금 바로 할 일**\n1. 학교는 결석·조퇴·지각 사유를 확인하고 의심증상을 관찰해 추가 (의심)환자 발생 여부를 파악합니다.[1]\n2. 학교는 추가 (의심)환자의 보호자에게 의료기관 진료를 안내하고, 진료 결과에 따라 등교중지 조치를 합니다.[1]\n3. 학교는 손 씻기와 기침 예절을 교육하고, 마스크 착용을 권고합니다.[2]\n4. 학교는 학부모와 교직원에게 안내문을 발송합니다.[1]\n\n**이후에 할 일**\n- 환자는 증상 발현 후 5일까지 격리합니다.[3]\n- 접촉자는 유증상자 및 추가 환자 발생 여부를 모니터링합니다.[3]\n- 면역력이 없는 접촉자에게는 예방접종을 권고합니다.[3]\n\n**학교 내 다른 담당의 역할**\n- 학교장은 대응 제3단계에서 학교감염병관리조직의 기능을 강화하고, 유행 확산 정도에 따라 학사일정 조정 및 교육 활동 제한을 검토·실시합니다.[6]\n\n**신고·법적 사항**\n- 교육부 매뉴얼(2023)의 목록에 따른 학교장 신고 대상은 아니며, 해당 목록의 법적 근거는 감염병예방법 제12조 및 시행규칙 제8조입니다.[5]\n- 대응 제2단계에서는 나이스(NEIS)로 교육(지원)청에 보고하고, 학교 내 능동감시체계의 감시범위와 방법을 정해 실시합니다.[4]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "D4",
+   "kind": "질병별",
+   "question": "수두에 걸린 학생이 있으면 학교가 해야 할 일은?",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 16,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "tool_candidates": 18,
+   "tool_gold": 0,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "cited": 6,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 15.1,
+   "answer": "**수두 학생은 모든 수포에 가피가 생길 때까지 등교를 중지시키고, 학교는 환자 관리와 접촉자 증상 모니터링을 하세요. 수두는 제2급 법정감염병이지만, 교육부 매뉴얼의 학교장 신고 대상 목록에는 없습니다.**[2][3][6]\n\n**상황 판단**\n- 수두는 제2급 법정감염병입니다.[6]\n- 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에 수두가 없으므로, 이 목록에 따른 학교장 신고 대상은 아닙니다.[3]\n- 교육부 매뉴얼(2023)은 등교 중지 기간을 “모든 수포에 가피가 형성될 때까지”로 정하고 있습니다.[2]\n\n**지금 바로 할 일**\n1. 학교는 학생의 등교를 모든 수포에 가피가 생길 때까지 중지하도록 안내하세요.[2]\n2. 학교는 환자 관리에 표준주의·공기주의·접촉주의를 적용하세요.[5]\n3. 학교는 접촉자의 증상 발생을 모니터링하세요.[5]\n\n**이후에 할 일**\n- 예방접종을 받은 환자에게 병변 가피가 생기지 않는 경우, 경기도 가이드북(2024)은 24시간 동안 새로운 피부병변이 나타나지 않을 때까지 격리 또는 타인과 접촉 제한을 권장합니다.[5]\n\n**신고·법적 사항**\n- 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에 수두가 없으므로, 해당 목록에 따른 신고 대상은 아닙니다.[3]"
+  },
+  {
+   "run": 2,
+   "id": "D5",
+   "kind": "질병별",
+   "question": "결핵 환자가 학교에서 확인되면 학교는 무엇을 해야 하나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 7,
+   "gold_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "tool_candidates": 16,
+   "tool_gold": 0,
+   "tool_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "cited": 9,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "moe_school_manual_v3",
+    "moleg_infectious_disease_act_21521"
+   ],
+   "docs_covered": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 16.2,
+   "answer": "**결핵은 학교장 신고 대상인 제2급감염병입니다. 학교장은 관할 보건소에 신고하고, 학교는 교육(지원)청 보고와 보건소 협의를 진행해야 합니다.**[1][2][9]\n\n**상황 판단**\n- 결핵은 교육부 매뉴얼(2023)의 학교장 신고 대상 감염병 목록에 있으며, 제2급 법정감염병입니다.[1][9]\n\n**지금 바로 할 일**\n1. 학교장은 교육(지원)청 보고절차에 따라 나이스(NEIS) 전자결재로 교육(지원)청과 보건소에 보고합니다. 서면 신고가 여의치 않으면 팩스나 전화를 활용합니다.[1]\n2. 학교장은 관할 보건소와 협의해 접촉자 조사를 진행합니다.[4]\n3. 학교장은 접촉자조사 대상자에게 역학조사 대상 기관 초기 유선(문자) 안내 예시를 참고해 안내를 배포합니다.[4]\n\n**이후에 할 일**\n- 전염성 결핵환자는 전염성 소실이 확인되면 등교 일시 제한을 해제하고 복귀할 수 있습니다. 교육부 매뉴얼(2023)은 해제 기준으로 효과적인 치료 약제를 포함한 항결핵제를 14일 이상 투여, 호흡기 증상 소실, 가래(객담)를 제시하며, 의사 소견서 등 관련 근거를 확인·보관하도록 합니다.[6]\n\n**학교 내 다른 담당의 역할**\n- 보건교사는 환자 발생 사실을 학교장에게 보고하고, 나이스(NEIS)로 교육(지원)청에 보고합니다.[3]\n- 보건교사는 능동감시 범위와 방법을 학교장에게 보고하고, 보건실 이용 학생 중 추가 의심환자 발생 여부를 파악합니다.[3]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "D6",
+   "kind": "질병별",
+   "question": "인플루엔자가 유행할 때 학교와 시설이 해야 할 일은?",
+   "mode": "nograph",
+   "status": "PARTIAL",
+   "tools": [
+    [
+     "action_search",
+     "OK"
+    ],
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 7,
+   "gold_docs": [
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "tool_candidates": 18,
+   "tool_gold": 4,
+   "tool_docs": [
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "cited": 12,
+   "cited_gold": 3,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "kdca_flu_facility_2026",
+    "moe_school_manual_v3"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": null,
+   "seconds": 17.3,
+   "answer": "**인플루엔자 유행 시에는 2026년 질병관리청 지침에 따라 시설 내 유입을 막고, 감염이 발생하면 확산 방지와 피해 최소화를 중심으로 대응하세요.**[1][12]\n\n**상황 판단**\n- 인플루엔자는 경기도 가이드북(2024)에서 제4급 법정감염병으로 분류하지만, 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에는 없습니다. 따라서 그 목록에 따른 학교장 신고 대상은 아닙니다.[7][8]\n- 교육부 매뉴얼(2023)은 최대 잠복기 이내에 같은 학급에서 의심·확진 환자가 2명 이상 발생하거나, 다른 학급이어도 이동수업·급식 등 공통 공간 노출로 관련성이 의심되면 유행의심 기준에 해당해 대응 제3단계로 격상하도록 합니다.[9]\n- 교육부 매뉴얼(2023)은 방역당국의 별도 관리지침이 있으면 그 지침을 우선 적용하도록 합니다.[12]\n\n**지금 바로 할 일**\n1. 영·유아·학생·교직원은 유행 시기 등원·등교 전에 인플루엔자 의심증상 등 건강상태를 확인합니다.[2]\n2. 발열 및 기침 또는 인후통 등을 보이는 사람이 있으면 질병관리청 지침의 환자·환경관리 권고사항에 따라 대응합니다.[2][4]\n3. 유행 시기에는 사람이 많이 모이는 장소를 피하고, 인플루엔자 의심 증상이 있는 사람과의 접촉을 피합니다.[3]\n4. 가능한 인플루엔자 유행기간에는 교실의 혼잡과 접촉을 줄입니다.[5]\n\n**이후에 할 일**\n- 교직원이 인플루엔자로 진단받으면 감염력이 소실될 때까지 업무를 일시적으로 제한하도록 권고합니다. 지침은 감염력 소실을 해열 후 24시간 경과로 설명합니다.[3]\n- 유행의심 기준에 해당하면 대응 제3단계로 격상하고, 기존 의심환자가 완치된 뒤 최대 잠복기 동안 추가 의심환자가 없으면 예방단계로 복귀합니다.[9]\n\n**학교 내 다른 담당의 역할**\n- 학교장은 대응 제3단계에서 학교감염병관리조직의 기능을 강화하고, 유행 확산 정도에 따라 학사일정 조정 및 각종 교육 활동 제한을 검토·실시합니다.[6]\n\n**신고·법적 사항**\n- 인플루엔자는 교육부 매뉴얼(2023)의 학교장 신고 대상 목록에 없으므로, 그 목록에 따른 학교장 신고 대상은 아닙니다. 해당 목록의 법적 근거는 감염병예방법 제12조 및 시행규칙 제8조입니다.[7]\n\n※ 담당은 원문이 제시한 예시입니다. 학교 상황에 따라 조정할 수 있습니다."
+  },
+  {
+   "run": 2,
+   "id": "K1",
+   "kind": "대조군",
+   "question": "마이코플라스마 폐렴 전염기간은?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 2,
+   "gold_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 1,
+   "tool_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "cited": 2,
+   "cited_gold": 1,
+   "cited_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "docs_covered": [
+    "kdca_respiratory_2026"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": true,
+   "seconds": 9.9,
+   "answer": "**마이코플라스마 폐렴은 증상 발현 2~8일 전부터 증상 발생 후 20일 이내까지 전염될 수 있습니다. 다만 일부 문헌은 감염 발생 후 14주까지 전파 가능성을 제시합니다.**[1][2]"
+  },
+  {
+   "run": 2,
+   "id": "K2",
+   "kind": "대조군",
+   "question": "코로나19 전염 기간은 얼마나 되나요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 1,
+   "gold_docs": [
+    "kdca_covid19_2026"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 0,
+   "tool_docs": [
+    "kdca_covid19_2026"
+   ],
+   "cited": 3,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025",
+    "kdca_covid19_2026",
+    "moe_school_manual_v3"
+   ],
+   "docs_covered": [
+    "kdca_covid19_2026"
+   ],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": true,
+   "seconds": 10.7,
+   "answer": "**코로나19는 증상 발생 1~3일 전부터 전파될 수 있고, 감염 초기에 전파가 쉽습니다. 바이러스 양은 감염 첫 주 안에 최고점에 도달한 뒤 점차 감소합니다.**[1]\n\n**상황 판단**\n- 질병관리청 관리지침(2026)은 전염기간을 증상 발생 1~3일 전부터 바이러스가 검출될 수 있고, 감염 첫 주 안에 바이러스 양이 최고점에 도달한 뒤 점차 감소하는 것으로 설명합니다.[1]\n- 경기도 가이드북(2024)은 발병 전 2일~발병 후 3일까지 전파력이 가장 높고, 대부분 7일 이후에는 소실된다고 적고 있습니다. 다만 방역당국의 별도 관리지침이 있으면 우선 적용하므로, 최신 기준은 질병관리청 관리지침(2026)을 따릅니다.[1][2][3]"
+  },
+  {
+   "run": 2,
+   "id": "K3",
+   "kind": "대조군",
+   "question": "성홍열 잠복기는 얼마인가요?",
+   "mode": "nograph",
+   "status": "ANSWERED",
+   "tools": [
+    [
+     "disease_search",
+     "OK"
+    ]
+   ],
+   "gold_chunks": 1,
+   "gold_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "tool_candidates": 12,
+   "tool_gold": 0,
+   "tool_docs": [
+    "kdca_respiratory_2026"
+   ],
+   "cited": 1,
+   "cited_gold": 0,
+   "cited_docs": [
+    "gyeonggi_school_guide_2025"
+   ],
+   "docs_covered": [],
+   "final_actions": 0,
+   "gold_actions_final": 0,
+   "key_hit": true,
+   "seconds": 8.6,
+   "answer": "**성홍열의 잠복기는 1~7일이며, 평균 2~5일입니다.**[1]"
+  }
+ ]
+}
