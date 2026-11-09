@@ -1,6 +1,6 @@
 {
   "schema_version": "text2cypher-aura-20261109-v1",
-  "observed_at_kst": "2026-11-09T10:30:14.847337+09:00",
+  "observed_at_kst": "2026-11-09T14:48:54.179114+09:00",
   "connection": {
     "instance_alias": "team2-project-aura",
     "instance_fingerprint": "f1382cfa4160",
