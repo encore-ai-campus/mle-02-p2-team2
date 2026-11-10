@@ -202,6 +202,19 @@ PYTHONPATH=src uv run python -m index.school.exclusion_table_actions <명세.jso
 
 ## 6. 스키마·프롬프트·쿼리·검증 기록·시각화 위치
 
+### 제출 자료 모음
+
+**데이터·전처리·검증·시연과 필수 산출물의 자세한 내용은 [`docs/submissions/`](docs/submissions/)에 정리했습니다.** 아래 두 문서에서 실제 코드·프롬프트·원문 대조 기록·Cypher·그래프 화면으로 바로 이동할 수 있습니다.
+
+| 문서 | 포함한 내용 |
+|---|---|
+| [공통 제출 — 데이터·전처리·검증·시연](docs/submissions/01_공통제출_데이터_검증_시연.md) | 문서 출처·판본·선정 범위, 담당별 전처리, 청킹 전후 사례, 검증 표본·분모·한계, 실행 환경과 시연 순서 |
+| [필수 산출물 ①·② — 추출과 Neo4j 지식그래프](docs/submissions/02_필수산출물_추출_지식그래프.md) | 실제 추출 프롬프트 전체, 구조화 출력·검수·정규화·적재 코드, 입출력 사례, 노드·관계 스키마, 대표 Cypher와 Aura 캡처 |
+
+원본 PDF와 중간 후보·적재 패키지 일부는 Git 제외 자료입니다. 새 환경에서 추출부터 재현하려면 원문과 해당 산출물을 별도로 준비해야 합니다. 제출 문서에는 기존 실행 기록을 종합했으며, 문서 작성 시점에 전체 DB·LLM·브라우저 시연을 다시 실행한 것은 아닙니다.
+
+### 코드·근거 위치
+
 | 무엇 | 어디 |
 |---|---|
 | **스키마**: 노드 6종·관계 6종(방향 고정) | [온톨로지 v3.1](교육시설_감염병_GraphRAG_온톨로지_스키마_설명서_v3.1.md), 제약·인덱스 코드 `src/index/school/schema_init.py`, 호흡기 ERD [v0.2](notebooks/respiratory/Neo4j_ERD_v0.2.md), 실제 DB 관찰 구조 [text2cypher_schema.json](notebooks/respiratory/text2cypher_schema.json) |
@@ -235,12 +248,14 @@ PYTHONPATH=src uv run python -m index.school.exclusion_table_actions <명세.jso
 
 ### 평가 요약 (분모와 질문셋이 달라 합치지 않습니다)
 
+원문 대조와 추출 품질, 검색 품질을 구분해 검증했습니다. 학교 표 **64개·544행**을 사람이 원문과 대조해 주소 37개 유지·27개 수정 판정을 반영했고, 표 각주를 제목으로 오인하거나 다른 질병의 주소를 이어받던 문제를 수정했습니다. 이 결과는 자동 파서와 사용자 검수 보정을 함께 적용한 것입니다. 법령 카드에서는 원문보다 넓어진 Q23 주장을 발견해 적용 대상·기간을 별도 근거로 분리했습니다. [검증 대상·오류 원인·수정과 재확인 기록](docs/submissions/01_공통제출_데이터_검증_시연.md#3-검증-기록)에 상세 내용을 정리했습니다.
+
 | 평가 | 결과 | 읽을 때 주의 |
 |---|---|---|
 | 학교 골든 40문항, 메인 끝까지(11/8) | 라우팅 40/40 · 정답 근거 인용 28/34 · 기대 상태 일치 36~37/40 | 개발 중 본 문항. 실행 간 변동 정답 인용 ±2 |
 | 상황형 질문 15문항 루브릭(11/7) | 52 → 73 / 75 | AI 1인 채점, 사람 확인 전 |
 | 지침 전용 질문 16문항, 정답 쪽 인용(11/8) | 5 → 12 | 질문은 AI가 작성, 자동 판정+판독 |
-| 학교 행동 추출 정밀도·재현율(11/7) | 정밀도 0.91 · 재현율 0.71 | 20개 청크 표본, 정답 주석 1인 |
+| 학교 행동 추출 정밀도·재현율(11/7) | 정밀도 10/11=0.91 · 재현율 10/14=0.71 · F1 0.80 | 20청크 표본, 검토 짝 판정은 Claude·사람 확인 전. 역할 근거(EXPLICIT/EXAMPLE) 일치는 5/10 |
 | 지식그래프 유무 비교, 개념 비교 14문항(11/9) | Tool이 모은 정답 근거 6.3 vs 1.7, 그래프 없는 답이 있는 근거를 "없다"고 한 경우 7/28 vs 1/28 | 질문을 그래프를 보고 만들었고 정답이 그래프 기준 |
 | 호흡기 골든 11문항 | 통과 5 · 부분 통과 4 · 실패 2 | 이미 사용한 질문셋([호흡기 README](notebooks/respiratory/README_respiratory.md)) |
 | 예방·법령 골든(11/7 기준) | 회귀 7/7 · 독립 8문항 중 2/8 | 답 카드가 없는 질문은 근거가 DB에 있어도 답하지 못했음([예방·법령 README](notebooks/prevention_legal/README_발표초안_예방법령.md)) |
@@ -283,7 +298,6 @@ PYTHONPATH=src uv run python -m index.school.exclusion_table_actions <명세.jso
 | **송수림** (PM) | 호흡기·인플루엔자·코로나19 지침 전처리·추출·정규화·적재, DiseaseSearchTool, CrossDocGraphTool(Cypher·시각화), 공동 DB 읽기 전용 점검, Text2Cypher 시연 | [호흡기 README](notebooks/respiratory/README_respiratory.md) · [업무 현황 25개](notebooks/respiratory/업무현황_25개_20261106.md) · [호흡기 코드 흐름](notebooks/respiratory/호흡기_코드_흐름_설명.md) |
 | **유종혁** (파트장) | 예방접종·홍역·수족구·진단신고기준·감염병예방법 처리·적재(벌칙 조문 포함), LegalSearchTool·답 카드, 공통 계약·출처 검증, GitHub·공동 지시서 정리, 웹디자인·화면 개선 | [예방·법령 README](notebooks/prevention_legal/README_발표초안_예방법령.md) · [최종 결과 정리](notebooks/prevention_legal/최종결과_정리_초안.md) · [일정 관리](notebooks/prevention_legal/일정관리_prevention_legal.md) |
 
-- 위 링크는 저장소에 이미 있는 작업 기록입니다. **개인 회고(배운 점·아쉬운 점)는 각자 작성해 이 표의 링크를 바꿔 주세요.**
 
 ---
 
